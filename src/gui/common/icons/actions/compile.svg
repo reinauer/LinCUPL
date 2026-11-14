@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <!-- Device dependent compile: a logic device and a run badge -->
+  <defs>
+    <linearGradient id="chip" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4d576b"/><stop offset="1" stop-color="#1c212c"/></linearGradient>
+    <linearGradient id="badge" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4cd964"/><stop offset="1" stop-color="#1f9d3a"/></linearGradient>
+  </defs>
+  <g fill="#d5dbe3" stroke="#7b8494" stroke-width="0.6"><rect x="3.50" y="2.50" width="1.6" height="2.5" rx="0.4"/><rect x="3.50" y="14.00" width="1.6" height="2.5" rx="0.4"/><rect x="6.10" y="2.50" width="1.6" height="2.5" rx="0.4"/><rect x="6.10" y="14.00" width="1.6" height="2.5" rx="0.4"/><rect x="8.70" y="2.50" width="1.6" height="2.5" rx="0.4"/><rect x="8.70" y="14.00" width="1.6" height="2.5" rx="0.4"/><rect x="11.30" y="2.50" width="1.6" height="2.5" rx="0.4"/><rect x="11.30" y="14.00" width="1.6" height="2.5" rx="0.4"/><rect x="13.90" y="2.50" width="1.6" height="2.5" rx="0.4"/><rect x="13.90" y="14.00" width="1.6" height="2.5" rx="0.4"/></g>
+  <rect x="1.5" y="4.5" width="16" height="10" rx="1.5" fill="url(#chip)" stroke="#11151c"/>
+  <rect x="2.4" y="5.4" width="14.2" height="8.2" rx="0.9" fill="none" stroke="#7f8aa0" stroke-width="0.6" stroke-opacity="0.8"/>
+  <path d="M1.5 7.9 A1.6 1.6 0 0 1 1.5 11.1" fill="#11151c"/>
+  <circle cx="4.1" cy="6.9" r="0.8" fill="#8f9bb0"/>
+  <circle cx="18" cy="18" r="5" fill="url(#badge)" stroke="#167a2c"/>
+  <path d="M16.4 15.4 L20.8 18 L16.4 20.6 Z" fill="#fff" stroke="#fff" stroke-width="0.6" stroke-linejoin="round"/>
+</svg>

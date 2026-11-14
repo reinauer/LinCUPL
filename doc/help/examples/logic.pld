@@ -1,0 +1,48 @@
+Name     Logic;
+PartNo   HELP07;
+Date     2026-01-01;
+Revision 01;
+Designer LinCUPL Help;
+Company  LinCUPL;
+Assembly None;
+Location None;
+Device   g16v8a;
+
+/* CONDITION, FUNCTION and APPEND */
+
+Pin 2 = en;
+Pin [3..4] = [sel1..0];
+Pin 5 = x;
+Pin 6 = y;
+Pin 7 = cin;
+Pin 8 = alarm_a;
+Pin 9 = alarm_b;
+
+Pin [12..15] = [line0..3];
+Pin 16 = sum;
+Pin 17 = cout;
+Pin 18 = alarm;
+Pin 19 = none;
+
+field sel = [sel1..0];
+
+/* 2-to-4 decoder: one line per selector value while enabled */
+condition {
+    if en & sel:0 out line0;
+    if en & sel:1 out line1;
+    if en & sel:2 out line2;
+    if en & sel:3 out line3;
+    default out none;
+}
+
+/* Full adder; the carry is passed back through a parameter */
+function add(a, b, c, carry) {
+    carry = a & b # a & c # b & c;
+    add = a $ b $ c;
+}
+
+sum = add(x, y, cin, cout);
+
+/* APPEND adds product terms to an output defined elsewhere */
+alarm = alarm_a & en;
+append alarm = alarm_b & en;

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Utilities</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="nav"><a href="index.html">Help</a></p>
+<h1>Utilities</h1>
+
+<h2 id="backpin">backpin: writing pin numbers into the design</h2>
+<pre class="syntax">backpin [-p] [-f] [-b backup] [-l logfile] [-u library] device design.pld</pre>
+<p>When a <a href="fitters.html">fitter</a> has chosen the pins of a
+design, <tt>backpin</tt> writes the chosen numbers into the
+<tt>PIN</tt> and <tt>PINNODE</tt> statements of the design, so that the
+next compile keeps them.  <tt>backpin -f</tt> does the opposite: it
+removes the numbers, so that the fitter places every signal anew.</p>
+<table>
+<tr><th>Option</th><th>Meaning</th></tr>
+<tr><td>(none)</td><td>Write pin and node numbers.</td></tr>
+<tr><td><tt>-p</tt></td><td>Write pin numbers only; the <tt>PINNODE</tt> statements lose their numbers.</td></tr>
+<tr><td><tt>-f</tt></td><td>Float: remove all pin and node numbers.</td></tr>
+<tr><td><tt>-b</tt> <i>file</i></td><td>Name of the backup copy (default <i>design</i><tt>.bak</tt>); it may not be the design itself.</td></tr>
+<tr><td><tt>-l</tt> <i>file</i></td><td>Write the messages to a log file.</td></tr>
+<tr><td><tt>-u</tt> <i>library</i></td><td>Device library.</td></tr>
+</table>
+<p>backpin reads the placements from <i>design</i><tt>.plc</tt>, a list of
+lines like <tt>PIN 21 = y ;</tt> and <tt>NODE 615 = r ;</tt>.  It first
+copies the design to the backup file and then writes the new design
+from that copy.</p>
+<pre class="shell">backpin -u Atmel.dl f1502plcc44 bp.pld   # Pin = y;  becomes  Pin 21 = y;
+backpin -f f1502plcc44 bp.pld            # Pin 21 = y;  becomes  Pin   = y;</pre>
+<p>backpin rewrites <tt>PIN</tt> and <tt>PINNODE</tt> statements with
+one signal, a range or a list (<tt>Pin = y;</tt>,
+<tt>Pin = [q0..3];</tt>, <tt>Pin = [a, !b];</tt>,
+<tt>Pinnode [601, 602] = [r, s];</tt>); blanks, comments and line breaks
+inside the brackets stay as written.  A list gets its numbers in
+brackets on the left, <tt>Pin [4,5] = [a, !b];</tt>; when one of its
+signals has no placed pin (and with <tt>-f</tt>, or <tt>-p</tt> for
+<tt>PINNODE</tt>) the list is written without numbers.  <tt>NODE</tt>
+statements carry no numbers and are copied as they are.</p>
+<p>backpin writes the design only when it has read all of it: at a
+statement it cannot read (a missing semicolon, for example) it stops
+with a message and leaves the design unchanged.</p>
+<p class="note">The original backpin stops at <tt>NODE</tt> statements
+and at lists with blanks or <tt>!</tt> between the names, and the
+design it writes then ends there, with the rest only in the
+<tt>.bak</tt> copy; for lists without placed pins it writes pin number
+0.  It also ignores the name given with <tt>-b</tt>, reads the device and
+the design only from a command line with at least one option
+(<tt>backpin f1502plcc44 bp.pld</tt> looks for a design called
+<tt>&amp;</tt>), and prints a meaningless line number with
+<i>invalid flag</i>.</p>
+
+<h3 id="pin-menu">In LinCUPL</h3>
+<p>The <b>Utilities</b> menu runs backpin on the open design (or the
+<a href="getting-started.html#projects">project</a>) with its device and
+the device library:</p>
+<table>
+<tr><th>Menu entry</th><th>backpin run</th></tr>
+<tr><td><b>Float All Pins and Nodes</b></td><td><tt>backpin -f</tt></td></tr>
+<tr><td><b>Assign Pins and Pinnodes</b></td><td><tt>backpin</tt></td></tr>
+<tr><td><b>Assign Pins Only</b></td><td><tt>backpin -p</tt></td></tr>
+<tr><td><b>Backpin...</b></td><td>a dialog with all options and the command line</td></tr>
+</table>
+<p>The ATF150x fitters report their placement in the <tt>.pin</tt> file;
+LinCUPL converts it into the <tt>.plc</tt> file backpin reads, and warns
+when the placement is older than the design.  The editor receives the new
+text as a single change, so <b>Edit &gt; Undo</b> brings the old pin
+numbers back.  Should a backpin program write only part of the design,
+LinCUPL puts the design back as it was and says why, instead of loading
+the shortened file.</p>
+
+<h2 id="cbld">cbld: device library contents</h2>
+<pre class="syntax">cbld [-flags] [library] [devices]</pre>
+<table>
+<tr><th>Flag</th><th>Lists</th></tr>
+<tr><td><tt>-t</tt></td><td>the names of all devices in the library</td></tr>
+<tr><td><tt>-l</tt></td><td>for each device: revision, pins, fuses and product terms</td></tr>
+<tr><td><tt>-e</tt></td><td>the <a href="lang-extensions.html">extensions</a> each device supports</td></tr>
+<tr><td><tt>-u</tt></td><td>use the library named on the command line</td></tr>
+<tr><td><tt>-b</tt></td><td>build a library from a build file</td></tr>
+</table>
+<pre class="shell">cbld -tu Atmel.dl
+cbld -lu Atmel.dl g22v10 v750c
+cbld -eu Atmel.dl f1502plcc44</pre>
+<p>The output of <tt>cbld -lu Atmel.dl g22v10</tt>:</p>
+<pre class="output">Device        Rev   Pins  Fuses  Pterms
+------------  ---   ----  -----  ------
+g22v10         01    24    5892    132</pre>
+<p><b>Utilities &gt; Device Library Table of Contents (cbld -t)</b> shows
+the device list of the current library, and the
+<a href="devices.html#choose">device browser</a> runs <tt>cbld -l</tt> and
+<tt>-e</tt> for the selected device.</p>
+
+<h2 id="tools">User tools</h2>
+<p>Other programs, such as a device programmer, can be added to the
+<b>Tools</b> menu of LinCUPL; see
+<a href="getting-started.html#tools">Tools menu</a>.</p>
+<p class="seealso">See also: <a href="fitters.html">ATF150x fitters</a>,
+<a href="devices.html">Devices and libraries</a>.</p>
+</body>
+</html>

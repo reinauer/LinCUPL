@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Preprocessor</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="nav"><a href="index.html">Help</a> &gt; <a href="lang-overview.html">CUPL language</a></p>
+<h1>Preprocessor</h1>
+
+<p>Before the design is compiled, the preprocessor replaces symbols,
+reads included files and leaves out conditional parts.  Its commands
+start with <tt>$</tt> in the first column of a line and may be written in
+any case.</p>
+<table>
+<tr><th>Command</th><th>Effect</th></tr>
+<tr><td id="define"><tt>$DEFINE</tt> <i>symbol</i> [<i>text</i>]</td><td>From here on, <i>symbol</i> is replaced by <i>text</i>.</td></tr>
+<tr><td id="undef"><tt>$UNDEF</tt> <i>symbol</i></td><td>Forget a symbol.</td></tr>
+<tr><td id="include"><tt>$INCLUDE</tt> <i>file</i></td><td>Read another file at this place.</td></tr>
+<tr><td id="ifdef"><tt>$IFDEF</tt> <i>symbol</i></td><td>Keep the following lines only if the symbol is defined.</td></tr>
+<tr><td id="ifndef"><tt>$IFNDEF</tt> <i>symbol</i></td><td>Keep the following lines only if the symbol is not defined.</td></tr>
+<tr><td id="else"><tt>$ELSE</tt></td><td>Switch to the other branch.</td></tr>
+<tr><td id="endif"><tt>$ENDIF</tt></td><td>End of the conditional part.</td></tr>
+</table>
+
+<h2 id="example">Example</h2>
+<pre data-example="shifter.pld" data-lines="13-33">$include pins.inc
+
+$define ROTATE_LEFT                 /* remove this line to rotate right */
+$define HOLD    !load &amp; !shift      /* text substitution, not a signal */
+
+Pin 11 = shift;
+
+field data = [d7..0];
+field reg  = [q7..0];
+
+/* One equation per bit, made by $REPEAT; {i} is replaced by the
+   value of i and {expression} by the value of the expression */
+$REPEAT i = [0..7]
+$ifdef ROTATE_LEFT
+q{i}.d = load &amp; d{i} # !load &amp; shift &amp; q{(i+7)%8} # HOLD &amp; q{i};
+$else
+q{i}.d = load &amp; d{i} # !load &amp; shift &amp; q{(i+1)%8} # HOLD &amp; q{i};
+$endif
+$REPEND
+
+reg.oe = oe;</pre>
+<p>with the included file</p>
+<pre data-example="pins.inc" data-lines="all">/* Pin assignments shared by several designs; read with $include */
+
+Pin 1  = clk;
+Pin 2  = load;
+Pin [3..10] = [d7..0];
+Pin 13 = !oe;
+Pin [14..21] = [q7..0];</pre>
+
+<h2 id="define-rules">$DEFINE</h2>
+<p>The text of a <tt>$DEFINE</tt> runs to the end of the line; a comment
+at the end is not part of it.  The text may be empty, which is useful
+for <tt>$IFDEF</tt>.  It is inserted as written, so
+<tt>HOLD</tt> above becomes <tt>!load &amp; !shift</tt> inside the larger
+expression; put parentheses into the text if the expression around it
+could bind differently.  Defining a symbol that is already defined is an
+error (<i>already defined</i>); use <tt>$UNDEF</tt> first.</p>
+<p>Symbols are commonly used for state encodings
+(<a href="lang-sequence.html#example">traffic.pld</a>) and for constants
+that occur in several places.</p>
+
+<h2 id="include-rules">$INCLUDE</h2>
+<p>The file is looked for in the directory of the design, then in the
+directory of the device library and in its <tt>Macro</tt> subdirectory.
+The name is matched without regard to case.  Included files may contain
+any statements, such as pin declarations or
+<a href="lang-macros.html#macro">macro</a> definitions.</p>
+
+<h2 id="conditional">Conditional parts</h2>
+<p><tt>$IFDEF</tt> and <tt>$IFNDEF</tt> with <tt>$ELSE</tt> and
+<tt>$ENDIF</tt> select lines by whether a symbol is defined.  They work
+inside <tt>$REPEAT</tt> as well.  To choose by the value of an expression,
+use <a href="lang-macros.html#if">$IF</a>.</p>
+<p class="note">The commands must start in the first column.  An
+indented <tt>$ifdef</tt> is not seen by the preprocessor and gives a
+syntax error.</p>
+<p class="seealso">See also: <a href="lang-macros.html">Macros and
+$REPEAT</a>, <a href="compiler-options.html#e">-e</a> to see the expanded
+source.</p>
+</body>
+</html>

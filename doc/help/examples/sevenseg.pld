@@ -1,0 +1,29 @@
+Name     SevenSeg;
+PartNo   HELP04;
+Date     2026-01-01;
+Revision 01;
+Designer LinCUPL Help;
+Company  LinCUPL;
+Assembly None;
+Location None;
+Device   g16v8a;
+
+/* Hexadecimal to seven-segment decoder written as a TABLE.
+   Segment outputs are active low (common anode display). */
+
+Pin [2..5]   = [d3..0];
+Pin [12..18] = ![sa, sb, sc, sd, se, sf, sg];
+
+field digit    = [d3..0];
+field segments = [sa, sb, sc, sd, se, sf, sg];
+
+table digit => segments {
+    'h'0 => 'b'1111110;   'h'1 => 'b'0110000;
+    'h'2 => 'b'1101101;   'h'3 => 'b'1111001;
+    'h'4 => 'b'0110011;   'h'5 => 'b'1011011;
+    'h'6 => 'b'1011111;   'h'7 => 'b'1110000;
+    'h'8 => 'b'1111111;   'h'9 => 'b'1111011;
+    'h'A => 'b'1110111;   'h'B => 'b'0011111;
+    'h'C => 'b'1001110;   'h'D => 'b'0111101;
+    'h'E => 'b'1001111;   'h'F => 'b'1000111;
+}

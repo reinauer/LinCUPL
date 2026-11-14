@@ -1,0 +1,19 @@
+Name     Cpld;
+PartNo   HELP09;
+Date     2026-01-01;
+Revision 01;
+Designer LinCUPL Help;
+Company  LinCUPL;
+Assembly None;
+Location None;
+Device   f1502ispplcc44;
+
+ORDER: clk, rst, load, %2, data, %2, count, %2, match;
+
+VECTORS:
+$MSG "Reset, then load 03 into the compare register";
+0 1 0  '00'  "00" L
+C 0 1  '03'  "01" L
+C 0 0  '00'  "02" L
+C 0 0  '00'  "03" H
+C 0 0  '00'  "04" L

@@ -1,0 +1,24 @@
+Name     Traffic;
+PartNo   HELP05;
+Date     2026-01-01;
+Revision 01;
+Designer LinCUPL Help;
+Company  LinCUPL;
+Assembly None;
+Location None;
+Device   g22v10;
+
+ORDER: clk, car, rst, %2, state, %2, main_red, main_yellow, main_green,
+       %2, side_red, side_green, %2, walk_req;
+
+VECTORS:
+$MSG "Reset: main road green";
+0 0 1  "0"  LLH HL L
+C 0 0  "0"  LLH HL L
+$MSG "A car arrives on the side road";
+C 1 0  "1"  LHL HL L
+C 1 0  "3"  HLL LH L
+C 1 0  "3"  HLL LH H
+$MSG "The side road is empty again";
+C 0 0  "2"  HLL HL L
+C 0 0  "0"  LLH HL L

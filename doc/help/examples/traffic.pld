@@ -1,0 +1,51 @@
+Name     Traffic;
+PartNo   HELP05;
+Date     2026-01-01;
+Revision 01;
+Designer LinCUPL Help;
+Company  LinCUPL;
+Assembly None;
+Location None;
+Device   g22v10;
+
+/* Traffic light controller as a state machine.  A car waiting on the
+   side road (car) turns the main road light from green to red. */
+
+Pin 1  = clk;
+Pin 2  = car;              /* car waiting on the side road */
+Pin 3  = rst;              /* asynchronous reset to MAIN_GO */
+
+Pin [14..15] = [s1..0];    /* state register */
+Pin 16 = main_red;
+Pin 17 = main_yellow;
+Pin 18 = main_green;
+Pin 19 = side_red;
+Pin 20 = side_green;
+Pin 21 = walk_req;         /* registered output */
+
+field state = [s1..0];
+
+$define MAIN_GO    'b'00
+$define MAIN_STOP  'b'01
+$define SIDE_GO    'b'11
+$define SIDE_STOP  'b'10
+
+sequenced state {
+    present MAIN_GO
+        if car  next MAIN_STOP;
+        default next MAIN_GO;
+        out [main_green, side_red];
+    present MAIN_STOP
+        next SIDE_GO;
+        out [main_yellow, side_red];
+    present SIDE_GO
+        if car  next SIDE_GO   out walk_req.d;
+        if !car next SIDE_STOP;
+        out [main_red, side_green];
+    present SIDE_STOP
+        next MAIN_GO;
+        out [main_red, side_red];
+}
+
+state.ar = rst;
+walk_req.ar = rst;

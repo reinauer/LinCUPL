@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Macros and $REPEAT</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="nav"><a href="index.html">Help</a> &gt; <a href="lang-overview.html">CUPL language</a></p>
+<h1>Macros and $REPEAT</h1>
+
+<p>The macro language generates design text: it repeats lines with a
+loop variable, computes numbers, and expands named macros with
+parameters.  The result can be seen in the <tt>.mx</tt> file
+(<a href="compiler-options.html#e"><tt>-e</tt></a>).</p>
+
+<h2 id="repeat">$REPEAT</h2>
+<pre class="syntax">$REPEAT variable = [list]
+lines
+$REPEND</pre>
+<p>The lines between <tt>$REPEAT</tt> and <tt>$REPEND</tt> are written once
+for every value in the list, with <tt>{</tt><i>variable</i><tt>}</tt>
+replaced by the value.  The list holds numbers and ranges separated by
+commas: <tt>[0..7]</tt>, <tt>[7..0]</tt> (counting down),
+<tt>[0, 2, 4..6]</tt>.  Loops may be nested two deep.</p>
+<pre data-example="cpld.pld" data-lines="33-37">/* Counter: bit i toggles when all lower bits are 1 */
+q0.t = 'b'1;
+$repeat i = [1..7]
+q{i}.t = [q{i-1}..0]:&amp;;
+$repend</pre>
+<p>expands to <tt>q1.t = [q0..0]:&amp;;</tt>, <tt>q2.t = [q1..0]:&amp;;</tt>
+and so on up to <tt>q7.t</tt>.</p>
+
+<h2 id="arith">Expressions in braces</h2>
+<p>Braces hold an integer expression whose value replaces them:</p>
+<table>
+<tr><th>Operators</th><th>Meaning</th></tr>
+<tr><td><tt>+ - * / %</tt></td><td>arithmetic on integers (<tt>/</tt> truncates, <tt>%</tt> is the remainder)</td></tr>
+<tr><td><tt>**</tt></td><td>power</td></tr>
+<tr><td><tt>== != &lt; &gt; &lt;= &gt;=</tt></td><td>comparison, 1 or 0</td></tr>
+<tr><td><tt>log2( )</tt>, <tt>log8( )</tt>, <tt>log10( )</tt>, <tt>log16( )</tt></td><td>number of digits needed for a value: <tt>log2(16)</tt> is 4, <tt>log2(9)</tt> is 4</td></tr>
+<tr><td><tt>( )</tt></td><td>grouping</td></tr>
+</table>
+<p>Inside the braces a loop variable is written without braces:
+<tt>q{(i+7)%8}</tt>.  The value is written in decimal, or in the base
+of a prefix just before the braces: <tt>f:'h'{i+10}</tt> gives
+<tt>f:'h'a</tt> for <tt>i</tt> = 0.  An expression may start with a
+function: <tt>{log2(16)}</tt> gives 4, inside <tt>$REPEAT</tt> as well as
+outside.</p>
+<p class="note">Inside <tt>$REPEAT</tt> the original CUPL does not compute
+an expression that starts with a function name: the braces stay in the
+text and its preprocessor stops with <i>unexpected end-of-file</i>.  Write
+<tt>{(log2(16))}</tt> in designs that are also compiled with it.</p>
+<pre data-example="shifter.pld" data-lines="25-31">$REPEAT i = [0..7]
+$ifdef ROTATE_LEFT
+q{i}.d = load &amp; d{i} # !load &amp; shift &amp; q{(i+7)%8} # HOLD &amp; q{i};
+$else
+q{i}.d = load &amp; d{i} # !load &amp; shift &amp; q{(i+1)%8} # HOLD &amp; q{i};
+$endif
+$REPEND</pre>
+
+<h2 id="if">$IF</h2>
+<pre class="syntax">$IF(expression)
+lines
+$ELSE
+lines
+$IFEND</pre>
+<p>Keeps the first group of lines when the expression is not 0 and the
+second otherwise; <tt>$ELSE</tt> is optional.  Inside a loop:</p>
+<pre class="syntax">$REPEAT i = [0..7]
+$IF(i &lt; 4)
+y{i} = a{i};
+$ELSE
+y{i} = !a{i};
+$IFEND
+$REPEND</pre>
+
+<h2 id="macro">$MACRO</h2>
+<pre class="syntax">$MACRO name parameter parameter ...
+lines
+$MEND
+
+name(argument, argument, ...);</pre>
+<p>A macro is a named piece of text with parameters, separated by
+blanks in the definition.  A call, written like a function call with a
+semicolon, inserts the text with every parameter replaced by its
+argument.  The number of arguments must match (<i>incorrect number of
+parameters for Macro call</i>), and the macro must be defined before it
+is called.  Since the replacement is plain text, a parameter may even
+stand for a keyword:</p>
+<pre data-example="flipflops.pld" data-lines="27-39">$MACRO counter kind name
+kind name {
+    present 0  if up next 1;  default next 3;
+    present 1  if up next 2;  default next 0;
+    present 2  if up next 3;  default next 1;
+    present 3  if up next 0;  default next 2;
+}
+$MEND
+
+counter(sequenced,  dcount);
+counter(sequencejk, jcount);
+counter(sequencers, rcount);
+counter(sequencet,  tcount);</pre>
+
+<h2 id="library">Macro libraries</h2>
+<p>Macros used in several designs can be kept in a file of their own and
+read with <a href="lang-preprocessor.html#include">$INCLUDE</a>.  The
+<tt>Macro</tt> directory beside the device library is searched for such
+files.  In LinCUPL, <b>Edit &gt; CUPL Macros</b> helps to define a macro,
+to add one to a library file and to insert a call with the matching
+<tt>$include</tt>.</p>
+<p class="seealso">See also: <a href="lang-preprocessor.html">Preprocessor</a>,
+<a href="lang-function.html">FUNCTION</a>.</p>
+</body>
+</html>

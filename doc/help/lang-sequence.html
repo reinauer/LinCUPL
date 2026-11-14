@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>State machines</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="nav"><a href="index.html">Help</a> &gt; <a href="lang-overview.html">CUPL language</a></p>
+<h1>State machines</h1>
+
+<pre class="syntax">SEQUENCE state_field {
+    PRESENT state
+        NEXT state;                         (unconditional)
+      or
+        IF expression NEXT state [OUT outputs];
+        ...
+        DEFAULT NEXT state [OUT outputs];
+        [OUT outputs;]                      (in this state)
+        [IF expression OUT outputs;]        (in this state, when true)
+    PRESENT state
+        ...
+}</pre>
+<p>A <tt>SEQUENCE</tt> block describes a synchronous state machine.  The
+state register is a <a href="lang-expressions.html#field">field</a> of
+registered outputs or nodes; each <tt>PRESENT</tt> names one value of the
+field and says which state follows at the next clock and which outputs are
+active.  cupl turns the block into the equations of the state
+register and the outputs.</p>
+
+<h2 id="kinds">Kinds of flip-flops</h2>
+<table>
+<tr><th>Keyword</th><th>State register made of</th></tr>
+<tr><td id="sequence"><tt>SEQUENCE</tt></td><td>the device's default register type (D flip-flops in GALs and the 22V10)</td></tr>
+<tr><td id="sequenced"><tt>SEQUENCED</tt></td><td>D flip-flops (<tt>.d</tt>)</td></tr>
+<tr><td id="sequencejk"><tt>SEQUENCEJK</tt></td><td>JK flip-flops (<tt>.j</tt>, <tt>.k</tt>)</td></tr>
+<tr><td id="sequencers"><tt>SEQUENCERS</tt></td><td>SR flip-flops (<tt>.s</tt>, <tt>.r</tt>)</td></tr>
+<tr><td id="sequencet"><tt>SEQUENCET</tt></td><td>T flip-flops (<tt>.t</tt>)</td></tr>
+</table>
+<p>The device must have the chosen kind; the
+<a href="virtual.html">virtual device</a> has all of them
+(see <tt>flipflops.pld</tt> on the <a href="lang-extensions.html#example">extensions
+page</a>).</p>
+
+<h2 id="example">Example</h2>
+<p>A traffic light in a GAL22V10.  The states have names made with
+<a href="lang-preprocessor.html#define">$define</a>, which keeps the
+encoding in one place:</p>
+<pre data-example="traffic.pld" data-lines="14-51">Pin 1  = clk;
+Pin 2  = car;              /* car waiting on the side road */
+Pin 3  = rst;              /* asynchronous reset to MAIN_GO */
+
+Pin [14..15] = [s1..0];    /* state register */
+Pin 16 = main_red;
+Pin 17 = main_yellow;
+Pin 18 = main_green;
+Pin 19 = side_red;
+Pin 20 = side_green;
+Pin 21 = walk_req;         /* registered output */
+
+field state = [s1..0];
+
+$define MAIN_GO    'b'00
+$define MAIN_STOP  'b'01
+$define SIDE_GO    'b'11
+$define SIDE_STOP  'b'10
+
+sequenced state {
+    present MAIN_GO
+        if car  next MAIN_STOP;
+        default next MAIN_GO;
+        out [main_green, side_red];
+    present MAIN_STOP
+        next SIDE_GO;
+        out [main_yellow, side_red];
+    present SIDE_GO
+        if car  next SIDE_GO   out walk_req.d;
+        if !car next SIDE_STOP;
+        out [main_red, side_green];
+    present SIDE_STOP
+        next MAIN_GO;
+        out [main_red, side_red];
+}
+
+state.ar = rst;
+walk_req.ar = rst;</pre>
+
+<h2 id="present">PRESENT and NEXT</h2>
+<p><tt>PRESENT</tt> <i>value</i> starts the description of one state.
+<tt>NEXT</tt> <i>value</i> alone means that the machine always goes to
+that state at the next clock.  Otherwise each <tt>IF</tt>
+<i>expression</i> <tt>NEXT</tt> <i>value</i> gives a transition taken when
+the expression is true, and <tt>DEFAULT NEXT</tt> the one taken when none
+of them is true.  The conditions of one state should not overlap.  A state
+that no <tt>PRESENT</tt> describes and that has no way out should not be
+reachable: make sure the reset (<tt>state.ar</tt>) or the encoding keeps
+the machine in the listed states.</p>
+
+<h2 id="out">Outputs</h2>
+<table>
+<tr><th>Written as</th><th>The output is</th></tr>
+<tr><td><tt>OUT</tt> <i>list</i><tt>;</tt> after <tt>PRESENT</tt></td><td>combinational: true while the machine is in this state.</td></tr>
+<tr><td><tt>IF</tt> <i>expr</i> <tt>OUT</tt> <i>list</i><tt>;</tt></td><td>combinational: true while in this state and the expression is true.</td></tr>
+<tr><td><tt>IF</tt> <i>expr</i> <tt>NEXT</tt> <i>s</i> <tt>OUT</tt> <i>list</i><tt>;</tt><br><tt>DEFAULT NEXT</tt> <i>s</i> <tt>OUT</tt> <i>list</i><tt>;</tt></td><td>registered: set at the clock that makes this transition, so it is true in the next state.  An extension such as <tt>walk_req.d</tt> may name the register input.</td></tr>
+</table>
+<p>A state may have only one unconditional <tt>OUT</tt> statement;
+list all its outputs in it (<tt>out [main_green, side_red];</tt>).  Two of
+them give <i>multiple unconditional statements for state</i>.  An output
+is false in every state that does not name it.</p>
+
+<h2 id="tips">Hints</h2>
+<ul>
+<li>A state machine can be built by a <a href="lang-macros.html">macro</a>;
+the sequence keyword may be a macro parameter.</li>
+<li>The simulator shows the state register as a field; put it into
+<a href="sim-language.html#order">ORDER</a> to follow the states.</li>
+<li>Gray-code encodings (as above) let only one register bit change per
+transition.</li>
+</ul>
+<p class="seealso">See also: <a href="lang-extensions.html">Pin
+extensions</a>, <a href="lang-condition.html">CONDITION</a>.</p>
+</body>
+</html>

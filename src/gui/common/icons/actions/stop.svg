@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <!-- Stop: a red octagon with a square -->
+  <defs>
+    <linearGradient id="red" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff6b6b"/><stop offset="1" stop-color="#c62828"/></linearGradient>
+  </defs>
+  <path d="M8.3 2.5 H15.7 L21.5 8.3 V15.7 L15.7 21.5 H8.3 L2.5 15.7 V8.3 Z" fill="url(#red)" stroke="#8e1b1b" stroke-linejoin="round"/>
+  <rect x="8.5" y="8.5" width="7" height="7" rx="0.8" fill="#fff"/>
+</svg>

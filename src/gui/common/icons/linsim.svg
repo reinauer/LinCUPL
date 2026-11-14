@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+  <!-- LinSim application icon: a clock, a signal and a bus on a
+       waveform grid. -->
+  <defs>
+    <linearGradient id="tile" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#16206e"/>
+      <stop offset="1" stop-color="#070b33"/>
+    </linearGradient>
+    <clipPath id="inside">
+      <rect x="8" y="8" width="240" height="240" rx="52"/>
+    </clipPath>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="125%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="5"/>
+      <feOffset dy="4" result="blur"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.35"/></feComponentTransfer>
+      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <!-- the tile leaves a margin like other desktop icons -->
+  <g filter="url(#shadow)" transform="translate(24 22) scale(0.8667) translate(-8 -8)">
+
+  <rect x="8" y="8" width="240" height="240" rx="52" fill="url(#tile)" stroke="#3341a8" stroke-width="4"/>
+
+  <!-- grid -->
+  <g clip-path="url(#inside)" stroke="#27328a" stroke-width="2">
+    <path d="M56,8 V248 M88,8 V248 M120,8 V248 M152,8 V248 M184,8 V248 M216,8 V248"/>
+  </g>
+
+  <g fill="none" stroke-width="11" stroke-linecap="round" stroke-linejoin="round">
+    <!-- clock -->
+    <path stroke="#ff4af0" d="M28,76 H40 V44 H56 V76 H72 V44 H88 V76 H104 V44 H120 V76 H136 V44 H152 V76 H168 V44 H184 V76 H200 V44 H216 V76 H228"/>
+    <!-- signal -->
+    <path stroke="#3dff74" d="M28,136 H56 V104 H120 V136 H152 V104 H184 V136 H228"/>
+  </g>
+  <!-- bus -->
+  <g fill="none" stroke="#ffe23d" stroke-width="8" stroke-linejoin="round">
+    <path d="M28,186 L40,164 H76 L88,186 L76,208 H40 Z"/>
+    <path d="M88,186 L100,164 H140 L152,186 L140,208 H100 Z"/>
+    <path d="M152,186 L164,164 H216 L228,186 L216,208 H164 Z"/>
+  </g>
+  </g>
+</svg>

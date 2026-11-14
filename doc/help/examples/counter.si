@@ -1,0 +1,27 @@
+Name     Counter;
+PartNo   HELP02;
+Date     2026-01-01;
+Revision 01;
+Designer LinCUPL Help;
+Company  LinCUPL;
+Assembly None;
+Location None;
+Device   g22v10;
+
+ORDER: clk, en, rst, pre, oe, %2, count, %2, carry;
+
+VECTORS:
+$MSG "Reset, then count from 0";
+0 0 1 0 1  "0" L
+C 1 0 0 1  "1" L
+C 1 0 0 1  "2" L
+C 0 0 0 1  "2" L
+$REPEAT 12;
+C 1 0 0 1  "*" *
+$MSG "Count is 14 now; carry is high at 15";
+C 1 0 0 1  "F" H
+C 1 0 0 1  "0" L
+$MSG "Preset on the next clock";
+C 0 0 1 1  "F" L
+$MSG "Outputs off";
+0 0 0 0 0  "Z" L

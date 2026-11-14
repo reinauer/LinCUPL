@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <!-- Add signal: a waveform row and a plus badge -->
+  <defs>
+    <linearGradient id="tile" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1d2a86"/><stop offset="1" stop-color="#0a0f3c"/></linearGradient>
+    <linearGradient id="badge" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4cd964"/><stop offset="1" stop-color="#1f9d3a"/></linearGradient>
+  </defs>
+  <rect x="1.5" y="5.5" width="19" height="9" rx="2" fill="url(#tile)" stroke="#3341a8"/>
+  <path d="M3.5 12 H6 V8 H11 V12 H14 V8 H18.5" fill="none" stroke="#3dff74" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+  <circle cx="18" cy="18" r="5" fill="url(#badge)" stroke="#167a2c"/>
+  <path d="M15.4 18 H20.6 M18 15.4 V20.6" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/>
+</svg>

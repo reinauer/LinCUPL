@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Design file structure</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="nav"><a href="index.html">Help</a> &gt; CUPL language</p>
+<h1>Design file structure</h1>
+
+<p>A CUPL design (<tt>.pld</tt> file) is plain text.  It starts with a
+header, declares the pins, and then describes the logic with equations,
+tables and state machines.  Line breaks and blanks do not matter; every
+statement ends with a semicolon.</p>
+<pre data-example="counter.pld" data-lines="1-35">Name     Counter;
+PartNo   HELP02;
+Date     2026-01-01;
+Revision 01;
+Designer LinCUPL Help;
+Company  LinCUPL;
+Assembly None;
+Location None;
+Device   g22v10;
+
+/* 4-bit binary counter with count enable, asynchronous reset,
+   synchronous preset to 1111 and three-state outputs */
+
+Pin 1  = clk;           /* clock of all registers */
+Pin 2  = en;            /* count when high */
+Pin 3  = rst;           /* asynchronous reset to 0000 */
+Pin 4  = pre;           /* synchronous preset to 1111 */
+Pin 13 = !oe;           /* outputs enabled when the pin is low */
+
+Pin [14..17] = [q0..3];
+Pin 18 = carry;
+
+field count = [q3..0];
+
+/* Toggle a bit when all lower bits are 1 */
+q0.d = q0 $ en;
+q1.d = q1 $ (en &amp; q0);
+q2.d = q2 $ (en &amp; q0 &amp; q1);
+q3.d = q3 $ (en &amp; q0 &amp; q1 &amp; q2);
+
+count.ar = rst;
+count.sp = pre;
+count.oe = oe;
+
+carry = en &amp; count:'h'F;</pre>
+
+<h2 id="header">Header</h2>
+<p>The header describes the design.  Each item is a keyword, a text and a
+semicolon:</p>
+<table>
+<tr><th>Item</th><th>Meaning</th></tr>
+<tr><td><tt>Name</tt></td><td>Name of the design.  The JEDEC file is named after it (see <a href="compiler-options.html#n">-n</a>).</td></tr>
+<tr><td><tt>Partno</tt></td><td>Part number.</td></tr>
+<tr><td><tt>Revision</tt> or <tt>Rev</tt></td><td>Revision.</td></tr>
+<tr><td><tt>Date</tt></td><td>Date.</td></tr>
+<tr><td><tt>Designer</tt></td><td>Designer.</td></tr>
+<tr><td><tt>Company</tt></td><td>Company.</td></tr>
+<tr><td><tt>Assembly</tt> or <tt>Assy</tt></td><td>Assembly the device goes into.</td></tr>
+<tr><td><tt>Location</tt> or <tt>Loc</tt></td><td>Position on the board.</td></tr>
+<tr><td id="device"><tt>Device</tt></td><td>The <a href="devices.html">device</a> to compile for, e.g. <tt>g22v10</tt>; a device given to cupl on the command line takes precedence.  <tt>virtual</tt> compiles <a href="virtual.html">device independently</a>.</td></tr>
+<tr><td id="format"><tt>Format</tt></td><td>Download formats to write in addition to the command line options: <tt>j</tt> (JEDEC), <tt>h</tt> (ASCII-hex), <tt>i</tt> (HL).</td></tr>
+</table>
+<p>A missing item gives the note <i>missing header item(s)</i>; the design
+still compiles.  The texts appear in the documentation and JEDEC files,
+and the simulator compares the header of the <tt>.si</tt> file with
+them.</p>
+
+<h2 id="comments">Comments</h2>
+<p>A comment starts with <tt>/*</tt> and ends with <tt>*/</tt>.  It may
+span several lines and may stand anywhere a blank may.  <tt>//</tt>
+starts a comment that runs to the end of the line; the file must end
+with a line break after it.</p>
+<p>A source line may be at most 255 characters long (<i>line exceeds
+maximum length</i>).</p>
+
+<h2 id="names">Names</h2>
+<p>Names of pins, nodes, fields and other variables consist of letters,
+digits and the underscore.  Upper and lower case are <b>different</b>:
+<tt>A0</tt> and <tt>a0</tt> are two signals.  Keywords (<tt>PIN</tt>,
+<tt>field</tt>, <tt>Sequenced</tt>, ...) may be written in any case.  A
+name that ends in a number, such as <tt>q3</tt> or <tt>addr12</tt>, is an
+<i>indexed</i> name and can be used in
+<a href="lang-expressions.html#lists">ranges</a> like
+<tt>[q0..3]</tt>.</p>
+
+<h2 id="numbers">Numbers</h2>
+<p>Pin and node numbers are decimal.  All other numbers are
+<b>hexadecimal</b> unless a base prefix in single quotes says otherwise:</p>
+<table>
+<tr><th>Prefix</th><th>Base</th><th>Examples</th></tr>
+<tr><td><tt>'b'</tt></td><td>binary</td><td><tt>'b'1010</tt>, <tt>'b'1X0X</tt></td></tr>
+<tr><td><tt>'o'</tt></td><td>octal</td><td><tt>'o'17</tt></td></tr>
+<tr><td><tt>'d'</tt></td><td>decimal</td><td><tt>'d'200</tt></td></tr>
+<tr><td><tt>'h'</tt></td><td>hexadecimal</td><td><tt>'h'3F</tt>, <tt>'h'8X</tt>, <tt>3F</tt></td></tr>
+</table>
+<p>The prefix letter may be upper or lower case.  In binary, octal and
+hexadecimal numbers an <tt>X</tt> is a don't-care digit (one, three or
+four bits): <tt>addr:'h'8X</tt> is true for every address from
+<tt>80</tt> to <tt>8F</tt>.</p>
+<p class="note">Because the default base is hexadecimal, <tt>10</tt> means
+sixteen.  Write <tt>'d'10</tt> for ten.</p>
+
+<h2 id="statements">Statements</h2>
+<table>
+<tr><th>Statement</th><th>Page</th></tr>
+<tr><td><tt>PIN</tt>, <tt>PINNODE</tt>, <tt>NODE</tt></td><td><a href="lang-pins.html">Pins and nodes</a></td></tr>
+<tr><td><tt>FIELD</tt></td><td><a href="lang-expressions.html#field">Fields</a></td></tr>
+<tr><td><i>variable</i> <tt>=</tt> <i>expression</i>, <tt>APPEND</tt></td><td><a href="lang-equations.html">Equations</a></td></tr>
+<tr><td><tt>TABLE</tt></td><td><a href="lang-table.html">TABLE</a></td></tr>
+<tr><td><tt>SEQUENCE</tt>, <tt>SEQUENCED</tt>, <tt>SEQUENCEJK</tt>, <tt>SEQUENCERS</tt>, <tt>SEQUENCET</tt></td><td><a href="lang-sequence.html">State machines</a></td></tr>
+<tr><td><tt>CONDITION</tt></td><td><a href="lang-condition.html">CONDITION</a></td></tr>
+<tr><td><tt>FUNCTION</tt></td><td><a href="lang-function.html">FUNCTION</a></td></tr>
+<tr><td><tt>MIN</tt></td><td><a href="minimization.html#min">Minimization</a></td></tr>
+<tr><td><tt>PROPERTY</tt></td><td><a href="lang-property.html">Fitter options</a></td></tr>
+<tr><td><tt>$DEFINE</tt>, <tt>$INCLUDE</tt>, <tt>$IFDEF</tt>, ...</td><td><a href="lang-preprocessor.html">Preprocessor</a></td></tr>
+<tr><td><tt>$MACRO</tt>, <tt>$REPEAT</tt>, <tt>$IF</tt></td><td><a href="lang-macros.html">Macros</a></td></tr>
+</table>
+
+<h2 id="reserved">Reserved words</h2>
+<p>These words are keywords in any case and cannot be used as names:</p>
+<pre class="syntax">APPEND    ASSEMBLY  ASSY      COMPANY   CONDITION DATE      DECLARE
+DEFAULT   DEMORGAN  DESIGNER  DEVICE    EXIT      EXTERN    FIELD
+FLD       FORMAT    FUNCTION  GLOBAL    GROUP     GRP       IF
+INIT_TO   LOC       LOCATION  MIN       MSG       NAME      NEXT
+NODE      OUT       PARTNO    PIN       PINNODE   PRESENT   PROPERTY
+REGISTER_SELECT     REV       REVISION  SEQUENCE  SEQUENCED SEQUENCEJK
+SEQUENCERS          SEQUENCET TABLE     TROFF     TRON</pre>
+<p>The single letters <tt>b</tt>, <tt>d</tt>, <tt>h</tt> and <tt>o</tt>
+are reserved for the base prefixes of numbers.</p>
+<p class="seealso">See also: <a href="lang-pins.html">Pins and nodes</a>,
+<a href="lang-expressions.html">Expressions</a>.</p>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>PROPERTY</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="nav"><a href="index.html">Help</a> &gt; <a href="lang-overview.html">CUPL language</a></p>
+<h1>PROPERTY</h1>
+
+<pre class="syntax">PROPERTY vendor { name = value; name = value; ... };</pre>
+<p>A <tt>PROPERTY</tt> statement passes options to the
+<a href="fitters.html">fitter</a> of a CPLD.  cupl does not interpret
+them; it copies each <i>name</i> <tt>=</tt> <i>value</i> pair into the
+fitter input file (<tt>.tt2</tt>).  For the ATF150x devices the vendor
+is <tt>atmel</tt>:</p>
+<pre data-example="cpld.pld" data-lines="16">property atmel { preassign = keep };   /* use the pin numbers given below */</pre>
+<p>Several options may stand in one block, separated by semicolons, or in
+several <tt>PROPERTY</tt> statements:</p>
+<pre class="syntax">property atmel { preassign = keep; output_fast = on; pin_keep = off };</pre>
+<p>Some options take a list of pin names instead of <tt>on</tt> or
+<tt>off</tt> and then apply to these pins only.  The
+<a href="fitters.html#property">fitter page</a> lists the options of the
+ATF150x fitters.  For devices without a fitter the statement is accepted
+and has no effect.</p>
+<p class="note">A source line may be at most 255 characters long; spread
+long property lists over several lines.</p>
+<p class="seealso">See also: <a href="fitters.html">ATF150x fitters</a>,
+<a href="compiler-options.html">Compiler options</a>.</p>
+</body>
+</html>

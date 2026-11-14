@@ -1,0 +1,35 @@
+Name     Counter;
+PartNo   HELP02;
+Date     2026-01-01;
+Revision 01;
+Designer LinCUPL Help;
+Company  LinCUPL;
+Assembly None;
+Location None;
+Device   g22v10;
+
+/* 4-bit binary counter with count enable, asynchronous reset,
+   synchronous preset to 1111 and three-state outputs */
+
+Pin 1  = clk;           /* clock of all registers */
+Pin 2  = en;            /* count when high */
+Pin 3  = rst;           /* asynchronous reset to 0000 */
+Pin 4  = pre;           /* synchronous preset to 1111 */
+Pin 13 = !oe;           /* outputs enabled when the pin is low */
+
+Pin [14..17] = [q0..3];
+Pin 18 = carry;
+
+field count = [q3..0];
+
+/* Toggle a bit when all lower bits are 1 */
+q0.d = q0 $ en;
+q1.d = q1 $ (en & q0);
+q2.d = q2 $ (en & q0 & q1);
+q3.d = q3 $ (en & q0 & q1 & q2);
+
+count.ar = rst;
+count.sp = pre;
+count.oe = oe;
+
+carry = en & count:'h'F;

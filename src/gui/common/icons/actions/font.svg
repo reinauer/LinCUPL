@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <!-- Font: a capital letter over a colour bar -->
+  <defs>
+    <linearGradient id="glyph" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5a98f5"/><stop offset="1" stop-color="#2457c0"/></linearGradient>
+    <linearGradient id="bar" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffb347"/><stop offset="1" stop-color="#e0781a"/></linearGradient>
+  </defs>
+  <path d="M4 17.5 L10 2.5 H14 L20 17.5 H16.2 L15 14.2 H9 L7.8 17.5 Z M10.1 11.2 H13.9 L12 5.9 Z" fill="url(#glyph)" fill-rule="evenodd" stroke="#173d8c" stroke-linejoin="round"/>
+  <rect x="3.5" y="19" width="17" height="3" rx="1" fill="url(#bar)" stroke="#a35210"/>
+</svg>

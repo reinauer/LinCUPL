@@ -1,0 +1,17 @@
+Name     Gates;
+PartNo   HELP01;
+Date     2026-01-01;
+Revision 01;
+Designer LinCUPL Help;
+Company  LinCUPL;
+Assembly None;
+Location None;
+Device   g16v8a;
+
+ORDER: a, b, %4, y_and, y_or, y_xor, y_nand, y_nor;
+
+VECTORS:
+0 0    L L L H L
+0 1    L H H H H
+1 0    L H H H H
+1 1    H H L L H

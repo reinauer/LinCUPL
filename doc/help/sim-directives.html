@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Simulator directives</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="nav"><a href="index.html">Help</a> &gt; <a href="sim-overview.html">Simulation</a></p>
+<h1>Simulator directives</h1>
+
+<p>Directives stand between the vectors of a <tt>.si</tt> file.  They
+start with <tt>$</tt> and end with a semicolon, or with a colon where a
+block of vectors follows.</p>
+<table>
+<tr><th>Directive</th><th>Effect</th></tr>
+<tr><td><a href="#msg"><tt>$MSG "text";</tt></a></td><td>Print a message.</td></tr>
+<tr><td><a href="#repeat"><tt>$REPEAT n;</tt></a></td><td>Run the next vector <i>n</i> times.</td></tr>
+<tr><td><a href="#for"><tt>$FOR i = a..b :</tt> ... <tt>$ENDF;</tt></a></td><td>Run the vectors of the block once per value.</td></tr>
+<tr><td><a href="#do"><tt>$DO :</tt> ... <tt>$UNTIL cond;</tt></a></td><td>Run the block, then again until the condition holds.</td></tr>
+<tr><td><a href="#while"><tt>$WHILE cond :</tt> ... <tt>$ENDW;</tt></a></td><td>Run the block as long as the condition holds.</td></tr>
+<tr><td><a href="#if"><tt>$IF cond :</tt> ... <tt>$ELSE :</tt> ... <tt>$ENDIF;</tt></a></td><td>Run one of two blocks.</td></tr>
+<tr><td><a href="#simoff"><tt>$SIMOFF;</tt> ... <tt>$SIMON;</tt></a></td><td>List vectors without simulating them.</td></tr>
+<tr><td><a href="#exit"><tt>$EXIT "text";</tt></a></td><td>End the simulation.</td></tr>
+<tr><td><a href="#trace"><tt>$TRACE n;</tt></a></td><td>Show internal values while simulating.</td></tr>
+<tr><td><a href="#var"><tt>VAR</tt>, <tt>$SET</tt>, <tt>$COMP</tt>, <tt>$OUT</tt></a></td><td>Compute test vectors from variables.</td></tr>
+</table>
+<p>The examples on this page come from <tt>stepper.si</tt>, which tests
+a 3-bit counter with enable (<tt>en</tt>), synchronous clear
+(<tt>clr</tt>) and an output <tt>top</tt> that is high at 7:</p>
+<pre data-example="stepper.si" data-lines="11-15">ORDER: clk, en, clr, %3, cnt, %2, top;
+
+VECTORS:
+$MSG "Clear the counter";
+C 0 1  "0" L</pre>
+
+<h2 id="msg">$MSG</h2>
+<p>Prints the text when the simulation reaches it, on the console and in
+the listing, between the vectors.  Messages make the listing easier to
+follow and appear as comments in <a href="sim-linsim.html">LinSim</a>.</p>
+
+<h2 id="repeat">$REPEAT</h2>
+<p>Runs the vector that follows <i>n</i> times.  With <tt>*</tt> as the
+expected values the listing shows what the design did:</p>
+<pre data-example="stepper.si" data-lines="38-40">$MSG "Hold the count for four clocks";
+$REPEAT 4;
+C 0 0  "3" L</pre>
+
+<h2 id="for">$FOR</h2>
+<p>Runs the vectors up to <tt>$ENDF</tt> once for each value from
+<i>a</i> to <i>b</i>:</p>
+<pre data-example="stepper.si" data-lines="17-20">$MSG "Count to 5 with a loop";
+$FOR i = 1..5 :
+C 1 0  "*" *
+$ENDF;</pre>
+
+<h2 id="conditions">Conditions</h2>
+<p><tt>$UNTIL</tt>, <tt>$WHILE</tt> and <tt>$IF</tt> test the simulated
+state: a signal compared with <tt>H</tt> or <tt>L</tt>, or a field
+compared with a value in single quotes.  The operators are <tt>=</tt>
+(equal), <tt>#</tt> (not equal), <tt>&lt;</tt> and <tt>&gt;</tt>.</p>
+
+<h2 id="do">$DO ... $UNTIL</h2>
+<p>Runs the block, then tests the condition and repeats the block until
+it is true:</p>
+<pre data-example="stepper.si" data-lines="22-25">$MSG "Count until the top output is high";
+$DO :
+C 1 0  "*" *
+$UNTIL top = H;</pre>
+
+<h2 id="while">$WHILE</h2>
+<p>Tests the condition first and runs the block while it is true:</p>
+<pre data-example="stepper.si" data-lines="27-30">$MSG "Wrap around while the count is not 3";
+$WHILE cnt # '3' :
+C 1 0  "*" *
+$ENDW;</pre>
+<p>A loop whose condition never changes does not end; make sure the
+vectors in it change the state that the condition tests.</p>
+
+<h2 id="if">$IF</h2>
+<pre data-example="stepper.si" data-lines="32-36">$IF cnt = '3' :
+C 0 0  "3" L
+$ELSE :
+C 0 1  "0" L
+$ENDIF;</pre>
+<p>A <tt>$MSG</tt> or <tt>$EXIT</tt> inside a branch counts only when its
+branch runs, also in nested <tt>$IF</tt>s and inside <tt>$FOR</tt> and
+<tt>$WHILE</tt> loops.</p>
+<p class="note">The original csim prints a message inside a branch
+whichever branch runs, and an <tt>$EXIT</tt> in a branch that does not
+run still ends the simulation.  Put <tt>$MSG</tt> before the
+<tt>$IF</tt> in test files that are also run with it.</p>
+
+<h2 id="simoff">$SIMOFF and $SIMON</h2>
+<p>Vectors between <tt>$SIMOFF</tt> and <tt>$SIMON</tt> are copied into
+the listing as written but not simulated; the state of the design does
+not change.  This keeps vectors for later without deleting them.</p>
+<pre data-example="stepper.si" data-lines="42-45">$MSG "Not simulated:";
+$SIMOFF;
+C 1 0  "7" H
+$SIMON;</pre>
+
+<h2 id="exit">$EXIT</h2>
+<p>Ends the simulation with a message; the vectors after it are not
+run.</p>
+<pre data-example="stepper.si" data-lines="47-48">$EXIT "End of the test";
+C 1 0  "*" *</pre>
+
+<h2 id="trace">$TRACE</h2>
+<p><tt>$TRACE 0;</tt> to <tt>$TRACE 4;</tt> set how much csim prints
+about each vector: 0 (the default) nothing extra; higher levels print the
+signal values before, at and after the clock and the register contents
+(<tt>REGS</tt>), and level 3 also every equation as it is evaluated.  The
+trace goes to the console, i.e. into LinCUPL's build log.</p>
+<h2 id="var">Variables: VAR, $SET, $COMP and $OUT</h2>
+<p>Instead of writing every vector, a test can keep values in variables,
+compute with them and output a vector made from them:</p>
+<pre class="syntax">ORDER: clk, en, clr, %3, cnt, %2, top;
+VAR ctl = en, clr;          /* after ORDER, before VECTORS; no $ */
+VAR n = en, clr;
+
+VECTORS:
+C 0 1 "0" L
+$SET ctl = 10;              /* one test value per signal: en=1, clr=0 */
+$SET cnt = ***;             /* expect nothing particular */
+$SET top = *;
+$OUT;                       /* run the vector made of the current values */
+$SET n = '1';               /* a number in single quotes */
+$COMP n = n + 1;            /* n is now 2: en=1, clr=0 */
+$OUT;</pre>
+<ul>
+<li><tt>VAR</tt> <i>name</i> <tt>=</tt> <i>signals</i><tt>;</tt> stands
+between <tt>ORDER</tt> and <tt>VECTORS</tt> and is written without
+<tt>$</tt>; anywhere else it is an error (<i>misplaced variable
+declaration</i>, or <i>invalid syntax</i> for <tt>$VAR</tt>).  Every
+signal and field of the ORDER statement is a variable as well.</li>
+<li><tt>$SET</tt> <i>variable</i> <tt>=</tt> <i>values</i><tt>;</tt>
+gives one test value (<tt>0 1 H L X C K P Z N R *</tt>) per signal, or
+<tt>'</tt><i>number</i><tt>'</tt> in the current <tt>BASE</tt>.  An
+unquoted number of the wrong width is <i>bad width for constant</i>.</li>
+<li><tt>$COMP</tt> <i>variable</i> <tt>=</tt> <i>expression</i><tt>;</tt>
+computes with <tt>+ - * /</tt>, <tt>&amp;</tt> (and), <tt>#</tt> (or),
+<tt>$</tt> (exclusive or), <tt>!</tt> and parentheses.  The operators
+bind in this order, tightest first: <tt>!</tt>, <tt>&amp;</tt>,
+<tt># $</tt>, <tt>* /</tt>, <tt>+ -</tt>; so <tt>1 # 2 + 1</tt> is 4.
+Use parentheses when in doubt.  The variables used must hold 0 or 1 in
+every bit.</li>
+<li><tt>$OUT;</tt> simulates one vector made of the current values of all
+signals: inputs as last set, expected outputs as in the vector before
+unless they were set with <tt>$SET</tt>.  Set them to <tt>*</tt> to
+list what the design does.</li>
+</ul>
+<p>The keywords <tt>$MACRO</tt>, <tt>$MEND</tt> and <tt>$CALL</tt> are
+recognised but do not give working test files; repeat vectors with
+<a href="#for"><tt>$FOR</tt></a> or <a href="#repeat"><tt>$REPEAT</tt></a>
+instead.  Since keywords are recognised everywhere, signals cannot be
+called <tt>set</tt>, <tt>out</tt>, <tt>var</tt> or <tt>comp</tt>.</p>
+
+<p class="seealso">See also: <a href="sim-language.html">Test vector
+files</a>, <a href="sim-listing.html">the listing</a>.</p>
+</body>
+</html>

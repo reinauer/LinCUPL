@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Output files</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="nav"><a href="index.html">Help</a></p>
+<h1>Output files</h1>
+
+<p>The files are written next to the design and named after it
+(<tt>counter.pld</tt> gives <tt>counter.lst</tt>, <tt>counter.doc</tt>,
+...).  The JEDEC file is the exception: it is named after the
+<tt>Name</tt> line of the header (<tt>Name Counter;</tt> gives
+<tt>Counter.jed</tt>) unless the <tt>-n</tt> option is given.  Without
+any output option cupl only checks the design.</p>
+
+<h2 id="compiler">Files written by cupl</h2>
+<table>
+<tr><th>File</th><th>Option</th><th>Contents</th></tr>
+<tr><td id="jed"><tt>.jed</tt></td><td><tt>-j</tt></td><td>JEDEC fuse map for
+the device programmer: the fuse states, the fuse checksum and, after
+<tt>csim -j</tt>, the test vectors.  <tt>-g</tt> also sets the security
+fuse (<tt>G1</tt>).  For an ATF150x the fitter writes it.</td></tr>
+<tr><td id="lst"><tt>.lst</tt></td><td><tt>-l</tt></td><td>Listing: the
+source with line numbers and every error and warning under the line it
+belongs to.</td></tr>
+<tr><td id="doc"><tt>.doc</tt></td><td><tt>-x</tt></td><td>Documentation:
+the expanded and minimized product terms of every output, the symbol
+table (pins, nodes, extensions, product terms used and available) and, for
+fixed-architecture devices, the fuse plot with <tt>-f</tt>.</td></tr>
+<tr><td id="abs"><tt>.abs</tt></td><td><tt>-a</tt></td><td>Absolute file:
+the compiled design in binary form, read by the simulator.  Needed before
+simulating.  Its tab shows it decoded: the header, the symbol table, the
+product terms of every OR array as rows of <tt>1</tt>, <tt>0</tt> and
+<tt>-</tt> with the equation csim makes of them (including whether the
+output complements them), and the field lists.  The <b>Raw</b> button in
+the tab shows the bytes as hex.</td></tr>
+<tr><td id="sim"><tt>.sim</tt></td><td><tt>-a</tt></td><td>Readable form of
+what the simulator uses: pins, fields and the final equations.</td></tr>
+<tr><td id="pla"><tt>.pla</tt></td><td><tt>-b</tt></td><td>Berkeley PLA
+format: the product terms as a table of inputs and outputs, for other
+logic tools.</td></tr>
+<tr><td id="mx"><tt>.mx</tt></td><td><tt>-e</tt></td><td>The design after
+macro expansion ($MACRO, $REPEAT, $INCLUDE): useful to see what the
+<a href="lang-macros.html">macros</a> produced.</td></tr>
+<tr><td id="pds"><tt>.pds</tt></td><td><tt>-c</tt></td><td>PALASM source
+of the design.</td></tr>
+<tr><td id="pdf"><tt>.pdf</tt></td><td><tt>-p</tt></td><td>PDIF netlist
+(a text netlist format, not a PDF document).</td></tr>
+<tr><td id="edf"><tt>.edf</tt></td><td><tt>-t</tt></td><td>EDIF
+netlist.</td></tr>
+<tr><td id="hex"><tt>.hex</tt>, <tt>.hl</tt></td><td><tt>-h</tt>,
+<tt>-i</tt></td><td>ASCII-hex and HL download formats, for the devices
+that use them (PROMs and some PLDs); other devices get a warning.</td></tr>
+<tr><td id="tt2"><tt>.tt2</tt></td><td>(fitter devices)</td><td>Fitter
+input in PLA form with the pin assignments and PROPERTY options; cupl
+writes it for devices that are placed by a
+<a href="fitters.html">fitter</a> and then runs the fitter.</td></tr>
+</table>
+
+<h2 id="fitter">Files written by the ATF150x fitters</h2>
+<table>
+<tr><th>File</th><th>Contents</th></tr>
+<tr><td id="fit"><tt>.fit</tt></td><td>Fitter report: the options in
+effect, the pin and node placement, the resources used and the
+equations as placed.</td></tr>
+<tr><td id="pin"><tt>.pin</tt></td><td>The pin and node numbers the
+fitter chose, one line per signal.</td></tr>
+<tr><td id="io"><tt>.io</tt></td><td>The same assignment as a
+<tt>CHIP</tt> block with the type of each signal (input pin, output pin, node).</td></tr>
+<tr><td id="tt3"><tt>.tt3</tt></td><td>The equations after fitting, in
+PLA form.</td></tr>
+<tr><td><tt>.jed</tt></td><td>The JEDEC file of the device.</td></tr>
+</table>
+<p>The pin numbers chosen by the fitter can be written back into the
+design with <a href="utilities.html#backpin">backpin</a>.</p>
+
+<h2 id="simulator">Files written by csim</h2>
+<table>
+<tr><th>File</th><th>Option</th><th>Contents</th></tr>
+<tr><td id="so"><tt>.so</tt></td><td><tt>-l</tt> or <tt>-w</tt></td><td>Simulation
+listing: the <tt>.si</tt> file with line numbers, then every vector with
+the simulated values and a message for each output that differs from the
+expected value.  See <a href="sim-listing.html">reading the
+listing</a>.</td></tr>
+<tr><td id="wo"><tt>.wo</tt></td><td><tt>-l</tt> or <tt>-w</tt></td><td>Waveform
+file: the header, fields, ORDER and the simulated vectors in a form that
+<a href="sim-linsim.html">LinSim</a> reads.</td></tr>
+<tr><td><tt>.jed</tt></td><td><tt>-j</tt></td><td>The test vectors are
+added to the JEDEC file (<tt>V</tt> fields) and its checksum is
+updated.</td></tr>
+</table>
+<p>Without <tt>-l</tt> or <tt>-w</tt> the simulator prints the vectors
+and messages and writes no file.</p>
+
+<h2 id="temporary">Other files</h2>
+<p>cupl works with temporary files in the design's directory and removes
+them when it ends.  <a href="utilities.html#backpin">backpin</a> keeps a
+copy of the design it changes (<tt>.bak</tt>).</p>
+<p class="seealso">See also: <a href="compiler-options.html">Compiler
+options</a>, <a href="sim-overview.html">Simulator</a>.</p>
+</body>
+</html>

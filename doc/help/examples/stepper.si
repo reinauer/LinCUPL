@@ -1,0 +1,48 @@
+Name     Stepper;
+PartNo   HELP10;
+Date     2026-01-01;
+Revision 01;
+Designer LinCUPL Help;
+Company  LinCUPL;
+Assembly None;
+Location None;
+Device   g16v8a;
+
+ORDER: clk, en, clr, %3, cnt, %2, top;
+
+VECTORS:
+$MSG "Clear the counter";
+C 0 1  "0" L
+
+$MSG "Count to 5 with a loop";
+$FOR i = 1..5 :
+C 1 0  "*" *
+$ENDF;
+
+$MSG "Count until the top output is high";
+$DO :
+C 1 0  "*" *
+$UNTIL top = H;
+
+$MSG "Wrap around while the count is not 3";
+$WHILE cnt # '3' :
+C 1 0  "*" *
+$ENDW;
+
+$IF cnt = '3' :
+C 0 0  "3" L
+$ELSE :
+C 0 1  "0" L
+$ENDIF;
+
+$MSG "Hold the count for four clocks";
+$REPEAT 4;
+C 0 0  "3" L
+
+$MSG "Not simulated:";
+$SIMOFF;
+C 1 0  "7" H
+$SIMON;
+
+$EXIT "End of the test";
+C 1 0  "*" *

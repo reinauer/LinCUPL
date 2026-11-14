@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>ATF150x fitters</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="nav"><a href="index.html">Help</a></p>
+<h1>ATF150x fitters</h1>
+
+<p>The ATF1502, ATF1504 and ATF1508 CPLDs have too many ways to route a
+signal for cupl to place a design itself.  For these devices cupl
+compiles and minimizes the design, writes it as a fitter input file
+(<tt>.tt2</tt>) and runs the fitter of the family: <tt>fit1502</tt>,
+<tt>fit1504</tt> or <tt>fit1508</tt>.  The fitter assigns the signals to
+pins and macrocells, routes them and writes the JEDEC file.</p>
+<pre class="shell">cupl -jaxl cpld.pld        # runs fit1502 for Device f1502ispplcc44</pre>
+<p>The fitter's console output appears in the build log; its files are
+described under <a href="output-files.html#fitter">output files</a>.
+When the fitter reports an error (a design that does not fit, an input
+it could not read) cupl adds <tt>[0010ck] Fitter could not fit
+design</tt> and ends with <tt>Error Code = 1</tt> and exit status 1, so a
+make file or script stops there and LinCUPL reports the build as failed;
+the fitter's own messages in the build log or the <tt>.fit</tt> report say
+why.  (The original CUPL ends with <tt>Error Code = 0</tt> in that case.)
+The simulator works from the <tt>.abs</tt> file that cupl writes, as for
+any other device.</p>
+
+<h2 id="example">Example</h2>
+<pre data-example="cpld.pld" data-lines="9-47">Device   f1502ispplcc44;
+
+/* An 8-bit counter with a compare register in an ATF1502AS (PLCC44,
+   in-system programmable: the JTAG pins stay reserved).  cupl writes
+   the fitter input (cpld.tt2) and runs fit1502, which places the logic
+   and writes the JEDEC file. */
+
+property atmel { preassign = keep };   /* use the pin numbers given below */
+
+Pin 43 = clk;                          /* global clock input */
+Pin 1  = rst;                          /* global clear input */
+Pin 2  = load;                         /* load the compare register */
+Pin [4,5,6,8,9,11,12,14] = [d0..7];
+Pin [16..21,24,25] = [q0..7];
+Pin 26 = match;
+
+Pinnode = [r0..7];                     /* buried registers; the fitter
+                                          chooses their macrocells */
+Node    count_is_zero;                 /* a buried combinational node */
+
+field count   = [q7..0];
+field compare = [r7..0];
+field data    = [d7..0];
+
+/* Counter: bit i toggles when all lower bits are 1 */
+q0.t = 'b'1;
+$repeat i = [1..7]
+q{i}.t = [q{i-1}..0]:&amp;;
+$repend
+count.ck = clk;
+count.ar = rst;
+
+/* Compare register: loads the data inputs */
+compare.d  = data &amp; load # compare &amp; !load;
+compare.ck = clk;
+compare.ar = rst;
+
+count_is_zero = count:0;
+match = (count == compare) &amp; !count_is_zero;</pre>
+<p>In the 44-pin ATF1502, pins 3, 15, 23 and 35 are VCC and pins 10, 22,
+30 and 42 are ground; pin 43 is the global clock and pin 1 the global
+clear input.  The <tt>isp</tt> devices keep pins 7, 13, 32 and 38 for the
+JTAG port (TDI, TMS, TCK, TDO).</p>
+
+<h2 id="pins">Pin assignment</h2>
+<p>Pins may be given numbers in the design, or left to the fitter
+(<tt>Pin = name;</tt>).  The <tt>preassign</tt> property says what the
+fitter does with given numbers.  The pins it chose are in the
+<tt>.pin</tt> and <tt>.fit</tt> files, and
+<b>Utilities &gt; Assign Pins and Pinnodes</b> writes them back into the
+design (see <a href="utilities.html#backpin">backpin</a>), so the next fit
+keeps them and the board layout stays valid.</p>
+
+<h2 id="property">Fitter options</h2>
+<p>Fitter options are set in the design with a
+<a href="lang-property.html">PROPERTY</a> statement; cupl passes them to
+the fitter in the <tt>.tt2</tt> file:</p>
+<pre class="syntax">property atmel { preassign = keep; output_fast = on };</pre>
+<table>
+<tr><th>Property</th><th>Values (default first)</th><th>Effect</th></tr>
+<tr><td><tt>preassign</tt></td><td><tt>keep</tt>, <tt>try</tt>, <tt>ignore</tt></td><td>Use the pin numbers of the design: always, if possible, or not at all.</td></tr>
+<tr><td><tt>pin_keep</tt></td><td><tt>on</tt>, <tt>off</tt></td><td>Bus-hold circuit on the I/O pins, which keeps an undriven pin at its last level.</td></tr>
+<tr><td><tt>output_fast</tt></td><td><tt>off</tt>, <tt>on</tt>, pin names</td><td>Fast output slew rate (default slow).</td></tr>
+<tr><td><tt>open_collector</tt></td><td><tt>off</tt>, <tt>on</tt>, pin names</td><td>Open-drain outputs.</td></tr>
+<tr><td><tt>security</tt></td><td><tt>off</tt>, <tt>on</tt></td><td>Program the security fuse.</td></tr>
+<tr><td><tt>jtag</tt></td><td>by device</td><td>Keep the JTAG port.  cupl tells the fitter on its command line: <tt>-JTAG ON</tt> for the <tt>isp</tt> devices, <tt>-JTAG OFF</tt> for the others.  The property can only switch the port off: <tt>jtag = off</tt> frees the four pins of an <tt>isp</tt> device for logic, but <tt>jtag = on</tt> on a device without <tt>isp</tt> in its name is overridden by <tt>-JTAG OFF</tt>.  To keep the port, choose the <tt>isp</tt> device.</td></tr>
+<tr><td><tt>tdi_pullup</tt>, <tt>tms_pullup</tt></td><td><tt>off</tt>, <tt>on</tt></td><td>Internal pull-ups on the JTAG inputs.</td></tr>
+<tr><td><tt>power_reset</tt></td><td><tt>off</tt>, <tt>on</tt></td><td>Power-on reset of the registers.</td></tr>
+<tr><td><tt>mc_power</tt></td><td><tt>off</tt>, <tt>on</tt>, pin names</td><td>Reduced-power mode of the macrocells.</td></tr>
+<tr><td><tt>optimize</tt></td><td><tt>on</tt>, <tt>off</tt></td><td>Logic optimization in the fitter.</td></tr>
+<tr><td><tt>xor_synthesis</tt></td><td><tt>off</tt>, <tt>on</tt></td><td>Use the macrocells' XOR gates for XOR logic.</td></tr>
+<tr><td><tt>foldback_logic</tt></td><td><tt>on</tt>, <tt>off</tt></td><td>Use foldback product terms.</td></tr>
+<tr><td><tt>cascade_logic</tt></td><td><tt>off</tt>, <tt>on</tt></td><td>Cascade product terms from neighbouring macrocells.</td></tr>
+<tr><td><tt>soft_buffer</tt>, <tt>logic_doubling</tt>, <tt>push_gate</tt>, <tt>global_fold</tt>, <tt>global_oe</tt>, <tt>gck_itd</tt>, <tt>fast_inlatch</tt>, <tt>twoclock</tt></td><td></td><td>Further placement and synthesis controls; see <tt>fit1502 -h2</tt>.</td></tr>
+</table>
+<p>The <tt>.fit</tt> report lists the options in effect at its top.  A
+name the fitter does not know is reported there (<i>PROPERTY ... is
+invalid and ignored</i>) and has no effect.</p>
+
+<h2 id="command">Running a fitter by hand</h2>
+<pre class="shell">fit1502 -i cpld.tt2 -CUPL -dev P1502C44 -JTAG ON
+fit1502 -h2                     # list of all -strategy options</pre>
+<p>Options of the form <tt>-strategy name value</tt> correspond to the
+properties above.  The device names are <tt>P1502C44</tt> and
+<tt>P1502T44</tt> (PLCC and TQFP) for the ATF1502, and similar names for
+the ATF1504 and ATF1508; <tt>fit1504</tt> and <tt>fit1508</tt> print theirs
+when started without arguments.</p>
+
+<h2 id="finding">Where the fitters are found</h2>
+<p>cupl looks for the fitter next to itself and on the <tt>PATH</tt>.  A
+fitter that exists only as a Windows program (<tt>.exe</tt>) is looked for
+in the directory named by <tt>LINCUPL_FITTERS</tt>, in the current
+directory and in a <tt>Fitters</tt> directory beside the device library,
+and is run with Wine (<tt>LINCUPL_WINE</tt> names the Wine command, else
+<tt>wine</tt> is taken from the <tt>PATH</tt>).</p>
+<p class="seealso">See also: <a href="lang-property.html">PROPERTY</a>,
+<a href="utilities.html#backpin">backpin</a>,
+<a href="output-files.html#fitter">fitter output files</a>.</p>
+</body>
+</html>

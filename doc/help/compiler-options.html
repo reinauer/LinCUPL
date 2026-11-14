@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Compiler options</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="nav"><a href="index.html">Help</a></p>
+<h1>Compiler options</h1>
+
+<h2 id="command">The cupl command</h2>
+<pre class="syntax">cupl [-flags] [-u library] [device] design.pld</pre>
+<p>Flags may be given separately (<tt>-j -a -l</tt>) or together
+(<tt>-jal</tt>).  A <i>device</i> on the command line is used instead of
+the <tt>Device</tt> line of the design; <tt>virtual</tt> compiles
+<a href="virtual.html">device independently</a>.  <tt>-u</tt> names the
+<a href="devices.html#libraries">device library</a>; without it cupl uses
+the library of the environment (<tt>LIBCUPL</tt>) or the default
+library.  Without any output flag cupl reads and checks the design and
+writes nothing.</p>
+<pre class="shell">cupl -jaxl counter.pld              # JEDEC, absolute, documentation, listing
+cupl -u cupl.dl -jl p22v10 counter.pld
+cupl -axl virtual counter.pld</pre>
+<p>The usage text that cupl prints describes several flags wrongly
+(<tt>-g</tt> "create Gates file", <tt>-z</tt> "deactivate unused OR
+gates", <tt>-q</tt> "subtle warnings off", ...).  The tables below say
+what each flag does.</p>
+
+<h2 id="output">Output files</h2>
+<table>
+<tr><th>Flag</th><th>Effect</th></tr>
+<tr><td id="j"><tt>-j</tt></td><td>JEDEC fuse file (<tt>.jed</tt>), named after the <tt>Name</tt> field of the header.  For an ATF150x and other devices placed by a <a href="fitters.html">fitter</a> cupl writes the fitter input (<tt>.tt2</tt>, <tt>.pla</tt>) and runs the fitter, which writes the <tt>.jed</tt>.  PROMs get a note instead (they use <tt>-h</tt>).</td></tr>
+<tr><td id="n"><tt>-n</tt></td><td>Name the JEDEC and ASCII-hex files after the design file instead (<tt>counter.pld</tt> gives <tt>counter.jed</tt>).</td></tr>
+<tr><td id="a"><tt>-a</tt></td><td>Absolute file for the simulator (<tt>.abs</tt>) and its readable form (<tt>.sim</tt>).</td></tr>
+<tr><td id="l"><tt>-l</tt></td><td>Listing with line numbers and messages (<tt>.lst</tt>).</td></tr>
+<tr><td id="x"><tt>-x</tt></td><td>Documentation file (<tt>.doc</tt>) with the expanded and minimized equations and the symbol table.</td></tr>
+<tr><td id="f"><tt>-f</tt></td><td>Adds the fuse plot and the chip diagram of the device to the <tt>.doc</tt> file, and writes that file even without <tt>-x</tt>.  Devices placed by a fitter get neither.</td></tr>
+<tr><td id="b"><tt>-b</tt></td><td>Berkeley PLA file (<tt>.pla</tt>; for fitter devices also the <tt>.tt2</tt>).</td></tr>
+<tr><td id="c"><tt>-c</tt></td><td>PALASM source (<tt>.pds</tt>); devices PALASM does not know get a warning, the file is written anyway.</td></tr>
+<tr><td id="e"><tt>-e</tt></td><td>The design after macro expansion (<tt>.mx</tt>).</td></tr>
+<tr><td id="p"><tt>-p</tt></td><td>PDIF netlist (<tt>.pdf</tt>).</td></tr>
+<tr><td id="t"><tt>-t</tt></td><td>EDIF netlist (<tt>.edf</tt>).</td></tr>
+<tr><td id="h"><tt>-h</tt></td><td>ASCII-hex download file (<tt>.hex</tt>) for PROMs; other devices get the note "invalid download format" in the listing.</td></tr>
+<tr><td id="i"><tt>-i</tt></td><td>HL download file (<tt>.hl</tt>) for the Signetics IFL devices (e.g. <tt>f153</tt>); other devices get the same note.</td></tr>
+<tr><td id="g"><tt>-g</tt></td><td>Program the security fuse: the JEDEC file gets <tt>G1</tt> instead of <tt>G0</tt>, and a programmed device cannot be read back or verified.  For fitter devices cupl only writes <tt>PROPERTY CUPL SECURITY = ON</tt> into the <tt>.tt2</tt>, which the ATF150x fitters ignore; they take <tt>PROPERTY ATMEL {SECURITY = ON}</tt>.</td></tr>
+<tr><td id="d"><tt>-d</tt></td><td>IFL devices: the OR-array connections of unused product terms are switched off (the <tt>.jed</tt> changes).  No effect on other devices.</td></tr>
+<tr><td id="z"><tt>-zq</tt>, <tt>-zx</tt></td><td><tt>-zq</tt> writes the PLA fitter input and runs the fitter, like <tt>-j</tt> for fitter devices.  <tt>-zx</tt> asks for an XNF netlist, which cupl does not write: it needs the external program <tt>pla2xnf</tt>, and devices other than <tt>ga...</tt> get a note.  <tt>-z</tt> alone prints the usage and stops.</td></tr>
+</table>
+
+<h2 id="logic">Logic options</h2>
+<table>
+<tr><th>Flag</th><th>Effect</th></tr>
+<tr><td id="m"><tt>-m0</tt> ... <tt>-m4</tt></td><td><a href="minimization.html">Minimization</a>: none, quick (default), Quine-McCluskey, Presto, Espresso.  <tt>-m</tt> alone is <tt>-m1</tt>.</td></tr>
+<tr><td id="kb"><tt>-kb</tt></td><td>Choose the polarity of each pin and node that needs fewer product terms; overrides <tt>DEMORGAN</tt> statements.</td></tr>
+<tr><td id="kd"><tt>-kd</tt></td><td>Apply DeMorgan to all pins and nodes; overrides <tt>DEMORGAN</tt> statements.  With both <tt>-kb</tt> and <tt>-kd</tt> the one given last counts.</td></tr>
+<tr><td id="ks"><tt>-ks</tt></td><td>Minimize all outputs together so that they can share product terms.  Changes the result with <tt>-m2</tt> ... <tt>-m4</tt>; with <tt>-m1</tt> it has no effect.</td></tr>
+<tr><td id="kx"><tt>-kx</tt></td><td>Keep XOR equations as XOR, for the virtual device and fitters with XOR gates.</td></tr>
+<tr><td id="o"><tt>-o</tt></td><td>One-hot state machines: the state numbers of <tt>SEQUENCE</tt> blocks are one-hot codes (1, 2, 4, ...) and each state is recognised by its own bit.  Designs written for binary state numbers usually no longer compile.</td></tr>
+<tr><td id="r"><tt>-r</tt></td><td>Never share product terms between outputs, not even the single <tt>AR</tt> and <tt>SP</tt> terms of a 22V10; such designs then fail with "excessive number of product terms".</td></tr>
+</table>
+
+<h2 id="other">Other flags</h2>
+<table>
+<tr><th>Flag</th><th>Effect</th></tr>
+<tr><td id="s"><tt>-s</tt></td><td>Run <a href="sim-overview.html">csim</a> on the design's <tt>.si</tt> file after a successful compile.  It writes <tt>.abs</tt>, <tt>.sim</tt>, <tt>.so</tt> and <tt>.wo</tt>, and with <tt>-j</tt> adds the test vectors to the <tt>.jed</tt>.  Without a <tt>.si</tt> file the run fails.</td></tr>
+<tr><td id="w"><tt>-w</tt></td><td>The same as <tt>-s</tt> (the usage text calls it "warnings off"; it is not).</td></tr>
+<tr><td id="q"><tt>-q</tt></td><td>Messages in the form <tt>design.pld(6) : Error [0037ca] :...</tt> instead of the source line with a caret; also writes a <tt>.lst</tt> file.  It does not switch off any warning.</td></tr>
+<tr><td id="y"><tt>-y1</tt> ... <tt>-y8</tt></td><td>Accepted and ignored.</td></tr>
+<tr><td id="u"><tt>-u</tt> <i>library</i></td><td>Device library.</td></tr>
+</table>
+
+<h2 id="dialog">Options &gt; Compiler Options in LinCUPL</h2>
+<p>The dialog stores the options and builds the flags that
+<b>Run &gt; Device Dependent Compile</b> passes to cupl; the line at the
+bottom shows them, and the tooltip of each box names its flag.  The
+groups follow the options dialog of WinCUPL.  The default is
+<tt>-m1 -j -l -a -x</tt>.</p>
+<table>
+<tr><th>Group</th><th>Box</th><th>Flag</th></tr>
+<tr><td rowspan="5">General</td><td>Secure device (program the security fuse)</td><td><a href="#g"><tt>-g</tt></a> (off by default)</td></tr>
+<tr><td>Deactivate unused OR terms (IFL devices)</td><td><a href="#d"><tt>-d</tt></a></td></tr>
+<tr><td>Simulate after compiling</td><td><a href="#s"><tt>-s</tt></a></td></tr>
+<tr><td>One-hot state machines</td><td><a href="#o"><tt>-o</tt></a></td></tr>
+<tr><td>JEDEC file named after the design file</td><td><a href="#n"><tt>-n</tt></a></td></tr>
+<tr><td rowspan="6">Minimization</td><td>None, Quick, Quine-McCluskey, Presto, Espresso</td><td><a href="#m"><tt>-m0</tt> ... <tt>-m4</tt></a></td></tr>
+<tr><td>Best polarity for each output</td><td><a href="#kb"><tt>-kb</tt></a></td></tr>
+<tr><td>DeMorgan all pins and nodes</td><td><a href="#kd"><tt>-kd</tt></a></td></tr>
+<tr><td>Keep XOR equations</td><td><a href="#kx"><tt>-kx</tt></a></td></tr>
+<tr><td>Product-term sharing</td><td><a href="#ks"><tt>-ks</tt></a></td></tr>
+<tr><td>Never share product terms</td><td><a href="#r"><tt>-r</tt></a></td></tr>
+<tr><td rowspan="7">Output</td><td>EDIF netlist (.edf)</td><td><a href="#t"><tt>-t</tt></a></td></tr>
+<tr><td>PALASM source (.pds)</td><td><a href="#c"><tt>-c</tt></a></td></tr>
+<tr><td>Berkeley PLA (.pla)</td><td><a href="#b"><tt>-b</tt></a></td></tr>
+<tr><td>PDIF netlist (.pdf)</td><td><a href="#p"><tt>-p</tt></a></td></tr>
+<tr><td>Expanded macros (.mx)</td><td><a href="#e"><tt>-e</tt></a></td></tr>
+<tr><td>Listing (.lst)</td><td><a href="#l"><tt>-l</tt></a></td></tr>
+<tr><td>Absolute file for the simulator (.abs)</td><td><a href="#a"><tt>-a</tt></a></td></tr>
+<tr><td rowspan="3">Download</td><td>JEDEC file (.jed)</td><td><a href="#j"><tt>-j</tt></a></td></tr>
+<tr><td>HL file (Signetics IFL devices)</td><td><a href="#i"><tt>-i</tt></a></td></tr>
+<tr><td>ASCII-hex file (PROMs)</td><td><a href="#h"><tt>-h</tt></a></td></tr>
+<tr><td rowspan="2">Doc File Options</td><td>Equations</td><td><a href="#x"><tt>-x</tt></a></td></tr>
+<tr><td>Fuse plot</td><td><a href="#f"><tt>-f</tt></a></td></tr>
+</table>
+<p>Best polarity and DeMorgan exclude each other, and so do Product-term
+sharing and Never share product terms: checking one clears the other.</p>
+<p><b>Device Independent Compile</b> passes <tt>virtual</tt> as the
+device and always adds <tt>-a -l -x</tt>; it leaves out <tt>-g</tt>,
+<tt>-d</tt>, <tt>-n</tt>, the download flags and <tt>-f</tt>, which do
+nothing for the virtual device.</p>
+<p>WinCUPL's dialog also had QDIF and XNF boxes: cupl writes no QDIF
+file, and XNF needs an external program (see <a href="#z"><tt>-zx</tt></a>),
+so they are left out.  Its <i>Device In File</i> and <i>Library</i>
+settings are <b>Options &gt; Devices</b> and <b>Options &gt; Environment
+&amp; Tool Paths</b> in LinCUPL, and <i>View Simulation Results</i> is
+<i>Open LinSim after simulating</i> in the simulator options.  There is no
+box for <tt>-q</tt>, whose message form the Diagnostics list cannot place
+on a line, nor for <tt>-w</tt> and <tt>-zq</tt>, which do the same as
+<tt>-s</tt> and <tt>-j</tt>.</p>
+
+<h3 id="oldsettings">Settings of earlier LinCUPL versions</h3>
+<p>Earlier versions labelled the boxes after cupl's usage text.  Their
+settings are converted once: a box is carried over only where its label
+asked for what its flag did.  <i>Gate-Level Equations</i> (which passed
+<tt>-g</tt> and so programmed the security fuse), <i>Append Fuse Plot</i>
+(<tt>-d</tt>), <i>Create ALL Download Files</i> (<tt>-h</tt>), the
+DeMorgan mode that passed <tt>-kb</tt>, <i>Deactivate unused global OR
+gates</i> (<tt>-z</tt>), <i>Warning Messages OFF</i> (<tt>-w</tt>) and
+<i>Subtle Warnings OFF</i> (<tt>-q</tt>) are dropped; their new boxes
+start at the default, so <i>Secure device</i> is always off after the
+update.  <i>Chip Diagram</i> (<tt>-f</tt>) becomes <i>Fuse plot</i>,
+<i>Central Fuse Numbers / PALASM</i> (<tt>-c</tt>) <i>PALASM source</i>,
+<i>Truth Table / EDIF</i> (<tt>-t</tt>) <i>EDIF netlist</i>, <i>IFL
+File</i> (<tt>-i</tt>) <i>HL file</i>, and <i>Run CSIM Simulation</i> or
+<i>Generate Waveform output</i> <i>Simulate after compiling</i>.</p>
+
+<h2 id="simdialog">Options &gt; Simulator Options</h2>
+<table>
+<tr><th>Box</th><th>csim flag</th></tr>
+<tr><td>Write the simulation listing and waveform file (.so, .wo)</td><td><tt>-l</tt> (on by default; csim's <tt>-w</tt> does the same)</td></tr>
+<tr><td>Add the test vectors to the JEDEC file</td><td><tt>-j</tt>; not for the virtual device</td></tr>
+<tr><td>JEDEC file named after the design file</td><td><tt>-n</tt>; set it like the compiler box of the same name, so that csim finds the JEDEC file cupl wrote</td></tr>
+<tr><td>Open LinSim after simulating</td><td>opens <a href="sim-linsim.html">LinSim</a> after a successful simulation</td></tr>
+</table>
+<p>csim always prints the vectors in the build log, so its <tt>-v</tt>
+changes nothing; the former boxes <i>Generate Simulation Listing File</i>
+and <i>Generate Waveform Output File</i> became the first box above, and
+<i>Verbose Vector Listing</i> was dropped.</p>
+<p class="seealso">See also: <a href="output-files.html">Output files</a>,
+<a href="sim-overview.html#csim">the csim command</a>.</p>
+</body>
+</html>

@@ -1,0 +1,47 @@
+Name     Cpld;
+PartNo   HELP09;
+Date     2026-01-01;
+Revision 01;
+Designer LinCUPL Help;
+Company  LinCUPL;
+Assembly None;
+Location None;
+Device   f1502ispplcc44;
+
+/* An 8-bit counter with a compare register in an ATF1502AS (PLCC44,
+   in-system programmable: the JTAG pins stay reserved).  cupl writes
+   the fitter input (cpld.tt2) and runs fit1502, which places the logic
+   and writes the JEDEC file. */
+
+property atmel { preassign = keep };   /* use the pin numbers given below */
+
+Pin 43 = clk;                          /* global clock input */
+Pin 1  = rst;                          /* global clear input */
+Pin 2  = load;                         /* load the compare register */
+Pin [4,5,6,8,9,11,12,14] = [d0..7];
+Pin [16..21,24,25] = [q0..7];
+Pin 26 = match;
+
+Pinnode = [r0..7];                     /* buried registers; the fitter
+                                          chooses their macrocells */
+Node    count_is_zero;                 /* a buried combinational node */
+
+field count   = [q7..0];
+field compare = [r7..0];
+field data    = [d7..0];
+
+/* Counter: bit i toggles when all lower bits are 1 */
+q0.t = 'b'1;
+$repeat i = [1..7]
+q{i}.t = [q{i-1}..0]:&;
+$repend
+count.ck = clk;
+count.ar = rst;
+
+/* Compare register: loads the data inputs */
+compare.d  = data & load # compare & !load;
+compare.ck = clk;
+compare.ar = rst;
+
+count_is_zero = count:0;
+match = (count == compare) & !count_is_zero;

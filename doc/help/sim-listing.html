@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>The simulation listing (.so)</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="nav"><a href="index.html">Help</a> &gt; <a href="sim-overview.html">Simulation</a></p>
+<h1>The simulation listing (.so)</h1>
+
+<p><tt>csim -l</tt> writes the listing.  It starts with the lines of the
+<tt>.si</tt> file up to <tt>VECTORS</tt>, numbered, with the fields of the
+design inserted where csim learned them.  Errors in these lines are shown
+under the line.  Then come the vectors as simulated.  This is the
+listing of <tt>counter.si</tt>:</p>
+<pre class="output">=======================
+                   c
+                   a
+      c rp         r
+      lesro        r
+      kntee  count y
+=======================
+Reset, then count from 0
+0001: 00101  LLLL  L
+0002: C1001  LLLH  L
+0003: C1001  LLHL  L
+0004: C0001  LLHL  L
+0005: C1001  LLHH  L
+...
+Count is 14 now; carry is high at 15
+0017: C1001  HHHH  H
+0018: C1001  LLLL  L
+Preset on the next clock
+0019: C0011  HHHH  L
+Outputs off
+0020: 00000  ZZZZ  L</pre>
+<p>The names of the <tt>ORDER</tt> statement are written vertically
+above their columns, with the blanks of <tt>%</tt><i>n</i>.  Each vector
+has its number and one character per signal: the inputs as given, the
+outputs as simulated (<tt>L</tt>, <tt>H</tt>, <tt>Z</tt> for a disabled
+output, <tt>X</tt> for an undefined value).  A field shows one character
+per bit.  <tt>$MSG</tt> texts appear where they were in the file.</p>
+
+<h2 id="errors">Failed vectors</h2>
+<p>When a simulated output differs from the expected value, csim marks
+the column with <tt>^</tt> and names each output, with the value that was
+expected:</p>
+<pre class="output">0001: C01LLLL
+0002: C10LLHL
+          ^^^
+[0019sa] user expected (H) for c1
+[0019sa] user expected (L) for c0
+[0019sa] user expected (H) for top</pre>
+<p>Here the vector expected the count 2 (<tt>"2"</tt>) and <tt>top</tt>
+high, but the counter was at 1.  The listing shows the simulated values,
+so the line above the marks tells what the design did.  Other messages
+point at a value that does not fit its column, for example <i>invalid test
+value</i> for a value that does not suit the signal, such as an input
+value in single quotes (<tt>'5'</tt>) given to an output field, and
+<i>excessive test value</i> for a vector with more values than
+<tt>ORDER</tt> has signals.</p>
+<p>In LinCUPL the messages are also listed under Diagnostics.  csim ends
+with exit status 1 when any vector failed.</p>
+
+<h2 id="tips">Working with the listing</h2>
+<ul>
+<li>Write <tt>*</tt> for outputs whose value is not known yet, simulate,
+and check the listing; <a href="sim-linsim.html#assign">Assign Simulator
+Results</a> in LinSim copies the simulated values into the vectors.</li>
+<li>Mismatches right after reset often come from an active-low pin: the
+vectors give the <a href="sim-language.html#polarity">logical value</a>,
+not the pin level.</li>
+<li><a href="sim-directives.html#trace">$TRACE</a> shows the register
+contents around each clock.</li>
+</ul>
+
+<h2 id="wo">The waveform file (.wo)</h2>
+<p>csim also writes the <tt>.wo</tt> file with the header, the signals and
+the simulated vectors.  <a href="sim-linsim.html">LinSim</a> reads it to
+draw the waveforms and to merge the simulated values into the vectors it
+shows.</p>
+<p class="seealso">See also: <a href="errors.html">Error messages</a>.</p>
+</body>
+</html>

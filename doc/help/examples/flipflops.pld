@@ -1,0 +1,41 @@
+Name     FlipFlops;
+PartNo   HELP06;
+Date     2026-01-01;
+Revision 01;
+Designer LinCUPL Help;
+Company  LinCUPL;
+Assembly None;
+Location None;
+Device   virtual;
+
+/* The same two-bit up/down counter for each kind of flip-flop.
+   The virtual device has every kind, so this compiles device
+   independently (cupl -a, or Device Independent Compile). */
+
+Pin = clk;
+Pin = up;
+Pin = [d1..0];          /* D flip-flops */
+Pin = [j1..0];          /* JK flip-flops */
+Pin = [r1..0];          /* SR flip-flops */
+Pin = [t1..0];          /* T flip-flops */
+
+field dcount = [d1..0];
+field jcount = [j1..0];
+field rcount = [r1..0];
+field tcount = [t1..0];
+
+$MACRO counter kind name
+kind name {
+    present 0  if up next 1;  default next 3;
+    present 1  if up next 2;  default next 0;
+    present 2  if up next 3;  default next 1;
+    present 3  if up next 0;  default next 2;
+}
+$MEND
+
+counter(sequenced,  dcount);
+counter(sequencejk, jcount);
+counter(sequencers, rcount);
+counter(sequencet,  tcount);
+
+[d1..0, j1..0, r1..0, t1..0].ck = clk;

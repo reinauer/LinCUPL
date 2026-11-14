@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Pin extensions</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="nav"><a href="index.html">Help</a> &gt; <a href="lang-overview.html">CUPL language</a></p>
+<h1>Pin extensions</h1>
+
+<p>An extension after a pin or node name selects one part of the
+macrocell behind it: the D input of its flip-flop, its output enable, its
+reset, and so on.  An equation without an extension describes a
+combinational output.</p>
+<pre data-example="counter.pld" data-lines="26-29,31-33">q0.d = q0 $ en;
+q1.d = q1 $ (en &amp; q0);
+q2.d = q2 $ (en &amp; q0 &amp; q1);
+q3.d = q3 $ (en &amp; q0 &amp; q1 &amp; q2);
+...
+count.ar = rst;
+count.sp = pre;
+count.oe = oe;</pre>
+<p>An extension may follow a <a href="lang-expressions.html#field">field</a>
+or a list: <tt>count.ar = rst;</tt> sets the reset of every bit.  On the
+right side of an equation, <tt>q0</tt> is the output of the flip-flop and
+an extension selects another feedback path (<tt>q.io</tt>,
+<tt>q.dfb</tt>) where the device has one.</p>
+
+<h2 id="table">Common extensions</h2>
+<table>
+<tr><th>Extension</th><th>Meaning</th></tr>
+<tr><td id="d"><tt>.d</tt></td><td>D input of a D flip-flop: the output takes this value at the clock.</td></tr>
+<tr><td id="t"><tt>.t</tt></td><td>T input of a toggle flip-flop: the output changes at the clock when it is 1.</td></tr>
+<tr><td id="jk"><tt>.j</tt>, <tt>.k</tt></td><td>J and K inputs of a JK flip-flop.</td></tr>
+<tr><td id="sr-ff"><tt>.s</tt>, <tt>.r</tt></td><td>Set and reset inputs of an SR flip-flop.  Both 1 at a clock gives an undefined state.</td></tr>
+<tr><td id="l"><tt>.l</tt>, <tt>.le</tt></td><td>Data input and enable of a latch: the output follows <tt>.l</tt> while <tt>.le</tt> is 1 and holds when it is 0.</td></tr>
+<tr><td id="ck"><tt>.ck</tt></td><td>Clock of the flip-flop, where the device allows a clock other than the clock pin (CPLDs, ATF750, the virtual device).</td></tr>
+<tr><td id="ce"><tt>.ce</tt></td><td>Clock enable: the flip-flop loads only while it is 1.</td></tr>
+<tr><td id="ar"><tt>.ar</tt></td><td>Asynchronous reset: the output goes to 0 at once, without a clock.</td></tr>
+<tr><td id="ap"><tt>.ap</tt></td><td>Asynchronous preset: the output goes to 1 at once.</td></tr>
+<tr><td id="sr"><tt>.sr</tt></td><td>Synchronous reset: the output goes to 0 at the next clock.</td></tr>
+<tr><td id="sp"><tt>.sp</tt></td><td>Synchronous preset: the output goes to 1 at the next clock.</td></tr>
+<tr><td id="oe"><tt>.oe</tt></td><td>Output enable: the pin drives its value while the expression is 1 and is high impedance (<tt>Z</tt> in the simulator) when it is 0.  Without an <tt>.oe</tt> equation the output is always enabled.</td></tr>
+<tr><td id="io"><tt>.io</tt></td><td>On the right side: the level at the pin, for devices that can feed back either the pin or the register.</td></tr>
+<tr><td id="dfb"><tt>.dfb</tt>, <tt>.tfb</tt></td><td>On the right side: the output of the D or T register, where the macrocell can feed it back separately from the pin.</td></tr>
+<tr><td id="dq"><tt>.dq</tt>, <tt>.lq</tt></td><td>Output of an input register or input latch (registered input pins of CPLDs).</td></tr>
+<tr><td id="mux"><tt>.oemux</tt>, <tt>.ckmux</tt></td><td>Select a global output enable or global clock instead of a product term.</td></tr>
+</table>
+<p>Other extensions exist for particular architectures (for example
+<tt>.iod</tt>, <tt>.iol</tt>, <tt>.iock</tt> and <tt>.ioar</tt> for the
+registers in the I/O cells of the ATF150x).  The data sheet of the device
+describes these parts of the macrocell.</p>
+
+<h2 id="device">Which extensions a device has</h2>
+<p>Each device supports only the extensions of its macrocells:</p>
+<table>
+<tr><th>Device</th><th>Extensions</th></tr>
+<tr><td><tt>g16v8a</tt>, <tt>g20v8a</tt></td><td><tt>.oe .d</tt></td></tr>
+<tr><td><tt>g22v10</tt></td><td><tt>.oe .d .ar .sp</tt></td></tr>
+<tr><td><tt>v750c</tt></td><td><tt>.d .t .ar .ck .ckmux .oe .sp .dfb .tfb .io</tt></td></tr>
+<tr><td><tt>v2500c</tt></td><td><tt>.d .t .ar .ck .oe .sp .io .ce .dfb</tt></td></tr>
+<tr><td><tt>f1502plcc44</tt></td><td><tt>.d .t .s .r .oe .oemux .ck .ckmux .ar .dq .lq .io .iod .iol .iock .ioar</tt></td></tr>
+<tr><td><tt>virtual</tt></td><td>all of them</td></tr>
+</table>
+<p>The list for any device is shown by <a href="utilities.html#cbld">cbld</a>:</p>
+<pre class="shell">cbld -eu Atmel.dl g22v10</pre>
+<p>An extension the device does not have gives <i>unknown extension</i>
+and <i>invalid usage</i>.  On a GAL22V10 all flip-flops share the clock
+pin and one product term each for <tt>.ar</tt> and <tt>.sp</tt>: the
+reset and preset act on every registered output, and two different
+<tt>.ar</tt> expressions fail with <i>excessive number of product
+terms</i>.  Outputs without an <tt>.ar</tt> or <tt>.sp</tt> equation get
+the note <i>no expression assigned</i>, which is harmless.</p>
+
+<h2 id="example">Flip-flop types</h2>
+<p>The <a href="virtual.html">virtual device</a> has every kind of
+flip-flop.  This design builds the same counter from D, JK, SR and T
+flip-flops with the <a href="lang-sequence.html">state machine</a>
+statements; each of them writes the matching extensions:</p>
+<pre data-example="flipflops.pld" data-lines="27-41">$MACRO counter kind name
+kind name {
+    present 0  if up next 1;  default next 3;
+    present 1  if up next 2;  default next 0;
+    present 2  if up next 3;  default next 1;
+    present 3  if up next 0;  default next 2;
+}
+$MEND
+
+counter(sequenced,  dcount);
+counter(sequencejk, jcount);
+counter(sequencers, rcount);
+counter(sequencet,  tcount);
+
+[d1..0, j1..0, r1..0, t1..0].ck = clk;</pre>
+
+<h2 id="register-select">Converting flip-flop types</h2>
+<p><tt>REGISTER_SELECT <i>output</i> = <i>n</i>;</tt> has cupl rewrite the
+flip-flop equations of an output for another flip-flop type, so a design
+written for one type fits a device that has another:</p>
+<table>
+<tr><th><i>n</i></th><th>Converts to</th></tr>
+<tr><td><tt>1</tt></td><td>D (<tt>.d</tt>)</td></tr>
+<tr><td><tt>2</tt></td><td>T (<tt>.t</tt>)</td></tr>
+<tr><td><tt>3</tt></td><td>JK (<tt>.j</tt>, <tt>.k</tt>)</td></tr>
+<tr><td><tt>4</tt></td><td>SR (<tt>.s</tt>, <tt>.r</tt>)</td></tr>
+</table>
+<p>The output may be a list, as in <tt>REGISTER_SELECT [y0..2] = 2;</tt>.
+When the device lacks the flip-flop type, cupl warns and leaves the
+equations as they are.  For example, <tt>q.s = s; q.r = r;</tt>
+with <tt>REGISTER_SELECT q = 1;</tt> becomes
+<tt>q.d = s # !r &amp; q;</tt>.</p>
+<p class="note">The original keeps only one input of an SR or JK
+flip-flop when it converts SR to D, SR to T or JK to T: the terms of the
+other input are lost, and csim stops with <i>sr initialization</i> on a
+converted SR flip-flop; and with <tt>DEMORGAN</tt> level 2 on the output
+it stops with <i>symbol table corrupted</i>.  LinCUPL converts both inputs,
+with or without <tt>DEMORGAN</tt>.</p>
+<p class="seealso">See also: <a href="lang-pins.html">Pins and nodes</a>,
+<a href="lang-equations.html">Equations</a>,
+<a href="sim-language.html">Simulation</a>.</p>
+</body>
+</html>

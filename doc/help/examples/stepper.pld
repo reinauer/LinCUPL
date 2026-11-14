@@ -1,0 +1,26 @@
+Name     Stepper;
+PartNo   HELP10;
+Date     2026-01-01;
+Revision 01;
+Designer LinCUPL Help;
+Company  LinCUPL;
+Assembly None;
+Location None;
+Device   g16v8a;
+
+/* A 3-bit counter with enable and synchronous clear; the design that
+   the simulator examples (stepper.si) test */
+
+Pin 1  = clk;
+Pin 2  = en;
+Pin 3  = clr;
+Pin [12..14] = [c0..2];
+Pin 15 = top;
+
+field cnt = [c2..0];
+
+c0.d = !clr & (c0 $ en);
+c1.d = !clr & (c1 $ (en & c0));
+c2.d = !clr & (c2 $ (en & c0 & c1));
+
+top = cnt:7;

@@ -1,0 +1,28 @@
+Name     Gates;
+PartNo   HELP01;
+Date     2026-01-01;
+Revision 01;
+Designer LinCUPL Help;
+Company  LinCUPL;
+Assembly None;
+Location None;
+Device   g16v8a;
+
+/* Basic gates in a GAL16V8 */
+
+/* Inputs */
+Pin 2 = a;
+Pin 3 = b;
+
+/* Outputs */
+Pin 12 = y_and;
+Pin 13 = y_or;
+Pin 14 = y_xor;
+Pin 15 = y_nand;
+Pin 16 = !y_nor;     /* active low: the pin is low when a or b is high */
+
+y_and  = a & b;
+y_or   = a # b;
+y_xor  = a $ b;
+y_nand = !(a & b);
+y_nor  = a # b;

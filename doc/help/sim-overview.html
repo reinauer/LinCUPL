@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Simulator overview</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="nav"><a href="index.html">Help</a> &gt; Simulation</p>
+<h1>Simulator overview</h1>
+
+<p><b>csim</b> checks a compiled design against test vectors.  Each
+vector sets the inputs, clocks the registers if asked to, and compares
+the outputs with the values the vector expects.  The simulation works on
+the equations as they were compiled for the device, so it also catches
+mistakes in pin polarity, output enables and reset logic.</p>
+
+<h2 id="flow">The steps</h2>
+<ol>
+<li>Compile the design with <tt>-a</tt> to get the absolute file
+(<tt>.abs</tt>).  LinCUPL's default options include it.</li>
+<li>Write the test vectors in a <tt>.si</tt> file with the same base name
+as the design (<tt>counter.pld</tt>, <tt>counter.si</tt>); see
+<a href="sim-language.html">test vector files</a>.</li>
+<li>Run csim.  It prints every vector and writes the listing
+(<tt>.so</tt>) and the waveform file (<tt>.wo</tt>).</li>
+<li>Read the <a href="sim-listing.html">listing</a>: each output that
+differs from the expected value is marked.</li>
+</ol>
+<pre data-example="counter.si" data-lines="11-27">ORDER: clk, en, rst, pre, oe, %2, count, %2, carry;
+
+VECTORS:
+$MSG "Reset, then count from 0";
+0 0 1 0 1  "0" L
+C 1 0 0 1  "1" L
+C 1 0 0 1  "2" L
+C 0 0 0 1  "2" L
+$REPEAT 12;
+C 1 0 0 1  "*" *
+$MSG "Count is 14 now; carry is high at 15";
+C 1 0 0 1  "F" H
+C 1 0 0 1  "0" L
+$MSG "Preset on the next clock";
+C 0 0 1 1  "F" L
+$MSG "Outputs off";
+0 0 0 0 0  "Z" L</pre>
+
+<h2 id="csim">The csim command</h2>
+<pre class="syntax">csim [-flags] [-u library] [device] name</pre>
+<p><i>name</i> is the base name of the design: <tt>csim -l counter</tt>
+reads <tt>counter.abs</tt> and <tt>counter.si</tt>.  A <i>device</i>
+(e.g. <tt>virtual</tt>) must be the one the design was compiled for.</p>
+<table>
+<tr><th>Flag</th><th>Effect</th></tr>
+<tr><td><tt>-l</tt></td><td>Write the listing (<tt>.so</tt>) and the waveform file (<tt>.wo</tt>).</td></tr>
+<tr><td><tt>-w</tt></td><td>The same; used by LinSim.</td></tr>
+<tr><td><tt>-j</tt></td><td>Add the vectors to the JEDEC file, for device programmers that test the programmed part.  A design with a pin without a number gets no vectors; csim names the first such pin in note <tt>[0033sa]</tt>.</td></tr>
+<tr><td><tt>-n</tt></td><td>The JEDEC file is named after the design file, as with cupl's <tt>-n</tt>.</td></tr>
+<tr><td><tt>-u</tt> <i>library</i></td><td>Device library.</td></tr>
+</table>
+<p>Without <tt>-l</tt> or <tt>-w</tt> the results go to the console only.
+csim ends with exit status 1 when a vector fails.</p>
+
+<h2 id="lincupl">In LinCUPL and LinSim</h2>
+<ul>
+<li><b>Run &gt; Device Dependent Simulate</b> (<kbd>F10</kbd>) simulates
+the open design; <b>Compile &amp; Simulate</b> (<kbd>F11</kbd>) compiles
+first.  <b>Device Independent Simulate</b> (<kbd>Shift+F10</kbd>) uses the
+<a href="virtual.html">virtual device</a>.  The flags are set in
+<a href="compiler-options.html#simdialog">Options &gt; Simulator
+Options</a>.</li>
+<li><b>File &gt; New Simulation (.SI)</b> starts a <tt>.si</tt> file with
+the header and the pins of the open design.</li>
+<li><a href="sim-linsim.html">LinSim</a> (<kbd>F12</kbd>) shows the
+vectors as waveforms, edits them and runs csim.</li>
+</ul>
+<p class="seealso">See also: <a href="sim-directives.html">Simulator
+directives</a>, <a href="output-files.html#simulator">simulator output
+files</a>.</p>
+</body>
+</html>

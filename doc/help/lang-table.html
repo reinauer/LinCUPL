@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>TABLE</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="nav"><a href="index.html">Help</a> &gt; <a href="lang-overview.html">CUPL language</a></p>
+<h1>TABLE</h1>
+
+<pre class="syntax">TABLE inputs => outputs {
+    value => value;
+    ...
+}</pre>
+<p>A <tt>TABLE</tt> describes logic as a truth table.  <i>inputs</i> and
+<i>outputs</i> are <a href="lang-expressions.html#field">fields</a>, lists
+or single signals.  Each entry maps a value of the inputs to a value of
+the outputs; the outputs are 0 for every input value the table does not
+list.  Values are hexadecimal unless they have a
+<a href="lang-overview.html#numbers">base prefix</a>.</p>
+<pre data-example="sevenseg.pld" data-lines="14-29">Pin [2..5]   = [d3..0];
+Pin [12..18] = ![sa, sb, sc, sd, se, sf, sg];
+
+field digit    = [d3..0];
+field segments = [sa, sb, sc, sd, se, sf, sg];
+
+table digit =&gt; segments {
+    'h'0 =&gt; 'b'1111110;   'h'1 =&gt; 'b'0110000;
+    'h'2 =&gt; 'b'1101101;   'h'3 =&gt; 'b'1111001;
+    'h'4 =&gt; 'b'0110011;   'h'5 =&gt; 'b'1011011;
+    'h'6 =&gt; 'b'1011111;   'h'7 =&gt; 'b'1110000;
+    'h'8 =&gt; 'b'1111111;   'h'9 =&gt; 'b'1111011;
+    'h'A =&gt; 'b'1110111;   'h'B =&gt; 'b'0011111;
+    'h'C =&gt; 'b'1001110;   'h'D =&gt; 'b'0111101;
+    'h'E =&gt; 'b'1001111;   'h'F =&gt; 'b'1000111;
+}</pre>
+<p>The segment outputs are declared active low, so the table is written
+with 1 for a lit segment and cupl inverts the pins.</p>
+
+<h2 id="ranges">Ranges and don't-cares</h2>
+<p>An input value may be a range or contain <tt>X</tt> digits; the entry
+then applies to every matching input value:</p>
+<pre class="syntax">table inp =&gt; res {
+    [0..7] =&gt; 1;
+    [8..B] =&gt; 2;
+    [C..F] =&gt; 3;
+}
+table inp =&gt; res { 'b'1XXX =&gt; 3;  'b'0XXX =&gt; 1; }</pre>
+<p>Each output bit becomes an OR of the input values for which it is 1,
+and is then <a href="minimization.html">minimized</a>.  A table with a
+single output signal (<tt>table inp =&gt; y0 { 0 =&gt; 1; 5 =&gt; 1; }</tt>)
+is a convenient way to write a list of minterms.</p>
+<p class="note"><tt>OUT</tt> is a reserved word, so a field cannot be
+called <tt>out</tt>.</p>
+<p class="seealso">See also: <a href="lang-condition.html">CONDITION</a>,
+<a href="lang-sequence.html">State machines</a>.</p>
+</body>
+</html>

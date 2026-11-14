@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>FUNCTION</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="nav"><a href="index.html">Help</a> &gt; <a href="lang-overview.html">CUPL language</a></p>
+<h1>FUNCTION</h1>
+
+<pre class="syntax">FUNCTION name(parameter, parameter, ...) {
+    equations;
+    name = expression;
+}
+... = name(argument, argument, ...) ...;</pre>
+<p>A <tt>FUNCTION</tt> is a piece of logic that is written once and used
+in several equations.  A call is replaced by the expression assigned to
+the function's own name, with the arguments put in place of the
+parameters.  An equation inside the function that assigns to a
+parameter assigns to the signal given as that argument; this is how a
+function returns more than one result.</p>
+<pre data-example="logic.pld" data-lines="38-44">/* Full adder; the carry is passed back through a parameter */
+function add(a, b, c, carry) {
+    carry = a &amp; b # a &amp; c # b &amp; c;
+    add = a $ b $ c;
+}
+
+sum = add(x, y, cin, cout);</pre>
+<p>The call above gives the two equations</p>
+<pre class="syntax">cout = x &amp; y # x &amp; cin # y &amp; cin;
+sum  = x $ y $ cin;</pre>
+<p>The parameter names are local to the function: <tt>a</tt>, <tt>b</tt>
+and <tt>c</tt> above have nothing to do with pins of the same name.  A
+function must be defined before it is called.</p>
+<p>For text that should be repeated with different names (several
+statements, a whole state machine), use a
+<a href="lang-macros.html#macro">$MACRO</a> instead.</p>
+<p class="seealso">See also: <a href="lang-equations.html">Equations</a>,
+<a href="lang-macros.html">Macros</a>.</p>
+</body>
+</html>

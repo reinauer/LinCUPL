@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=LinSim
+GenericName=Waveform Simulator
+Comment=Edit CUPL test vectors and view simulation waveforms
+Exec=linsim %f
+Icon=linsim
+Terminal=false
+Categories=Development;Electronics;
+Keywords=CUPL;simulation;waveform;test vectors;

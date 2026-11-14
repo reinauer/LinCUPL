@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <!-- Print: a printer with a page -->
+  <defs>
+    <linearGradient id="body" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#eef1f5"/><stop offset="1" stop-color="#a3adbb"/></linearGradient>
+    <linearGradient id="paper" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#e3e9f1"/></linearGradient>
+  </defs>
+  <rect x="7.5" y="2.5" width="9" height="7" fill="#ffffff" stroke="#5f6b7a"/>
+  <rect x="3.5" y="8.5" width="17" height="8" rx="2" fill="url(#body)" stroke="#4b5563"/>
+  <circle cx="17.5" cy="11" r="0.9" fill="#34c759"/>
+  <path d="M7.5 14.5 H16.5 V21.5 H7.5 Z" fill="url(#paper)" stroke="#5f6b7a"/>
+  <path d="M9.5 17 H14.5 M9.5 19.3 H13" stroke="#9aa7b8" stroke-linecap="round"/>
+</svg>

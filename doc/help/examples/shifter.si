@@ -1,0 +1,19 @@
+Name     Shifter;
+PartNo   HELP08;
+Date     2026-01-01;
+Revision 01;
+Designer LinCUPL Help;
+Company  LinCUPL;
+Assembly None;
+Location None;
+Device   g22v10;
+
+ORDER: clk, load, shift, oe, %2, data, %2, reg;
+
+VECTORS:
+C 1 0 1  '81'  "81"
+C 0 1 1  '00'  "03"
+C 0 1 1  '00'  "06"
+C 0 0 1  '00'  "06"
+C 1 1 1  'F0'  "F0"
+0 0 0 0  '00'  "ZZ"

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Getting started</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="nav"><a href="index.html">Help</a></p>
+<h1>Getting started</h1>
+
+<h2 id="window">The LinCUPL window</h2>
+<ul>
+<li>The <b>editor</b> in the middle has one tab per open file: designs
+(<tt>.pld</tt>), test vectors (<tt>.si</tt>) and the files the tools write.
+CUPL keywords, pin extensions, numbers and comments are coloured.</li>
+<li><b>Design &amp; Output Files</b> (left) lists the files that belong to
+the design in the current tab: the source, its test vectors and every
+output file, with their state.  Double-click one to open it.</li>
+<li><b>Diagnostics &amp; Build Output</b> (bottom) shows the errors and
+warnings of the last run, an explanation of the selected message and the
+complete output of the tools.  Clicking a message jumps to its line.</li>
+<li>The status bar shows the open <a href="#projects">project</a>, the
+device of the design, the device library in use and the cursor
+position.</li>
+</ul>
+
+<h2 id="first-design">A first design</h2>
+<p>Choose <b>File &gt; New Project</b> (<kbd>Ctrl+N</kbd>) to have the
+header and the pin declarations written for you, <b>File &gt; New Empty
+PLD</b> for a blank design, or <b>File &gt; Open</b> for an existing one.
+A design is a text
+file: a <a href="lang-overview.html#header">header</a> naming the design
+and the device, <a href="lang-pins.html">pin declarations</a> and
+<a href="lang-equations.html">equations</a>.  This one puts five gates
+into a GAL16V8:</p>
+<pre data-example="gates.pld" data-lines="all">Name     Gates;
+PartNo   HELP01;
+Date     2026-01-01;
+Revision 01;
+Designer LinCUPL Help;
+Company  LinCUPL;
+Assembly None;
+Location None;
+Device   g16v8a;
+
+/* Basic gates in a GAL16V8 */
+
+/* Inputs */
+Pin 2 = a;
+Pin 3 = b;
+
+/* Outputs */
+Pin 12 = y_and;
+Pin 13 = y_or;
+Pin 14 = y_xor;
+Pin 15 = y_nand;
+Pin 16 = !y_nor;     /* active low: the pin is low when a or b is high */
+
+y_and  = a &amp; b;
+y_or   = a # b;
+y_xor  = a $ b;
+y_nand = !(a &amp; b);
+y_nor  = a # b;</pre>
+<p><tt>&amp;</tt> is AND, <tt>#</tt> is OR, <tt>$</tt> is exclusive OR and
+<tt>!</tt> is NOT (see <a href="lang-expressions.html">Expressions</a>).
+<b>Options &gt; Devices</b> lists the devices of the library and writes
+the chosen name into the <tt>Device</tt> line.</p>
+
+<h2 id="compile">Compiling</h2>
+<p><b>Run &gt; Device Dependent Compile</b> (<kbd>F9</kbd>) saves the
+design and runs <tt>cupl</tt> for the device named in the file.  The
+<a href="compiler-options.html">compiler options</a> decide which
+<a href="output-files.html">output files</a> are written; by default
+these are the JEDEC file (<tt>.jed</tt>) for the device programmer, the
+listing (<tt>.lst</tt>), the documentation file (<tt>.doc</tt>) and the
+absolute file (<tt>.abs</tt>) that the simulator needs.  They open as tabs
+next to the source and are reloaded after every run.</p>
+<p><b>Run &gt; Device Independent Compile</b> (<kbd>Shift+F9</kbd>)
+compiles for the <a href="virtual.html">virtual device</a>, which checks
+and simulates the logic before a device is chosen.</p>
+<p>When a run fails, the Diagnostics list shows each message with its
+line.  The explanation beside it comes from the catalog of
+<a href="errors.html">error messages</a>.</p>
+
+<h2 id="simulate">Simulating</h2>
+<p>Test vectors go into a <tt>.si</tt> file with the same name as the
+design.  <b>File &gt; New Simulation (.SI)</b> starts one from the pins of
+the open design.  Each line of vectors sets the inputs and states the
+outputs it expects:</p>
+<pre data-example="gates.si" data-lines="11-17">ORDER: a, b, %4, y_and, y_or, y_xor, y_nand, y_nor;
+
+VECTORS:
+0 0    L L L H L
+0 1    L H H H H
+1 0    L H H H H
+1 1    H H L L H</pre>
+<p><b>Run &gt; Device Dependent Simulate</b> (<kbd>F10</kbd>) runs
+<tt>csim</tt>; <b>Compile &amp; Simulate</b> (<kbd>F11</kbd>) does both.
+The simulation listing (<tt>.so</tt>) shows every vector and marks each
+output that differs from the expected value.  See
+<a href="sim-overview.html">the simulator</a> and
+<a href="sim-language.html">test vector files</a>.</p>
+
+<h2 id="linsim">Waveforms</h2>
+<p><b>Run &gt; Launch Waveform Simulator</b> (<kbd>F12</kbd>) opens the
+test vectors of the design in <a href="sim-linsim.html">LinSim</a>, which
+shows them as waveforms, lets you edit them and runs the simulator.</p>
+
+<h2 id="projects">Projects</h2>
+<p>A project is a design: its <tt>.pld</tt> file together with its
+<tt>.si</tt> file and output files.  There is no separate project file.
+<b>File &gt; New Project</b> creates a design with the wizard and opens it
+as the project, <b>File &gt; Open Project</b> (<kbd>Ctrl+Shift+O</kbd>)
+opens an existing design as the project, and <b>File &gt; Close
+Project</b> closes its tabs.  While a project is open, compiling,
+simulating, the file list and the utilities work on the project's design
+whichever tab is active; if the active tab holds another design, LinCUPL
+asks which one to compile.  A device chosen as override in
+<a href="devices.html#choose">Options &gt; Devices</a> is kept with the
+project.  <b>Options &gt; Reopen Last Project at Startup</b> opens the
+last project again when LinCUPL starts.</p>
+
+<h2 id="settings">Device library, paths and fonts</h2>
+<p><b>Options &gt; Environment &amp; Tool Paths</b> chooses the
+<a href="devices.html#libraries">device library</a> (<tt>Atmel.dl</tt>
+or <tt>cupl.dl</tt>) and, if the command line tools are not next to
+LinCUPL, the directory they are in.  <b>Options &gt; Font</b> sets the
+fonts of the editor (source and output tabs), the messages (diagnostics
+and build log) and the sidebar.  The <b>Utilities</b> menu runs
+<a href="utilities.html#backpin">backpin</a> to float or assign the pins
+of a fitted design, and lists the contents of the device library with
+<a href="utilities.html#cbld">cbld</a>.</p>
+
+<h2 id="tools">Tools menu</h2>
+<p><b>Tools &gt; Add Tool</b> adds an external program to the
+<b>Tools</b> menu, for example the software of a device programmer; up
+to 13 tools can be defined and changed with <b>Tools &gt; Edit Tools</b>.
+Each tool has a menu name, the command, its arguments and a working
+directory (by default the design's).  In these, placeholders are
+replaced when the tool runs:</p>
+<table>
+<tr><th>Placeholder</th><th>Replaced by</th></tr>
+<tr><td><tt>$(FILE)</tt></td><td>the file of the active tab</td></tr>
+<tr><td><tt>$(DESIGN)</tt></td><td>the project's (or active) design file</td></tr>
+<tr><td><tt>$(DIR)</tt></td><td>the directory of the design</td></tr>
+<tr><td><tt>$(NAME)</tt></td><td>the design's name without extension</td></tr>
+<tr><td><tt>$(DEVICE)</tt></td><td>the device (the override, else the design's <tt>Device</tt>)</td></tr>
+<tr><td><tt>$(JED)</tt></td><td>the design's JEDEC file</td></tr>
+<tr><td><tt>$(SI)</tt></td><td>the design's <tt>.si</tt> file</td></tr>
+<tr><td><tt>$(LIB)</tt></td><td>the device library</td></tr>
+</table>
+<p>Arguments are split like a shell command line, so a placeholder whose
+value contains blanks stays one argument; quotes group words.  A tool can
+save all modified files first, show its output in the build log (where
+<b>Tools &gt; Stop Running Tool</b>, <kbd>Ctrl+Shift+F9</kbd>, ends
+it) or start in a
+window of its own, and can have a button on the user tools toolbar.</p>
+<pre class="syntax">Command:    minipro
+Arguments:  -p ATF22V10C -w $(JED)</pre>
+
+<h2 id="command-line">From the command line</h2>
+<p>Everything LinCUPL does can be done in a terminal:</p>
+<pre class="shell">cupl -jaxl gates.pld      # compile: .jed, .abs, .doc, .lst
+csim -l gates             # simulate gates.si: .so</pre>
+<p class="seealso">See also: <a href="compiler-options.html">Compiler
+options</a>, <a href="sim-overview.html">Simulator</a>.</p>
+</body>
+</html>

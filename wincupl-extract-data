@@ -1,0 +1,471 @@
+#!/usr/bin/env python3
+"""
+Download (or read a local copy of) the official Microchip/Atmel WinCUPL 5.0a
+installer archive (awincupl.exe.zip / awincupl.exe) and extract its device
+libraries (.dl), category/error catalogs, macros, fitter support data, and
+reference PLD/SI examples into share/lincupl/ using only the Python 3 standard
+library.
+"""
+
+import argparse
+import hashlib
+import io
+import os
+import struct
+import sys
+import urllib.error
+import urllib.request
+import zipfile
+import zlib
+
+MICROCHIP_AEM_URL = "https://ww1.microchip.com/downloads/aemDocuments/documents/OTH/ProductDocuments/SoftwareLibraries/Firmware/awincupl.exe.zip"
+PRIMARY_URL = MICROCHIP_AEM_URL
+FALLBACK_URLS = (
+    "https://ww1.microchip.com/downloads/en/DeviceDoc/awincupl.exe.zip",
+    "https://ww1.microchip.com/downloads/en/DeviceDoc/awincupl.exe",
+)
+EXPECTED_SHA256 = "162d3e12602dc7816f039b7a2ede4be0a4bc49b23d17281b4bf27b3b982f30b2"
+
+OLE2_MAGIC = b"\xd0\xcf\x11\xe0\xa1\xb1\x1a\xe1"
+MSCF_MAGIC = b"MSCF\x00\x00\x00\x00"
+ZIP_MAGIC = b"PK\x03\x04"
+
+# Mapping from destination path (relative to output dir) -> candidate CAB entry names
+CORE_FILE_MAP = [
+    ("Atmel.dl", ("Atmel.dl1", "Atmel.dl")),
+    ("cupl.dl", ("cupl.dl1", "cupl.dl")),
+    ("Atmel.cat", ("Atmel.cat1", "Atmel.cat")),
+    ("Devices.ref", ("Devices.ref1", "Devices.ref")),
+    ("CuplErr.txt", ("CuplErr.txt1", "CuplErr.txt")),
+    ("DECLARE.DEF", ("DECLARE.DEF1", "DECLARE.DEF")),
+    ("TTL.M", ("TTL.M",)),
+    ("FIT1500.M", ("FIT1500.M",)),
+    (os.path.join("Macro", "COUNTERS.MAC"), ("COUNTERS.MAC",)),
+    (os.path.join("Macro", "TTL.MAC"), ("TTL.MAC",)),
+    (os.path.join("Fitters", "atmel.std"), ("atmel.std",)),
+    (os.path.join("Fitters", "FIT1500.MAC"), ("FIT1500.MAC",)),
+]
+
+
+def download_bytes(url: str) -> bytes:
+    print(f"Downloading {url} ...", flush=True)
+    req = urllib.request.Request(
+        url,
+        headers={
+            "User-Agent": "Mozilla/5.0 (compatible; lincupl-extract-data/1.0)",
+            "Accept": "*/*",
+        },
+    )
+    with urllib.request.urlopen(req, timeout=120) as resp:
+        total = resp.headers.get("Content-Length")
+        total_int = int(total) if total and total.isdigit() else None
+        chunks = []
+        read_so_far = 0
+        while True:
+            blk = resp.read(262144)
+            if not blk:
+                break
+            chunks.append(blk)
+            read_so_far += len(blk)
+        data = b"".join(chunks)
+        if total_int is not None and len(data) != total_int:
+            raise RuntimeError(
+                f"Incomplete download from {url}: got {len(data)} of {total_int} bytes"
+            )
+        print(f"Downloaded {len(data):,} bytes.", flush=True)
+        return data
+
+
+def load_installer_payload(args: argparse.Namespace) -> bytes:
+    if args.file and (getattr(args, "download", False) or args.url):
+        raise ValueError("Cannot combine --file with --download or --url")
+
+    if args.file:
+        if not os.path.isfile(args.file):
+            raise FileNotFoundError(f"Installer file not found: {args.file}")
+        print(f"Reading local installer: {args.file}", flush=True)
+        with open(args.file, "rb") as fp:
+            raw = fp.read()
+    elif args.url:
+        raw = download_bytes(args.url)
+    elif getattr(args, "download", False):
+        raw = download_bytes(MICROCHIP_AEM_URL)
+    else:
+        urls_to_try = (PRIMARY_URL, *FALLBACK_URLS)
+        raw = None
+        last_exc = None
+        for idx, candidate_url in enumerate(urls_to_try):
+            try:
+                raw = download_bytes(candidate_url)
+                break
+            except (urllib.error.URLError, urllib.error.HTTPError, OSError, RuntimeError) as exc:
+                last_exc = exc
+                if idx + 1 < len(urls_to_try):
+                    next_url = urls_to_try[idx + 1]
+                    print(
+                        f"Download failed ({exc}); trying fallback {next_url} ...",
+                        file=sys.stderr,
+                        flush=True,
+                    )
+        if raw is None:
+            raise last_exc
+
+    if raw[:4] == ZIP_MAGIC:
+        with zipfile.ZipFile(io.BytesIO(raw)) as zf:
+            exe_names = [
+                n for n in zf.namelist()
+                if os.path.basename(n).lower() == "awincupl.exe"
+            ]
+            if not exe_names:
+                exe_names = [n for n in zf.namelist() if n.lower().endswith(".exe")]
+            if not exe_names:
+                raise RuntimeError("No .exe installer found inside ZIP archive")
+            print(f"Extracting {exe_names[0]} from ZIP archive ...", flush=True)
+            raw = zf.read(exe_names[0])
+
+    actual_sha256 = hashlib.sha256(raw).hexdigest().lower()
+    if not args.skip_checksum:
+        if actual_sha256 != EXPECTED_SHA256:
+            raise RuntimeError(
+                f"SHA-256 checksum mismatch for awincupl.exe:\n"
+                f"  expected: {EXPECTED_SHA256}\n"
+                f"  actual:   {actual_sha256}\n"
+                f"(Pass --skip-checksum to override if using a modified installer.)"
+            )
+        print(f"Verified SHA-256: {actual_sha256}", flush=True)
+    else:
+        print(f"Skipped SHA-256 check (file SHA-256: {actual_sha256})", flush=True)
+
+    return raw
+
+
+def iter_ole2_cab_streams(blob: bytes):
+    """Yield MSCF cabinet byte streams embedded inside OLE2 (.msi) containers in blob."""
+    search_pos = 0
+    while True:
+        ole_off = blob.find(OLE2_MAGIC, search_pos)
+        if ole_off < 0:
+            break
+        search_pos = ole_off + 8
+        if ole_off + 512 > len(blob):
+            continue
+
+        try:
+            sector_shift, mini_shift = struct.unpack_from("<HH", blob, ole_off + 30)
+            if sector_shift not in (9, 12) or mini_shift != 6:
+                continue
+            sec_size = 1 << sector_shift
+            hdr_size = max(512, sec_size)
+            (
+                _csect_dir,
+                csect_fat,
+                sect_dir_start,
+                _tx_sig,
+                mini_cutoff,
+                _sect_minifat_start,
+                _csect_minifat,
+                sect_dif_start,
+                csect_dif,
+            ) = struct.unpack_from("<9I", blob, ole_off + 40)
+
+            def read_sec(sec_id: int) -> bytes:
+                off = ole_off + hdr_size + sec_id * sec_size
+                if off < 0 or off + sec_size > len(blob):
+                    raise ValueError("OLE2 sector out of bounds")
+                return blob[off : off + sec_size]
+
+            difat = list(struct.unpack_from("<109I", blob, ole_off + 76))
+            cur_dif = sect_dif_start
+            ints_per_sec = sec_size // 4
+            for _ in range(csect_dif):
+                if cur_dif >= 0xFFFFFFFE:
+                    break
+                blk = read_sec(cur_dif)
+                vals = struct.unpack(f"<{ints_per_sec}I", blk)
+                difat.extend(vals[:-1])
+                cur_dif = vals[-1]
+            difat = [s for s in difat if s < 0xFFFFFFFE][:csect_fat]
+
+            fat = []
+            for fat_sec in difat:
+                blk = read_sec(fat_sec)
+                fat.extend(struct.unpack(f"<{ints_per_sec}I", blk))
+
+            def read_chain(start_sec: int, max_bytes=None) -> bytes:
+                out = bytearray()
+                cur = start_sec
+                seen = set()
+                while cur < 0xFFFFFFFE:
+                    if cur in seen or cur >= len(fat):
+                        raise ValueError("Invalid OLE2 FAT chain")
+                    seen.add(cur)
+                    out.extend(read_sec(cur))
+                    if max_bytes is not None and len(out) >= max_bytes:
+                        return bytes(out[:max_bytes])
+                    cur = fat[cur]
+                return bytes(out)
+
+            dir_stream = read_chain(sect_dir_start)
+            for off in range(0, len(dir_stream), 128):
+                ent = dir_stream[off : off + 128]
+                if len(ent) < 128:
+                    break
+                cb_name = struct.unpack_from("<H", ent, 64)[0]
+                obj_type = ent[66]
+                if cb_name == 0 or obj_type != 2:
+                    continue
+                start_sec, low_size = struct.unpack_from("<II", ent, 116)
+                if low_size < max(mini_cutoff, 64):
+                    continue
+                head = read_sec(start_sec)
+                if head[:8] == MSCF_MAGIC:
+                    yield read_chain(start_sec, low_size)
+        except (struct.error, ValueError):
+            continue
+
+
+def iter_contiguous_cabs(blob: bytes):
+    """Fallback generator yielding contiguous MSCF cabinets directly inside blob."""
+    pos = 0
+    while True:
+        idx = blob.find(MSCF_MAGIC, pos)
+        if idx < 0:
+            break
+        pos = idx + 8
+        if idx + 36 > len(blob):
+            continue
+        cb_cab = struct.unpack_from("<I", blob, idx + 8)[0]
+        if 36 < cb_cab <= len(blob) - idx:
+            yield blob[idx : idx + cb_cab]
+
+
+def parse_cabinet_metadata(cab: bytes):
+    """Parse CFHEADER, CFFOLDERs, and CFFILEs from a cabinet byte buffer."""
+    if len(cab) < 36 or cab[:8] != MSCF_MAGIC:
+        raise ValueError("Not a valid MSCF cabinet")
+    (
+        cb_cabinet,
+        _res1,
+        coff_files,
+        _res2,
+        _ver_min,
+        _ver_maj,
+        c_folders,
+        c_files,
+        flags,
+        _set_id,
+        _i_cabinet,
+    ) = struct.unpack_from("<IIIIBBHHHHH", cab, 8)
+    if cb_cabinet > len(cab):
+        raise ValueError("Truncated MSCF cabinet")
+
+    pos = 36
+    cb_cf_folder = 0
+    cb_cf_data = 0
+    if flags & 0x0004:  # cfhdrRESERVE_PRESENT
+        cb_cf_header, cb_cf_folder, cb_cf_data = struct.unpack_from("<HBB", cab, pos)
+        pos += 4 + cb_cf_header
+    if flags & 0x0001:  # cfhdrPREV_CABINET
+        for _ in range(2):
+            end = cab.index(b"\x00", pos)
+            pos = end + 1
+    if flags & 0x0002:  # cfhdrNEXT_CABINET
+        for _ in range(2):
+            end = cab.index(b"\x00", pos)
+            pos = end + 1
+
+    folders = []
+    for _ in range(c_folders):
+        coff_cab_start, c_cf_data, type_compress = struct.unpack_from("<IHH", cab, pos)
+        folders.append((coff_cab_start, c_cf_data, type_compress, cb_cf_data))
+        pos += 8 + cb_cf_folder
+
+    files = []
+    p = coff_files
+    for _ in range(c_files):
+        cb_file, uoff_start, i_folder, _date, _time, attribs = struct.unpack_from(
+            "<IIHHHH", cab, p
+        )
+        end_s = cab.index(b"\x00", p + 16)
+        raw_name = cab[p + 16 : end_s]
+        name = raw_name.decode("utf-8" if (attribs & 0x0080) else "latin1")
+        files.append((name, i_folder, uoff_start, cb_file))
+        p = end_s + 1
+
+    return folders, files
+
+
+def decompress_cab_folder(cab: bytes, folder_meta: tuple) -> bytes:
+    """Decompress an uncompressed (0x0000) or MSZIP (0x0001) CAB folder."""
+    coff_cab_start, c_cf_data, type_compress, cb_cf_data = folder_meta
+    comp_method = type_compress & 0x000F
+    if comp_method not in (0, 1):
+        raise RuntimeError(
+            f"Unsupported CAB compression type 0x{type_compress:04x} (only NONE and MSZIP are supported)"
+        )
+
+    pos = coff_cab_start
+    out = bytearray()
+    prev_dict = b""
+    for blk_idx in range(c_cf_data):
+        _csum, cb_data, cb_uncomp = struct.unpack_from("<IHH", cab, pos)
+        data_start = pos + 8 + cb_cf_data
+        comp = cab[data_start : data_start + cb_data]
+        pos = data_start + cb_data
+
+        if comp_method == 0:
+            chunk = comp
+        else:
+            if len(comp) < 2 or comp[:2] != b"CK":
+                raise RuntimeError(f"Invalid MSZIP block signature at block {blk_idx}")
+            dobj = zlib.decompressobj(-zlib.MAX_WBITS, zdict=prev_dict)
+            chunk = dobj.decompress(comp[2:]) + dobj.flush()
+            prev_dict = (prev_dict + chunk)[-32768:]
+
+        if len(chunk) != cb_uncomp:
+            raise RuntimeError(
+                f"CAB block {blk_idx} size mismatch: got {len(chunk)}, expected {cb_uncomp}"
+            )
+        out.extend(chunk)
+
+    return bytes(out)
+
+
+def find_wincupl_cabinet(installer_bytes: bytes):
+    for stream in iter_ole2_cab_streams(installer_bytes):
+        try:
+            folders, files = parse_cabinet_metadata(stream)
+            names = {f[0] for f in files}
+            if ("Atmel.dl1" in names or "Atmel.dl" in names) and (
+                "cupl.dl1" in names or "cupl.dl" in names
+            ):
+                return stream, folders, files
+        except ValueError:
+            continue
+
+    for stream in iter_contiguous_cabs(installer_bytes):
+        try:
+            folders, files = parse_cabinet_metadata(stream)
+            names = {f[0] for f in files}
+            if ("Atmel.dl1" in names or "Atmel.dl" in names) and (
+                "cupl.dl1" in names or "cupl.dl" in names
+            ):
+                return stream, folders, files
+        except ValueError:
+            continue
+
+    raise RuntimeError("Could not locate WinCUPL MSCF data cabinet inside installer")
+
+
+def extract_wincupl_data(installer_bytes: bytes, output_dir: str) -> None:
+    cab, folders, files = find_wincupl_cabinet(installer_bytes)
+    by_name = {name: (i_folder, uoff, sz) for name, i_folder, uoff, sz in files}
+
+    # Build extraction plan: list of (dest_rel_path, cab_entry_name, i_folder, uoff, sz)
+    plan = []
+    for dest_rel, candidates in CORE_FILE_MAP:
+        matched = None
+        for cand in candidates:
+            if cand in by_name:
+                matched = cand
+                break
+        if matched is None:
+            raise RuntimeError(
+                f"Required file {dest_rel} (candidates: {candidates}) missing from cabinet"
+            )
+        i_folder, uoff, sz = by_name[matched]
+        plan.append((dest_rel, matched, i_folder, uoff, sz))
+
+    pld_count = 0
+    si_count = 0
+    for name, i_folder, uoff, sz in files:
+        base = name.replace("\\", "/").split("/")[-1]
+        low = base.lower()
+        if low.endswith(".pld"):
+            plan.append((os.path.join("Examples", "Atmel", base), name, i_folder, uoff, sz))
+            pld_count += 1
+        elif low.endswith(".si"):
+            plan.append((os.path.join("Examples", "Atmel", base), name, i_folder, uoff, sz))
+            si_count += 1
+
+    if pld_count != 41 or si_count != 26:
+        raise RuntimeError(
+            f"Unexpected example count in cabinet: found {pld_count} .PLD and {si_count} .SI files (expected 41 and 26)"
+        )
+
+    needed_folders = sorted({item[2] for item in plan})
+    folder_data = {}
+    for fi in needed_folders:
+        if fi >= len(folders):
+            raise RuntimeError(f"Invalid CAB folder index {fi}")
+        folder_data[fi] = decompress_cab_folder(cab, folders[fi])
+
+    for dest_rel, cab_name, i_folder, uoff, sz in plan:
+        buf = folder_data[i_folder]
+        if uoff + sz > len(buf):
+            raise RuntimeError(f"CAB entry {cab_name} exceeds folder {i_folder} bounds")
+        payload = buf[uoff : uoff + sz]
+        dest_path = os.path.join(output_dir, dest_rel)
+        os.makedirs(os.path.dirname(dest_path), exist_ok=True)
+        with open(dest_path, "wb") as out_fp:
+            out_fp.write(payload)
+
+    print(
+        f"Extracted {len(plan)} files "
+        f"(8 core library/support files, 2 macros, {pld_count} .PLD + {si_count} .SI examples, 2 fitter data files) "
+        f"into {output_dir}",
+        flush=True,
+    )
+
+
+def main() -> int:
+    repo_root = os.path.dirname(os.path.abspath(__file__))
+    default_out = os.path.join(repo_root, "share", "lincupl")
+
+    parser = argparse.ArgumentParser(
+        description="Download and extract Atmel WinCUPL device libraries and reference examples for lincupl."
+    )
+    parser.add_argument(
+        "-d",
+        "--download",
+        action="store_true",
+        help=f"Download awincupl.exe.zip directly from {MICROCHIP_AEM_URL}",
+    )
+    parser.add_argument(
+        "-f",
+        "--file",
+        default=None,
+        help="Path to a local awincupl.exe.zip (or awincupl.exe) installer instead of downloading",
+    )
+    parser.add_argument(
+        "-u",
+        "--url",
+        default=None,
+        help=f"Custom download URL (default: {PRIMARY_URL} with fallback URLs)",
+    )
+    parser.add_argument(
+        "-o",
+        "--output",
+        default=default_out,
+        help=f"Destination directory (default: {default_out})",
+    )
+    parser.add_argument(
+        "--skip-checksum",
+        action="store_true",
+        help="Skip SHA-256 verification of awincupl.exe",
+    )
+    args = parser.parse_args()
+    if args.file and (args.download or args.url):
+        parser.error("argument -f/--file: not allowed with argument -d/--download or -u/--url")
+
+    try:
+        installer_bytes = load_installer_payload(args)
+        extract_wincupl_data(installer_bytes, os.path.abspath(args.output))
+    except Exception as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 1
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

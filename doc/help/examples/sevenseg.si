@@ -1,0 +1,18 @@
+Name     SevenSeg;
+PartNo   HELP04;
+Date     2026-01-01;
+Revision 01;
+Designer LinCUPL Help;
+Company  LinCUPL;
+Assembly None;
+Location None;
+Device   g16v8a;
+
+ORDER: digit, %3, segments;
+
+VECTORS:
+'0'   "7E"
+'1'   "30"
+'8'   "7F"
+'A'   "77"
+'F'   "47"

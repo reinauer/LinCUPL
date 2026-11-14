@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Devices and libraries</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="nav"><a href="index.html">Help</a></p>
+<h1>Devices and libraries</h1>
+
+<p>cupl knows a device by its <i>mnemonic</i>, the name written in the
+<a href="lang-overview.html#device">Device</a> line of the design.  The
+mnemonics, pin counts, fuse maps and the
+<a href="lang-extensions.html#device">extensions</a> of each device are
+kept in a device library (<tt>.dl</tt> file).</p>
+
+<h2 id="names">Device names</h2>
+<table>
+<tr><th>Mnemonic</th><th>Device</th></tr>
+<tr><td><tt>g16v8</tt>, <tt>g16v8a</tt>, <tt>g16v8ma</tt>, <tt>g16v8ms</tt>, ...</td><td>GAL16V8 / ATF16V8 (20 pins); the suffixes select an operating mode or device variant</td></tr>
+<tr><td><tt>g20v8</tt>, <tt>g20v8a</tt>, ...</td><td>GAL20V8 / ATF20V8 (24 pins)</td></tr>
+<tr><td><tt>g22v10</tt>, <tt>p22v10</tt></td><td>GAL22V10 / ATF22V10, PAL22V10 (24 pins)</td></tr>
+<tr><td><tt>v750c</tt>, <tt>v750cext</tt>, ...</td><td>ATF750C (24 pins, buried registers)</td></tr>
+<tr><td><tt>v2500c</tt>, ...</td><td>ATF2500C (40 pins)</td></tr>
+<tr><td><tt>f1502plcc44</tt>, <tt>f1504plcc84</tt>, <tt>f1508qfp100</tt>, ...</td><td>ATF1502/1504/1508 CPLDs: family, package and pin count; placed by a <a href="fitters.html">fitter</a></td></tr>
+<tr><td><tt>f1502ispplcc44</tt>, ...</td><td>the same CPLDs with the JTAG port kept for in-system programming</td></tr>
+<tr><td><tt>...lcc</tt> (e.g. <tt>g22v10lcc</tt>)</td><td>the 28-pin PLCC package of a device</td></tr>
+<tr><td><tt>virtual</tt></td><td>the <a href="virtual.html">virtual device</a></td></tr>
+</table>
+<p>Pin numbers in a design are the pins of the package the mnemonic
+names: <tt>g22v10</tt> and <tt>g22v10lcc</tt> have different
+numbers for the same signals.</p>
+
+<h2 id="libraries">Device libraries</h2>
+<table>
+<tr><th>Library</th><th>Contents</th></tr>
+<tr><td><tt>Atmel.dl</tt></td><td>The Atmel devices: ATF16V8, 20V8, 22V10, 750, 2500 and the ATF150x CPLDs, plus <tt>virtual</tt>.</td></tr>
+<tr><td><tt>cupl.dl</tt></td><td>Several hundred PAL, GAL, PROM and other devices of many makers.</td></tr>
+<tr><td><tt>lincupl.dl</tt></td><td>Both of them in one library: the devices of
+<tt>Atmel.dl</tt>, then those that only <tt>cupl.dl</tt> has.  It is
+made from the two when LinCUPL is built, with cbld.</td></tr>
+</table>
+<p><tt>Atmel.dl</tt> and <tt>cupl.dl</tt> stay as they came with
+WinCUPL.  A device that is in both comes from <tt>Atmel.dl</tt> in
+<tt>lincupl.dl</tt>, and a design for it gives the same files as with
+<tt>-u Atmel.dl</tt>.  A device of <tt>cupl.dl</tt> gives the same
+<tt>.jed</tt> as with <tt>-u cupl.dl</tt>; only the <tt>.abs</tt> file,
+which records where the device is in the library, differs.</p>
+<p>The library is chosen in this order:</p>
+<ol>
+<li>the <tt>-u</tt> option of cupl, csim, cbld or backpin;</li>
+<li>the <tt>LIBCUPL</tt> environment variable (a <tt>.dl</tt> file or a directory);</li>
+<li>the <tt>LINCUPL_SHARE</tt> environment variable (a directory);</li>
+<li>the <tt>share/lincupl</tt> directory next to the programs, then the
+installed one.  In a directory, <tt>lincupl.dl</tt> is preferred,
+then <tt>Atmel.dl</tt>, then <tt>cupl.dl</tt>.</li>
+</ol>
+<p class="note">The original programs come with <tt>Atmel.dl</tt> as
+the library: a device of <tt>cupl.dl</tt> needs <tt>-u cupl.dl</tt>
+there.  With LinCUPL it can be used without <tt>-u</tt>.</p>
+<p>LinCUPL passes the library chosen in <b>Options &gt; Environment &amp;
+Tool Paths</b> with <tt>-u</tt>; the status bar shows it.</p>
+
+<h2 id="choose">Choosing a device in LinCUPL</h2>
+<p><b>Options &gt; Devices</b> lists the devices of the library with their
+pins, product terms and fuses.  The list can be filtered by package and
+by name, and <b>Inspect with cbld</b> shows the details and extensions of
+the selected device.  The chosen device is written into the
+<tt>Device</tt> line of the design, or set as a device override that is
+passed to cupl instead of the design's device (and kept with the
+<a href="getting-started.html#projects">project</a>).</p>
+
+<h2 id="cbld">Looking into a library</h2>
+<pre class="shell">cbld -tu Atmel.dl              # all device names
+cbld -lu Atmel.dl g22v10       # pins, fuses and product terms
+cbld -eu Atmel.dl g22v10       # extensions</pre>
+<p>See <a href="utilities.html#cbld">cbld</a>.  <b>Utilities &gt; Device
+Library Table of Contents</b> shows the first list.</p>
+<p class="seealso">See also: <a href="lang-extensions.html">Pin
+extensions</a>, <a href="fitters.html">ATF150x fitters</a>.</p>
+</body>
+</html>

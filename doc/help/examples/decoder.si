@@ -1,0 +1,24 @@
+Name     Decoder;
+PartNo   HELP03;
+Date     2026-01-01;
+Revision 01;
+Designer LinCUPL Help;
+Company  LinCUPL;
+Assembly None;
+Location None;
+Device   g16v8a;
+
+ORDER: iorq, %1, addr, %2, rom_cs, ram_cs, io_cs, %2,
+       page0, all_ones, any_set, parity, low_nibble_5;
+
+BASE: hex;
+
+VECTORS:
+0 '00'  HLL  HLLLL
+0 '3F'  HLL  LLHHL
+0 '40'  LHL  LLLLL
+0 'B5'  LHL  LLHLH
+0 'C0'  LLL  LLLLL
+1 'F5'  LLH  LLHLH
+1 'FF'  LLH  LHHHL
+1 '7F'  LLL  LLHHL

@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Qt Help project of the LinCUPL help: the contents tree and the index.
+     Index keywords for CUPL words are in the form the editor's F1 lookup
+     asks for: upper case words, "$WORD", ".ext" and ":&". -->
+<QtHelpProject version="1.0">
+    <namespace>lincupl.help</namespace>
+    <virtualFolder>doc</virtualFolder>
+    <filterSection>
+        <toc>
+            <section title="LinCUPL Help" ref="index.html">
+                <section title="Using LinCUPL" ref="getting-started.html">
+                    <section title="Getting started" ref="getting-started.html">
+                        <section title="The LinCUPL window" ref="getting-started.html#window"/>
+                        <section title="A first design" ref="getting-started.html#first-design"/>
+                        <section title="Compiling" ref="getting-started.html#compile"/>
+                        <section title="Simulating" ref="getting-started.html#simulate"/>
+                        <section title="Waveforms" ref="getting-started.html#linsim"/>
+                        <section title="Projects" ref="getting-started.html#projects"/>
+                        <section title="Device library, paths and fonts" ref="getting-started.html#settings"/>
+                        <section title="Tools menu" ref="getting-started.html#tools"/>
+                        <section title="From the command line" ref="getting-started.html#command-line"/>
+                    </section>
+                    <section title="Output files" ref="output-files.html">
+                        <section title="Files written by cupl" ref="output-files.html#compiler"/>
+                        <section title="Files written by the fitters" ref="output-files.html#fitter"/>
+                        <section title="Files written by csim" ref="output-files.html#simulator"/>
+                    </section>
+                    <section title="Compiler options" ref="compiler-options.html">
+                        <section title="The cupl command" ref="compiler-options.html#command"/>
+                        <section title="Output files" ref="compiler-options.html#output"/>
+                        <section title="Logic options" ref="compiler-options.html#logic"/>
+                        <section title="Compiler Options dialog" ref="compiler-options.html#dialog"/>
+                        <section title="Simulator Options dialog" ref="compiler-options.html#simdialog"/>
+                    </section>
+                    <section title="Minimization and DeMorgan" ref="minimization.html">
+                        <section title="Minimization levels" ref="minimization.html#levels"/>
+                        <section title="The MIN statement" ref="minimization.html#min"/>
+                        <section title="DeMorgan and polarity" ref="minimization.html#demorgan"/>
+                        <section title="When a design does not fit" ref="minimization.html#hints"/>
+                    </section>
+                    <section title="Device independent design" ref="virtual.html"/>
+                    <section title="Devices and libraries" ref="devices.html">
+                        <section title="Device names" ref="devices.html#names"/>
+                        <section title="Device libraries" ref="devices.html#libraries"/>
+                        <section title="Choosing a device" ref="devices.html#choose"/>
+                    </section>
+                    <section title="ATF150x fitters" ref="fitters.html">
+                        <section title="Pin assignment" ref="fitters.html#pins"/>
+                        <section title="Fitter options" ref="fitters.html#property"/>
+                        <section title="Running a fitter by hand" ref="fitters.html#command"/>
+                        <section title="Where the fitters are found" ref="fitters.html#finding"/>
+                    </section>
+                    <section title="Utilities" ref="utilities.html">
+                        <section title="backpin" ref="utilities.html#backpin"/>
+                        <section title="cbld" ref="utilities.html#cbld"/>
+                    </section>
+                    <section title="Error messages" ref="errors.html"/>
+                </section>
+                <section title="CUPL language" ref="lang-overview.html">
+                    <section title="Design file structure" ref="lang-overview.html">
+                        <section title="Header" ref="lang-overview.html#header"/>
+                        <section title="Comments" ref="lang-overview.html#comments"/>
+                        <section title="Names" ref="lang-overview.html#names"/>
+                        <section title="Numbers" ref="lang-overview.html#numbers"/>
+                        <section title="Reserved words" ref="lang-overview.html#reserved"/>
+                    </section>
+                    <section title="Pins and nodes" ref="lang-pins.html">
+                        <section title="PIN" ref="lang-pins.html#pin"/>
+                        <section title="Active-low pins" ref="lang-pins.html#polarity"/>
+                        <section title="NODE" ref="lang-pins.html#node"/>
+                        <section title="PINNODE" ref="lang-pins.html#pinnode"/>
+                    </section>
+                    <section title="Pin extensions" ref="lang-extensions.html"/>
+                    <section title="Expressions, lists and fields" ref="lang-expressions.html">
+                        <section title="Logic operators" ref="lang-expressions.html#operators"/>
+                        <section title="Lists" ref="lang-expressions.html#lists"/>
+                        <section title="FIELD" ref="lang-expressions.html#field"/>
+                        <section title="Comparing with values" ref="lang-expressions.html#equality"/>
+                        <section title="Bit field operators" ref="lang-expressions.html#bitops"/>
+                    </section>
+                    <section title="Equations" ref="lang-equations.html">
+                        <section title="APPEND" ref="lang-equations.html#append"/>
+                    </section>
+                    <section title="TABLE" ref="lang-table.html"/>
+                    <section title="State machines" ref="lang-sequence.html">
+                        <section title="Kinds of flip-flops" ref="lang-sequence.html#kinds"/>
+                        <section title="PRESENT and NEXT" ref="lang-sequence.html#present"/>
+                        <section title="Outputs" ref="lang-sequence.html#out"/>
+                    </section>
+                    <section title="CONDITION" ref="lang-condition.html"/>
+                    <section title="FUNCTION" ref="lang-function.html"/>
+                    <section title="PROPERTY" ref="lang-property.html"/>
+                    <section title="Preprocessor" ref="lang-preprocessor.html"/>
+                    <section title="Macros and $REPEAT" ref="lang-macros.html">
+                        <section title="$REPEAT" ref="lang-macros.html#repeat"/>
+                        <section title="Expressions in braces" ref="lang-macros.html#arith"/>
+                        <section title="$IF" ref="lang-macros.html#if"/>
+                        <section title="$MACRO" ref="lang-macros.html#macro"/>
+                    </section>
+                </section>
+                <section title="Simulation" ref="sim-overview.html">
+                    <section title="Simulator overview" ref="sim-overview.html"/>
+                    <section title="Test vector files (.si)" ref="sim-language.html">
+                        <section title="ORDER" ref="sim-language.html#order"/>
+                        <section title="BASE" ref="sim-language.html#base"/>
+                        <section title="VECTORS" ref="sim-language.html#vectors"/>
+                        <section title="Preload" ref="sim-language.html#preload"/>
+                    </section>
+                    <section title="Simulator directives" ref="sim-directives.html"/>
+                    <section title="The simulation listing (.so)" ref="sim-listing.html"/>
+                    <section title="LinSim" ref="sim-linsim.html">
+                        <section title="Editing vectors" ref="sim-linsim.html#editing"/>
+                        <section title="Find" ref="sim-linsim.html#find"/>
+                        <section title="Simulating" ref="sim-linsim.html#simulate"/>
+                    </section>
+                </section>
+            </section>
+        </toc>
+        <keywords>
+            <keyword name="NAME" ref="lang-overview.html#header"/>
+            <keyword name="PARTNO" ref="lang-overview.html#header"/>
+            <keyword name="REVISION" ref="lang-overview.html#header"/>
+            <keyword name="REV" ref="lang-overview.html#header"/>
+            <keyword name="DATE" ref="lang-overview.html#header"/>
+            <keyword name="DESIGNER" ref="lang-overview.html#header"/>
+            <keyword name="COMPANY" ref="lang-overview.html#header"/>
+            <keyword name="ASSEMBLY" ref="lang-overview.html#header"/>
+            <keyword name="ASSY" ref="lang-overview.html#header"/>
+            <keyword name="LOCATION" ref="lang-overview.html#header"/>
+            <keyword name="LOC" ref="lang-overview.html#header"/>
+            <keyword name="DEVICE" ref="lang-overview.html#device"/>
+            <keyword name="FORMAT" ref="lang-overview.html#format"/>
+            <keyword name="PIN" ref="lang-pins.html#pin"/>
+            <keyword name="NODE" ref="lang-pins.html#node"/>
+            <keyword name="PINNODE" ref="lang-pins.html#pinnode"/>
+            <keyword name="FIELD" ref="lang-expressions.html#field"/>
+            <keyword name="FLD" ref="lang-expressions.html#field"/>
+            <keyword name="APPEND" ref="lang-equations.html#append"/>
+            <keyword name="TABLE" ref="lang-table.html"/>
+            <keyword name="SEQUENCE" ref="lang-sequence.html#sequence"/>
+            <keyword name="SEQUENCED" ref="lang-sequence.html#sequenced"/>
+            <keyword name="SEQUENCEJK" ref="lang-sequence.html#sequencejk"/>
+            <keyword name="SEQUENCERS" ref="lang-sequence.html#sequencers"/>
+            <keyword name="SEQUENCET" ref="lang-sequence.html#sequencet"/>
+            <keyword name="PRESENT" ref="lang-sequence.html#present"/>
+            <keyword name="NEXT" ref="lang-sequence.html#present"/>
+            <keyword name="IF" ref="lang-sequence.html#present"/>
+            <keyword name="IF" ref="lang-condition.html"/>
+            <keyword name="OUT" ref="lang-sequence.html#out"/>
+            <keyword name="OUT" ref="lang-condition.html"/>
+            <keyword name="DEFAULT" ref="lang-sequence.html#present"/>
+            <keyword name="DEFAULT" ref="lang-condition.html"/>
+            <keyword name="CONDITION" ref="lang-condition.html"/>
+            <keyword name="FUNCTION" ref="lang-function.html"/>
+            <keyword name="MIN" ref="minimization.html#min"/>
+            <keyword name="PROPERTY" ref="lang-property.html"/>
+            <keyword name="$DEFINE" ref="lang-preprocessor.html#define"/>
+            <keyword name="$UNDEF" ref="lang-preprocessor.html#undef"/>
+            <keyword name="$INCLUDE" ref="lang-preprocessor.html#include"/>
+            <keyword name="$IFDEF" ref="lang-preprocessor.html#ifdef"/>
+            <keyword name="$IFNDEF" ref="lang-preprocessor.html#ifndef"/>
+            <keyword name="$ELSE" ref="lang-preprocessor.html#else"/>
+            <keyword name="$ELSE" ref="lang-macros.html#if"/>
+            <keyword name="$ELSE" ref="sim-directives.html#if"/>
+            <keyword name="$ENDIF" ref="lang-preprocessor.html#endif"/>
+            <keyword name="$ENDIF" ref="sim-directives.html#if"/>
+            <keyword name="$MACRO" ref="lang-macros.html#macro"/>
+            <keyword name="$MEND" ref="lang-macros.html#macro"/>
+            <keyword name="$REPEAT" ref="lang-macros.html#repeat"/>
+            <keyword name="$REPEND" ref="lang-macros.html#repeat"/>
+            <keyword name="$REPEAT" ref="sim-directives.html#repeat"/>
+            <keyword name="$IF" ref="lang-macros.html#if"/>
+            <keyword name="$IFEND" ref="lang-macros.html#if"/>
+            <keyword name="$IF" ref="sim-directives.html#if"/>
+            <keyword name="LOG2" ref="lang-macros.html#arith"/>
+            <keyword name="REGISTER_SELECT" ref="lang-extensions.html#register-select"/>
+            <keyword name=".d" ref="lang-extensions.html#d"/>
+            <keyword name=".t" ref="lang-extensions.html#t"/>
+            <keyword name=".j" ref="lang-extensions.html#jk"/>
+            <keyword name=".k" ref="lang-extensions.html#jk"/>
+            <keyword name=".s" ref="lang-extensions.html#sr-ff"/>
+            <keyword name=".r" ref="lang-extensions.html#sr-ff"/>
+            <keyword name=".l" ref="lang-extensions.html#l"/>
+            <keyword name=".le" ref="lang-extensions.html#l"/>
+            <keyword name=".ck" ref="lang-extensions.html#ck"/>
+            <keyword name=".ce" ref="lang-extensions.html#ce"/>
+            <keyword name=".ar" ref="lang-extensions.html#ar"/>
+            <keyword name=".ap" ref="lang-extensions.html#ap"/>
+            <keyword name=".sr" ref="lang-extensions.html#sr"/>
+            <keyword name=".sp" ref="lang-extensions.html#sp"/>
+            <keyword name=".oe" ref="lang-extensions.html#oe"/>
+            <keyword name=".io" ref="lang-extensions.html#io"/>
+            <keyword name=".dfb" ref="lang-extensions.html#dfb"/>
+            <keyword name=".tfb" ref="lang-extensions.html#dfb"/>
+            <keyword name=".dq" ref="lang-extensions.html#dq"/>
+            <keyword name=".lq" ref="lang-extensions.html#dq"/>
+            <keyword name=".oemux" ref="lang-extensions.html#mux"/>
+            <keyword name=".ckmux" ref="lang-extensions.html#mux"/>
+            <keyword name="!" ref="lang-expressions.html#operators"/>
+            <keyword name="&amp;" ref="lang-expressions.html#operators"/>
+            <keyword name="#" ref="lang-expressions.html#operators"/>
+            <keyword name="$" ref="lang-expressions.html#operators"/>
+            <keyword name=":&amp;" ref="lang-expressions.html#bitops"/>
+            <keyword name=":#" ref="lang-expressions.html#bitops"/>
+            <keyword name=":$" ref="lang-expressions.html#bitops"/>
+            <keyword name="==" ref="lang-expressions.html#compare"/>
+            <keyword name=":" ref="lang-expressions.html#equality"/>
+            <keyword name=".." ref="lang-expressions.html#lists"/>
+            <keyword name="ORDER" ref="sim-language.html#order"/>
+            <keyword name="VECTORS" ref="sim-language.html#vectors"/>
+            <keyword name="BASE" ref="sim-language.html#base"/>
+            <keyword name="FIELD" ref="sim-language.html#order"/>
+            <keyword name="$MSG" ref="sim-directives.html#msg"/>
+            <keyword name="$TRACE" ref="sim-directives.html#trace"/>
+            <keyword name="$FOR" ref="sim-directives.html#for"/>
+            <keyword name="$ENDF" ref="sim-directives.html#for"/>
+            <keyword name="$DO" ref="sim-directives.html#do"/>
+            <keyword name="$UNTIL" ref="sim-directives.html#do"/>
+            <keyword name="$WHILE" ref="sim-directives.html#while"/>
+            <keyword name="$ENDW" ref="sim-directives.html#while"/>
+            <keyword name="$SIMOFF" ref="sim-directives.html#simoff"/>
+            <keyword name="$SIMON" ref="sim-directives.html#simoff"/>
+            <keyword name="$EXIT" ref="sim-directives.html#exit"/>
+            <keyword name="C (clock)" ref="sim-language.html#vectors"/>
+            <keyword name="P (preload)" ref="sim-language.html#preload"/>
+            <keyword name="csim" ref="sim-overview.html#csim"/>
+            <keyword name="LinSim" ref="sim-linsim.html"/>
+            <keyword name="Assign Simulator Results" ref="sim-linsim.html#assign"/>
+            <keyword name="test vectors" ref="sim-language.html"/>
+            <keyword name="simulation listing" ref="sim-listing.html"/>
+            <keyword name="expected value" ref="sim-listing.html#errors"/>
+            <keyword name="active-low pin" ref="lang-pins.html#polarity"/>
+            <keyword name="polarity" ref="lang-pins.html#polarity"/>
+            <keyword name="polarity" ref="sim-language.html#polarity"/>
+            <keyword name="comments" ref="lang-overview.html#comments"/>
+            <keyword name="names" ref="lang-overview.html#names"/>
+            <keyword name="numbers" ref="lang-overview.html#numbers"/>
+            <keyword name="hexadecimal" ref="lang-overview.html#numbers"/>
+            <keyword name="don't care" ref="lang-overview.html#numbers"/>
+            <keyword name="reserved words" ref="lang-overview.html#reserved"/>
+            <keyword name="line length" ref="lang-overview.html#comments"/>
+            <keyword name="header" ref="lang-overview.html#header"/>
+            <keyword name="lists" ref="lang-expressions.html#lists"/>
+            <keyword name="ranges" ref="lang-expressions.html#equality"/>
+            <keyword name="operator precedence" ref="lang-expressions.html#operators"/>
+            <keyword name="XOR" ref="lang-expressions.html#operators"/>
+            <keyword name="intermediate variable" ref="lang-equations.html#intermediate"/>
+            <keyword name="equations" ref="lang-equations.html"/>
+            <keyword name="truth table" ref="lang-table.html"/>
+            <keyword name="state machine" ref="lang-sequence.html"/>
+            <keyword name="flip-flop types" ref="lang-extensions.html#example"/>
+            <keyword name="macro library" ref="lang-macros.html#library"/>
+            <keyword name="preprocessor" ref="lang-preprocessor.html"/>
+            <keyword name="cupl" ref="compiler-options.html#command"/>
+            <keyword name="compiler options" ref="compiler-options.html"/>
+            <keyword name="JEDEC file" ref="output-files.html#jed"/>
+            <keyword name="listing file" ref="output-files.html#lst"/>
+            <keyword name="documentation file" ref="output-files.html#doc"/>
+            <keyword name="absolute file" ref="output-files.html#abs"/>
+            <keyword name=".so file" ref="output-files.html#so"/>
+            <keyword name=".wo file" ref="sim-listing.html#wo"/>
+            <keyword name="fitter report" ref="output-files.html#fit"/>
+            <keyword name="security fuse" ref="compiler-options.html#g"/>
+            <keyword name="minimization" ref="minimization.html"/>
+            <keyword name="Espresso" ref="minimization.html#levels"/>
+            <keyword name="DeMorgan" ref="minimization.html#demorgan"/>
+            <keyword name="product terms" ref="minimization.html#hints"/>
+            <keyword name="virtual device" ref="virtual.html"/>
+            <keyword name="device independent" ref="virtual.html"/>
+            <keyword name="device library" ref="devices.html#libraries"/>
+            <keyword name="Atmel.dl" ref="devices.html#libraries"/>
+            <keyword name="cupl.dl" ref="devices.html#libraries"/>
+            <keyword name="LIBCUPL" ref="devices.html#libraries"/>
+            <keyword name="device names" ref="devices.html#names"/>
+            <keyword name="GAL22V10" ref="devices.html#names"/>
+            <keyword name="GAL16V8" ref="devices.html#names"/>
+            <keyword name="ATF750" ref="devices.html#names"/>
+            <keyword name="ATF1502" ref="fitters.html"/>
+            <keyword name="ATF1504" ref="fitters.html"/>
+            <keyword name="ATF1508" ref="fitters.html"/>
+            <keyword name="fitter" ref="fitters.html"/>
+            <keyword name="fit1502" ref="fitters.html#command"/>
+            <keyword name="JTAG" ref="fitters.html#property"/>
+            <keyword name="preassign" ref="fitters.html#property"/>
+            <keyword name="pin_keep" ref="fitters.html#property"/>
+            <keyword name="output_fast" ref="fitters.html#property"/>
+            <keyword name="LINCUPL_FITTERS" ref="fitters.html#finding"/>
+            <keyword name="Wine" ref="fitters.html#finding"/>
+            <keyword name="backpin" ref="utilities.html#backpin"/>
+            <keyword name="cbld" ref="utilities.html#cbld"/>
+            <keyword name="Float All Pins and Nodes" ref="utilities.html#pin-menu"/>
+            <keyword name="Assign Pins and Pinnodes" ref="utilities.html#pin-menu"/>
+            <keyword name="error messages" ref="errors.html"/>
+            <keyword name="projects" ref="getting-started.html#projects"/>
+            <keyword name="Tools menu" ref="getting-started.html#tools"/>
+            <keyword name="placeholders" ref="getting-started.html#tools"/>
+            <keyword name="fonts" ref="getting-started.html#settings"/>
+        </keywords>
+        <files>
+            <file>*.html</file>
+            <file>style.css</file>
+        </files>
+    </filterSection>
+</QtHelpProject>

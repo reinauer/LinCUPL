@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Expressions, lists and fields</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="nav"><a href="index.html">Help</a> &gt; <a href="lang-overview.html">CUPL language</a></p>
+<h1>Expressions, lists and fields</h1>
+
+<h2 id="operators">Logic operators</h2>
+<table>
+<tr><th>Operator</th><th>Meaning</th><th>Precedence</th></tr>
+<tr><td><tt>!</tt></td><td>NOT</td><td>1 (binds tightest)</td></tr>
+<tr><td><tt>&amp;</tt></td><td>AND</td><td>2</td></tr>
+<tr><td><tt>#</tt></td><td>OR</td><td>3</td></tr>
+<tr><td><tt>$</tt></td><td>exclusive OR</td><td>4</td></tr>
+</table>
+<p>Operators of higher precedence are applied first, and parentheses
+change the order: <tt>a # b &amp; c</tt> is <tt>a # (b &amp; c)</tt>, and
+<tt>a # b $ c</tt> is <tt>(a # b) $ c</tt>.  The constants are
+written <tt>'b'0</tt> and <tt>'b'1</tt>; a bare <tt>1</tt> on the right
+side of an equation is a syntax error.</p>
+<pre data-example="gates.pld" data-lines="24-28">y_and  = a &amp; b;
+y_or   = a # b;
+y_xor  = a $ b;
+y_nand = !(a &amp; b);
+y_nor  = a # b;</pre>
+<p>cupl expands every expression into a sum of products (an OR of AND
+terms) and then <a href="minimization.html">minimizes</a> it.  An
+exclusive OR of many signals needs many product terms; the
+<i>excessive number of product terms</i> error says that an output needs
+more terms than its macrocell has.</p>
+
+<h2 id="lists">Lists</h2>
+<p>Square brackets group signals into a list: <tt>[a, b, c]</tt>.  A range
+of indexed names, <tt>[a7..0]</tt>, is <tt>[a7, a6, ..., a0]</tt>, and
+lists and ranges may be mixed: <tt>[q0..3, carry]</tt>.  The first
+element is the most significant bit when the list is compared with a
+number.</p>
+<p>An operator between two lists of the same length works on each pair of
+elements; between a list and a single signal it works on each element
+with that signal:</p>
+<pre class="syntax">[y1..0] = [a1..0] &amp; [b1..0];   is   y1 = a1 &amp; b1;  y0 = a0 &amp; b0;
+[y1..0] = [a1..0] &amp; en;        is   y1 = a1 &amp; en;  y0 = a0 &amp; en;</pre>
+
+<h2 id="field">FIELD</h2>
+<pre class="syntax">FIELD name = [list];</pre>
+<p>A <tt>FIELD</tt> names a list so that it can be used like a number: in
+equations, in <a href="lang-table.html">tables</a>, as the state register
+of a <a href="lang-sequence.html">state machine</a> and in the
+<a href="sim-language.html#order">simulator</a>.  A field may contain
+another field.</p>
+<pre data-example="decoder.pld" data-lines="25">field addr = [a7..0];</pre>
+<p>A field (or a list) can stand anywhere a list can, and an extension
+applies to every element: <tt>count.ar = rst;</tt></p>
+
+<h2 id="equality">Comparing with values</h2>
+<p><i>field</i><tt>:</tt><i>value</i> is true when the bits of the field
+match the number.  The number is hexadecimal unless it has a
+<a href="lang-overview.html#numbers">base prefix</a>, and <tt>X</tt> digits
+match anything.  <i>field</i><tt>:[</tt><i>low</i><tt>..</tt><i>high</i><tt>]</tt>
+is true for every value in the range:</p>
+<pre data-example="decoder.pld" data-lines="27-31,35">rom_cs = !iorq &amp; addr:[00..3F];         /* 'h'00 to 'h'3F */
+ram_cs = !iorq &amp; addr:[40..BF];
+io_cs  =  iorq &amp; addr:'b'1111XXXX;      /* F0 to FF: low four bits ignored */
+
+page0        = addr:0;                  /* all address bits low */
+...
+low_nibble_5 = [a3..0]:'d'5;</pre>
+<p>A range is turned into as few product terms as possible, so ranges that
+start and end on powers of two are cheapest.</p>
+<p>Several single values are listed with commas:
+<tt>[a3..0]:[3, 7]</tt> is true for 3 and for 7, and several ranges as
+well: <tt>[a3..0]:[0..1, 4..5]</tt>.  Ranges and single values can be
+mixed in any order; the list is true for each of them:
+<tt>f:[0..3, 7]</tt> and <tt>f:[7, 0..3]</tt> are both true for 0 to 3
+and for 7, as <tt>f:[0..3] # f:7</tt> is.  The same holds for the input
+lists of a <tt>TABLE</tt>.</p>
+<p class="note">The original CUPL computes such lists wrongly: a single
+value after a range takes on the bits that the range leaves open
+(<tt>f:[0..3, 7]</tt> is true for 0 to 7), and a range after a single
+value is a syntax error.  Write <tt>f:[0..3] # f:7</tt> in designs that
+are also compiled with it.</p>
+
+<h2 id="bitops">Bit field operators</h2>
+<table>
+<tr><th>Expression</th><th>Value</th></tr>
+<tr><td id="and-all"><i>field</i><tt>:&amp;</tt></td><td>AND of all bits: true when every bit is 1.</td></tr>
+<tr><td id="or-all"><i>field</i><tt>:#</tt></td><td>OR of all bits: true when any bit is 1.</td></tr>
+<tr><td id="xor-all"><i>field</i><tt>:$</tt></td><td>Exclusive OR of all bits: true when an odd number of bits is 1.</td></tr>
+</table>
+<pre data-example="decoder.pld" data-lines="32-34">all_ones     = addr:&amp;;                  /* AND of all bits */
+any_set      = [a3..0]:#;               /* OR of the low four bits */
+parity       = [a2..0]:$;               /* XOR of the low three bits */</pre>
+
+<h2 id="compare">Comparing two fields</h2>
+<p><i>list</i> <tt>==</tt> <i>list</i> is true when both lists have the
+same value, bit by bit:</p>
+<pre data-example="cpld.pld" data-lines="47">match = (count == compare) &amp; !count_is_zero;</pre>
+<p>An 8-bit comparison needs many product terms; it suits a CPLD better
+than a GAL.</p>
+
+<h2 id="arith">Arithmetic</h2>
+<p>CUPL has no addition or comparison by magnitude in equations.  A
+counter is written with exclusive ORs (<tt>counter.pld</tt>), with toggle
+flip-flops (<tt>cpld.pld</tt>) or as a
+<a href="lang-sequence.html">state machine</a>; an adder with a
+<a href="lang-function.html">FUNCTION</a>.  Arithmetic on numbers is
+available in the <a href="lang-macros.html#arith">macro language</a>,
+which computes values while the design is read.</p>
+<p class="seealso">See also: <a href="lang-equations.html">Equations</a>,
+<a href="lang-table.html">TABLE</a>.</p>
+</body>
+</html>

@@ -1,0 +1,33 @@
+Name     Shifter;
+PartNo   HELP08;
+Date     2026-01-01;
+Revision 01;
+Designer LinCUPL Help;
+Company  LinCUPL;
+Assembly None;
+Location None;
+Device   g22v10;
+
+/* An 8-bit register that loads or rotates, built with the preprocessor */
+
+$include pins.inc
+
+$define ROTATE_LEFT                 /* remove this line to rotate right */
+$define HOLD    !load & !shift      /* text substitution, not a signal */
+
+Pin 11 = shift;
+
+field data = [d7..0];
+field reg  = [q7..0];
+
+/* One equation per bit, made by $REPEAT; {i} is replaced by the
+   value of i and {expression} by the value of the expression */
+$REPEAT i = [0..7]
+$ifdef ROTATE_LEFT
+q{i}.d = load & d{i} # !load & shift & q{(i+7)%8} # HOLD & q{i};
+$else
+q{i}.d = load & d{i} # !load & shift & q{(i+1)%8} # HOLD & q{i};
+$endif
+$REPEND
+
+reg.oe = oe;

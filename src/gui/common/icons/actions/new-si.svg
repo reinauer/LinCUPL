@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <!-- New simulator input: a document with waveforms and a sparkle -->
+  <defs>
+    <linearGradient id="paper" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#e3e9f1"/></linearGradient>
+  </defs>
+  <g transform="translate(0 0)">
+    <path d="M5.5 2.5 H14.5 L19.5 7.5 V21.5 H5.5 Z" fill="url(#paper)" stroke="#5f6b7a" stroke-linejoin="round"/>
+    <path d="M14.5 2.5 V7.5 H19.5" fill="#d3dbe6" stroke="#5f6b7a" stroke-linejoin="round"/>
+  </g>
+  <path d="M8 13 H9.5 V10.5 H12 V13 H14.5 V10.5 H17" fill="none" stroke="#c21fb3" stroke-width="1.2" stroke-linejoin="round"/>
+  <path d="M8 18.5 H10.5 V16 H14.5 V18.5 H17" fill="none" stroke="#16a34a" stroke-width="1.2" stroke-linejoin="round"/>
+  <path d="M18.5 1.2999999999999998 L19.844 4.156 L22.7 5.5 L19.844 6.844 L18.5 9.7 L17.156 6.844 L14.3 5.5 L17.156 4.156 Z" fill="#ffd23f" stroke="#c98a00" stroke-width="0.8" stroke-linejoin="round"/>
+</svg>

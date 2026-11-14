@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>LinSim</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="nav"><a href="index.html">Help</a> &gt; <a href="sim-overview.html">Simulation</a></p>
+<h1>LinSim</h1>
+
+<p>LinSim shows the test vectors of a <tt>.si</tt> file as waveforms, lets
+you draw and change them, and runs the simulator.  Start it from
+LinCUPL with <b>Run &gt; Launch Waveform Simulator</b> (<kbd>F12</kbd>),
+which opens the vectors of the current design, or on its own with a
+<tt>.si</tt> or <tt>.wo</tt> file.</p>
+
+<h2 id="window">The window</h2>
+<p>Each document has a window of its own with three tabs, also reached
+through the <b>Window</b> menu:</p>
+<ul>
+<li><b>Waveform Editor</b> (<kbd>Alt+1</kbd>): one row per signal, one
+column per vector.  Buses (fields) can be expanded into their bits.</li>
+<li><b>Simulation Listing (.SO)</b> (<kbd>Alt+2</kbd>): the
+<a href="sim-listing.html">listing</a> of the last run.</li>
+<li><b>Simulation Source (.SI)</b> (<kbd>Alt+3</kbd>): the text of the
+<tt>.si</tt> file.  Edits here are taken over into the waveforms.</li>
+</ul>
+<p>The simulation console below the tabs shows the commands LinSim runs
+and their output, with the messages in a list of their own.
+<b>View &gt; Signal Definitions</b> shows the declaration of the selected
+signal.  <b>File &gt; New Window</b> opens an empty window; the
+<b>Window</b> menu lists all open windows and can cascade or tile them,
+and <b>Open LinCUPL IDE</b> opens the design in LinCUPL.</p>
+
+<h2 id="editing">Editing vectors</h2>
+<ul>
+<li>Click a cell or drag over a range of signals and vectors, then type
+a state: <tt>0 1</tt> for inputs, <tt>C K P</tt> for clocks,
+<tt>L H Z X *</tt> for outputs (see the
+<a href="sim-language.html#vectors">table of values</a>).
+<b>Signal &gt; Set Selection State</b> does the same from the menu.</li>
+<li><kbd>Ctrl</kbd>+click sets <tt>*</tt> (value left to the
+simulator).</li>
+<li>A double-click toggles a single signal or opens <b>Set Bus Value</b>
+(<kbd>Ctrl+B</kbd>) for a bus.</li>
+<li><kbd>Shift</kbd>+click on the ruler sets a reference marker for
+measuring.</li>
+<li><b>Edit &gt; Cut / Copy / Paste Vectors</b> and <b>Undo / Redo</b>
+work on whole vectors.</li>
+</ul>
+<p>The <b>Signal</b> menu adds signals and buses (<kbd>Ctrl+Shift+S</kbd>),
+renames, deletes and moves them (<kbd>Alt+Up</kbd>, <kbd>Alt+Down</kbd>),
+expands or collapses buses, adds vectors (<kbd>Ctrl+I</kbd>), duplicates
+the current one (<kbd>Ctrl+D</kbd>), deletes the selected vectors and
+edits the message of a vector, which is saved as a
+<a href="sim-directives.html#msg">$MSG</a>.  <b>File &gt; Design
+Properties</b> edits the header and the base of the file.</p>
+
+<h2 id="find">Find</h2>
+<p><b>Edit &gt; Find</b> (<kbd>Ctrl+F</kbd>) searches the tab that is
+shown.  In the waveform editor it finds a signal by name, a vector by its
+number, or a vector by the text of its comment or <tt>$MSG</tt>; in the
+listing and source tabs it searches the text.  <b>Find Next</b>
+(<kbd>F3</kbd>) and <b>Find Previous</b> (<kbd>Shift+F3</kbd>) repeat the
+search, also while the Find box has the focus.</p>
+
+<h2 id="simulate">Simulating</h2>
+<p><b>Simulator &gt; Simulate</b> (<kbd>F9</kbd>) saves the <tt>.si</tt>
+file if it was changed and runs <tt>csim -lw</tt> on it.  If the design
+has no absolute file yet, or with <b>Compile &amp; Simulate</b>
+(<kbd>Shift+F9</kbd>), it first compiles the <tt>.pld</tt> of the same
+name with <tt>cupl -ja -m1</tt>.  The simulated outputs are then merged
+into the waveforms and the listing tab is updated.</p>
+<ul>
+<li id="assign"><b>Assign Simulator Results</b> makes the simulated
+output values the expected values of the vectors, so a run that has
+been checked by eye becomes a regression test.</li>
+<li><b>Append Vectors to JEDEC</b> adds <tt>-j</tt>, <b>Use PLD Filename
+for JEDEC</b> adds <tt>-n</tt> (see <a href="sim-overview.html#csim">csim</a>).</li>
+<li><b>Set Library</b> chooses the device library.</li>
+</ul>
+
+<h2 id="output">Saving, printing and export</h2>
+<p><b>File &gt; Save (.SI)</b> writes the vectors as a <tt>.si</tt> file;
+a document opened from a <tt>.wo</tt> file is saved as the <tt>.si</tt>
+of the same name.  <b>Save All</b> (<kbd>Ctrl+Alt+S</kbd>) saves every
+open window.  <b>Export Waveform PNG / PDF</b> and <b>Print</b> write the
+waveforms; <b>Print Colors</b> chooses between the screen colours and black
+and white.  The <b>View</b> menu sets zoom, row height, the grid and its
+size, wide signal rows and the colours.</p>
+<p><b>Help &gt; Waveform States &amp; Shortcuts</b> shows a summary of the
+states and mouse actions.</p>
+<p class="seealso">See also: <a href="sim-language.html">Test vector
+files</a>, <a href="sim-directives.html">Simulator directives</a>.</p>
+</body>
+</html>

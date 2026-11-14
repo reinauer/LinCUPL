@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <!-- Compile and simulate: a logic device over waveforms -->
+  <defs>
+    <linearGradient id="tile" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1d2a86"/><stop offset="1" stop-color="#0a0f3c"/></linearGradient>
+    <linearGradient id="chip" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4d576b"/><stop offset="1" stop-color="#1c212c"/></linearGradient>
+  </defs>
+  <rect x="6.5" y="8.5" width="15.5" height="13" rx="2.5" fill="url(#tile)" stroke="#3341a8"/>
+  <path d="M8.5 14.09 H10.0 V11.1 H12.5 V14.09 H15.0 V11.1 H17.5 V14.09 H20.0 V11.1 H20.0" fill="none" stroke="#ff4af0" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"/>
+  <path d="M8.5 18.9 H12.0 V15.91 H17.0 V18.9 H20.0" fill="none" stroke="#3dff74" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"/>
+  <g fill="#d5dbe3" stroke="#7b8494" stroke-width="0.6"><rect x="3.53" y="0.50" width="1.6" height="2.5" rx="0.4"/><rect x="3.53" y="9.00" width="1.6" height="2.5" rx="0.4"/><rect x="6.20" y="0.50" width="1.6" height="2.5" rx="0.4"/><rect x="6.20" y="9.00" width="1.6" height="2.5" rx="0.4"/><rect x="8.87" y="0.50" width="1.6" height="2.5" rx="0.4"/><rect x="8.87" y="9.00" width="1.6" height="2.5" rx="0.4"/></g>
+  <rect x="1.5" y="2.5" width="11" height="7" rx="1.5" fill="url(#chip)" stroke="#11151c"/>
+  <rect x="2.4" y="3.4" width="9.2" height="5.2" rx="0.9" fill="none" stroke="#7f8aa0" stroke-width="0.6" stroke-opacity="0.8"/>
+  <path d="M1.5 4.4 A1.6 1.6 0 0 1 1.5 7.6" fill="#11151c"/>
+  <circle cx="4.1" cy="4.9" r="0.8" fill="#8f9bb0"/>
+</svg>

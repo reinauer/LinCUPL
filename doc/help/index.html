@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>LinCUPL Help</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<h1>LinCUPL Help</h1>
+
+<p>LinCUPL is an editor and front end for <b>cupl</b>, a compiler for
+programmable logic devices (PAL, GAL, ATF22V10, ATF750, ATF2500, ATF150x
+and many others), and for <b>csim</b>, its logic simulator.  You describe
+a design in the CUPL language in a <tt>.pld</tt> file; cupl turns it into
+a JEDEC fuse file for a device programmer.  Test vectors in a <tt>.si</tt>
+file check the design in csim.  <b>LinSim</b> shows and edits the test
+vectors as waveforms.</p>
+
+<h2>Where to start</h2>
+<ul>
+<li><a href="getting-started.html">Getting started</a>: the LinCUPL window, a first design, compiling and simulating.</li>
+<li><a href="output-files.html">Output files</a>: what the compiler and the simulator write.</li>
+<li><a href="lang-overview.html">The CUPL language</a>: the parts of a design file.</li>
+<li><a href="sim-overview.html">The simulator</a>: test vectors, csim and LinSim.</li>
+<li><a href="devices.html">Devices and libraries</a>: device names and the device libraries.</li>
+</ul>
+
+<h2>Contents</h2>
+<table>
+<tr><th>Using LinCUPL</th><th>CUPL language</th><th>Simulation</th></tr>
+<tr>
+<td>
+<a href="getting-started.html">Getting started</a><br>
+<a href="output-files.html">Output files</a><br>
+<a href="compiler-options.html">Compiler options</a><br>
+<a href="minimization.html">Minimization and DeMorgan</a><br>
+<a href="virtual.html">Device independent design</a><br>
+<a href="devices.html">Devices and libraries</a><br>
+<a href="fitters.html">ATF150x fitters</a><br>
+<a href="utilities.html">Utilities</a><br>
+<a href="errors.html">Error messages</a>
+</td>
+<td>
+<a href="lang-overview.html">Design file structure</a><br>
+<a href="lang-pins.html">Pins and nodes</a><br>
+<a href="lang-extensions.html">Pin extensions</a><br>
+<a href="lang-expressions.html">Expressions, lists and fields</a><br>
+<a href="lang-equations.html">Equations</a><br>
+<a href="lang-table.html">TABLE</a><br>
+<a href="lang-sequence.html">State machines</a><br>
+<a href="lang-condition.html">CONDITION</a><br>
+<a href="lang-function.html">FUNCTION</a><br>
+<a href="lang-property.html">PROPERTY</a><br>
+<a href="lang-preprocessor.html">Preprocessor</a><br>
+<a href="lang-macros.html">Macros and $REPEAT</a>
+</td>
+<td>
+<a href="sim-overview.html">Simulator overview</a><br>
+<a href="sim-language.html">Test vector files (.si)</a><br>
+<a href="sim-directives.html">Simulator directives</a><br>
+<a href="sim-listing.html">The simulation listing (.so)</a><br>
+<a href="sim-linsim.html">LinSim</a>
+</td>
+</tr>
+</table>
+
+<h2>Using this help</h2>
+<p>The <b>Contents</b> and <b>Index</b> tabs beside the page find topics,
+and the <b>Search</b> tab searches the text of all pages (when LinCUPL
+was built with the Qt Help module); <b>Find in Page</b>
+(<kbd>Ctrl+F</kbd>) searches the page shown.
+In the LinCUPL editor, <kbd>F1</kbd> on a CUPL keyword, a pin extension or
+a simulator directive opens its description; elsewhere <kbd>F1</kbd> opens
+this page.</p>
+
+<p>Every example design on these pages is in the <tt>doc/help/examples</tt>
+directory of the LinCUPL sources, and the test suite compiles and
+simulates each of them.</p>
+</body>
+</html>

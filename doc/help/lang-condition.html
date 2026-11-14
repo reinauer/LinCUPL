@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>CONDITION</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="nav"><a href="index.html">Help</a> &gt; <a href="lang-overview.html">CUPL language</a></p>
+<h1>CONDITION</h1>
+
+<pre class="syntax">CONDITION {
+    IF expression OUT outputs;
+    ...
+    DEFAULT OUT outputs;
+}</pre>
+<p>A <tt>CONDITION</tt> block lists conditions and the outputs each one
+turns on.  It is the combinational counterpart of a
+<a href="lang-sequence.html">state machine</a> without states: every
+output named after an <tt>IF</tt> becomes true when that expression is
+true, and the outputs after <tt>DEFAULT</tt> become true when none of the
+conditions is.  An output named by several conditions is the OR of
+them.</p>
+<pre data-example="logic.pld" data-lines="27-36">field sel = [sel1..0];
+
+/* 2-to-4 decoder: one line per selector value while enabled */
+condition {
+    if en &amp; sel:0 out line0;
+    if en &amp; sel:1 out line1;
+    if en &amp; sel:2 out line2;
+    if en &amp; sel:3 out line3;
+    default out none;
+}</pre>
+<p>This is the same as the equations</p>
+<pre class="syntax">line0 = en &amp; sel:0;     line1 = en &amp; sel:1;
+line2 = en &amp; sel:2;     line3 = en &amp; sel:3;
+none  = !(en &amp; sel:0 # en &amp; sel:1 # en &amp; sel:2 # en &amp; sel:3);   /* = !en */</pre>
+<p>The outputs are combinational; to register them, name the register
+input (<tt>out q.d</tt>) on a device that has one.</p>
+<p class="seealso">See also: <a href="lang-table.html">TABLE</a>,
+<a href="lang-expressions.html#equality">comparing with values</a>.</p>
+</body>
+</html>

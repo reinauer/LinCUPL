@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+  <!-- LinCUPL application icon: the CUPL wordmark over a programmable
+       logic device whose label shows an AND gate. -->
+  <defs>
+    <linearGradient id="tile" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#e3fbff"/>
+      <stop offset="1" stop-color="#86d9ee"/>
+    </linearGradient>
+    <linearGradient id="body" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3a4252"/>
+      <stop offset="1" stop-color="#151a24"/>
+    </linearGradient>
+    <linearGradient id="label" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fffaeb"/>
+      <stop offset="1" stop-color="#f3e6c2"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="125%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="5"/>
+      <feOffset dy="4" result="blur"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.35"/></feComponentTransfer>
+      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <!-- the tile leaves a margin like other desktop icons -->
+  <g filter="url(#shadow)" transform="translate(24 22) scale(0.8667) translate(-8 -8)">
+
+  <rect x="8" y="8" width="240" height="240" rx="52" fill="url(#tile)" stroke="#4fb3cf" stroke-width="4"/>
+
+  <!-- CUPL -->
+  <g fill="none" stroke="#0b2f9e" stroke-width="12" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M70,46 C70,39 64,36 56,36 C48,36 42,40 42,48 L42,72 C42,80 48,84 56,84 C64,84 70,81 70,74"/>
+    <path d="M90,36 L90,70 C90,79 96,84 104,84 C112,84 118,79 118,70 L118,36"/>
+    <path d="M138,84 L138,36 L152,36 C161,36 166,41 166,49 C166,57 161,62 152,62 L138,62"/>
+    <path d="M186,36 L186,84 L214,84"/>
+  </g>
+
+  <!-- pins -->
+  <g fill="#cfd5df" stroke="#7b8494" stroke-width="2">
+    <rect x="53" y="106" width="12" height="16" rx="2"/>
+    <rect x="73" y="106" width="12" height="16" rx="2"/>
+    <rect x="93" y="106" width="12" height="16" rx="2"/>
+    <rect x="113" y="106" width="12" height="16" rx="2"/>
+    <rect x="133" y="106" width="12" height="16" rx="2"/>
+    <rect x="153" y="106" width="12" height="16" rx="2"/>
+    <rect x="173" y="106" width="12" height="16" rx="2"/>
+    <rect x="193" y="106" width="12" height="16" rx="2"/>
+    <rect x="53" y="202" width="12" height="16" rx="2"/>
+    <rect x="73" y="202" width="12" height="16" rx="2"/>
+    <rect x="93" y="202" width="12" height="16" rx="2"/>
+    <rect x="113" y="202" width="12" height="16" rx="2"/>
+    <rect x="133" y="202" width="12" height="16" rx="2"/>
+    <rect x="153" y="202" width="12" height="16" rx="2"/>
+    <rect x="173" y="202" width="12" height="16" rx="2"/>
+    <rect x="193" y="202" width="12" height="16" rx="2"/>
+  </g>
+
+  <!-- package -->
+  <rect x="40" y="118" width="176" height="88" rx="10" fill="url(#body)" stroke="#0d1118" stroke-width="2"/>
+  <path d="M40,150 A12,12 0 0 1 40,174" fill="#86d9ee" stroke="#0d1118" stroke-width="2"/>
+
+  <!-- label with an AND gate -->
+  <rect x="68" y="134" width="120" height="56" rx="7" fill="url(#label)" stroke="#c4b07c" stroke-width="2"/>
+  <g fill="none" stroke="#0b2f9e" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M114,146 L126,146 A16,16 0 0 1 126,178 L114,178 Z"/>
+    <path d="M92,154 L114,154 M92,170 L114,170 M142,162 L164,162"/>
+  </g>
+  </g>
+</svg>

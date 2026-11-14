@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Pins and nodes</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="nav"><a href="index.html">Help</a> &gt; <a href="lang-overview.html">CUPL language</a></p>
+<h1>Pins and nodes</h1>
+
+<h2 id="pin">PIN</h2>
+<pre class="syntax">PIN number = [!]name;
+PIN [number, number, ...] = [[!]name, name, ...];
+PIN [first..last] = [name_first..last];
+PIN = [!]name;                        (virtual and fitter devices)</pre>
+<p>A <tt>PIN</tt> statement gives a pin of the device a name.  The pin
+numbers are those of the device's package, as decimal numbers.  Only
+pins that the design uses need to be named.</p>
+<p>A list assigns several pins at once, the first name to the first number
+and so on.  A range like <tt>[14..17]</tt> counts up or down; a name
+range like <tt>[q0..3]</tt> is short for <tt>[q0, q1, q2, q3]</tt> and
+may be written <tt>[q0..q3]</tt> too:</p>
+<pre data-example="decoder.pld" data-lines="13-19">Pin [2..9] = [a7..0];          /* address bus, a7 on pin 2 */
+Pin 1      = !iorq;            /* active-low I/O request */
+
+Pin 12 = !rom_cs;              /* chip selects, active low */
+Pin 13 = !ram_cs;
+Pin 14 = !io_cs;
+Pin 15 = page0;</pre>
+<p>Pin numbers in a list need not be consecutive:</p>
+<pre data-example="cpld.pld" data-lines="21-22">Pin [4,5,6,8,9,11,12,14] = [d0..7];
+Pin [16..21,24,25] = [q0..7];</pre>
+<p>Assigning one pin twice is an error (<i>pin/node N redeclared</i>), and
+so is an output equation for a pin that cannot be an output
+(<i>invalid output pin</i>).  The <a href="devices.html">device
+page</a> explains how to see which pins can do what.</p>
+
+<h2 id="polarity">Active-low pins</h2>
+<p>A <tt>!</tt> in front of the name declares the pin active low.  The
+name then stands for the <i>logical</i> signal: it is true when the pin is
+low.  Equations are written in terms of the logical signal and cupl
+inverts the output (or uses the inverted input) itself.  In
+<tt>decoder.pld</tt> above, <tt>rom_cs</tt> is true for addresses 00 to
+3F, and the pin <tt>12</tt> goes low then.</p>
+<p>The <a href="sim-language.html#polarity">simulator</a> also uses the
+logical values: a test vector for <tt>rom_cs</tt> expects <tt>H</tt> when
+the chip select is active, which is a low level on the pin.</p>
+
+<h2 id="node">NODE</h2>
+<pre class="syntax">NODE [!]name;
+NODE [name, name, ...];</pre>
+<p>A <tt>NODE</tt> is a buried signal: a macrocell or register whose
+output does not go to a pin.  The compiler or the
+<a href="fitters.html">fitter</a> chooses the node.  Nodes are
+available in the <a href="virtual.html">virtual device</a> and in devices
+that have buried macrocells, like the ATF150x CPLDs:</p>
+<pre data-example="cpld.pld" data-lines="27">Node    count_is_zero;                 /* a buried combinational node */</pre>
+<p>For a device without free nodes (e.g. a GAL22V10) the statement is
+refused with <i>invalid usage</i>.</p>
+
+<h2 id="pinnode">PINNODE</h2>
+<pre class="syntax">PINNODE number = [!]name;
+PINNODE [number, ...] = [name, ...];
+PINNODE = [name, ...];                 (fitter devices: the fitter chooses)</pre>
+<p><tt>PINNODE</tt> names a buried node by its number.  The node numbers
+of a device come from its data sheet and from the documentation file of a
+compiled design.  Examples are the buried registers of the ATF750
+(<tt>Device v750c; Pinnode 25 = b;</tt>) and the buried macrocells of
+the ATF150x CPLDs.  For a fitter device the number may be left out; the
+fitter then places the nodes:</p>
+<pre data-example="cpld.pld" data-lines="25-26">Pinnode = [r0..7];                     /* buried registers; the fitter
+                                          chooses their macrocells */</pre>
+
+<h2 id="virtual">Pins without numbers</h2>
+<p><tt>Pin = name;</tt> declares an input or output without a number.  The <a href="virtual.html">virtual device</a>
+has no pin numbers at all; for a device placed by a
+<a href="fitters.html">fitter</a> (ATF150x) the fitter chooses the pin,
+and <a href="utilities.html#backpin">backpin</a> can write its choice
+back into the design.  A list of zeros, <tt>Pin [0,0] = [a, b];</tt>,
+also leaves the numbers to the fitter.</p>
+<p class="note">The original reads only one such statement per line and
+stops with a syntax error at a second <tt>Pin = name;</tt> on the same
+line; LinCUPL reads any number of them.</p>
+<pre data-example="flipflops.pld" data-lines="15-17">Pin = clk;
+Pin = up;
+Pin = [d1..0];          /* D flip-flops */</pre>
+<p class="seealso">See also: <a href="lang-extensions.html">Pin
+extensions</a>, <a href="lang-expressions.html#field">FIELD</a>,
+<a href="utilities.html#backpin">backpin</a>.</p>
+</body>
+</html>

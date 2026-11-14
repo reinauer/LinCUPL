@@ -1,0 +1,132 @@
+name: Build and release
+
+on:
+  push:
+    branches: ['**']
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: ${{ matrix.platform }}
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - runner: ubuntu-24.04
+            platform: linux-x86_64
+            architecture: x86_64
+            cc: gcc
+            cxx: g++
+          - runner: macos-15
+            platform: macos-arm64
+            architecture: arm64
+            cc: clang
+            cxx: clang++
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v7
+
+      - name: Check runner architecture
+        shell: bash
+        env:
+          EXPECTED_ARCH: ${{ matrix.architecture }}
+        run: test "$(uname -m)" = "$EXPECTED_ARCH"
+
+      - name: Install Linux Qt dependencies
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y qt6-base-dev qt6-tools-dev qt6-tools-dev-tools
+
+      - name: Install macOS Qt dependencies
+        if: runner.os == 'macOS'
+        run: brew install qt
+
+      - name: Configure
+        run: >-
+          cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+          -DCMAKE_C_COMPILER=${{ matrix.cc }}
+          -DCMAKE_CXX_COMPILER=${{ matrix.cxx }}
+          -DLINCUPL_BUILD_GUI=ON
+
+      - name: Build
+        run: cmake --build build --parallel 3
+
+      - name: Verify executables
+        shell: bash
+        run: |
+          set -euo pipefail
+          for tool in cupl csim cbld backpin cfitr fit1502 fit1504 fit1508 lincupl linsim; do
+            test -x "build/bin/$tool"
+          done
+
+      - name: Package
+        shell: bash
+        env:
+          PACKAGE_PLATFORM: ${{ matrix.platform }}
+        run: |
+          set -euo pipefail
+          if [[ "$GITHUB_REF_TYPE" == tag ]]; then
+            version="$GITHUB_REF_NAME"
+          else
+            version="git-${GITHUB_SHA:0:12}"
+          fi
+          version="${version//\//-}"
+          package="lincupl-${version}-${PACKAGE_PLATFORM}"
+          cmake --install build --prefix "$PWD/package/$package"
+          cp README.md LICENSE wincupl-extract-data "package/$package/"
+          mkdir -p "package/$package/licenses" dist
+          cp third_party/espresso/COPYRIGHT "package/$package/licenses/espresso-COPYRIGHT"
+          tar -C package -czf "dist/$package.tar.gz" "$package"
+          tar -tzf "dist/$package.tar.gz"
+
+      - name: Upload binary archive
+        uses: actions/upload-artifact@v7
+        with:
+          name: lincupl-${{ matrix.platform }}
+          path: dist/*.tar.gz
+          if-no-files-found: error
+
+  release:
+    name: Publish tagged binaries
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: build
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    steps:
+      - name: Download binary archives
+        uses: actions/download-artifact@v8
+        with:
+          pattern: lincupl-*
+          path: dist
+          merge-multiple: true
+
+      - name: Verify archives and checksums
+        shell: bash
+        run: |
+          set -euo pipefail
+          archives=(dist/lincupl-*.tar.gz)
+          if [[ ${#archives[@]} -ne 2 ]]; then
+            echo "Expected Linux and macOS archives" >&2
+            exit 1
+          fi
+          (cd dist && sha256sum lincupl-*.tar.gz > SHA256SUMS)
+
+      - name: Publish release
+        uses: softprops/action-gh-release@v3
+        with:
+          files: |
+            dist/lincupl-*.tar.gz
+            dist/SHA256SUMS
+          fail_on_unmatched_files: true
+          generate_release_notes: true
+          prerelease: ${{ contains(github.ref_name, '-') }}

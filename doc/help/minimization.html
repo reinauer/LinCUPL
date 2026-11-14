@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Minimization and DeMorgan</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="nav"><a href="index.html">Help</a></p>
+<h1>Minimization and DeMorgan</h1>
+
+<p>Each output of a PAL, GAL or CPLD macrocell is an OR of a fixed number
+of product terms.  cupl expands every equation into a sum of products and
+then minimizes it so that it fits.  The
+<a href="output-files.html#doc">documentation file</a> (<tt>-x</tt>) shows
+the result of every output, and its symbol table how many product terms
+each one uses and has.</p>
+
+<h2 id="levels">Minimization levels</h2>
+<table>
+<tr><th>Flag</th><th>Method</th><th>Use</th></tr>
+<tr><td><tt>-m0</tt></td><td>none</td><td>Keeps the product terms as written, e.g. to keep redundant terms that avoid hazards.  Designs often no longer fit.</td></tr>
+<tr><td><tt>-m1</tt></td><td>quick (default)</td><td>Fast and good for most designs.</td></tr>
+<tr><td><tt>-m2</tt></td><td>Quine-McCluskey</td><td>Exact minimum for each output; slow for many inputs.</td></tr>
+<tr><td><tt>-m3</tt></td><td>Presto</td><td>Heuristic; handles larger functions than <tt>-m2</tt>.</td></tr>
+<tr><td><tt>-m4</tt></td><td>Espresso</td><td>Heuristic; usually the best result for large designs.</td></tr>
+</table>
+<p>In LinCUPL the level is chosen in
+<a href="compiler-options.html#dialog">Options &gt; Compiler Options</a>.</p>
+
+<h2 id="min">The MIN statement</h2>
+<pre class="syntax">MIN variable[.extension] = level;
+MIN [list] = level;</pre>
+<p><tt>MIN</tt> sets the level for single outputs, overriding the command
+line.  With <tt>MIN z = 0;</tt> the equation
+<tt>z = a &amp; b # a &amp; !b;</tt> keeps both terms, while every other
+output is minimized to the level of the compile (<tt>z = a</tt>).</p>
+
+<h2 id="demorgan">DeMorgan and polarity</h2>
+<p>Many devices can invert an output.  An output whose complement has
+fewer product terms can then be built from the complement:
+<tt>y = !(a &amp; b &amp; c)</tt> needs three terms (<tt>!a # !b # !c</tt>)
+but its complement only one.  The flags</p>
+<table>
+<tr><th>Flag</th><th>Effect</th></tr>
+<tr><td><tt>-kb</tt></td><td>optimizes the product term usage by choosing the polarity of each output</td></tr>
+<tr><td><tt>-kd</tt></td><td>applies DeMorgan's theorem to all pins and nodes; designs can then need more terms than before</td></tr>
+<tr><td><tt>-ks</tt></td><td>forces product term sharing between outputs (in devices that can share terms)</td></tr>
+<tr><td><tt>-kx</tt></td><td>keeps XOR equations as XOR instead of expanding them, for the virtual device and fitters with XOR gates</td></tr>
+</table>
+<p>An output built from its complement keeps its function: the fuse map
+inverts it again, also for equations that start with a NOT and for pins
+declared active low.</p>
+<p class="note">The original CUPL inverts some of these outputs once too
+often with <tt>-kb</tt> and <tt>-kd</tt> (on the GAL16V8 as on the
+22V10 and ATV750), so its fuse maps with these flags can differ from
+LinCUPL's.  On the ATV750 and ATV2500 it often stops with
+<i>[1018cb] program error</i> under <tt>-kb</tt>, where LinCUPL compiles.
+Neither program should be given <tt>-kb</tt> or <tt>-kd</tt> for
+designs with toggle (<tt>.t</tt>) flip-flops: complementing a toggle
+input does not complement the output.</p>
+<p>An exclusive OR of <i>n</i> signals expands to 2<sup><i>n</i>-1</sup>
+product terms, which is why wide XORs (parity, comparators) often do not
+fit.  Split them over nodes, or use a device whose macrocells have XOR
+gates.</p>
+
+<h2 id="hints">When a design does not fit</h2>
+<ul>
+<li><i>excessive number of product terms</i>: try <tt>-m4</tt> or
+<tt>-kb</tt>, move logic to a <a href="lang-pins.html#node">node</a>, or
+choose an output pin whose macrocell has more terms (on a 22V10 the middle
+pins have the most).</li>
+<li>Look at the <tt>.doc</tt> file to see which output is too large.</li>
+<li>For a CPLD the <a href="fitters.html">fitter</a> handles the
+placement and can split large functions itself.</li>
+</ul>
+<p class="seealso">See also: <a href="compiler-options.html">Compiler
+options</a>, <a href="lang-expressions.html">Expressions</a>.</p>
+</body>
+</html>

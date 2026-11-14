@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <!-- Copy: two documents -->
+  <defs>
+    <linearGradient id="paper" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#e3e9f1"/></linearGradient>
+  </defs>
+  <g transform="translate(-3 -1.5)">
+    <path d="M5.5 2.5 H14.5 L19.5 7.5 V21.5 H5.5 Z" fill="url(#paper)" stroke="#5f6b7a" stroke-linejoin="round"/>
+    <path d="M14.5 2.5 V7.5 H19.5" fill="#d3dbe6" stroke="#5f6b7a" stroke-linejoin="round"/>
+  </g>
+  <g transform="translate(1.5 1)">
+    <path d="M5.5 2.5 H14.5 L19.5 7.5 V21.5 H5.5 Z" fill="url(#paper)" stroke="#5f6b7a" stroke-linejoin="round"/>
+    <path d="M14.5 2.5 V7.5 H19.5" fill="#d3dbe6" stroke="#5f6b7a" stroke-linejoin="round"/>
+    <path d="M8 11.5 H17 M8 14.5 H17 M8 17.5 H14" stroke="#9aa7b8" stroke-linecap="round"/>
+  </g>
+</svg>

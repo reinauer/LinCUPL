@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=LinCUPL
+GenericName=Programmable Logic IDE
+Comment=Edit, compile and simulate CUPL designs for PLDs and CPLDs
+Exec=lincupl %F
+Icon=lincupl
+Terminal=false
+Categories=Development;IDE;Electronics;
+Keywords=CUPL;PLD;CPLD;GAL;JEDEC;

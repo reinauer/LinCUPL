@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Device independent design</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="nav"><a href="index.html">Help</a></p>
+<h1>Device independent design</h1>
+
+<p>The device <tt>virtual</tt> is not a real chip.  It has as many inputs,
+outputs and nodes as a design needs, every kind of flip-flop and every
+<a href="lang-extensions.html">pin extension</a>, and no limit on product
+terms.  Compiling for it checks the logic and lets the simulator test it
+before a device is chosen, or when the real device does not fit yet.</p>
+
+<h2 id="use">Compiling and simulating</h2>
+<p>A design can name the virtual device in its header
+(<tt>Device virtual;</tt>), or any design can be compiled for it by
+giving <tt>virtual</tt> as the device on the command line:</p>
+<pre class="shell">cupl -axl virtual gates.pld
+csim -l virtual gates</pre>
+<p>In LinCUPL, <b>Run &gt; Device Independent Compile (virtual)</b>
+(<kbd>Shift+F9</kbd>) and <b>Run &gt; Device Independent Simulate
+(virtual)</b> (<kbd>Shift+F10</kbd>) do this for the open design.  The
+same <tt>.si</tt> file serves both the virtual and the real device.</p>
+<p>csim takes the test file with or without its extension:
+<tt>csim -l virtual gates</tt> and <tt>csim -l virtual gates.si</tt> both
+simulate <tt>gates.si</tt> against <tt>gates.abs</tt>.  (The original
+csim looks for <tt>gates.si.abs</tt> for the virtual device and stops
+with <i>could not open</i>.)</p>
+<p>A preload (<tt>P</tt> in the clock column, see
+<a href="sim-language.html#preload">Preload</a>) loads the complement of
+the given values into the registers of active-high outputs of the
+virtual device: <tt>P 0 0 '5' X</tt> leaves the count at 2 (010 instead
+of 101).  Outputs declared active low (<tt>Pin = ![q0..2];</tt>) are
+loaded with the values as given.  For active-high outputs give the
+complement in the preload vector, or reach the state with clocked
+vectors.</p>
+<p>No JEDEC file is written for the virtual device.  The absolute file,
+the listing and the documentation file are, and the documentation shows
+the equations before any device-specific fitting.</p>
+
+<h2 id="pins">Pins without numbers</h2>
+<p>A design for the virtual device may leave out the pin numbers.  Each
+<tt>Pin = name;</tt> statement stands on a line of its own.
+<a href="lang-pins.html#node">NODE</a> declares buried signals:</p>
+<pre data-example="flipflops.pld" data-lines="9-25">Device   virtual;
+
+/* The same two-bit up/down counter for each kind of flip-flop.
+   The virtual device has every kind, so this compiles device
+   independently (cupl -a, or Device Independent Compile). */
+
+Pin = clk;
+Pin = up;
+Pin = [d1..0];          /* D flip-flops */
+Pin = [j1..0];          /* JK flip-flops */
+Pin = [r1..0];          /* SR flip-flops */
+Pin = [t1..0];          /* T flip-flops */
+
+field dcount = [d1..0];
+field jcount = [j1..0];
+field rcount = [r1..0];
+field tcount = [t1..0];</pre>
+<p>The virtual device has no clock pin: give every register a
+<tt>.ck</tt> equation.  A register without one compiles, but never
+changes in the simulator.  Before moving the design to a
+device, add the pin numbers and remove the extensions that device does
+not have.</p>
+
+<h2 id="xor">XOR gates</h2>
+<p>With <tt>-kx</tt> XOR equations stay XOR in the virtual device, which
+shows the logic in its original form.  See
+<a href="minimization.html#demorgan">DeMorgan and polarity</a>.</p>
+<p class="seealso">See also: <a href="devices.html">Devices</a>,
+<a href="sim-overview.html">Simulator</a>.</p>
+</body>
+</html>

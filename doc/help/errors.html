@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Error messages</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="nav"><a href="index.html">Help</a></p>
+<h1>Error messages</h1>
+
+<p>cupl and csim report problems as a code in brackets followed by a
+message.  For errors in the source, the line is printed above the message
+with a <tt>^</tt> under the place where the problem was found:</p>
+<pre class="output">  3:y = a; y = b;
+             ^
+[0011ca] expression already assigned to:  y</pre>
+<p>The four digits number the message; the first letter says which
+program reported it (<tt>c</tt> for cupl, <tt>s</tt> for csim) and the
+second letter the stage of the run, for example <tt>x</tt> for the
+preprocessor, <tt>a</tt> for the parser and <tt>k</tt> for the program
+itself (files, options, the fitter).  Messages that start with
+<i>Please note</i> are notes; the run goes on and the files are
+written.  After an error cupl ends with</p>
+<pre class="output">Fatal CUPL errors encountered ... program aborted!
+Normal exit
+Error Code = 1</pre>
+<p>and exit status 1.  The first line reads <i>CUPL errors
+encountered!</i> when the error came while the fuse map was written, and
+<i>CSIM errors encountered!</i> when the simulation that <tt>-s</tt> runs
+failed.  An error of an <a href="fitters.html">ATF150x fitter</a> ends the
+run the same way, after <tt>[0010ck] Fitter could not fit design</tt> (or
+<tt>[0011ck] Fatal fitter error during processing</tt> when the fitter
+crashed).  A successful run ends with <i>Total elapsed time</i>,
+<tt>Error Code = 0</tt> and exit status 0.</p>
+
+<h2 id="catalog">The message catalog</h2>
+<p>Every message has a short explanation and a hint.
+<a href="lincupl:error-messages">Open the error message catalog</a>
+(<b>Help &gt; Error Messages</b> in LinCUPL) to look them up by code or
+text.  The Diagnostics list in LinCUPL shows the explanation of the
+selected message next to it, and clicking a message moves the cursor to
+its line.</p>
+
+<h2 id="common">Frequent messages</h2>
+<table>
+<tr><th>Message</th><th>Usual cause</th></tr>
+<tr><td><i>invalid syntax</i></td><td>A missing semicolon on the line before, a misspelt keyword, or a reserved word used as a name (<tt>out</tt>, <tt>name</tt>, <tt>node</tt>; see <a href="lang-overview.html#reserved">reserved words</a>).</td></tr>
+<tr><td><i>expression already assigned to</i></td><td>Two equations for the same output; use <a href="lang-equations.html#append">APPEND</a> or combine them.</td></tr>
+<tr><td><i>intermediate var not assigned an expression</i></td><td>A misspelt name, or a pin that was never declared.</td></tr>
+<tr><td><i>unknown extension</i>, <i>invalid usage</i></td><td>The device has no such <a href="lang-extensions.html#device">extension</a> or the pin cannot do this.</td></tr>
+<tr><td><i>invalid output pin</i></td><td>An equation for an input-only pin.</td></tr>
+<tr><td><i>pin/node N redeclared</i></td><td>A pin number used twice.</td></tr>
+<tr><td><i>excessive number of product terms</i></td><td>The output needs more terms than its macrocell has; see <a href="minimization.html#hints">Minimization</a>.</td></tr>
+<tr><td><i>multiple unconditional statements for state</i></td><td>Two <tt>OUT</tt> statements in one <a href="lang-sequence.html#out">state</a>.</td></tr>
+<tr><td><i>missing header item(s)</i></td><td>A <a href="lang-overview.html#header">header</a> line is missing (a note only).</td></tr>
+<tr><td><i>target device not specified</i></td><td>No <tt>Device</tt> line and no device on the command line.</td></tr>
+<tr><td><i>line exceeds maximum length</i></td><td>A line longer than 255 characters.</td></tr>
+</table>
+<p>The simulator's messages for wrong output values are explained in
+<a href="sim-listing.html#errors">reading the simulation listing</a>.</p>
+<p class="seealso">See also: <a href="output-files.html#lst">the listing
+file</a>.</p>
+</body>
+</html>

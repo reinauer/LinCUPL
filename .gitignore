@@ -1,0 +1,4 @@
+/build/
+/share/
+.DS_Store
+__pycache__/

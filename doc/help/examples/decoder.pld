@@ -1,0 +1,35 @@
+Name     Decoder;
+PartNo   HELP03;
+Date     2026-01-01;
+Revision 01;
+Designer LinCUPL Help;
+Company  LinCUPL;
+Assembly None;
+Location None;
+Device   g16v8a;
+
+/* Address decoder: bit fields, values, ranges and bit field operators */
+
+Pin [2..9] = [a7..0];          /* address bus, a7 on pin 2 */
+Pin 1      = !iorq;            /* active-low I/O request */
+
+Pin 12 = !rom_cs;              /* chip selects, active low */
+Pin 13 = !ram_cs;
+Pin 14 = !io_cs;
+Pin 15 = page0;
+Pin 16 = all_ones;
+Pin 17 = any_set;
+Pin 18 = parity;
+Pin 19 = low_nibble_5;
+
+field addr = [a7..0];
+
+rom_cs = !iorq & addr:[00..3F];         /* 'h'00 to 'h'3F */
+ram_cs = !iorq & addr:[40..BF];
+io_cs  =  iorq & addr:'b'1111XXXX;      /* F0 to FF: low four bits ignored */
+
+page0        = addr:0;                  /* all address bits low */
+all_ones     = addr:&;                  /* AND of all bits */
+any_set      = [a3..0]:#;               /* OR of the low four bits */
+parity       = [a2..0]:$;               /* XOR of the low three bits */
+low_nibble_5 = [a3..0]:'d'5;

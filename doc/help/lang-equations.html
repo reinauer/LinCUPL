@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Equations</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="nav"><a href="index.html">Help</a> &gt; <a href="lang-overview.html">CUPL language</a></p>
+<h1>Equations</h1>
+
+<pre class="syntax">[!]variable[.extension] = expression;
+[list][.extension] = expression;
+APPEND [!]variable[.extension] = expression;</pre>
+<p>An equation gives an output, a node or an
+<a href="lang-extensions.html">extension</a> of one its logic.  The
+<a href="lang-expressions.html">expression</a> on the right may use
+inputs, the outputs of other macrocells (their feedback) and intermediate
+variables.</p>
+<pre data-example="counter.pld" data-lines="25-35">/* Toggle a bit when all lower bits are 1 */
+q0.d = q0 $ en;
+q1.d = q1 $ (en &amp; q0);
+q2.d = q2 $ (en &amp; q0 &amp; q1);
+q3.d = q3 $ (en &amp; q0 &amp; q1 &amp; q2);
+
+count.ar = rst;
+count.sp = pre;
+count.oe = oe;
+
+carry = en &amp; count:'h'F;</pre>
+
+<h2 id="negated">Negated left side</h2>
+<p><tt>!y = a &amp; b;</tt> gives <tt>y</tt> the complement of the
+expression; it is the same as <tt>y = !(a &amp; b);</tt>.  Which form is
+smaller after minimization depends on the logic; the
+<a href="minimization.html#demorgan">DeMorgan options</a> and the
+polarity of the pin decide what the device finally implements.</p>
+
+<h2 id="lists">Lists on the left side</h2>
+<p>A list or <a href="lang-expressions.html#field">field</a> on the left
+gives one equation per element.  The right side is then a list of the
+same length, a single expression for all of them, or a field operation:</p>
+<pre class="syntax">[y3..0] = [a3..0] $ [b3..0];   /* one XOR per bit */
+count.ar = rst;                /* the same reset for every bit */</pre>
+
+<h2 id="intermediate">Intermediate variables</h2>
+<p>A name that is not a pin or node can be assigned too.  It is an
+intermediate variable: cupl substitutes its expression wherever it is
+used, and it takes no macrocell.  Using a name that is never assigned
+gives <i>intermediate var not assigned an expression</i>.</p>
+<pre class="syntax">tmp = a &amp; b;
+y   = tmp # c;                 /* y = a &amp; b # c */</pre>
+<p>For a signal that should have a macrocell of its own, declare a
+<a href="lang-pins.html#node">node</a>.</p>
+
+<h2 id="append">APPEND</h2>
+<p>A variable may be assigned only once (<i>expression already assigned
+to</i>).  <tt>APPEND</tt> ORs another expression to it instead; the
+equations may stand anywhere in the file, even in different
+<a href="lang-macros.html">macros</a> or included files:</p>
+<pre data-example="logic.pld" data-lines="46-48">/* APPEND adds product terms to an output defined elsewhere */
+alarm = alarm_a &amp; en;
+append alarm = alarm_b &amp; en;</pre>
+<p>The result is <tt>alarm = alarm_a &amp; en # alarm_b &amp; en</tt>.</p>
+
+<h2 id="other">Other ways to write logic</h2>
+<ul>
+<li><a href="lang-table.html">TABLE</a>: a truth table from input values to output values.</li>
+<li><a href="lang-sequence.html">SEQUENCE</a>: a state machine.</li>
+<li><a href="lang-condition.html">CONDITION</a>: a decoder of conditions.</li>
+<li><a href="lang-function.html">FUNCTION</a>: reusable logic with parameters.</li>
+</ul>
+<p class="seealso">See also: <a href="minimization.html">Minimization</a>,
+<a href="output-files.html#doc">the documentation file</a>, which lists
+the expanded and minimized equations.</p>
+</body>
+</html>

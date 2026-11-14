@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Test vector files (.si)</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="nav"><a href="index.html">Help</a> &gt; <a href="sim-overview.html">Simulation</a></p>
+<h1>Test vector files (.si)</h1>
+
+<p>A <tt>.si</tt> file has a header, an <tt>ORDER</tt> statement that
+says which signals the columns of the vectors are, and the vectors
+after <tt>VECTORS:</tt>.  Comments are written <tt>/* ... */</tt> as in
+the design.  Lines may end in LF or in CR LF.</p>
+<p class="note">The original csim misreads loops (<tt>$FOR</tt>,
+<tt>$REPEAT</tt>, <tt>$WHILE</tt>, <tt>$UNTIL</tt>) in a file whose lines
+end in LF alone, for example <i>loop index variable already in use</i>;
+give test files that are also run with it CR LF line ends.</p>
+<pre data-example="decoder.si" data-lines="all">Name     Decoder;
+PartNo   HELP03;
+Date     2026-01-01;
+Revision 01;
+Designer LinCUPL Help;
+Company  LinCUPL;
+Assembly None;
+Location None;
+Device   g16v8a;
+
+ORDER: iorq, %1, addr, %2, rom_cs, ram_cs, io_cs, %2,
+       page0, all_ones, any_set, parity, low_nibble_5;
+
+BASE: hex;
+
+VECTORS:
+0 '00'  HLL  HLLLL
+0 '3F'  HLL  LLHHL
+0 '40'  LHL  LLLLL
+0 'B5'  LHL  LLHLH
+0 'C0'  LLL  LLLLL
+1 'F5'  LLH  LLHLH
+1 'FF'  LLH  LHHHL
+1 '7F'  LLL  LLHHL</pre>
+
+<h2 id="header">Header</h2>
+<p>The header has the same items as the
+<a href="lang-overview.html#header">header of the design</a>.  csim
+compares them with the compiled design and gives the note
+<i>inconsistent header information</i> when they differ, so that test
+vectors are not used with the wrong design by mistake.</p>
+
+<h2 id="order">ORDER</h2>
+<pre class="syntax">ORDER: item, item, ... ;</pre>
+<p>The items are pin and node names, fields, <tt>%</tt><i>n</i> for
+<i>n</i> blanks in the listing, and texts in double quotes that are
+printed as they are.  The statement may span several lines.  Each
+signal takes one column in the vectors; a field takes one quoted value
+(see below).  Blanks between the values of a vector are ignored, so they
+can be grouped freely.</p>
+<pre class="syntax">ORDER: clk, " en=", en, clr, %2, cnt, top;</pre>
+<p>The fields of the design (<a href="lang-expressions.html#field">FIELD</a>
+statements) are known to the simulator.  A <tt>.si</tt> file may define
+further fields of its own with a <tt>FIELD</tt> statement before
+<tt>ORDER</tt>:</p>
+<pre class="syntax">FIELD lo = [c1..0];
+ORDER: clk, en, clr, %1, cnt, %1, lo, top;</pre>
+
+<h2 id="polarity">Signal values and polarity</h2>
+<p>Values refer to the logical signal, as in the design.  For a pin
+declared active low (<tt>Pin 16 = !y_nor;</tt>) the vector gives
+<tt>H</tt> when <tt>y_nor</tt> is true, which is a low level on the pin:</p>
+<pre data-example="gates.si" data-lines="11-17">ORDER: a, b, %4, y_and, y_or, y_xor, y_nand, y_nor;
+
+VECTORS:
+0 0    L L L H L
+0 1    L H H H H
+1 0    L H H H H
+1 1    H H L L H</pre>
+
+<h2 id="base">BASE</h2>
+<pre class="syntax">BASE: hex | decimal | octal | binary;</pre>
+<p>The base of the field values in quotes; the default is hexadecimal.</p>
+
+<h2 id="vectors">VECTORS</h2>
+<p>After <tt>VECTORS:</tt> each line is one test vector, with one value
+per signal of <tt>ORDER</tt>:</p>
+<table>
+<tr><th>Value</th><th>For</th><th>Meaning</th></tr>
+<tr><td><tt>0</tt>, <tt>1</tt></td><td>inputs</td><td>Drive the input low or high.</td></tr>
+<tr><td><tt>C</tt></td><td>clock inputs</td><td>A clock pulse 0-1-0: the registers clocked by this input load at its rising edge.</td></tr>
+<tr><td><tt>K</tt></td><td>clock inputs</td><td>An inverted pulse 1-0-1.</td></tr>
+<tr><td><tt>R</tt></td><td>inputs</td><td>A random 0 or 1.</td></tr>
+<tr><td><tt>P</tt></td><td>clock input</td><td>Preload: the registers are set to the values given for the outputs in this vector (<tt>0</tt>, <tt>1</tt>, or a field value in single quotes).</td></tr>
+<tr><td><tt>L</tt>, <tt>H</tt></td><td>outputs</td><td>Expect the output low or high.</td></tr>
+<tr><td><tt>Z</tt></td><td>outputs</td><td>Expect the output disabled (high impedance).</td></tr>
+<tr><td><tt>X</tt></td><td>inputs, outputs</td><td>Undefined input; for an output, expect an undefined value.</td></tr>
+<tr><td><tt>N</tt></td><td>outputs</td><td>Do not check the output.</td></tr>
+<tr><td><tt>*</tt></td><td>outputs</td><td>Do not check; the listing shows the simulated value.</td></tr>
+</table>
+<p>A register may be clocked by another signal of the design, for
+example by the register before it in a ripple counter
+(<tt>q1.ck = q0;</tt>).  It loads when that signal rises while the
+vector is simulated.</p>
+<p class="note">The original's simulator for the virtual device and the
+ATF150x CPLDs never clocks such a register; the usual workaround was to
+pass the clock through a <tt>PINNODE</tt>.  LinCUPL does not need
+it.</p>
+<p>A field takes its value in quotes: <tt>'5A'</tt> in single quotes sets
+inputs, <tt>"5A"</tt> in double quotes gives the expected value of
+outputs, in the <a href="#base">base</a> of the file.  A quoted value may
+also be <tt>"*"</tt>, <tt>"X"</tt> or <tt>"Z"</tt> for all bits.</p>
+<pre data-example="counter.si" data-lines="14-17">$MSG "Reset, then count from 0";
+0 0 1 0 1  "0" L
+C 1 0 0 1  "1" L
+C 1 0 0 1  "2" L</pre>
+<p>An output is checked after the inputs have been applied and, for a
+<tt>C</tt> vector, after the clock pulse.  The
+<a href="sim-directives.html">directives</a> between the vectors repeat
+vectors, print messages and control the run.</p>
+
+<h2 id="preload">Preload</h2>
+<p>A <tt>P</tt> in the clock column loads the registers directly, without
+going through their logic; useful to start a test in a particular state:</p>
+<pre class="syntax">ORDER: clk, en, clr, %1, cnt, top;
+VECTORS:
+P 0 0 '5' X          /* registers := 101 */
+0 0 0 "5" L
+C 1 0 "6" L</pre>
+<p>With the <a href="virtual.html#use">virtual device</a> a preload sets
+active-high registers to the complement of the given values.</p>
+<p class="seealso">See also: <a href="sim-directives.html">Simulator
+directives</a>, <a href="sim-listing.html">the listing</a>.</p>
+</body>
+</html>
