@@ -119,13 +119,15 @@ endif()
 
 # Code used by several programs (src/shared): file name and data file
 # lookup, string helpers, starting an external fitter, JEDEC checksums,
-# reading device libraries, the files the compiler phases hand on, the
+# reading JEDEC fuse maps and device libraries, the files the compiler
+# phases hand on, the
 # absolute file as text (for the GUI), the runtime of the compiler phases
 # and the simulator
 set(LINCUPL_SHARED_SOURCES
     src/shared/absdump.c
     src/shared/cfile.c
     src/shared/devlib.c
+    src/shared/jedread.c
     src/shared/jedsum.c
     src/shared/locate.c
     src/shared/phase.c
