@@ -17,6 +17,7 @@ static void csim_usage(void) {
     printf("  -n download filename=PLD filename\n");
     printf("  -l listing file (generate error listing in .so file)\n");
     printf("  -w simulate and generate waveform (.wo and .so files)\n");
+    printf("  -f simulate the fuse map in filename.jed (GAL16V8, GAL20V8, GAL22V10; no .abs file)\n");
     printf("  -u Use specified library (overrides Environment Variable)\n");
     exit(0);
 }

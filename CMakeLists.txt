@@ -80,6 +80,7 @@ set(LINCUPL_PHASE_SOURCES
     src/sim/driver.c
     src/sim/sim.c
     src/sim/load.c
+    src/sim/jedload.c
     src/sim/parse.c
     src/sim/core.c
     src/sim/bind.c

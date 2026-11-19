@@ -118,6 +118,28 @@ static void load_device(void)
     g_lib.fp = NULL;
 }
 
+void load_device_entry(const char *name)
+{
+    g_lib.name = name;
+    load_device();
+}
+
+/* Does the library have an entry `name`?  (0 also if it cannot be read;
+ * load_device_entry() then reports why.) */
+int device_in_library(const char *name)
+{
+    uint8_t header[DL_HEADER_SIZE];
+    uint8_t entry[DL_ENTRY_SIZE];
+    FILE *fp = open_file(g_args[2], "rb");
+    int found;
+    if (fp == NULL) {
+        return 0;
+    }
+    found = dl_read_header(fp, header) == DL_OK && dl_find_device(fp, name, DL_MATCH_CASE, entry);
+    close_file(fp);
+    return found;
+}
+
 /* Is `abs_device` listed as an alias in the library entry `device`? */
 static int device_has_alias(const char *device, const char *abs_device)
 {

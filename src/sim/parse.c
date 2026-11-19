@@ -1175,7 +1175,7 @@ static void act_header_text(list_node_t *tok)
     case T_FORMAT: index = -1; break;
     default: index = 0; break;
     }
-    if (index >= 0) {
+    if (index >= 0 && (g_header_items & (1u << index))) {
         const char *item = g_abs_extra != NULL ? g_abs_extra : "";
         for (int i = 0; i < index; i++) {
             item += strlen(item) + 1;
@@ -1190,6 +1190,9 @@ static void act_header_text(list_node_t *tok)
 /* Warn if a header item is missing. */
 static void check_header_items(void)
 {
+    if (g_header_items == 0) {
+        return;     /* a JEDEC file without header items: none are expected */
+    }
     for (int i = 0; i < 8; i++) {
         if (!(g_header_seen & (1u << i))) {
             print_warning_now(ERR_HEADER_MISSING, " ");
@@ -1266,6 +1269,15 @@ static void act_order_name(list_node_t *tok)
             fatal_error(ERR_TOO_MANY_SYMBOLS, "");
         }
         sym = find_symbol(tok_text(tok));
+        if (sym == NULL && (g_options & OPT_FUSEMAP)) {
+            /* P<n> for a pin that has a name from the .pld file: the level
+             * of the pin, whatever polarity the name was declared with */
+            int inverted = 0;
+            sym = jedec_pin_symbol(tok_text(tok), &inverted);
+            if (sym != NULL && inverted) {
+                tok->flags ^= 1;
+            }
+        }
         if (sym == NULL) {
             fatal_error(ERR_UNKNOWN_SYMBOL, tok_text(tok));
         }

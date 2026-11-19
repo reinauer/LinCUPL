@@ -10,6 +10,7 @@
  * Source files:
  *   sim.c        error reporting, lists, strings, program flow
  *   load.c   .abs file and device library
+ *   jedload.c  the design from a JEDEC fuse map instead (option f)
  *   parse.c  .si scanner, parser and statement actions
  *   core.c   product term evaluation, phases of a test vector
  *   bind.c   binding symbols to macrocell models
@@ -192,6 +193,13 @@ char *make_file_name(const char *dir, const char *name, const char *ext)
 
 static const char *error_text(int code)
 {
+    switch (code) {
+    case ERR_JEDEC_FILE: return "invalid JEDEC file:  ";
+    case ERR_JEDEC_NO_DEVICE: return "no device for JEDEC file:  ";
+    case ERR_JEDEC_DEVICE: return "device cannot be simulated from a JEDEC file:  ";
+    case ERR_JEDEC_MODE: return "mode fuses of the JEDEC file select another mode than device:  ";
+    default: break;
+    }
     if (g_vsima && code == ERR_NO_PIN_NUMBER) {
         return k_error_text_33_vsima;
     }
@@ -872,6 +880,7 @@ static void reset_globals(void)
     g_syms = NULL;
     g_nsyms = 0;
     g_abs_extra = NULL;
+    g_header_items = 0xff;
     g_terms = NULL;
     g_nterms = g_total_rows = 0;
     g_row_words = -1;
@@ -900,6 +909,7 @@ static void sim_main(void)
         case 'l':
         case 'w': g_options |= OPT_LISTING; break;
         case 'n': g_options |= OPT_N; break;
+        case 'f': g_options |= OPT_FUSEMAP; break;
         case 'v': g_options |= OPT_CONSOLE; g_rt.console = 1; break;
         default: break;
         }
@@ -910,9 +920,17 @@ static void sim_main(void)
         open_listing_files();
     }
     clear_marker_line();
-    load_design();
+    if ((g_options & OPT_FUSEMAP) && !g_vsima) {
+        load_design_jedec();
+    } else {
+        g_options &= (uint16_t)~OPT_FUSEMAP;
+        load_design();
+    }
     build_fields();
     sim_allocate();
+    if (g_options & OPT_FUSEMAP) {
+        jedec_design_bound();
+    }
     if (g_options & OPT_JEDEC) {
         jedec_begin();
     }

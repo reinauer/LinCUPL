@@ -4,7 +4,8 @@
  * csim_parse_options reads the csim command line and finds the device
  * library; csim_driver_run decides from the library entry of the device
  * whether csima or vsima simulates the design and runs that phase with the
- * argument vector it expects.
+ * argument vector it expects.  With -f the design is the fuse map of a
+ * JEDEC file, which csima simulates.
  */
 #include "banner.h"
 #include "locate.h"
@@ -284,6 +285,12 @@ static void init_args(const struct csim_options *opt) {
     g_na[5] = g_source_buf;
     g_na[6] = g_flags_str;
     verify_lib();
+    if (strchr(g_flags_str + 1, 'f') != NULL) {
+        /* -f: the design is the fuse map of <name>.jed.  There is no .abs
+         * file to take the device from; the simulator (csima) finds the
+         * device from the fuse map or takes the one given here. */
+        return;
+    }
     /* Check if device is "&" (read from .abs) or specified explicitly */
     if (strcmp(g_na[4], "&") == 0) {
         char base_name[256];
@@ -462,7 +469,7 @@ int csim_parse_options(int argc, char **argv, struct csim_options *opt)
             int c = (unsigned char)*s;
             if (c == '-') {
                 continue;
-            } else if (c == 'j' || c == 'l' || c == 'n' || c == 'w' || c == 'd' || c == 'v') {
+            } else if (c == 'j' || c == 'l' || c == 'n' || c == 'w' || c == 'd' || c == 'v' || c == 'f') {
                 if (nletters + 1 < sizeof(letters)) {
                     letters[nletters++] = *s;
                     letters[nletters] = '\0';
@@ -498,7 +505,7 @@ int csim_parse_options(int argc, char **argv, struct csim_options *opt)
     }
     lincupl_strlwr(opt->device);
 
-    /* j, l, n, v and w are passed on once each, in the order first given,
+    /* f, j, l, n, v and w are passed on once each, in the order first given,
      * and v in any case: the simulator always runs in console mode.  -d
      * (show the .so file in the waveform viewer) is not passed on. */
     opt->flags[0] = '&';
