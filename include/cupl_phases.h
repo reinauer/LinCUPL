@@ -30,7 +30,8 @@ enum {
 /* The csim command line, "csim [-flags] [library] [device] file", as
  * csim_parse_options leaves it for csim_driver_run. */
 struct csim_options {
-    char flags[8];              /* "&" and the option letters for the simulator */
+    char flags[8];              /* "&" and the option letters for the simulator
+                                 * (at most six: f, j, l, n, w and v) */
     char library[PATH_MAX];
     char device[128];           /* lower case; "" if none was given */
     char source[PATH_MAX];

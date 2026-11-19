@@ -99,7 +99,12 @@ enum {
     ERR_UNDEFINED_FEEDBACK = 32,  /* feedback usage of undefined output:  */
     ERR_NO_PIN_NUMBER = 33,       /* csima: pin number is undefined for:
                                      vsima: jedec vectors cannot be created with undefined pin numbers */
-    ERR_REGISTER_TYPE = 34        /* vsima only: possible undefined register type:  */
+    ERR_REGISTER_TYPE = 34,       /* vsima only: possible undefined register type:  */
+    /* option f: the design is taken from a JEDEC file (jedload.c) */
+    ERR_JEDEC_FILE = 35,          /* invalid JEDEC file:   */
+    ERR_JEDEC_NO_DEVICE = 36,     /* no device for JEDEC file:   */
+    ERR_JEDEC_DEVICE = 37,        /* device cannot be simulated from a JEDEC file:   */
+    ERR_JEDEC_MODE = 38           /* mode fuses of the JEDEC file select another mode than device:   */
 };
 
 /* -------------------------------------------------------------------------
@@ -273,6 +278,10 @@ SIM_EXTERN char g_device_name[28];  /* device name from the .abs header */
 SIM_EXTERN int g_nsyms_file;       /* number of symbols in the file */
 SIM_EXTERN int g_dev_has_class;     /* device header byte +0x12 is non-zero */
 SIM_EXTERN char *g_abs_extra;       /* variable part of the .abs header */
+/* Header items (bit 0 NAME ... bit 7 LOCATION) that g_abs_extra has and the
+ * .si file is compared with: all of them, unless the design comes from a
+ * JEDEC file that does not carry them (option f). */
+SIM_EXTERN uint8_t g_header_items;
 
 /* Entry of the term table g_terms, indexed by frame->index. */
 typedef struct term_entry {
@@ -336,6 +345,7 @@ SIM_EXTERN int g_dev_is_7c330;      /* library entry name is p7c330 */
 SIM_EXTERN const char *g_args[9];   /* copy of the phase argv */
 enum {
     OPT_LISTING = 0x02,     /* l / w: write .so and .wo */
+    OPT_FUSEMAP = 0x04,     /* f: simulate <design>.jed, there is no .abs file */
     OPT_JEDEC = 0x08,       /* j: append test vectors to the .jed file */
     OPT_N = 0x10,           /* n */
     OPT_CONSOLE = 0x80      /* v */
@@ -556,6 +566,17 @@ int queued_error_count(void);
  * ------------------------------------------------------------------------- */
 int sim_run(int vsima, int argc, char **argv);   /* entry point, see cupl_phases.h */
 void load_design(void);             /* read .abs and the device library entry */
+void load_device_entry(const char *name); /* load the library entry `name` into g_dev_rec */
+int device_in_library(const char *name);  /* does the library have the entry? */
+/* Option f (jedload.c): build the design from <design>.jed and the library
+ * entry of its device, in place of load_design(). */
+void load_design_jedec(void);
+/* After sim_allocate(): an output enable pin that no vector drives enables. */
+void jedec_design_bound(void);
+/* The symbol an ORDER name "P<n>" stands for when the pin has another name
+ * (from the .pld file), NULL if it is no such name; *inverted is set if
+ * that name is declared active low, so that P<n> is the level of the pin. */
+sym_t *jedec_pin_symbol(const char *name, int *inverted);
 void close_abs_file(void);
 void build_fields(void);            /* define the FIELDs of the .abs file */
 void sim_reset(void);               /* initial state of the simulation core */
