@@ -93,7 +93,9 @@ added to the JEDEC file (<tt>V</tt> fields) and its checksum is
 updated.</td></tr>
 </table>
 <p>Without <tt>-l</tt> or <tt>-w</tt> the simulator prints the vectors
-and messages and writes no file.</p>
+and messages and writes no file.  With <tt>-f</tt> csim reads the fuse
+map of the <tt>.jed</tt> file instead of the <tt>.abs</tt> file
+(<a href="sim-overview.html#jedec">simulating a JEDEC file</a>).</p>
 
 <h2 id="temporary">Other files</h2>
 <p>cupl works with temporary files in the design's directory and removes
