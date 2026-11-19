@@ -1,0 +1,36 @@
+Name     t16r;
+PartNo   00;
+Date     2026-01-01;
+Revision 01;
+Designer LinCUPL;
+Company  LinCUPL;
+Assembly None;
+Location None;
+Device   g16v8;
+
+/* GAL16V8 in registered mode: registers of both polarities behind the
+   output enable pin, one without feedback, and combinatorial outputs with
+   a product term output enable, one of them also read as an input */
+
+Pin 1  = clk;
+Pin 2  = a;
+Pin 3  = b;
+Pin 4  = c;
+Pin 5  = d;
+Pin 11 = !oe;
+Pin 19 = q0;
+Pin 18 = !q1;
+Pin 17 = q2;
+Pin 16 = co;
+Pin 15 = !cz;
+Pin 14 = io;
+Pin 13 = inp;
+
+q0.d = a & !q0 # b & q1;
+q1.d = q0 $ c;
+q2.d = a & b & inp;
+co = q0 & q1 # a & io;
+cz = a & b # c & d;
+cz.oe = a & !b;
+io = c & d;
+io.oe = !a & b;

@@ -1,0 +1,35 @@
+Name     t16c;
+PartNo   00;
+Date     2026-01-01;
+Revision 01;
+Designer LinCUPL;
+Company  LinCUPL;
+Assembly None;
+Location None;
+Device   g16v8;
+
+/* GAL16V8 in complex mode: three-state outputs with product term output
+   enables, outputs read back from their pins (two of them cross coupled),
+   the two outputs that have no feedback (pins 12 and 19), an input on an
+   output pin */
+
+Pin 1  = a;
+Pin 2  = b;
+Pin 3  = c;
+Pin 4  = d;
+Pin 11 = e;
+Pin 19 = x;
+Pin 18 = !y;
+Pin 17 = z;
+Pin 16 = io;
+Pin 13 = inp;
+Pin 12 = w;
+
+x = a & b # c & d;
+x.oe = e;
+y = a $ b # z;
+y.oe = c;
+z = y & d # a & inp;
+io = a & b;
+io.oe = !d & c;
+w = io # e & !a;

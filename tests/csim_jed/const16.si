@@ -1,0 +1,17 @@
+Name     const16;
+PartNo   00;
+Date     2026-01-01;
+Revision 01;
+Designer LinCUPL;
+Company  LinCUPL;
+Assembly None;
+Location None;
+Device   g16v8;
+
+ORDER: a, b, %2, one, zero, nzero, off, buf;
+
+VECTORS:
+0 0  H L L Z L
+1 0  H L L Z L
+1 1  H L L Z H
+$RANDOM 20 - 2 5;

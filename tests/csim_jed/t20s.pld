@@ -1,0 +1,29 @@
+Name     t20s;
+PartNo   00;
+Date     2026-01-01;
+Revision 01;
+Designer LinCUPL;
+Company  LinCUPL;
+Assembly None;
+Location None;
+Device   g20v8;
+
+/* GAL20V8 in simple mode: outputs of both polarities, among them the two
+   that cannot be inputs (pins 18 and 19) */
+
+Pin [1..6] = [a, b, c, d, e, f];
+Pin 13 = g;
+Pin 14 = h;
+Pin 23 = i;
+Pin 22 = x;
+Pin 21 = !y;
+Pin 20 = inp;
+Pin 19 = m;
+Pin 18 = !n;
+Pin 15 = w;
+
+x = a & b # c & d # g & h & i;
+y = a $ b # inp;
+m = a & e # !c & f;
+n = a # b # c # d & e;
+w = inp & e & !a # h & !i;

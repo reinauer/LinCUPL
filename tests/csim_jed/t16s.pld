@@ -1,0 +1,30 @@
+Name     t16s;
+PartNo   00;
+Date     2026-01-01;
+Revision 01;
+Designer LinCUPL;
+Company  LinCUPL;
+Assembly None;
+Location None;
+Device   g16v8;
+
+/* GAL16V8 in simple mode: outputs of both polarities, among them the two
+   that cannot be inputs (pins 15 and 16), an input on an output pin */
+
+Pin 1  = a;
+Pin 2  = b;
+Pin 3  = c;
+Pin 4  = d;
+Pin 11 = e;
+Pin 19 = x;
+Pin 18 = !y;
+Pin 17 = inp;
+Pin 16 = m;
+Pin 15 = !n;
+Pin 12 = w;
+
+x = a & b # c & d;
+y = a $ b # inp;
+m = a & e # !c;
+n = a # b # c # d & e;
+w = inp & e & !a;

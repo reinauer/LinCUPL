@@ -1,0 +1,36 @@
+Name     t20r;
+PartNo   00;
+Date     2026-01-01;
+Revision 01;
+Designer LinCUPL;
+Company  LinCUPL;
+Assembly None;
+Location None;
+Device   g20v8;
+
+/* GAL20V8 in registered mode: registers of both polarities behind the
+   output enable pin, combinatorial outputs with product term output
+   enables, the two extra inputs (pins 14 and 23) */
+
+Pin 1  = clk;
+Pin [2..5] = [a, b, c, d];
+Pin 11 = k;
+Pin 13 = !oe;
+Pin 14 = e;
+Pin 23 = f;
+Pin 22 = q0;
+Pin 21 = !q1;
+Pin 20 = q2;
+Pin 19 = co;
+Pin 18 = !cz;
+Pin 17 = io;
+Pin 16 = inp;
+
+q0.d = a & !q0 # b & q1 # e & f;
+q1.d = q0 $ c;
+q2.d = a & b & inp # k;
+co = q0 & q1 # a & io;
+cz = a & b # c & d;
+cz.oe = e & !f;
+io = c & d;
+io.oe = !a & b;

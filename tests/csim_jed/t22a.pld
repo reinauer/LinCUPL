@@ -1,0 +1,46 @@
+Name     t22a;
+PartNo   00;
+Date     2026-01-01;
+Revision 01;
+Designer LinCUPL;
+Company  LinCUPL;
+Assembly None;
+Location None;
+Device   g22v10;
+
+/* GAL22V10: registers of both polarities with asynchronous reset and
+   synchronous preset, one of them buried (its output is never enabled, but
+   product terms read it), combinatorial outputs of both polarities with
+   product term output enables, a bidirectional pin, a latch made of
+   combinatorial feedback, an input on a macrocell pin */
+
+Pin 1  = clk;
+Pin 2  = a;
+Pin 3  = b;
+Pin 4  = c;
+Pin 5  = d;
+Pin 6  = !rst;
+Pin 7  = pre;
+Pin 13 = !oeb;
+Pin 16 = e;
+Pin 23 = qh;
+Pin 22 = !ql;
+Pin 21 = ch;
+Pin 20 = !cl;
+Pin 19 = bio;
+Pin 18 = lat;
+Pin 17 = qb;
+
+qh.d = a & b # c & !d;
+ql.d = a $ ql # e;
+qb.d = !qb & a # qb & !a & b;
+[qh, ql, qb].ar = rst;
+[qh, ql, qb].sp = pre & d;
+qh.oe = oeb;
+qb.oe = 'b'0;
+ch = a & !b # ch & c;
+ch.oe = d & !a;
+cl = a & b & c # !a & !b & qh # qb & d;
+bio = a # b;
+bio.oe = c & d;
+lat = a & !b # lat & !b # bio & e;
