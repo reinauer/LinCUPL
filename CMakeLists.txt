@@ -350,6 +350,25 @@ if(TARGET lincupl OR TARGET linsim)
     endforeach()
 endif()
 
+# ------------------------------------------------------------------------------
+# Tests
+# ------------------------------------------------------------------------------
+# csim -f (simulate the fuse map of a JEDEC file) against csim on the
+# compiled design, over the designs of tests/csim_jed and doc/help/examples
+# (and the installed examples when the device libraries were extracted).  The
+# test is skipped where no device library is found (build/share/lincupl, else
+# the directory LINCUPL_SHARE names).
+enable_testing()
+find_package(Python3 COMPONENTS Interpreter QUIET)
+if(Python3_EXECUTABLE)
+    add_test(
+        NAME csim_jed
+        COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/csim_jed.py" --bin-dir "$<TARGET_FILE_DIR:csim>"
+        WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
+    )
+    set_tests_properties(csim_jed PROPERTIES SKIP_RETURN_CODE 77)
+endif()
+
 # Install rules
 set(_install_targets cupl csim cbld backpin cfitr ${LINCUPL_FIT150X_PROGRAMS})
 if(TARGET lincupl)

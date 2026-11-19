@@ -1,0 +1,18 @@
+Name     t20r;
+PartNo   00;
+Date     2026-01-01;
+Revision 01;
+Designer LinCUPL;
+Company  LinCUPL;
+Assembly None;
+Location None;
+Device   g20v8;
+
+ORDER: clk, a, b, c, d, k, e, f, oe, inp, %2, q0, q1, q2, %1, co, cz, io;
+
+VECTORS:
+0 0 0 0 0 0 0 0 1 0  H L H  L Z Z
+C 1 0 0 0 0 0 0 1 0  L H L  X Z Z
+C 0 1 1 1 0 1 0 1 1  H H L  H H H
+C 1 1 1 0 1 1 1 0 1  Z Z Z  X Z Z
+$RANDOM 300 C 9 6;

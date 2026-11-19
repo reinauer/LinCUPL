@@ -1,0 +1,22 @@
+Name     pnames;
+PartNo   00;
+Date     2026-01-01;
+Revision 01;
+Designer LinCUPL;
+Company  LinCUPL;
+Assembly None;
+Location None;
+Device   g16v8;
+
+/* Pin names that look like the default names P<n> of other pins (GAL16V8,
+   simple mode) */
+
+Pin 1  = P3;
+Pin 2  = P1;
+Pin 3  = !P2;
+Pin 4  = d;
+Pin 19 = P12;
+Pin 12 = P19;
+
+P12 = P3 & P1 # P2 & d;
+P19 = P3 $ d;

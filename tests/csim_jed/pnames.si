@@ -1,0 +1,17 @@
+Name     pnames;
+PartNo   00;
+Date     2026-01-01;
+Revision 01;
+Designer LinCUPL;
+Company  LinCUPL;
+Assembly None;
+Location None;
+Device   g16v8;
+
+ORDER: P3, P1, P2, d, %2, P12, P19;
+
+VECTORS:
+0 0 0 0  L L
+1 1 0 0  H H
+0 0 1 1  H H
+$RANDOM 40 - 4 2;
