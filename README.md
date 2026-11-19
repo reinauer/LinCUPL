@@ -22,7 +22,7 @@ Amiga 3000/4000, built for a GAL22V10):
 | Program | Purpose |
 |---|---|
 | `cupl` | The compiler: `.pld` → `.jed` (and `.abs`, `.doc`, `.lst`, `.pla`, …) |
-| `csim` | The simulator: runs the vectors of a `.si` file against the compiled design |
+| `csim` | The simulator: runs the vectors of a `.si` file against the compiled design, or against the fuse map of a `.jed` file |
 | `fit1502`, `fit1504`, `fit1508` | Fitters for the ATF150x CPLDs; `cupl` starts them itself |
 | `cbld` | Lists the devices of a device library (`.dl`) and builds libraries |
 | `backpin` | Writes the pins a fitter chose back into the `.pld` file |
@@ -99,6 +99,42 @@ for the list of flags. The most common ones:
 | `-s`, `-w` | simulate after compiling; also write the waveform file `.wo` |
 | `-u lib.dl` | use this device library |
 | `csim -j` | append the test vectors to the `.jed` file |
+| `csim -f` | simulate the fuse map of the `.jed` file instead of the compiled design |
+
+**Simulating a JEDEC file.** `csim -f` takes the design from the fuse map
+in `name.jed` and needs no `.abs` file. This is for a GAL16V8, GAL20V8 or
+GAL22V10 whose source is not at hand: a file read back from a part, or one
+written by another compiler.
+
+```sh
+csim -lf u12              # reads u12.jed and u12.si, writes u12.so and u12.wo
+csim -lf g20v8lcc u12     # the same as this device (here for the pin numbers of the PLCC package)
+```
+
+- The device is the one named on the command line. Without one it is the
+  device of `u12.pld`, if that file is there and the fuse map fits it, else
+  it follows from the number of fuses: 2194 is a GAL16V8, 2706 a GAL20V8,
+  5892 or 5828 (no signature) a GAL22V10. The mode of a GAL16V8 or GAL20V8
+  (simple, complex, registered) is read from its SYN and AC0 fuses; a mode
+  can also be named (`g16v8ms`, `g16v8ma`, `g16v8s`).
+- A fuse map has no names. The pins are `P1`, `P2`, … in the `ORDER`
+  statement, and their test values are levels at the pins. If `u12.pld` is
+  there, the pins also have the names of its `PIN` declarations (and its
+  `FIELD`s), with their polarity as for a compiled design. Only plain
+  declarations are read (`PIN 2 = !cs;`, `PIN [3..6] = [a3..0];`); nothing
+  is preprocessed.
+- csim prints the device and which pins the fuses make inputs,
+  combinatorial outputs and registered outputs. A macrocell without
+  product terms whose output is never enabled is an input.
+- The output enable pin of the registered modes (pin 11 of the GAL16V8,
+  13 of the GAL20V8) enables the outputs unless a vector drives it. The
+  reset and preset terms of a GAL22V10 act on all its registers, as in
+  the device.
+- `-l` and `-w` work as usual; `-j` appends the vectors to `u12.jed`.
+- The file may come from other tools: files without STX/ETX, without a QF
+  or F field, with lower-case fields or other line ends are read. A file
+  with a wrong fuse checksum, or one that ends without ETX and without a
+  fuse checksum, is refused.
 
 **ATF150x CPLDs.** For `f1502…`, `f1504…` and `f1508…` devices, `cupl`
 writes a `.tt2` file and runs the fitter. The fitter writes the `.jed`,
@@ -151,6 +187,7 @@ option. Their sources are in `doc/help`.
 ```text
 src/cupl/      compiler: preprocessor, parser, expansion, minimizer, fuse map and output files
 src/sim/       simulator
+tests/         csim_jed.py: `csim -f` against the simulation of the compiled design (run by `ctest`)
 src/fit150x/   ATF1502/1504/1508 fitters
 src/tools/     cbld, backpin, cfitr
 src/shared/    code used by several programs (library files, paths, checksums)
