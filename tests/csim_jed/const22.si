@@ -1,0 +1,18 @@
+Name     const22;
+PartNo   00;
+Date     2026-01-01;
+Revision 01;
+Designer LinCUPL;
+Company  LinCUPL;
+Assembly None;
+Location None;
+Device   g22v10;
+
+ORDER: clk, a, b, %2, one, nzero, rz, ro, %1, y, z, off;
+
+VECTORS:
+0 0 0  H L L L  L L Z
+C 1 0  H L L H  H L Z
+C 0 1  H L L H  L L Z
+C 1 1  H L L H  H L Z
+$RANDOM 60 C 2 7;

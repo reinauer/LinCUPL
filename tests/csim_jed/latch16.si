@@ -1,0 +1,27 @@
+Name     latch16;
+PartNo   00;
+Date     2026-01-01;
+Revision 01;
+Designer LinCUPL;
+Company  LinCUPL;
+Assembly None;
+Location None;
+Device   g16v8;
+
+ORDER: s, r, d, g, en, %2, q, qn, l;
+
+VECTORS:
+$MSG "D latch open, so that it has a value; reset the other latch";
+0 1 1 1 1  L L H
+$MSG "Set, hold, reset, hold";
+1 0 1 1 1  H H H
+0 0 1 1 1  H H H
+0 1 1 1 1  L L H
+0 0 1 1 1  L L H
+$MSG "D latch: close, hold, open";
+0 0 1 0 1  L L H
+0 0 0 0 1  L L H
+0 0 0 1 1  L L L
+$MSG "Output of qn off";
+0 0 1 0 0  L Z L
+$RANDOM 300 - 5 3;

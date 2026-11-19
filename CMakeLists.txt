@@ -80,6 +80,7 @@ set(LINCUPL_PHASE_SOURCES
     src/sim/driver.c
     src/sim/sim.c
     src/sim/load.c
+    src/sim/jedload.c
     src/sim/parse.c
     src/sim/core.c
     src/sim/bind.c
@@ -119,13 +120,15 @@ endif()
 
 # Code used by several programs (src/shared): file name and data file
 # lookup, string helpers, starting an external fitter, JEDEC checksums,
-# reading device libraries, the files the compiler phases hand on, the
+# reading JEDEC fuse maps and device libraries, the files the compiler
+# phases hand on, the
 # absolute file as text (for the GUI), the runtime of the compiler phases
 # and the simulator
 set(LINCUPL_SHARED_SOURCES
     src/shared/absdump.c
     src/shared/cfile.c
     src/shared/devlib.c
+    src/shared/jedread.c
     src/shared/jedsum.c
     src/shared/locate.c
     src/shared/phase.c
@@ -345,6 +348,25 @@ if(TARGET lincupl OR TARGET linsim)
             add_dependencies(${_tgt} lincupl_help)
         endif()
     endforeach()
+endif()
+
+# ------------------------------------------------------------------------------
+# Tests
+# ------------------------------------------------------------------------------
+# csim -f (simulate the fuse map of a JEDEC file) against csim on the
+# compiled design, over the designs of tests/csim_jed and doc/help/examples
+# (and the installed examples when the device libraries were extracted).  The
+# test is skipped where no device library is found (build/share/lincupl, else
+# the directory LINCUPL_SHARE names).
+enable_testing()
+find_package(Python3 COMPONENTS Interpreter QUIET)
+if(Python3_EXECUTABLE)
+    add_test(
+        NAME csim_jed
+        COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/csim_jed.py" --bin-dir "$<TARGET_FILE_DIR:csim>"
+        WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
+    )
+    set_tests_properties(csim_jed PROPERTIES SKIP_RETURN_CODE 77)
 endif()
 
 # Install rules

@@ -1,0 +1,20 @@
+Name     t16c;
+PartNo   00;
+Date     2026-01-01;
+Revision 01;
+Designer LinCUPL;
+Company  LinCUPL;
+Assembly None;
+Location None;
+Device   g16v8;
+
+ORDER: a, b, c, d, e, inp, %2, x, y, z, io, w;
+
+VECTORS:
+0 0 0 0 0 0  Z Z L Z X
+1 1 1 0 1 0  H L L H H
+1 0 1 1 1 1  H L H Z X
+$MSG "io is an input while its output is off";
+0 0 0 0 0 0  Z Z L 1 H
+0 0 0 0 0 0  Z Z L 0 L
+$RANDOM 300 - 6 5;

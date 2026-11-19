@@ -1,0 +1,28 @@
+Name     const16;
+PartNo   00;
+Date     2026-01-01;
+Revision 01;
+Designer LinCUPL;
+Company  LinCUPL;
+Assembly None;
+Location None;
+Device   g16v8;
+
+/* Outputs that are constants and outputs enabled by constants (GAL16V8,
+   complex mode); most of the device is unused */
+
+Pin 2  = a;
+Pin 3  = b;
+Pin 19 = one;
+Pin 18 = zero;
+Pin 17 = !nzero;
+Pin 16 = off;
+Pin 15 = buf;
+
+one = 'b'1;
+zero = 'b'0;
+nzero = 'b'0;
+off = a;
+off.oe = 'b'0;
+buf = a & b;
+buf.oe = a # !a;

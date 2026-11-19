@@ -1,0 +1,39 @@
+Name     const22;
+PartNo   00;
+Date     2026-01-01;
+Revision 01;
+Designer LinCUPL;
+Company  LinCUPL;
+Assembly None;
+Location None;
+Device   g22v10;
+
+/* GAL22V10: outputs and registers that are constants, a register whose
+   output is never enabled and that has no product term but is read by
+   another output, a toggling register that is never enabled */
+
+Pin 1  = clk;
+Pin 2  = a;
+Pin 3  = b;
+Pin 23 = one;
+Pin 22 = !nzero;
+Pin 21 = rz;
+Pin 20 = !ro;
+Pin 19 = bur;
+Pin 18 = y;
+Pin 17 = bt;
+Pin 16 = z;
+Pin 15 = off;
+
+one = 'b'1;
+nzero = 'b'0;
+rz.d = 'b'0;
+ro.d = 'b'1;
+bur.d = 'b'0;
+bur.oe = 'b'0;
+y = a & !bur # b & bur;
+bt.d = !bt;
+bt.oe = 'b'0;
+z = bt $ a;
+off = a # b;
+off.oe = 'b'0;

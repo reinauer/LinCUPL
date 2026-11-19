@@ -1,0 +1,26 @@
+Name     t22p;
+PartNo   00;
+Date     2026-01-01;
+Revision 01;
+Designer LinCUPL;
+Company  LinCUPL;
+Assembly None;
+Location None;
+Device   p22v10;
+
+ORDER: clk, a, b, c, d, rst, pre, oeb, e, %2, qh, ql, %1, ch, cl, bio, lat;
+
+VECTORS:
+$MSG "Asynchronous reset; b clears the latch";
+0 0 1 0 0 1 0 1 0  L L  Z L Z L
+$MSG "Clock";
+C 1 1 0 0 0 0 1 0  H H  Z L Z L
+C 0 1 1 0 0 0 1 1  H H  Z L Z X
+$MSG "Synchronous preset";
+C 0 1 0 1 0 1 1 0  H H  L H Z L
+$MSG "Outputs of qh off";
+C 1 0 1 0 0 0 0 0  Z L  Z L Z H
+$MSG "bio as an input";
+0 0 0 0 0 0 0 1 1  H L  Z H 1 H
+0 0 1 0 0 0 0 1 1  H L  Z L 0 L
+$RANDOM 400 C 8 6;

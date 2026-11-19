@@ -1,0 +1,26 @@
+Name     latch16;
+PartNo   00;
+Date     2026-01-01;
+Revision 01;
+Designer LinCUPL;
+Company  LinCUPL;
+Assembly None;
+Location None;
+Device   g16v8;
+
+/* Latches made of combinatorial feedback: a set/reset latch and a D latch
+   with a hazard-free cover (GAL16V8, complex mode) */
+
+Pin 1  = s;
+Pin 2  = r;
+Pin 3  = d;
+Pin 4  = g;
+Pin 11 = !en;
+Pin 18 = q;
+Pin 17 = !qn;
+Pin 16 = l;
+
+q = s # q & !r;
+qn = q;
+qn.oe = en;
+l = d & g # l & !g # d & l;

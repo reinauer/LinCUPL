@@ -1,0 +1,16 @@
+Name     t20s;
+PartNo   00;
+Date     2026-01-01;
+Revision 01;
+Designer LinCUPL;
+Company  LinCUPL;
+Assembly None;
+Location None;
+Device   g20v8;
+
+ORDER: a, b, c, d, e, f, g, h, i, inp, %2, x, y, m, n, w;
+
+VECTORS:
+0 0 0 0 0 0 0 0 0 0  L L L L L
+1 1 0 0 1 1 1 1 1 1  H L H H L
+$RANDOM 300 - 10 5;
