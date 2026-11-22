@@ -1,0 +1,54 @@
+{
+  "device": "g22v10",
+  "variants": [
+    {
+      "label": "a & b register first",
+      "source": "pin 1 = clk; pin 3 = a; pin 4 = b; pin 22 = y;\ny.d = a & b;\ny = a # b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "label": "a & b combinational first",
+      "source": "pin 1 = clk; pin 3 = a; pin 4 = b; pin 22 = y;\ny = a # b;\ny.d = a & b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "label": "!(a & b) register first",
+      "source": "pin 1 = clk; pin 3 = a; pin 4 = b; pin 22 = y;\ny.d = !(a & b);\ny = a # b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "label": "!(a & b) combinational first",
+      "source": "pin 1 = clk; pin 3 = a; pin 4 = b; pin 22 = y;\ny = a # b;\ny.d = !(a & b);",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "label": "!(a # b) register first",
+      "source": "pin 1 = clk; pin 3 = a; pin 4 = b; pin 22 = y;\ny.d = !(a # b);\ny = a # b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "label": "!(a # b) combinational first",
+      "source": "pin 1 = clk; pin 3 = a; pin 4 = b; pin 22 = y;\ny = a # b;\ny.d = !(a # b);",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "label": "single negated register equation",
+      "source": "pin 1 = clk; pin 3 = a; pin 4 = b; pin 22 = y;\ny.d = !(a & b);",
+      "vectors": "ORDER: clk, a, b, y;\nVECTORS:\nC 0 0 H\nC 1 1 L\nC 0 1 H\n",
+      "simulate": [
+        "abs",
+        "jed"
+      ]
+    },
+    {
+      "label": "polarity optimization alternative",
+      "source": "pin 1 = clk; pin 3 = a; pin 4 = b; pin 22 = y;\ny.d = !(a & b);",
+      "flags": "-jaxm1kb",
+      "vectors": "ORDER: clk, a, b, y;\nVECTORS:\nC 0 0 H\nC 1 1 L\nC 0 1 H\n",
+      "simulate": [
+        "abs",
+        "jed"
+      ]
+    }
+  ]
+}
