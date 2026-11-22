@@ -1,0 +1,157 @@
+{
+  "device": "p32r16",
+  "variants": [
+    {
+      "label": "p32r16 bank 0 mixed modes order 0",
+      "device": "p32r16",
+      "source": "pin 11 = a; pin 12 = b; pin 4 = y; pin 3 = z;\ny = a; z.d = b;",
+      "diagnostic": "\\[0020cb\\]"
+    },
+    {
+      "label": "p32r16 bank 0 mixed modes order 1",
+      "device": "p32r16",
+      "source": "pin 11 = a; pin 12 = b; pin 4 = y; pin 3 = z;\nz.d = b; y = a;",
+      "diagnostic": "\\[0020cb\\]"
+    },
+    {
+      "label": "p32r16 bank 0 matching combinational modes",
+      "device": "p32r16",
+      "source": "pin 11 = a; pin 12 = b; pin 4 = y; pin 3 = z;\ny = a; z = b;"
+    },
+    {
+      "label": "p32r16 bank 0 matching .d modes",
+      "device": "p32r16",
+      "source": "pin 11 = a; pin 12 = b; pin 4 = y; pin 3 = z;\ny.d = a; z.d = b;"
+    },
+    {
+      "label": "p32r16 bank 1 mixed modes order 0",
+      "device": "p32r16",
+      "source": "pin 11 = a; pin 12 = b; pin 24 = y; pin 23 = z;\ny = a; z.d = b;",
+      "diagnostic": "\\[0020cb\\]"
+    },
+    {
+      "label": "p32r16 bank 1 mixed modes order 1",
+      "device": "p32r16",
+      "source": "pin 11 = a; pin 12 = b; pin 24 = y; pin 23 = z;\nz.d = b; y = a;",
+      "diagnostic": "\\[0020cb\\]"
+    },
+    {
+      "label": "p32r16 bank 1 matching combinational modes",
+      "device": "p32r16",
+      "source": "pin 11 = a; pin 12 = b; pin 24 = y; pin 23 = z;\ny = a; z = b;"
+    },
+    {
+      "label": "p32r16 bank 1 matching .d modes",
+      "device": "p32r16",
+      "source": "pin 11 = a; pin 12 = b; pin 24 = y; pin 23 = z;\ny.d = a; z.d = b;"
+    },
+    {
+      "label": "p32r16 independent banks 0 and 1",
+      "device": "p32r16",
+      "source": "pin 11 = a; pin 12 = b; pin 4 = y; pin 24 = z; y = a; z.d = b;"
+    },
+    {
+      "label": "p64r32 bank 0 mixed modes order 0",
+      "device": "p64r32",
+      "source": "pin 1 = a; pin 2 = b; pin 71 = y; pin 70 = z;\ny = a; z.d = b;",
+      "diagnostic": "\\[0020cb\\]"
+    },
+    {
+      "label": "p64r32 bank 0 mixed modes order 1",
+      "device": "p64r32",
+      "source": "pin 1 = a; pin 2 = b; pin 71 = y; pin 70 = z;\nz.d = b; y = a;",
+      "diagnostic": "\\[0020cb\\]"
+    },
+    {
+      "label": "p64r32 bank 0 matching combinational modes",
+      "device": "p64r32",
+      "source": "pin 1 = a; pin 2 = b; pin 71 = y; pin 70 = z;\ny = a; z = b;"
+    },
+    {
+      "label": "p64r32 bank 0 matching .d modes",
+      "device": "p64r32",
+      "source": "pin 1 = a; pin 2 = b; pin 71 = y; pin 70 = z;\ny.d = a; z.d = b;"
+    },
+    {
+      "label": "p64r32 bank 1 mixed modes order 0",
+      "device": "p64r32",
+      "source": "pin 1 = a; pin 2 = b; pin 63 = y; pin 62 = z;\ny = a; z.d = b;",
+      "diagnostic": "\\[0020cb\\]"
+    },
+    {
+      "label": "p64r32 bank 1 mixed modes order 1",
+      "device": "p64r32",
+      "source": "pin 1 = a; pin 2 = b; pin 63 = y; pin 62 = z;\nz.d = b; y = a;",
+      "diagnostic": "\\[0020cb\\]"
+    },
+    {
+      "label": "p64r32 bank 1 matching combinational modes",
+      "device": "p64r32",
+      "source": "pin 1 = a; pin 2 = b; pin 63 = y; pin 62 = z;\ny = a; z = b;"
+    },
+    {
+      "label": "p64r32 bank 1 matching .d modes",
+      "device": "p64r32",
+      "source": "pin 1 = a; pin 2 = b; pin 63 = y; pin 62 = z;\ny.d = a; z.d = b;"
+    },
+    {
+      "label": "p64r32 bank 2 mixed modes order 0",
+      "device": "p64r32",
+      "source": "pin 1 = a; pin 2 = b; pin 29 = y; pin 28 = z;\ny = a; z.d = b;",
+      "diagnostic": "\\[0020cb\\]"
+    },
+    {
+      "label": "p64r32 bank 2 mixed modes order 1",
+      "device": "p64r32",
+      "source": "pin 1 = a; pin 2 = b; pin 29 = y; pin 28 = z;\nz.d = b; y = a;",
+      "diagnostic": "\\[0020cb\\]"
+    },
+    {
+      "label": "p64r32 bank 2 matching combinational modes",
+      "device": "p64r32",
+      "source": "pin 1 = a; pin 2 = b; pin 29 = y; pin 28 = z;\ny = a; z = b;"
+    },
+    {
+      "label": "p64r32 bank 2 matching .d modes",
+      "device": "p64r32",
+      "source": "pin 1 = a; pin 2 = b; pin 29 = y; pin 28 = z;\ny.d = a; z.d = b;"
+    },
+    {
+      "label": "p64r32 bank 3 mixed modes order 0",
+      "device": "p64r32",
+      "source": "pin 1 = a; pin 2 = b; pin 21 = y; pin 20 = z;\ny = a; z.d = b;",
+      "diagnostic": "\\[0020cb\\]"
+    },
+    {
+      "label": "p64r32 bank 3 mixed modes order 1",
+      "device": "p64r32",
+      "source": "pin 1 = a; pin 2 = b; pin 21 = y; pin 20 = z;\nz.d = b; y = a;",
+      "diagnostic": "\\[0020cb\\]"
+    },
+    {
+      "label": "p64r32 bank 3 matching combinational modes",
+      "device": "p64r32",
+      "source": "pin 1 = a; pin 2 = b; pin 21 = y; pin 20 = z;\ny = a; z = b;"
+    },
+    {
+      "label": "p64r32 bank 3 matching .d modes",
+      "device": "p64r32",
+      "source": "pin 1 = a; pin 2 = b; pin 21 = y; pin 20 = z;\ny.d = a; z.d = b;"
+    },
+    {
+      "label": "p64r32 independent banks 0 and 1",
+      "device": "p64r32",
+      "source": "pin 1 = a; pin 2 = b; pin 71 = y; pin 63 = z; y = a; z.d = b;"
+    },
+    {
+      "label": "p64r32 independent banks 1 and 2",
+      "device": "p64r32",
+      "source": "pin 1 = a; pin 2 = b; pin 63 = y; pin 29 = z; y = a; z.d = b;"
+    },
+    {
+      "label": "p64r32 independent banks 2 and 3",
+      "device": "p64r32",
+      "source": "pin 1 = a; pin 2 = b; pin 29 = y; pin 21 = z; y = a; z.d = b;"
+    }
+  ]
+}
