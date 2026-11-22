@@ -1826,6 +1826,12 @@ void bind_cells(void)
                 c->true_out = (int16_t)node_kind_default(node[5]);
                 c->true_fb = (node[6] == 0) ? 1 : 0;
             }
+            if (strcmp(g_device_name, "v5000") == 0) {
+                /* Its ABS terms read logical variables. Convert the
+                 * driven level using the declaration, not the polarity
+                 * of the equation or selected register function. */
+                c->true_fb = (s->flags & 0x10) ? 0 : 1;
+            }
             if (s->flags & 0x40) {
                 c->is_node = 1;
             }

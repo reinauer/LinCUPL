@@ -1,0 +1,215 @@
+{
+  "device": "v5000",
+  "variants": [
+    {
+      "label": "pin 5 comb declaration positive lhs positive rhs positive",
+      "source": "pin 1 = a; pin 2 = clk; pin 34 = b; pin 5 = q; pin 7 = y;\nq = a; y = q & b;",
+      "vectors": "ORDER: a, b, q, y;\nVECTORS:\n00 LL\n01 LL\n10 HL\n11 HH\n"
+    },
+    {
+      "label": "pin 5 comb declaration positive lhs positive rhs !",
+      "source": "pin 1 = a; pin 2 = clk; pin 34 = b; pin 5 = q; pin 7 = y;\nq = !a; y = q & b;",
+      "vectors": "ORDER: a, b, q, y;\nVECTORS:\n00 HL\n01 HH\n10 LL\n11 LL\n"
+    },
+    {
+      "label": "pin 5 comb declaration positive lhs ! rhs positive",
+      "source": "pin 1 = a; pin 2 = clk; pin 34 = b; pin 5 = q; pin 7 = y;\n!q = a; y = q & b;",
+      "vectors": "ORDER: a, b, q, y;\nVECTORS:\n00 HL\n01 HH\n10 LL\n11 LL\n"
+    },
+    {
+      "label": "pin 5 comb declaration positive lhs ! rhs !",
+      "source": "pin 1 = a; pin 2 = clk; pin 34 = b; pin 5 = q; pin 7 = y;\n!q = !a; y = q & b;",
+      "vectors": "ORDER: a, b, q, y;\nVECTORS:\n00 LL\n01 LL\n10 HL\n11 HH\n"
+    },
+    {
+      "label": "pin 5 comb declaration ! lhs positive rhs positive",
+      "source": "pin 1 = a; pin 2 = clk; pin 34 = b; pin 5 = !q; pin 7 = y;\nq = a; y = q & b;",
+      "vectors": "ORDER: a, b, q, y;\nVECTORS:\n00 LL\n01 LL\n10 HL\n11 HH\n"
+    },
+    {
+      "label": "pin 5 comb declaration ! lhs positive rhs !",
+      "source": "pin 1 = a; pin 2 = clk; pin 34 = b; pin 5 = !q; pin 7 = y;\nq = !a; y = q & b;",
+      "vectors": "ORDER: a, b, q, y;\nVECTORS:\n00 HL\n01 HH\n10 LL\n11 LL\n"
+    },
+    {
+      "label": "pin 5 comb declaration ! lhs ! rhs positive",
+      "source": "pin 1 = a; pin 2 = clk; pin 34 = b; pin 5 = !q; pin 7 = y;\n!q = a; y = q & b;",
+      "vectors": "ORDER: a, b, q, y;\nVECTORS:\n00 HL\n01 HH\n10 LL\n11 LL\n"
+    },
+    {
+      "label": "pin 5 comb declaration ! lhs ! rhs !",
+      "source": "pin 1 = a; pin 2 = clk; pin 34 = b; pin 5 = !q; pin 7 = y;\n!q = !a; y = q & b;",
+      "vectors": "ORDER: a, b, q, y;\nVECTORS:\n00 LL\n01 LL\n10 HL\n11 HH\n"
+    },
+    {
+      "label": "pin 5 d declaration positive lhs positive rhs positive",
+      "source": "pin 1 = a; pin 2 = clk; pin 34 = b; pin 5 = q; pin 7 = y;\nq.d = a; y = q & b; q.ck = clk;",
+      "vectors": "ORDER: clk, a, b, q, y;\nVECTORS:\nC01 LL\nC11 HH\nC01 LL\nC11 HH\n"
+    },
+    {
+      "label": "pin 5 d declaration positive lhs positive rhs !",
+      "source": "pin 1 = a; pin 2 = clk; pin 34 = b; pin 5 = q; pin 7 = y;\nq.d = !a; y = q & b; q.ck = clk;",
+      "vectors": "ORDER: clk, a, b, q, y;\nVECTORS:\nC01 HH\nC11 LL\nC01 HH\nC11 LL\n"
+    },
+    {
+      "label": "pin 5 d declaration positive lhs ! rhs positive",
+      "source": "pin 1 = a; pin 2 = clk; pin 34 = b; pin 5 = q; pin 7 = y;\n!q.d = a; y = q & b; q.ck = clk;",
+      "vectors": "ORDER: clk, a, b, q, y;\nVECTORS:\nC01 HH\nC11 LL\nC01 HH\nC11 LL\n"
+    },
+    {
+      "label": "pin 5 d declaration positive lhs ! rhs !",
+      "source": "pin 1 = a; pin 2 = clk; pin 34 = b; pin 5 = q; pin 7 = y;\n!q.d = !a; y = q & b; q.ck = clk;",
+      "vectors": "ORDER: clk, a, b, q, y;\nVECTORS:\nC01 LL\nC11 HH\nC01 LL\nC11 HH\n"
+    },
+    {
+      "label": "pin 5 d declaration ! lhs positive rhs positive",
+      "source": "pin 1 = a; pin 2 = clk; pin 34 = b; pin 5 = !q; pin 7 = y;\nq.d = a; y = q & b; q.ck = clk;",
+      "vectors": "ORDER: clk, a, b, q, y;\nVECTORS:\nC01 LL\nC11 HH\nC01 LL\nC11 HH\n"
+    },
+    {
+      "label": "pin 5 d declaration ! lhs positive rhs !",
+      "source": "pin 1 = a; pin 2 = clk; pin 34 = b; pin 5 = !q; pin 7 = y;\nq.d = !a; y = q & b; q.ck = clk;",
+      "vectors": "ORDER: clk, a, b, q, y;\nVECTORS:\nC01 HH\nC11 LL\nC01 HH\nC11 LL\n"
+    },
+    {
+      "label": "pin 5 d declaration ! lhs ! rhs positive",
+      "source": "pin 1 = a; pin 2 = clk; pin 34 = b; pin 5 = !q; pin 7 = y;\n!q.d = a; y = q & b; q.ck = clk;",
+      "vectors": "ORDER: clk, a, b, q, y;\nVECTORS:\nC01 HH\nC11 LL\nC01 HH\nC11 LL\n"
+    },
+    {
+      "label": "pin 5 d declaration ! lhs ! rhs !",
+      "source": "pin 1 = a; pin 2 = clk; pin 34 = b; pin 5 = !q; pin 7 = y;\n!q.d = !a; y = q & b; q.ck = clk;",
+      "vectors": "ORDER: clk, a, b, q, y;\nVECTORS:\nC01 LL\nC11 HH\nC01 LL\nC11 HH\n"
+    },
+    {
+      "label": "pin 38 comb declaration positive lhs positive rhs positive",
+      "source": "pin 1 = a; pin 2 = clk; pin 34 = b; pin 38 = q; pin 40 = y;\nq = a; y = q & b;",
+      "vectors": "ORDER: a, b, q, y;\nVECTORS:\n00 LL\n01 LL\n10 HL\n11 HH\n"
+    },
+    {
+      "label": "pin 38 comb declaration positive lhs positive rhs !",
+      "source": "pin 1 = a; pin 2 = clk; pin 34 = b; pin 38 = q; pin 40 = y;\nq = !a; y = q & b;",
+      "vectors": "ORDER: a, b, q, y;\nVECTORS:\n00 HL\n01 HH\n10 LL\n11 LL\n"
+    },
+    {
+      "label": "pin 38 comb declaration positive lhs ! rhs positive",
+      "source": "pin 1 = a; pin 2 = clk; pin 34 = b; pin 38 = q; pin 40 = y;\n!q = a; y = q & b;",
+      "vectors": "ORDER: a, b, q, y;\nVECTORS:\n00 HL\n01 HH\n10 LL\n11 LL\n"
+    },
+    {
+      "label": "pin 38 comb declaration positive lhs ! rhs !",
+      "source": "pin 1 = a; pin 2 = clk; pin 34 = b; pin 38 = q; pin 40 = y;\n!q = !a; y = q & b;",
+      "vectors": "ORDER: a, b, q, y;\nVECTORS:\n00 LL\n01 LL\n10 HL\n11 HH\n"
+    },
+    {
+      "label": "pin 38 comb declaration ! lhs positive rhs positive",
+      "source": "pin 1 = a; pin 2 = clk; pin 34 = b; pin 38 = !q; pin 40 = y;\nq = a; y = q & b;",
+      "vectors": "ORDER: a, b, q, y;\nVECTORS:\n00 LL\n01 LL\n10 HL\n11 HH\n"
+    },
+    {
+      "label": "pin 38 comb declaration ! lhs positive rhs !",
+      "source": "pin 1 = a; pin 2 = clk; pin 34 = b; pin 38 = !q; pin 40 = y;\nq = !a; y = q & b;",
+      "vectors": "ORDER: a, b, q, y;\nVECTORS:\n00 HL\n01 HH\n10 LL\n11 LL\n"
+    },
+    {
+      "label": "pin 38 comb declaration ! lhs ! rhs positive",
+      "source": "pin 1 = a; pin 2 = clk; pin 34 = b; pin 38 = !q; pin 40 = y;\n!q = a; y = q & b;",
+      "vectors": "ORDER: a, b, q, y;\nVECTORS:\n00 HL\n01 HH\n10 LL\n11 LL\n"
+    },
+    {
+      "label": "pin 38 comb declaration ! lhs ! rhs !",
+      "source": "pin 1 = a; pin 2 = clk; pin 34 = b; pin 38 = !q; pin 40 = y;\n!q = !a; y = q & b;",
+      "vectors": "ORDER: a, b, q, y;\nVECTORS:\n00 LL\n01 LL\n10 HL\n11 HH\n"
+    },
+    {
+      "label": "pin 38 d declaration positive lhs positive rhs positive",
+      "source": "pin 1 = a; pin 2 = clk; pin 34 = b; pin 38 = q; pin 40 = y;\nq.d = a; y = q & b; q.ck = clk;",
+      "vectors": "ORDER: clk, a, b, q, y;\nVECTORS:\nC01 LL\nC11 HH\nC01 LL\nC11 HH\n"
+    },
+    {
+      "label": "pin 38 d declaration positive lhs positive rhs !",
+      "source": "pin 1 = a; pin 2 = clk; pin 34 = b; pin 38 = q; pin 40 = y;\nq.d = !a; y = q & b; q.ck = clk;",
+      "vectors": "ORDER: clk, a, b, q, y;\nVECTORS:\nC01 HH\nC11 LL\nC01 HH\nC11 LL\n"
+    },
+    {
+      "label": "pin 38 d declaration positive lhs ! rhs positive",
+      "source": "pin 1 = a; pin 2 = clk; pin 34 = b; pin 38 = q; pin 40 = y;\n!q.d = a; y = q & b; q.ck = clk;",
+      "vectors": "ORDER: clk, a, b, q, y;\nVECTORS:\nC01 HH\nC11 LL\nC01 HH\nC11 LL\n"
+    },
+    {
+      "label": "pin 38 d declaration positive lhs ! rhs !",
+      "source": "pin 1 = a; pin 2 = clk; pin 34 = b; pin 38 = q; pin 40 = y;\n!q.d = !a; y = q & b; q.ck = clk;",
+      "vectors": "ORDER: clk, a, b, q, y;\nVECTORS:\nC01 LL\nC11 HH\nC01 LL\nC11 HH\n"
+    },
+    {
+      "label": "pin 38 d declaration ! lhs positive rhs positive",
+      "source": "pin 1 = a; pin 2 = clk; pin 34 = b; pin 38 = !q; pin 40 = y;\nq.d = a; y = q & b; q.ck = clk;",
+      "vectors": "ORDER: clk, a, b, q, y;\nVECTORS:\nC01 LL\nC11 HH\nC01 LL\nC11 HH\n"
+    },
+    {
+      "label": "pin 38 d declaration ! lhs positive rhs !",
+      "source": "pin 1 = a; pin 2 = clk; pin 34 = b; pin 38 = !q; pin 40 = y;\nq.d = !a; y = q & b; q.ck = clk;",
+      "vectors": "ORDER: clk, a, b, q, y;\nVECTORS:\nC01 HH\nC11 LL\nC01 HH\nC11 LL\n"
+    },
+    {
+      "label": "pin 38 d declaration ! lhs ! rhs positive",
+      "source": "pin 1 = a; pin 2 = clk; pin 34 = b; pin 38 = !q; pin 40 = y;\n!q.d = a; y = q & b; q.ck = clk;",
+      "vectors": "ORDER: clk, a, b, q, y;\nVECTORS:\nC01 HH\nC11 LL\nC01 HH\nC11 LL\n"
+    },
+    {
+      "label": "pin 38 d declaration ! lhs ! rhs !",
+      "source": "pin 1 = a; pin 2 = clk; pin 34 = b; pin 38 = !q; pin 40 = y;\n!q.d = !a; y = q & b; q.ck = clk;",
+      "vectors": "ORDER: clk, a, b, q, y;\nVECTORS:\nC01 LL\nC11 HH\nC01 LL\nC11 HH\n"
+    },
+    {
+      "label": "root complement comb declaration positive lhs positive",
+      "source": "pin 1 = a; pin 2 = clk; pin 34 = b; pin 5 = q; pin 7 = y; q = !(a & b); y = q;",
+      "vectors": "ORDER: a, b, q, y;\nVECTORS:\n00 HH\n01 HH\n10 HH\n11 LL\n"
+    },
+    {
+      "label": "root complement comb declaration positive lhs !",
+      "source": "pin 1 = a; pin 2 = clk; pin 34 = b; pin 5 = q; pin 7 = y; !q = !(a & b); y = q;",
+      "vectors": "ORDER: a, b, q, y;\nVECTORS:\n00 LL\n01 LL\n10 LL\n11 HH\n"
+    },
+    {
+      "label": "root complement comb declaration ! lhs positive",
+      "source": "pin 1 = a; pin 2 = clk; pin 34 = b; pin 5 = !q; pin 7 = y; q = !(a & b); y = q;",
+      "vectors": "ORDER: a, b, q, y;\nVECTORS:\n00 HH\n01 HH\n10 HH\n11 LL\n"
+    },
+    {
+      "label": "root complement comb declaration ! lhs !",
+      "source": "pin 1 = a; pin 2 = clk; pin 34 = b; pin 5 = !q; pin 7 = y; !q = !(a & b); y = q;",
+      "vectors": "ORDER: a, b, q, y;\nVECTORS:\n00 LL\n01 LL\n10 LL\n11 HH\n"
+    },
+    {
+      "label": "root complement d declaration positive lhs positive",
+      "source": "pin 1 = a; pin 2 = clk; pin 34 = b; pin 5 = q; pin 7 = y; q.d = !(a & b); y = q; q.ck = clk;",
+      "vectors": "ORDER: clk, a, b, q, y;\nVECTORS:\nC00 HH\nC01 HH\nC10 HH\nC11 LL\n"
+    },
+    {
+      "label": "root complement d declaration positive lhs !",
+      "source": "pin 1 = a; pin 2 = clk; pin 34 = b; pin 5 = q; pin 7 = y; !q.d = !(a & b); y = q; q.ck = clk;",
+      "vectors": "ORDER: clk, a, b, q, y;\nVECTORS:\nC00 LL\nC01 LL\nC10 LL\nC11 HH\n"
+    },
+    {
+      "label": "root complement d declaration ! lhs positive",
+      "source": "pin 1 = a; pin 2 = clk; pin 34 = b; pin 5 = !q; pin 7 = y; q.d = !(a & b); y = q; q.ck = clk;",
+      "vectors": "ORDER: clk, a, b, q, y;\nVECTORS:\nC00 HH\nC01 HH\nC10 HH\nC11 LL\n"
+    },
+    {
+      "label": "root complement d declaration ! lhs !",
+      "source": "pin 1 = a; pin 2 = clk; pin 34 = b; pin 5 = !q; pin 7 = y; !q.d = !(a & b); y = q; q.ck = clk;",
+      "vectors": "ORDER: clk, a, b, q, y;\nVECTORS:\nC00 LL\nC01 LL\nC10 LL\nC11 HH\n"
+    },
+    {
+      "label": "buried register positive control",
+      "source": "pin 1 = a; pin 2 = clk; pin 7 = y; pinnode 69 = q; q.d = a; q.ck = clk; y = q;",
+      "vectors": "ORDER: clk, a, q, y;\nVECTORS:\nC0 LL\nC1 HH\nC0 LL\n"
+    },
+    {
+      "label": "buried register ! control",
+      "source": "pin 1 = a; pin 2 = clk; pin 7 = y; pinnode 69 = !q; q.d = a; q.ck = clk; y = q;",
+      "vectors": "ORDER: clk, a, q, y;\nVECTORS:\nC0 LL\nC1 HH\nC0 LL\n"
+    }
+  ]
+}
