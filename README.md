@@ -108,24 +108,35 @@ written by another compiler.
 
 ```sh
 csim -lf u12              # reads u12.jed and u12.si, writes u12.so and u12.wo
-csim -lf g20v8lcc u12     # the same as this device (here for the pin numbers of the PLCC package)
+csim -lf g20v8lcc u12     # the same as this device (for a file that does not say it is a PLCC part)
 ```
 
 - The device is the one named on the command line. Without one it is the
-  device of `u12.pld`, if that file is there and the fuse map fits it, else
-  it follows from the number of fuses: 2194 is a GAL16V8, 2706 a GAL20V8,
-  5892 or 5828 (no signature) a GAL22V10. The mode of a GAL16V8 or GAL20V8
-  (simple, complex, registered) is read from its SYN and AC0 fuses; a mode
-  can also be named (`g16v8ms`, `g16v8ma`, `g16v8s`).
+  device of `u12.pld`, if that file is there and the fuse map fits it; else
+  the device the JEDEC file names (`cupl` writes it into the file), on the
+  same condition; else it follows from the number of fuses: 2194 is a
+  GAL16V8, 2706 a GAL20V8, 5892 or 5828 (no signature) a GAL22V10, in the
+  PLCC package if the file says it has 28 pins (QP28). A file that says
+  neither is taken for the DIP package: name the device to get the pin
+  numbers of a PLCC part. The mode of a GAL16V8 or GAL20V8 (simple,
+  complex, registered) is read from its SYN and AC0 fuses; a mode can also
+  be named (`g16v8ms`, `g16v8ma`, `g16v8s`).
 - A fuse map has no names. The pins are `P1`, `P2`, … in the `ORDER`
   statement, and their test values are levels at the pins. If `u12.pld` is
   there, the pins also have the names of its `PIN` declarations (and its
-  `FIELD`s), with their polarity as for a compiled design. Only plain
-  declarations are read (`PIN 2 = !cs;`, `PIN [3..6] = [a3..0];`); nothing
-  is preprocessed.
+  `FIELD`s), with their polarity as for a compiled design. Declarations
+  of the forms `PIN 2 = !cs;` and `PIN [3..6] = [a3..0];` are read, from
+  the text as `cupl`'s preprocessor leaves it: with `$INCLUDE` files, the
+  names that `$DEFINE` replaces, and what `$IFDEF` selects. Declarations
+  made by `$REPEAT` or `$MACRO` are not found.
 - csim prints the device and which pins the fuses make inputs,
   combinatorial outputs and registered outputs. A macrocell without
-  product terms whose output is never enabled is an input.
+  product terms whose output is never enabled is an input. Product terms
+  of a macrocell that the fuses make an input have no effect in the
+  device, and note `[0039sa]` names the pin. `cupl` writes such a map for
+  a design that is forced into the simple mode (`g16v8s`) and reads an
+  output back: the compiled design simulates as written, the fuse map as
+  the device behaves.
 - The output enable pin of the registered modes (pin 11 of the GAL16V8,
   13 of the GAL20V8) enables the outputs unless a vector drives it. The
   reset and preset terms of a GAL22V10 act on all its registers, as in

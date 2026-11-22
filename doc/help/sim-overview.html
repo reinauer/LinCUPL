@@ -72,7 +72,7 @@ GAL16V8, GAL20V8 or GAL22V10 whose source is not at hand: a file read
 back from a part, or one written by another compiler.  The vectors come
 from <i>name</i><tt>.si</tt> as usual.</p>
 <pre class="shell">csim -lf u12              # u12.jed and u12.si: listing u12.so, waveforms u12.wo
-csim -lf g20v8lcc u12     # as this device (the pin numbers of the PLCC package)</pre>
+csim -lf g20v8lcc u12     # as this device (for a file that does not say it is a PLCC part)</pre>
 <p>csim first prints what it takes the fuse map for:</p>
 <pre class="output">fuse map u12.jed: 2194 fuses, simulated as device g16v8ms
   inputs:                 1 2 3 4 5 6 7 8 9 11 13
@@ -81,10 +81,14 @@ csim -lf g20v8lcc u12     # as this device (the pin numbers of the PLCC package)
 <ul>
 <li><b>The device</b> is the one named on the command line.  Without one it is the device
 of <i>name</i><tt>.pld</tt>, if that file is there and the fuse map fits
-it; else it follows from the number of fuses: 2194 is a GAL16V8, 2706 a
-GAL20V8, 5892 or 5828 (a map without the signature) a GAL22V10.  The
-mode of a GAL16V8 or GAL20V8 is read from its SYN and AC0 fuses.  A mode
-can be named as well (<tt>g16v8ms</tt>, <tt>g16v8ma</tt>,
+it; else the device the JEDEC file names (cupl writes it into the design
+specification, <tt>Device g22v10lcc</tt>), on the same condition; else it
+follows from the number of fuses: 2194 is a GAL16V8, 2706 a GAL20V8, 5892
+or 5828 (a map without the signature) a GAL22V10, in the PLCC package if
+the file says it has 28 pins (<tt>QP28</tt>).  A file that says neither is
+taken for the DIP package: name the device to get the pin numbers of a
+PLCC part.  The mode of a GAL16V8 or GAL20V8 is read from its SYN and AC0
+fuses.  A mode can be named as well (<tt>g16v8ms</tt>, <tt>g16v8ma</tt>,
 <tt>g16v8s</tt>); if the fuses select another one, note
 <tt>[0038sa]</tt> says so.  Other devices are refused with
 <tt>[0037sa]</tt>, a number of fuses that none of these devices has with
@@ -97,17 +101,27 @@ design (<tt>Pin 13 = !oe;</tt>: a test value of 1 is a low level), and
 its <tt>FIELD</tt>s over these names are defined.  <tt>P13</tt> still
 stands for the pin in the <tt>ORDER</tt> statement, where the listing
 then shows it as <tt>!oe</tt>; conditions and <tt>$SET</tt> take the
-names of the file.  Only plain
-declarations are read (<tt>Pin 2 = !cs;</tt>,
-<tt>Pin [3..6] = [a3..0];</tt>); the file is not preprocessed, so names
-from <tt>$DEFINE</tt> or an <tt>$INCLUDE</tt> file are not found.  The
+names of the file.  Declarations of the forms <tt>Pin 2 = !cs;</tt> and
+<tt>Pin [3..6] = [a3..0];</tt> are read, from the text as cupl's
+preprocessor leaves it: with <tt>$INCLUDE</tt> files, the names that
+<tt>$DEFINE</tt> replaces and what <tt>$IFDEF</tt> selects.  Declarations
+made by <tt>$REPEAT</tt> or <tt>$MACRO</tt> are not found.  The
 names are those of the <tt>Device</tt> the file states; they are not used
 with a device that has another number of pins.</li>
 <li><b>Inputs and outputs.</b> A pin is what its fuses make of it.  A
 macrocell without a product term whose output enable term is always
 false is an input, as cupl leaves unused macrocells.  Test values are
 checked as for a compiled design: the output of a register, for
-instance, cannot be given 0 or 1.</li>
+instance, cannot be given 0 or 1.  Product terms of a macrocell that the
+fuses make an input have no effect in the device; note
+<tt>[0039sa]</tt> names the pin.  cupl writes such a map for a design
+that is forced into the simple mode (<tt>g16v8s</tt>) and reads an output
+back: the compiled design simulates as it is written, the fuse map as
+the device behaves.</li>
+<li><b>$TRACE</b> lists the equations as for the compiled design, if the
+pins have the names of the <tt>.pld</tt> file.  A reset or preset term
+that the design writes as always false (<tt>q.ar = 'b'0;</tt>) is not
+listed: in the fuse map it is a term that is not there.</li>
 <li><b>The output enable pin</b> of the registered modes (pin 11 of the
 GAL16V8, pin 13 of the GAL20V8) enables the outputs unless the vectors
 drive it, as in a design that does not declare the pin.</li>
