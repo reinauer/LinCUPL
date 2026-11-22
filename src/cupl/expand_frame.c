@@ -697,6 +697,26 @@ static int check_shared_terms(const symbol_t *sym)
         int conflict = other >= 0 && sym->polarity != POL_FIXED &&
                        (sym->polarity == POL_KEEP || sym->pin == expand_symbols[other].pin) &&
                        map_test(expand_conflict_map, expand_conflict_words, other);
+        /* A register alias and its physical pin consume the same sum.
+         * Check every earlier consumer: the first symbol on the line may
+         * only read feedback, and equation inversion cannot add a sum. */
+        unsigned ext = dev_u8(dev_nodefn(sym->node_fn, NODEFN_EXT));
+        for (int i = 0; !conflict && sym->polarity != POL_FIXED &&
+             i < expand_symbol_count; i++) {
+            const symbol_t *previous = &expand_symbols[i];
+            if (previous->node_fn < 0 || previous->polarity == POL_FIXED ||
+                !map_test(expand_conflict_map, expand_conflict_words, i)) {
+                continue;
+            }
+            unsigned prev_ext = dev_u8(dev_nodefn(previous->node_fn, NODEFN_EXT));
+            if (ext != 1 && ext != 0x1b && prev_ext != 1 && prev_ext != 0x1b) {
+                continue;
+            }
+            conflict = dev_u16(dev_nodefn(sym->node_fn, NODEFN_LINE)) ==
+                           dev_u16(dev_nodefn(previous->node_fn, NODEFN_LINE)) &&
+                       dev_u32(dev_nodefn(sym->node_fn, NODEFN_GROUP)) ==
+                           dev_u32(dev_nodefn(previous->node_fn, NODEFN_GROUP));
+        }
         if (conflict) {
             expand_report_pin_error(ERR_EXCLUDED_OUTPUT, sym);
         }
