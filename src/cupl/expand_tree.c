@@ -314,10 +314,9 @@ static node_t *make_node(int op, node_t *left, node_t *right)
 
 /* Give an operator node its operands while a tree is built.
  * Variables and constants are folded into the node and released; a sub-tree
- * operand is left for the caller to attach.  The stored value of a folded
- * constant is copied as it is, without applying the constant's negation
- * flag.  An AND/OR/XOR that receives only one operand gets a "sub-tree,
- * leaf" form whatever side the operand is on. */
+ * operand is left for the caller to attach.  Constants are stored with
+ * their effective value, including negation.  An AND/OR/XOR that receives
+ * only one operand gets a "sub-tree, leaf" form whatever side it is on. */
 void expand_fold_operands(node_t *right, node_t *left, node_t *op_node)
 {
     int op = op_node->type;
@@ -350,9 +349,9 @@ void expand_fold_operands(node_t *right, node_t *left, node_t *op_node)
         }
         op_node->type = (uint8_t)(op + k_form_of[K_NODE][k]);
         if (left == NULL || k == K_ZERO) {
-            op_node->right = only->right;
+            set_right(op_node, k, only);
         } else {
-            op_node->left = only->right;
+            set_left(op_node, k, only);
         }
         node_free(only);
         return;
@@ -360,17 +359,17 @@ void expand_fold_operands(node_t *right, node_t *left, node_t *op_node)
     operand_kind_t lk = kind_of(left), rk = kind_of(right);
     if (is_leaf_kind(lk) && is_leaf_kind(rk)) {
         op_node->type = (uint8_t)(op + k_form_of[lk][rk]);
-        op_node->right = right->right;
-        op_node->left = left->right;
+        set_right(op_node, rk, right);
+        set_left(op_node, lk, left);
         node_free(right);
         node_free(left);
     } else if (is_leaf_kind(rk)) {
         op_node->type = (uint8_t)(op + k_form_of[K_NODE][rk]);
-        op_node->right = right->right;
+        set_right(op_node, rk, right);
         node_free(right);
     } else if (is_leaf_kind(lk)) {
         op_node->type = (uint8_t)(op + k_form_of[lk][K_NODE]);
-        op_node->left = left->right;
+        set_left(op_node, lk, left);
         node_free(left);
     }
 }
@@ -486,14 +485,14 @@ static void push_negation(node_t *n)
             break;
         case NODE_NOT_ZERO:
             n->type = NODE_CONST;
+            n->right.raw = (n->flags & NODE_NEGATED) == 0;
             n->flags = 0;
-            n->right.raw = 1;
             expand_fold_tree(g_root);
             break;
         case NODE_NOT_ONE:
             n->type = NODE_CONST;
+            n->right.raw = (n->flags & NODE_NEGATED) != 0;
             n->flags = 0;
-            n->right.raw = 0;
             expand_fold_tree(g_root);
             break;
         default:
