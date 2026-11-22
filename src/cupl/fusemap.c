@@ -541,7 +541,7 @@ static int read_device_record(void)
      * keeps a short or damaged record from being read past its end. */
     g.lib.rec_size = size;
     g.lib.rec = alloc_tracked((size_t)size + 0x10000, "device library processing");
-    return dl_read_image(g.lib.fp, g.lib.rec, size) > 0;
+    return dl_read_device_image(g.lib.fp, g.lib.dir_entry, g.lib.rec, size) > 0;
 }
 
 /* Load the record of the target device and close the library.  Devices of

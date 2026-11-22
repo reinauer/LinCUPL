@@ -91,7 +91,8 @@ static int read_device(dl_handle_t *lib)
     }
     lib->rec_size = dl_image_size(lib->dir_entry);
     lib->rec_buf = minimize_alloc_tracked(lib->rec_size, "device library processing");
-    return dl_first_block_read(dl_read_image(lib->fp, lib->rec_buf, lib->rec_size), lib->rec_size);
+    return dl_first_block_read(dl_read_device_image(lib->fp, lib->dir_entry, lib->rec_buf, lib->rec_size),
+                               lib->rec_size);
 }
 
 /* load the record of the design's device and return its class */

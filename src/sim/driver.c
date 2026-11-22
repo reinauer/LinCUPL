@@ -215,7 +215,7 @@ static int lookup_device_in_lib(uint8_t *out_buf, const char *dev_name, const ch
         fclose(fp);
         driver_fatal(8, "device library processing");
     }
-    size_t got = dl_read_image(fp, sec_data, sec_size);
+    size_t got = dl_read_device_image(fp, entry, sec_data, sec_size);
     fclose(fp);
     if (got != sec_size) {
         free(sec_data);

@@ -76,7 +76,7 @@ static int read_device_image(void)
     }
     expand_dev = expand_alloc_tracked(length, "device library processing");
     expand_dev_size = length;
-    return dl_read_image(expand_lib_file, expand_dev, length) != 0;
+    return dl_read_device_image(expand_lib_file, expand_lib_entry, expand_dev, length) != 0;
 }
 
 /* Load a device from the library and set the pin and node limits.

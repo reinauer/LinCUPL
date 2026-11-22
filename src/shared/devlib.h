@@ -77,6 +77,11 @@ int dl_seek_image(FILE *fp, const uint8_t *entry);
  * number of bytes read, which is less than `size` if the file ends early */
 size_t dl_read_image(FILE *fp, uint8_t *image, size_t size);
 
+/* Read an image at the current file position and apply known corrections
+ * to the in-memory device description. Use this when interpreting a design;
+ * dl_read_image() remains the raw reader for library copying/editing. */
+size_t dl_read_device_image(FILE *fp, const uint8_t *entry, uint8_t *image, size_t size);
+
 static inline uint32_t dl_image_size(const uint8_t *entry)
 {
     return rd32(entry + DL_ENTRY_LENGTH);

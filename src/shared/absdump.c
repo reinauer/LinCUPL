@@ -310,7 +310,7 @@ static void load_device(dump_t *d, const uint8_t *hdr)
         fclose(fp);
         return;
     }
-    d->image_size = dl_read_image(fp, d->image, size);
+    d->image_size = dl_read_device_image(fp, entry, d->image, size);
     fclose(fp);
     if (d->image_size < DL_SECTIONS * DL_SECTION_HEADER_SIZE) {
         put(&d->out, "  library        %s: the entry of %s is cut short\n", d->lib_path, name);

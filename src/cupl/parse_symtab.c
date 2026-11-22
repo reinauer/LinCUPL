@@ -483,7 +483,8 @@ static void load_device(device_t *dev, const char *name)
     if (dl_seek_image(dev->fp, dev->entry)) {
         dev->data_size = dl_image_size(dev->entry);
         dev->data = parse_alloc_tracked(dev->data_size, "device library processing");
-        loaded = dl_first_block_read(dl_read_image(dev->fp, dev->data, dev->data_size), dev->data_size);
+        loaded = dl_first_block_read(dl_read_device_image(dev->fp, dev->entry, dev->data, dev->data_size),
+                                     dev->data_size);
     }
     if (!loaded) {
         parse_fatal_error(ERR_BAD_LIBRARY, name);
