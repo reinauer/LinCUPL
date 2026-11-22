@@ -67,9 +67,32 @@ static void initializer(uint8_t *record, unsigned first, unsigned last,
     record[8] = (uint8_t)value;
 }
 
+static int check_atf750_feedback(void)
+{
+    uint8_t input[IMAGE_SIZE] = { 0 }, fixed[IMAGE_SIZE], again[IMAGE_SIZE];
+    section(input, 6, 2, 16, 260);
+    input[264] = 0x24;
+    input[271] = 1;
+    input[280] = 0x22;
+    input[287] = 1;
+    const char *devices[] = { "v750c", "v750cext", "v750cextppk", "v750cppk",
+        "v750clcc", "v750cextlcc", "v750cextppklcc", "v750cppklcc" };
+    for (unsigned i = 0; i < sizeof(devices) / sizeof(devices[0]); i++) {
+        CHECK(read_image(input, sizeof(input), devices[i], 0, fixed) == 0);
+        CHECK(fixed[271] == 0);
+        CHECK(fixed[287] == 1);
+        CHECK(read_image(fixed, sizeof(fixed), devices[i], 0, again) == 0);
+        CHECK(memcmp(fixed, again, sizeof(fixed)) == 0);
+    }
+    CHECK(read_image(input, sizeof(input), "v750b", 0, fixed) == 0);
+    CHECK(memcmp(input, fixed, sizeof(input)) == 0);
+    return 0;
+}
+
 int main(void)
 {
     CHECK(check_pal26_feedback() == 0);
+    CHECK(check_atf750_feedback() == 0);
     uint8_t original[IMAGE_SIZE] = { 0 }, fixed[IMAGE_SIZE], again[IMAGE_SIZE];
     section(original, 7, 1, 39, 260);
     section(original, 9, 3, 9, 299);

@@ -1,0 +1,389 @@
+{
+  "device": "v750c",
+  "variants": [
+    {
+      "label": "v750c pin 23 D feedback",
+      "device": "v750c",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 23 = q; pin 22 = y;\nq.d = a; q.ck = clk; y = q.tfb & b;",
+      "fuses": {
+        "14397": 0
+      }
+    },
+    {
+      "label": "v750c pin 23 T feedback",
+      "device": "v750c",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 23 = q; pin 22 = y;\nq.t = a; q.ck = clk; y = q.tfb & b;",
+      "fuses": {
+        "14397": 1
+      }
+    },
+    {
+      "label": "v750c pin 19 D feedback",
+      "device": "v750c",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 19 = q; pin 22 = y;\nq.d = a; q.ck = clk; y = q.tfb & b;",
+      "fuses": {
+        "14413": 0
+      }
+    },
+    {
+      "label": "v750c pin 19 T feedback",
+      "device": "v750c",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 19 = q; pin 22 = y;\nq.t = a; q.ck = clk; y = q.tfb & b;",
+      "fuses": {
+        "14413": 1
+      }
+    },
+    {
+      "label": "v750c pin 14 D feedback",
+      "device": "v750c",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 14 = q; pin 22 = y;\nq.d = a; q.ck = clk; y = q.tfb & b;",
+      "fuses": {
+        "14433": 0
+      }
+    },
+    {
+      "label": "v750c pin 14 T feedback",
+      "device": "v750c",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 14 = q; pin 22 = y;\nq.t = a; q.ck = clk; y = q.tfb & b;",
+      "fuses": {
+        "14433": 1
+      }
+    },
+    {
+      "label": "v750cext pin 23 D feedback",
+      "device": "v750cext",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 23 = q; pin 22 = y;\nq.d = a; q.ck = clk; y = q.tfb & b;",
+      "fuses": {
+        "14397": 0
+      }
+    },
+    {
+      "label": "v750cext pin 23 T feedback",
+      "device": "v750cext",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 23 = q; pin 22 = y;\nq.t = a; q.ck = clk; y = q.tfb & b;",
+      "fuses": {
+        "14397": 1
+      }
+    },
+    {
+      "label": "v750cext pin 19 D feedback",
+      "device": "v750cext",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 19 = q; pin 22 = y;\nq.d = a; q.ck = clk; y = q.tfb & b;",
+      "fuses": {
+        "14413": 0
+      }
+    },
+    {
+      "label": "v750cext pin 19 T feedback",
+      "device": "v750cext",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 19 = q; pin 22 = y;\nq.t = a; q.ck = clk; y = q.tfb & b;",
+      "fuses": {
+        "14413": 1
+      }
+    },
+    {
+      "label": "v750cext pin 14 D feedback",
+      "device": "v750cext",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 14 = q; pin 22 = y;\nq.d = a; q.ck = clk; y = q.tfb & b;",
+      "fuses": {
+        "14433": 0
+      }
+    },
+    {
+      "label": "v750cext pin 14 T feedback",
+      "device": "v750cext",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 14 = q; pin 22 = y;\nq.t = a; q.ck = clk; y = q.tfb & b;",
+      "fuses": {
+        "14433": 1
+      }
+    },
+    {
+      "label": "v750cextppk pin 23 D feedback",
+      "device": "v750cextppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 23 = q; pin 22 = y;\nq.d = a; q.ck = clk; y = q.tfb & b;",
+      "fuses": {
+        "14397": 0
+      }
+    },
+    {
+      "label": "v750cextppk pin 23 T feedback",
+      "device": "v750cextppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 23 = q; pin 22 = y;\nq.t = a; q.ck = clk; y = q.tfb & b;",
+      "fuses": {
+        "14397": 1
+      }
+    },
+    {
+      "label": "v750cextppk pin 19 D feedback",
+      "device": "v750cextppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 19 = q; pin 22 = y;\nq.d = a; q.ck = clk; y = q.tfb & b;",
+      "fuses": {
+        "14413": 0
+      }
+    },
+    {
+      "label": "v750cextppk pin 19 T feedback",
+      "device": "v750cextppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 19 = q; pin 22 = y;\nq.t = a; q.ck = clk; y = q.tfb & b;",
+      "fuses": {
+        "14413": 1
+      }
+    },
+    {
+      "label": "v750cextppk pin 14 D feedback",
+      "device": "v750cextppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 14 = q; pin 22 = y;\nq.d = a; q.ck = clk; y = q.tfb & b;",
+      "fuses": {
+        "14433": 0
+      }
+    },
+    {
+      "label": "v750cextppk pin 14 T feedback",
+      "device": "v750cextppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 14 = q; pin 22 = y;\nq.t = a; q.ck = clk; y = q.tfb & b;",
+      "fuses": {
+        "14433": 1
+      }
+    },
+    {
+      "label": "v750cppk pin 23 D feedback",
+      "device": "v750cppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 23 = q; pin 22 = y;\nq.d = a; q.ck = clk; y = q.tfb & b;",
+      "fuses": {
+        "14397": 0
+      }
+    },
+    {
+      "label": "v750cppk pin 23 T feedback",
+      "device": "v750cppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 23 = q; pin 22 = y;\nq.t = a; q.ck = clk; y = q.tfb & b;",
+      "fuses": {
+        "14397": 1
+      }
+    },
+    {
+      "label": "v750cppk pin 19 D feedback",
+      "device": "v750cppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 19 = q; pin 22 = y;\nq.d = a; q.ck = clk; y = q.tfb & b;",
+      "fuses": {
+        "14413": 0
+      }
+    },
+    {
+      "label": "v750cppk pin 19 T feedback",
+      "device": "v750cppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 19 = q; pin 22 = y;\nq.t = a; q.ck = clk; y = q.tfb & b;",
+      "fuses": {
+        "14413": 1
+      }
+    },
+    {
+      "label": "v750cppk pin 14 D feedback",
+      "device": "v750cppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 14 = q; pin 22 = y;\nq.d = a; q.ck = clk; y = q.tfb & b;",
+      "fuses": {
+        "14433": 0
+      }
+    },
+    {
+      "label": "v750cppk pin 14 T feedback",
+      "device": "v750cppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 14 = q; pin 22 = y;\nq.t = a; q.ck = clk; y = q.tfb & b;",
+      "fuses": {
+        "14433": 1
+      }
+    },
+    {
+      "label": "v750clcc pin 27 D feedback",
+      "device": "v750clcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = q; pin 26 = y;\nq.d = a; q.ck = clk; y = q.tfb & b;",
+      "fuses": {
+        "14397": 0
+      }
+    },
+    {
+      "label": "v750clcc pin 27 T feedback",
+      "device": "v750clcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = q; pin 26 = y;\nq.t = a; q.ck = clk; y = q.tfb & b;",
+      "fuses": {
+        "14397": 1
+      }
+    },
+    {
+      "label": "v750clcc pin 23 D feedback",
+      "device": "v750clcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 23 = q; pin 26 = y;\nq.d = a; q.ck = clk; y = q.tfb & b;",
+      "fuses": {
+        "14413": 0
+      }
+    },
+    {
+      "label": "v750clcc pin 23 T feedback",
+      "device": "v750clcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 23 = q; pin 26 = y;\nq.t = a; q.ck = clk; y = q.tfb & b;",
+      "fuses": {
+        "14413": 1
+      }
+    },
+    {
+      "label": "v750clcc pin 17 D feedback",
+      "device": "v750clcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 17 = q; pin 26 = y;\nq.d = a; q.ck = clk; y = q.tfb & b;",
+      "fuses": {
+        "14433": 0
+      }
+    },
+    {
+      "label": "v750clcc pin 17 T feedback",
+      "device": "v750clcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 17 = q; pin 26 = y;\nq.t = a; q.ck = clk; y = q.tfb & b;",
+      "fuses": {
+        "14433": 1
+      }
+    },
+    {
+      "label": "v750cextlcc pin 27 D feedback",
+      "device": "v750cextlcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = q; pin 26 = y;\nq.d = a; q.ck = clk; y = q.tfb & b;",
+      "fuses": {
+        "14397": 0
+      }
+    },
+    {
+      "label": "v750cextlcc pin 27 T feedback",
+      "device": "v750cextlcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = q; pin 26 = y;\nq.t = a; q.ck = clk; y = q.tfb & b;",
+      "fuses": {
+        "14397": 1
+      }
+    },
+    {
+      "label": "v750cextlcc pin 23 D feedback",
+      "device": "v750cextlcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 23 = q; pin 26 = y;\nq.d = a; q.ck = clk; y = q.tfb & b;",
+      "fuses": {
+        "14413": 0
+      }
+    },
+    {
+      "label": "v750cextlcc pin 23 T feedback",
+      "device": "v750cextlcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 23 = q; pin 26 = y;\nq.t = a; q.ck = clk; y = q.tfb & b;",
+      "fuses": {
+        "14413": 1
+      }
+    },
+    {
+      "label": "v750cextlcc pin 17 D feedback",
+      "device": "v750cextlcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 17 = q; pin 26 = y;\nq.d = a; q.ck = clk; y = q.tfb & b;",
+      "fuses": {
+        "14433": 0
+      }
+    },
+    {
+      "label": "v750cextlcc pin 17 T feedback",
+      "device": "v750cextlcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 17 = q; pin 26 = y;\nq.t = a; q.ck = clk; y = q.tfb & b;",
+      "fuses": {
+        "14433": 1
+      }
+    },
+    {
+      "label": "v750cextppklcc pin 27 D feedback",
+      "device": "v750cextppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = q; pin 26 = y;\nq.d = a; q.ck = clk; y = q.tfb & b;",
+      "fuses": {
+        "14397": 0
+      }
+    },
+    {
+      "label": "v750cextppklcc pin 27 T feedback",
+      "device": "v750cextppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = q; pin 26 = y;\nq.t = a; q.ck = clk; y = q.tfb & b;",
+      "fuses": {
+        "14397": 1
+      }
+    },
+    {
+      "label": "v750cextppklcc pin 23 D feedback",
+      "device": "v750cextppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 23 = q; pin 26 = y;\nq.d = a; q.ck = clk; y = q.tfb & b;",
+      "fuses": {
+        "14413": 0
+      }
+    },
+    {
+      "label": "v750cextppklcc pin 23 T feedback",
+      "device": "v750cextppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 23 = q; pin 26 = y;\nq.t = a; q.ck = clk; y = q.tfb & b;",
+      "fuses": {
+        "14413": 1
+      }
+    },
+    {
+      "label": "v750cextppklcc pin 17 D feedback",
+      "device": "v750cextppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 17 = q; pin 26 = y;\nq.d = a; q.ck = clk; y = q.tfb & b;",
+      "fuses": {
+        "14433": 0
+      }
+    },
+    {
+      "label": "v750cextppklcc pin 17 T feedback",
+      "device": "v750cextppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 17 = q; pin 26 = y;\nq.t = a; q.ck = clk; y = q.tfb & b;",
+      "fuses": {
+        "14433": 1
+      }
+    },
+    {
+      "label": "v750cppklcc pin 27 D feedback",
+      "device": "v750cppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = q; pin 26 = y;\nq.d = a; q.ck = clk; y = q.tfb & b;",
+      "fuses": {
+        "14397": 0
+      }
+    },
+    {
+      "label": "v750cppklcc pin 27 T feedback",
+      "device": "v750cppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = q; pin 26 = y;\nq.t = a; q.ck = clk; y = q.tfb & b;",
+      "fuses": {
+        "14397": 1
+      }
+    },
+    {
+      "label": "v750cppklcc pin 23 D feedback",
+      "device": "v750cppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 23 = q; pin 26 = y;\nq.d = a; q.ck = clk; y = q.tfb & b;",
+      "fuses": {
+        "14413": 0
+      }
+    },
+    {
+      "label": "v750cppklcc pin 23 T feedback",
+      "device": "v750cppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 23 = q; pin 26 = y;\nq.t = a; q.ck = clk; y = q.tfb & b;",
+      "fuses": {
+        "14413": 1
+      }
+    },
+    {
+      "label": "v750cppklcc pin 17 D feedback",
+      "device": "v750cppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 17 = q; pin 26 = y;\nq.d = a; q.ck = clk; y = q.tfb & b;",
+      "fuses": {
+        "14433": 0
+      }
+    },
+    {
+      "label": "v750cppklcc pin 17 T feedback",
+      "device": "v750cppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 17 = q; pin 26 = y;\nq.t = a; q.ck = clk; y = q.tfb & b;",
+      "fuses": {
+        "14433": 1
+      }
+    }
+  ]
+}

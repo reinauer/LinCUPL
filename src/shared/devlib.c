@@ -77,6 +77,20 @@ static uint8_t *image_records(uint8_t *image, size_t size, unsigned section,
     return image + offset;
 }
 
+static void correct_atf750_feedback(uint8_t *image, size_t size)
+{
+    unsigned count;
+    uint8_t *pins = image_records(image, size, 6, 16, &count);
+    for (unsigned i = 0; i < count; i++) {
+        uint8_t *p = pins + 16 * i;
+        /* TFB names a feedback path. Only the D/T equation may select
+         * the register type; a read must not turn a D register into T. */
+        if (p[4] == 0x24) {
+            p[11] = 0;
+        }
+    }
+}
+
 static void correct_gal24v10_rows(uint8_t *image, size_t size)
 {
     enum { NODE_SECTION = 7, NODE_SIZE = 39, INIT_SECTION = 9, INIT_SIZE = 9 };
@@ -132,6 +146,9 @@ size_t dl_read_device_image(FILE *fp, const uint8_t *entry, uint8_t *image, size
     char name[DL_ENTRY_NAME_SIZE + 1];
     memcpy(name, entry, DL_ENTRY_NAME_SIZE);
     name[DL_ENTRY_NAME_SIZE] = '\0';
+    if (strncasecmp(name, "v750c", 5) == 0) {
+        correct_atf750_feedback(image, got);
+    }
     if (strcasecmp(name, "g24v10ms") == 0) {
         correct_gal24v10_rows(image, got);
     } else if (strcasecmp(name, "p26v12") == 0) {
