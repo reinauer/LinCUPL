@@ -763,24 +763,30 @@ static void add_linked_functions(void)
     }
 }
 
-/* Some macrocells describe combinational and registered modes as separate
- * term arrays, although the two arrays overlap in the physical cell. */
-static void check_split_output_modes(void)
+/* Check exclusive modes whose descriptions use separate overlapping arrays
+ * or a bank selector shared by several physical cells. */
+static void check_output_modes(void)
 {
     for (int i = 0; i < expand_symbol_count; i++) {
         const symbol_t *comb = &expand_symbols[i];
         if (comb->node_fn < 0 || comb->ext_code != 0 || !(comb->flags & SYMF_OUTPUT) ||
-            comb->polarity == POL_FIXED || dev_u8(dev_nodefn(comb->node_fn, NODEFN_SHARING)) != 1) {
+            comb->polarity == POL_FIXED) {
             continue;
         }
         for (int j = 0; j < expand_symbol_count; j++) {
             const symbol_t *reg = &expand_symbols[j];
             if (reg->pin == comb->pin && reg->node_fn >= 0 && reg->ext_code == 1 &&
-                (reg->flags & SYMF_OUTPUT) && reg->polarity != POL_FIXED &&
-                dev_u8(dev_nodefn(reg->node_fn, NODEFN_SHARING)) == 1 &&
-                dev_u16(dev_nodefn(reg->node_fn, NODEFN_LINE)) !=
-                    dev_u16(dev_nodefn(comb->node_fn, NODEFN_LINE))) {
-                expand_report_pin_error(ERR_EXCLUDED_OUTPUT, reg);
+                (reg->flags & SYMF_OUTPUT) && reg->polarity != POL_FIXED) {
+                int split_arrays = dev_u8(dev_nodefn(comb->node_fn, NODEFN_SHARING)) == 1 &&
+                    dev_u8(dev_nodefn(reg->node_fn, NODEFN_SHARING)) == 1 &&
+                    dev_u16(dev_nodefn(reg->node_fn, NODEFN_LINE)) !=
+                        dev_u16(dev_nodefn(comb->node_fn, NODEFN_LINE));
+                unsigned bank = dev_u8(dev_nodefn(comb->node_fn, NODEFN_DEFAULT));
+                int banked_modes = bank >= 4 && bank <= 7 &&
+                    dev_u8(dev_nodefn(reg->node_fn, NODEFN_DEFAULT)) == bank;
+                if (split_arrays || banked_modes) {
+                    expand_report_pin_error(ERR_EXCLUDED_OUTPUT, reg);
+                }
             }
         }
     }
@@ -868,7 +874,7 @@ int expand_bind_symbols(char *alt_name, size_t alt_size)
     if (pick_alternative_device(alt_name, alt_size)) {
         return 1;
     }
-    check_split_output_modes();
+    check_output_modes();
     add_linked_functions();
     return 0;
 }
