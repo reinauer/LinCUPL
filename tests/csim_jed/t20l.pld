@@ -1,0 +1,29 @@
+Name     t20l;
+PartNo   00;
+Date     2026-01-01;
+Revision 01;
+Designer LinCUPL;
+Company  LinCUPL;
+Assembly None;
+Location None;
+Device   g20v8lcc;
+
+/* GAL20V8 in the PLCC package (28 leads; 1, 8, 15 and 22 are not
+   connected), registered mode: the clock is lead 2 and the output enable
+   lead 16.  Registers of both polarities, a combinatorial output with a
+   product term output enable, an input on a macrocell pin */
+
+Pin 2  = clk;
+Pin 3  = a;
+Pin 4  = b;
+Pin 5  = c;
+Pin 16 = !oe;
+Pin 26 = q1;
+Pin 25 = !q0;
+Pin 24 = x;
+Pin 23 = inp;
+
+q0.d = a $ q0;
+q1.d = q0 & b # q1 & !c;
+x = a & b # inp & c;
+x.oe = !c & a;

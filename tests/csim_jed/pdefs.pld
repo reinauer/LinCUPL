@@ -1,0 +1,41 @@
+Name     pdefs;
+PartNo   00;
+Date     2026-01-01;
+Revision 01;
+Designer LinCUPL;
+Company  LinCUPL;
+Assembly None;
+Location None;
+Device   g16v8;
+
+/* Pin names that the preprocessor makes (GAL16V8, complex mode): names
+   and a list replaced with $define, declarations in an $include file,
+   declarations chosen with $ifdef and $ifndef, a name that is free again
+   after $undef */
+
+$define CLOCKIN ck
+$define SELECT  [s1, s0]
+$define TWOBITS
+
+Pin 1 = CLOCKIN;
+Pin [2, 3] = SELECT;
+field sel = SELECT;
+
+$include pdefs.inc
+
+$ifdef TWOBITS
+Pin [4, 5] = [d1, d0];
+$else
+Pin 4 = d;
+$endif
+$ifndef TWOBITS
+Pin 5 = never;
+$endif
+
+Pin 17 = z;
+$undef CLOCKIN
+Pin 6 = CLOCKIN;
+
+x = ck & s1 # CLOCKIN & s0;
+y = d1 $ d0 # sel:3;
+z = y & d0 # ck;

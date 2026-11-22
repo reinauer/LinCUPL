@@ -1,0 +1,33 @@
+Name     t22l;
+PartNo   00;
+Date     2026-01-01;
+Revision 01;
+Designer LinCUPL;
+Company  LinCUPL;
+Assembly None;
+Location None;
+Device   g22v10lcc;
+
+/* GAL22V10 in the PLCC package: the pin numbers are those of its 28
+   leads (1, 8, 15 and 22 are not connected, the clock is lead 2).
+   Registers of both polarities with asynchronous reset, a three-state
+   output, an active-low output, an input on a macrocell pin */
+
+Pin 2  = clk;
+Pin 3  = a;
+Pin 4  = b;
+Pin 5  = c;
+Pin 13 = d;
+Pin 16 = en;
+Pin 27 = q1;
+Pin 26 = !q0;
+Pin 25 = !y;
+Pin 24 = t;
+Pin 17 = inp;
+
+q0.d = !q0 & a # q0 & !a & b;
+q1.d = q1 $ (q0 & a);
+[q1, q0].ar = c & d;
+y = a & b # inp;
+t = q1 & b # d;
+t.oe = en;

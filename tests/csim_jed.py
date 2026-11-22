@@ -11,9 +11,13 @@ which gives both <design>.abs and the .jed file, and simulated the usual way
 directories that have no .abs file:
 
   names    with the .pld file next to the .jed file (csim takes the pin names
-           from it) and the unchanged .si file.  The listing (.so) and the
-           waveform file (.wo) must be the same as those of the compiled
-           design, and so must the JEDEC file after "csim -j".
+           from it, also those its preprocessor directives make) and the
+           unchanged .si file.  The listing (.so) and the waveform file
+           (.wo) must be the same as those of the compiled design, and so
+           must the JEDEC file after "csim -j".
+  trace    as "names" with $TRACE 3 in front of the vectors: the listing
+           with every equation as it is evaluated must be the same too
+           (but for reset and preset terms written as always false).
   pins     without the .pld file, the names of the .si file replaced by the
            default names P<n>.  A name that is declared active low (!name)
            becomes !P<n>, which means the same; the vector lines of the
@@ -30,11 +34,17 @@ directories that have no .abs file:
            statement; designs whose .si file names pins elsewhere are left
            out).
 
+The device is named only in "device": a file cupl wrote names its device,
+which matters for a PLCC package (other pin numbers).
+
 Further cases check that fuse maps as other programs write them are read
 (no STX/ETX, fields starting with '*', lower case, CR LF, missing QF, notes
-and vectors, a 22V10 map without its signature fuses) and that damaged ones
+and vectors, a 22V10 map without its signature fuses), that damaged ones
 are refused with a message (cut short, wrong fuse checksum, fuse without a
-state, a number of fuses no supported device has).
+state, a number of fuses no supported device has), which device a file is
+taken for that names none (by its fuses and, with QP28, its pins), and that
+product terms of a macrocell which the fuse map makes an input are
+reported.
 
     csim_jed.py --bin-dir build/bin [--share DIR] [-k SUBSTR] [--keep DIR]
     csim_jed.py --bin-dir build/bin --corpus DIR   # load and run every .jed under DIR
@@ -90,20 +100,40 @@ def find_ci(directory, name):
 # ---------------------------------------------------------------------------
 # The pin declarations of a design
 # ---------------------------------------------------------------------------
-def pld_source(path, depth=0, includes=True):
-    """The text of a .pld file without comments, $include files put in."""
+def pld_source(path, depth=0, includes=True, defines=None):
+    """The text of a .pld file without comments, $include files put in,
+    names defined with $define replaced and the lines that $ifdef leaves
+    out dropped.  (Roughly what cupl's preprocessor does; the pins of a
+    compiled design are taken from its .doc file, see doc_pins.)"""
     text = re.sub(r'/\*.*?\*/', ' ', read_text(path), flags=re.S)
-    out = []
+    defines = {} if defines is None else defines
+    out, levels = [], []            # levels: [the text around is read, the condition holds]
     for line in text.split('\n'):
-        m = re.match(r'\s*\$include\s+"?([^"\s;]+)"?', line, re.I)
-        if m and depth < 4:
-            inc = find_ci(os.path.dirname(path), m.group(1))
+        reading = all(outer and taken for outer, taken in levels)
+        m = re.match(r'\s*\$(\w+)\s*(\S*)\s*(.*?)\s*$', line)
+        if not m:
+            if reading:
+                for name in sorted(defines, key=len, reverse=True):
+                    line = re.sub(re.escape(name) + r'(?![A-Za-z])', lambda _, v=defines[name]: v, line)
+                out.append(line)
+            continue
+        word, name, rest = m.group(1).lower(), m.group(2), m.group(3)
+        if word in ('ifdef', 'ifndef'):
+            levels.append([reading, (name in defines) == (word == 'ifdef')])
+        elif word == 'else' and levels:
+            levels[-1][1] = not levels[-1][1]
+        elif word == 'endif' and levels:
+            levels.pop()
+        elif not reading:
+            pass
+        elif word == 'define':
+            defines.setdefault(name, rest)
+        elif word == 'undef':
+            defines.pop(name, None)
+        elif word == 'include' and depth < 4:
+            inc = find_ci(os.path.dirname(path), name.strip('";'))
             if inc and includes:
-                out.append(pld_source(inc, depth + 1))
-            continue
-        if line.strip().startswith('$'):
-            continue
-        out.append(line)
+                out.append(pld_source(inc, depth + 1, True, defines))
     return '\n'.join(out)
 
 
@@ -159,6 +189,16 @@ def pld_pins(path, includes=True):
             except ValueError:
                 pass
     return pins, fields, device
+
+
+def doc_pins(doc):
+    """{name: (pin, low)} from the symbol table of the .doc file cupl
+    writes: the pins as the compiler has them, whatever made their names."""
+    pins = {}
+    for m in re.finditer(r'^ (!| )  (\S+) +(\d+) +V ', doc, re.M):
+        if int(m.group(3)) > 0:
+            pins[m.group(2)] = (int(m.group(3)), m.group(1) == '!')
+    return pins
 
 
 # ---------------------------------------------------------------------------
@@ -356,6 +396,23 @@ def mask_listing(text):
     return re.sub(r'^CREATED .*$', 'CREATED', text, flags=re.M)
 
 
+def trace_lines(listing):
+    """The lines of a $TRACE listing, without the reset and preset terms
+    that a design writes as always false (q.ar = 'b'0): in the fuse map
+    they are terms that are not there, and csim -f does not list them."""
+    lines = mask_listing(listing).split('\n')
+    out = []
+    i = 0
+    while i < len(lines):
+        if re.match(r'----> (\S+\.(ar|sp) )+$', lines[i]) and i + 1 < len(lines) and \
+                re.match(r'\(0\)[ -]*$', lines[i + 1]) and not (i + 2 < len(lines) and lines[i + 2].startswith('(')):
+            i += 2
+            continue
+        out.append(lines[i])
+        i += 1
+    return out
+
+
 def jedec_vectors(text):
     """The fuse data and the test vectors of a JEDEC file, without the
     transmission checksum."""
@@ -452,6 +509,9 @@ class Suite:
             return
         jed = os.path.join(ref, jeds[0])
         fuses_only = read_text(jed)
+        doc = find_ci(ref, base + '.doc')
+        if doc:
+            pins.update(doc_pins(read_text(doc)))
         rc, out = self.tools.run('csim', ['-lw', base], ref)
         ref_so = read_text(find_ci(ref, base + '.so'))
         ref_wo = read_text(find_ci(ref, base + '.wo'))
@@ -485,10 +545,7 @@ class Suite:
 
         # names: the .pld file gives the names
         name = 'names: %s' % label
-        names_ok = all(n in pld_pins(pld, False)[0] for n in pins)
-        if not names_ok:
-            self.skip(name, 'pin declarations in an $include file')
-        else:
+        if True:
             d = jed_dir('names', si_text, True)
             rc, out, so = run_f(d, '-lwf')
             wo = find_ci(d, base + '.wo')
@@ -507,13 +564,28 @@ class Suite:
                         return
                 self.ok(name)
 
+        # trace: every equation as it is evaluated
+        name = 'trace: %s' % label
+        m = re.search(r'^[ \t]*vectors[ \t]*:[ \t]*\n', si_text, re.I | re.M)
+        if m:
+            si_trace = si_text[:m.end()] + '$TRACE 3;\n' + si_text[m.end():]
+            d = self.dir(base, 'trace_ref')
+            for f in os.listdir(ref):
+                if not f.lower().endswith(('.so', '.wo', '.si')):
+                    shutil.copy(os.path.join(ref, f), d)
+            open(os.path.join(d, base + '.si'), 'w').write(si_trace)
+            rc_ref, out = self.tools.run('csim', ['-l', base], d)
+            want = trace_lines(read_text(find_ci(d, base + '.so')))
+            rc, out, so = run_f(jed_dir('trace', si_trace, True), '-lf')
+            if rc != rc_ref:
+                self.fail(name, 'exit status %d, compiled design %d:\n%s' % (rc, rc_ref, out[-800:]))
+            elif self.compare(name, trace_lines(so), want, 'listings'):
+                self.ok(name)
+
         # pins / device / levels: default names; alias: default names for
         # pins that have a name from the .pld file
-        lcc = device.endswith('lcc') or device == 'g22v10i'
         for mode in ('pins', 'device', 'levels', 'alias'):
             name = '%s: %s' % (mode, label)
-            if mode == 'alias' and not names_ok:
-                continue
             try:
                 si_new, inverted = si_for_pins(si_text, pins, fields, mode == 'levels', mode != 'alias')
                 ncolumns = len(order_columns(split_si(si_text)[1], pins, fields)[0])
@@ -523,20 +595,17 @@ class Suite:
                 continue
             if mode == 'levels' and not inverted:
                 continue        # nothing is active low: the same as "pins"
-            if mode == 'pins' and lcc:
-                self.skip(name, 'the pin numbers are those of the PLCC package: only with the device named')
-                continue
             if mode == 'alias' and any(re.match(r'P\d+$', n) for n in pins):
                 continue        # the design has names of this form itself
             d = jed_dir(mode, si_new, mode == 'alias')
-            rc, out, so = run_f(d, '-lf', device if (mode == 'device' or (lcc and mode != 'alias')) else None)
+            rc, out, so = run_f(d, '-lf', device if mode == 'device' else None)
             if rc != ref_rc:
                 self.fail(name, 'exit status %d, compiled design %d:\n%s' % (rc, ref_rc, out[-800:]))
                 continue
             if not self.compare(name, vector_lines(so), want, 'vector lines'):
                 continue
             if mode == 'levels' and ref_jed is not None:
-                self.tools.run('csim', ['-jf'] + ([device] if lcc else []) + [base], d)
+                self.tools.run('csim', ['-jf', base], d)
                 got = [l for l in read_text(os.path.join(d, base + '.jed')).split('\n') if l.startswith('V')]
                 if not self.compare(name, got, [l for l in ref_jed.split('\n') if l.startswith('V')],
                                     'test vectors written by csim -j'):
@@ -712,6 +781,135 @@ def mode_cases(suite, work):
     run('t16s', 'g16v8ma', False, ['[0038sa] Please note: mode fuses'])
 
 
+def package_cases(suite, work):
+    """The device of a fuse map when csim is not told: the one the file
+    names (cupl writes it into the design specification), else by the
+    number of fuses and, for the PLCC package, of pins (QP28)."""
+    def run(what, base, change, device, same):
+        name = 'package: %s, %s' % (base, what)
+        src = os.path.join(work, base, 'pins')
+        d = suite.dir(base, 'package')
+        jed = change(read_text(os.path.join(src, base + '.jed')))
+        open(os.path.join(d, base + '.jed'), 'w').write(jed)
+        shutil.copy(os.path.join(src, base + '.si'), d)
+        rc, out = suite.tools.run('csim', ['-lf', base], d)
+        lines = vector_lines(read_text(find_ci(d, base + '.so') or os.devnull))
+        want = vector_lines(read_text(os.path.join(src, base + '.so')))
+        m = re.search(r'simulated as device (\S+)', out)
+        if not m or not re.match(device + '$', m.group(1)):
+            suite.fail(name, 'expected device %s:\n%s' % (device, out[:600]))
+        elif same and (rc != suite.status[base] or lines != want):
+            suite.fail(name, 'not the result of the file as cupl wrote it (exit status %d):\n%s' % (rc, out[-400:]))
+        elif not same and lines == want:
+            suite.fail(name, 'the pin numbers of the PLCC package were understood')
+        else:
+            suite.ok(name)
+
+    def spec(text):
+        """The file with this design specification."""
+        return lambda jed: re.sub(r'^\x02.*?(?=\*QP)', lambda _: '\x02\n' + text, jed, flags=re.S)
+
+    def no_qp(change):
+        return lambda jed: change(jed).replace('*QP28 \n', '')
+
+    def qp24(change):
+        return lambda jed: change(jed).replace('*QP28 ', '*QP24 ')
+
+    if os.path.isdir(os.path.join(work, 't22l', 'pins')):
+        run('no device named, QP28', 't22l', spec('a fuse map\n'), 'g22v10lcc', True)
+        run('a device the library does not have, QP28', 't22l', spec('Device   nosuchdev\n'), 'g22v10lcc', True)
+        run('g22v10lcc named, QP24', 't22l', qp24(lambda jed: jed), 'g22v10lcc', True)
+        run('DEVICE: G22V10LCC named, no QP', 't22l', no_qp(spec('DEVICE: G22V10LCC\n')), 'g22v10lcc', True)
+        run('no device named, no QP', 't22l', no_qp(spec('a fuse map\n')), 'g22v10', False)
+        run('no device named, QP24', 't22l', qp24(spec('a fuse map\n')), 'g22v10', False)
+    if os.path.isdir(os.path.join(work, 't20l', 'pins')):
+        run('no device named, QP28', 't20l', spec('a fuse map\n'), r'g20v8\w*lcc', True)
+        run('no device named, no QP', 't20l', no_qp(spec('a fuse map\n')), r'g20v8(ms|ma|s|as)', False)
+    if os.path.isdir(os.path.join(work, 't16r', 'pins')):
+        # a mode entry the fuses do not select is not taken from the file
+        run('g16v8s named, registered mode', 't16r', spec('Device   g16v8s\n'), 'g16v8ms', True)
+
+
+DEAD_HEADER = '''Name     dead16;
+PartNo   00;
+Date     2026-01-01;
+Revision 01;
+Designer LinCUPL;
+Company  LinCUPL;
+Assembly None;
+Location None;
+Device   g16v8s;
+'''
+
+# y is read back.  In the simple mode cupl makes its pin an input (AC1 = 1)
+# and still gives it the product term.
+DEAD_PLD = DEAD_HEADER + '''
+Pin 2  = a;
+Pin 3  = b;
+Pin 4  = c;
+Pin 19 = y;
+Pin 18 = z;
+Pin 17 = w;
+
+y = a & b;
+z = y & c;
+w = a # c;
+'''
+
+DEAD_SI_COMPILED = DEAD_HEADER + '''
+ORDER: a, b, c, %2, y, z, w;
+
+VECTORS:
+1 1 1  H H H
+1 0 1  L L H
+0 0 0  L L L
+'''
+
+DEAD_SI_MAP = DEAD_HEADER + '''
+ORDER: %s, %%2, %s;
+
+VECTORS:
+1 1 1 0  L H
+1 1 1 1  H H
+0 0 1 1  H H
+0 0 0 1  L L
+'''
+
+
+def dead_terms_case(suite):
+    """Product terms of a macrocell that the fuse map makes an input: the
+    compiled design simulates as it is written, the fuse map as the device
+    behaves (the pin is an input), and csim says so."""
+    name = 'unused: product terms of an input macrocell'
+    note = '[0039sa] Please note: product terms without effect, the fuse map makes an input of pin:  19'
+    ref = suite.dir('dead16', 'ref')
+    open(os.path.join(ref, 'dead16.pld'), 'w').write(DEAD_PLD)
+    open(os.path.join(ref, 'dead16.si'), 'w').write(DEAD_SI_COMPILED)
+    rc, out = suite.tools.run('cupl', ['-jaxm4', 'dead16.pld'], ref)
+    jed = find_ci(ref, 'dead16.jed')
+    if rc != 0 or not jed:
+        suite.fail(name, 'cupl -jaxm4 failed:\n' + out[-600:])
+        return
+    rc, out = suite.tools.run('csim', ['-l', 'dead16'], ref)
+    if rc != 0:
+        suite.fail(name, 'the compiled design does not simulate as written:\n' + out[-600:])
+        return
+    for with_pld, order, end in ((True, ('a, b, c, y', 'z, w'), ' (y)\n'), (False, ('P2, P3, P4, P19', 'P18, P17'), '\n')):
+        d = suite.dir('dead16', 'names' if with_pld else 'pins')
+        shutil.copy(jed, os.path.join(d, 'dead16.jed'))
+        if with_pld:
+            shutil.copy(os.path.join(ref, 'dead16.pld'), d)
+        open(os.path.join(d, 'dead16.si'), 'w').write(DEAD_SI_MAP % order)
+        rc, out = suite.tools.run('csim', ['-lf', 'dead16'], d)
+        listing = read_text(find_ci(d, 'dead16.so') or os.devnull)
+        inputs = [(pin, pin_name) for pin, pin_name, low in summary_pins(out, 'inputs:')]
+        if rc != 0 or note + end not in out or note + end not in listing or \
+                (19, 'y' if with_pld else None) not in inputs or len(vector_lines(listing)) != 4:
+            suite.fail(name, 'exit status %d, inputs %s:\n%s' % (rc, inputs, out[-800:]))
+            return
+    suite.ok(name)
+
+
 def ptd_case(suite, work, base, ptd_fuse, width):
     """Product term disable fuses of the GAL16V8 / GAL20V8: a row whose
     fuse is intact (0) counts as little as a row whose inputs are all
@@ -748,13 +946,15 @@ def ptd_case(suite, work, base, ptd_fuse, width):
     suite.fail(name, 'no product term of %d changed the result' % tried)
 
 
-def path_case(suite, work, base):
-    """The design named with a directory."""
-    name = 'path: %s' % base
-    src = os.path.join(work, base, 'pins')
+def path_case(suite, work, base, mode='pins'):
+    """The design named with a directory; in mode "names" with its .pld
+    file and what that includes, which are looked for there too."""
+    name = 'path: %s%s' % (base, '' if mode == 'pins' else ' with its .pld file')
+    src = os.path.join(work, base, mode)
     d = suite.dir(base, 'path', 'sub dir')
-    for ext in ('.jed', '.si'):
-        shutil.copy(os.path.join(src, base + ext), d)
+    for f in os.listdir(src):
+        if not f.lower().endswith(('.so', '.wo')):
+            shutil.copy(os.path.join(src, f), d)
     rc, out = suite.tools.run('csim', ['-lf', os.path.join('sub dir', base)], os.path.dirname(d))
     so = find_ci(d, base + '.so')
     if so and vector_lines(read_text(so)) == vector_lines(read_text(os.path.join(src, base + '.so'))):
@@ -1032,6 +1232,10 @@ def main():
             ptd_case(suite, work, 't16r', 2128, 32)
             ptd_case(suite, work, 't20c', 2640, 40)
             path_case(suite, work, 't22a')
+            path_case(suite, work, 'pdefs', 'names')
+            print('Devices that are not named, product terms without effect')
+            package_cases(suite, work)
+            dead_terms_case(suite)
         print('\n%d designs; %d passed (%s), %d failed, %d skipped' % (
             len(designs), suite.passed, ', '.join('%s %d' % kv for kv in sorted(suite.counts.items())),
             len(suite.failed), len(suite.skipped)))
