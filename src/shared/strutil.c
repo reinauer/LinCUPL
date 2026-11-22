@@ -7,6 +7,17 @@
 #include <string.h>
 #include <strings.h>
 
+size_t lincupl_strcpy_trunc(char *dst, size_t size, const char *src)
+{
+    size_t len = strlen(src);
+    if (size != 0) {
+        size_t n = len < size - 1 ? len : size - 1;
+        memcpy(dst, src, n);
+        dst[n] = '\0';
+    }
+    return len;
+}
+
 void lincupl_strlwr(char *s)
 {
     if (s == NULL) {

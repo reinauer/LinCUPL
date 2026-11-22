@@ -540,8 +540,10 @@ static void pdif_classify(void)
                 memcpy(name, s->name, (size_t)len);
                 name[len] = '\0';
             } else {
+                char digits[16];
                 memcpy(name, s->name, (size_t)len - 2);
-                snprintf(name + len - 2, sizeof(s_pins[0].name) - (size_t)(len - 2), "%d", number);
+                snprintf(digits, sizeof(digits), "%d", number);
+                lincupl_strcpy_trunc(name + len - 2, sizeof(s_pins[0].name) - (size_t)(len - 2), digits);
             }
             len--;
             unique = pdif_name_is_unique(name, s->pin);
@@ -1127,7 +1129,7 @@ static void edif_write_contents(void)
         } else if (strcmp(ext, "byp") == 0) {
             p->cell += 0x32;
         } else if (type == 2 || type == 9) {
-            snprintf(p->name, sizeof(p->name), "%s", s->name);
+            lincupl_strcpy_trunc(p->name, sizeof(p->name), s->name);
             snprintf(p->instance, sizeof(p->instance), "PIN%d", (int)s->pin);
             if (s->node_index < 0) {
                 p->cell = (s->flags & SYMF_INVERTED) != 0;

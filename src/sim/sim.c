@@ -963,7 +963,7 @@ static void sim_main(void)
  * success, 1 after an error.  All files and memory are released. */
 int sim_run(int vsima, int argc, char **argv)
 {
-    int result = 1;
+    volatile int result = 1;   /* set between setjmp and a possible longjmp */
     g_vsima = vsima;
     reset_globals();
     for (int i = 0; i < 9; i++) {

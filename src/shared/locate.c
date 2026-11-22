@@ -199,8 +199,10 @@ FILE *lincupl_fopen_ci(const char *raw_path, const char *raw_mode) {
                 parent_raw[dlen] = '\0';
                 if (lincupl_resolve_ci_path(parent_raw, parent_res, sizeof(parent_res)) == 0) {
                     char full_out[PATH_MAX];
-                    snprintf(full_out, sizeof(full_out), "%s/%s", parent_res, slash + 1);
-                    fp = fopen(full_out, mode);
+                    int n = snprintf(full_out, sizeof(full_out), "%s/%s", parent_res, slash + 1);
+                    if (n >= 0 && (size_t)n < sizeof(full_out)) {
+                        fp = fopen(full_out, mode);
+                    }
                 }
             }
         }
@@ -270,7 +272,10 @@ static int lincupl_probe_dl_in_dir(const char *dir, char *out, size_t out_sz) {
     for (size_t i = 0; i < sizeof(names) / sizeof(names[0]); i++) {
         char cand[PATH_MAX];
         char resolved[PATH_MAX];
-        snprintf(cand, sizeof(cand), "%s/%s", dir_res, names[i]);
+        int n = snprintf(cand, sizeof(cand), "%s/%s", dir_res, names[i]);
+        if (n < 0 || (size_t)n >= sizeof(cand)) {
+            continue;
+        }
         if (lincupl_resolve_ci_path(cand, resolved, sizeof(resolved)) == 0 &&
             lincupl_is_reg_file(resolved)) {
             snprintf(out, out_sz, "%s", resolved);

@@ -26,6 +26,7 @@
  */
 #include "sim.h"
 #include "jedread.h"
+#include "strutil.h"
 
 /* Offsets in the records of the device (names as in src/cupl/fusemap.h) */
 enum {
@@ -324,7 +325,7 @@ static int check_device(const char *device, const char *jed_name, int *code, cha
     const uint8_t *hdr = dev_header();
     uint32_t fuses = rd32(hdr + HDR_FUSES);
     int known = 0;
-    int ok = hdr[HDR_TYPE] == 0 && hdr[HDR_PINS] <= MAX_PINS;
+    int ok = hdr[HDR_TYPE] == 0;   /* the pin count, one byte, is <= MAX_PINS */
     g_jed.ptd_fuse = 0;
     for (size_t i = 0; i < sizeof(k_families) / sizeof(k_families[0]); i++) {
         if (k_families[i].fuses == fuses) {
@@ -1672,7 +1673,7 @@ void load_design_jedec(void)
     read_pld();
     choose_device(jed_name);
     /* option j adds the vectors to the file that was read */
-    snprintf(g_abs_jedec_name, sizeof(g_abs_jedec_name), "%s", g_base_name);
+    lincupl_strcpy_trunc(g_abs_jedec_name, sizeof(g_abs_jedec_name), g_base_name);
     g_options |= OPT_N;
     read_header_items(design);
     collect_pins();

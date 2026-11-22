@@ -23,6 +23,7 @@
 #include <string.h>
 #include <strings.h>
 #include "parse_int.h"
+#include "strutil.h"
 
 static char g_message[64];             /* scratch text for message details */
 char g_parse_name_buf[NAME_BUF_SIZE];  /* scratch for generated names */
@@ -1230,14 +1231,14 @@ static void load_declare_defs(void)
         if (read_def_word(fp, word, sizeof(word)) == -1) {
             break;
         }
-        snprintf(g_declare[g_declare_count].name, sizeof(g_declare[0].name), "%s", word);
+        lincupl_strcpy_trunc(g_declare[g_declare_count].name, sizeof(g_declare[0].name), word);
         read_def_word(fp, word, sizeof(word));
         g_declare[g_declare_count].items = NULL;
         int result;
         do {
             read_def_word(fp, word, sizeof(word));
             declare_item_t *item = parse_alloc_tracked(sizeof(*item), "");
-            snprintf(item->name, sizeof(item->name), "%s", word);
+            lincupl_strcpy_trunc(item->name, sizeof(item->name), word);
             read_def_word(fp, word, sizeof(word));
             item->kind = (int)strtol(word, NULL, 10);
             if (item->kind == 3) {

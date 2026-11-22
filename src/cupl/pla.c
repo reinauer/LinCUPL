@@ -374,7 +374,7 @@ static int load_declarations(void)
         if (def_next(fp, text, sizeof(text)) == -1) {
             break;
         }
-        snprintf(s_decls[s_ndecls].name, sizeof(s_decls[0].name), "%s", text);
+        lincupl_strcpy_trunc(s_decls[s_ndecls].name, sizeof(s_decls[0].name), text);
         def_next(fp, text, sizeof(text));
         s_decls[s_ndecls].items = NULL;
         decl_item_t **link = &s_decls[s_ndecls].items;
@@ -382,7 +382,7 @@ static int load_declarations(void)
         do {
             def_next(fp, text, sizeof(text));
             decl_item_t *item = alloc_zeroed(1, sizeof(*item), "");
-            snprintf(item->name, sizeof(item->name), "%s", text);
+            lincupl_strcpy_trunc(item->name, sizeof(item->name), text);
             def_next(fp, text, sizeof(text));
             item->kind = (int)strtol(text, NULL, 10);
             if (item->kind == 3) {

@@ -22,6 +22,11 @@ extern "C" {
 void lincupl_strlwr(char *s);
 void lincupl_strupr(char *s);
 
+/* Copy src to dst, truncated to size - 1 characters, always terminated
+ * (unless size is 0).  Returns the length of src, so a result >= size
+ * means src was truncated. */
+size_t lincupl_strcpy_trunc(char *dst, size_t size, const char *src);
+
 /* End of the directory part of path: the last '/', else the last '\', else
  * the last ':'; NULL if there is none. */
 const char *lincupl_path_sep(const char *path);
