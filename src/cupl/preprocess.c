@@ -2204,6 +2204,13 @@ static void directive_define(FILE *in, int line)
     char *value = g_define_pool_ptr;
     entry->value = value;
 
+    /* read_word consumed the delimiter, which may already be the newline. */
+    if (g_pp_eol || g_pp_eof) {
+        *g_define_pool_ptr++ = '\0';
+        fputc('\n', g_pp_out);
+        return;
+    }
+
     int c;
     do {
         c = phase_read_char(in);

@@ -1,0 +1,45 @@
+{
+  "device": "g22v10",
+  "variants": [
+    {
+      "label": "empty definition before equation (LF)",
+      "source": "pin 3 = a; pin 4 = b; pin 22 = y; pin 21 = z;\n$DEFINE FLAG\ny = a; z = b;\n",
+      "reference": "pin 3 = a; pin 4 = b; pin 22 = y; pin 21 = z;\ny = a; z = b;\n"
+    },
+    {
+      "label": "empty definition before equation (CRLF)",
+      "source": "pin 3 = a; pin 4 = b; pin 22 = y; pin 21 = z;\r\n$DEFINE FLAG\r\ny = a; z = b;\r\n",
+      "reference": "pin 3 = a; pin 4 = b; pin 22 = y; pin 21 = z;\ny = a; z = b;\n"
+    },
+    {
+      "label": "empty definition before conditional (LF)",
+      "source": "pin 3 = a; pin 4 = b; pin 22 = y; pin 21 = z;\n$DEFINE FLAG\n$IFDEF FLAG\ny = a;\n$ELSE\ny = !a;\n$ENDIF\nz = b;\n",
+      "reference": "pin 3 = a; pin 4 = b; pin 22 = y; pin 21 = z;\ny = a; z = b;\n"
+    },
+    {
+      "label": "empty definition before conditional (CRLF)",
+      "source": "pin 3 = a; pin 4 = b; pin 22 = y; pin 21 = z;\r\n$DEFINE FLAG\r\n$IFDEF FLAG\r\ny = a;\r\n$ELSE\r\ny = !a;\r\n$ENDIF\r\nz = b;\r\n",
+      "reference": "pin 3 = a; pin 4 = b; pin 22 = y; pin 21 = z;\ny = a; z = b;\n"
+    },
+    {
+      "label": "trailing blank (LF)",
+      "source": "pin 3 = a; pin 4 = b; pin 22 = y; pin 21 = z;\n$DEFINE FLAG \ny = a; z = b;\n",
+      "reference": "pin 3 = a; pin 4 = b; pin 22 = y; pin 21 = z;\ny = a; z = b;\n"
+    },
+    {
+      "label": "trailing blank (CRLF)",
+      "source": "pin 3 = a; pin 4 = b; pin 22 = y; pin 21 = z;\r\n$DEFINE FLAG \r\ny = a; z = b;\r\n",
+      "reference": "pin 3 = a; pin 4 = b; pin 22 = y; pin 21 = z;\ny = a; z = b;\n"
+    },
+    {
+      "label": "empty definition at EOF (LF)",
+      "source": "pin 3 = a; pin 4 = b; pin 22 = y; pin 21 = z;\ny = a; z = b;\n$DEFINE FLAG",
+      "reference": "pin 3 = a; pin 4 = b; pin 22 = y; pin 21 = z;\ny = a; z = b;\n"
+    },
+    {
+      "label": "empty definition at EOF (CRLF)",
+      "source": "pin 3 = a; pin 4 = b; pin 22 = y; pin 21 = z;\r\ny = a; z = b;\r\n$DEFINE FLAG",
+      "reference": "pin 3 = a; pin 4 = b; pin 22 = y; pin 21 = z;\ny = a; z = b;\n"
+    }
+  ]
+}
