@@ -104,6 +104,7 @@ typedef struct {
     int16_t reg_rec;            /* pin record of the register feedback, -1 none */
     int16_t column;             /* its column pair, -1 none */
     int16_t node;               /* node record of the macrocell as programmed, -1: no output */
+    int16_t array;              /* OR array of the macrocell, -1: the pin has none */
     int16_t off_enable;         /* output enable term of a macrocell that is turned off, -1 none */
     int16_t enable;             /* node records of the output enable, */
     int16_t reset;              /* reset */
@@ -467,7 +468,7 @@ static void collect_pins(void)
     for (int p = 0; p <= MAX_PINS; p++) {
         jpin_t *pin = &g_jed.pins[p];
         memset(pin, 0, sizeof(*pin));
-        pin->in_rec = pin->reg_rec = pin->column = pin->node = pin->off_enable = -1;
+        pin->in_rec = pin->reg_rec = pin->column = pin->node = pin->array = pin->off_enable = -1;
         pin->enable = pin->reset = pin->preset = -1;
         pin->sym = pin->out_sym = pin->enable_sym = pin->reset_sym = pin->preset_sym = -1;
         snprintf(pin->name, sizeof(pin->name), "P%d", p);
@@ -555,6 +556,9 @@ static void configure_macrocells(void)
             continue;
         }
         pin = &g_jed.pins[number];
+        if (pin->array < 0) {
+            pin->array = (int16_t)rd16(n + NODE_ARRAY);
+        }
         if (pin->node >= 0) {
             continue;
         }
@@ -1511,6 +1515,28 @@ static void name_pins(void)
     }
 }
 
+/* A macrocell whose fuses make it an input does not drive its pin: product
+ * terms it has are without effect.  cupl writes such a map for a design
+ * that is forced into the simple mode of a GAL16V8 or GAL20V8 and reads an
+ * output back: the compiled design then simulates as written, the device
+ * does what the map says. */
+static void warn_dead_terms(void)
+{
+    for (int p = 1; p <= g_jed.npins; p++) {
+        const jpin_t *pin = &g_jed.pins[p];
+        char text[NAME_SIZE + 16];
+        if (pin->node >= 0 || pin->array < 0 || array_rows(pin->array) == 0) {
+            continue;
+        }
+        if (pin->named) {
+            snprintf(text, sizeof(text), "%d (%s)", p, pin->name);
+        } else {
+            snprintf(text, sizeof(text), "%d", p);
+        }
+        print_warning_now(ERR_JEDEC_DEAD_TERMS, text);
+    }
+}
+
 /* Define the fields of the .pld file whose members are all named pins. */
 static void define_pld_fields(void)
 {
@@ -1653,6 +1679,7 @@ void load_design_jedec(void)
     scan_arrays();
     configure_macrocells();
     name_pins();
+    warn_dead_terms();
     build_symbols();
     build_frames();
     define_pld_fields();

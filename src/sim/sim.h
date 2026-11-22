@@ -104,7 +104,8 @@ enum {
     ERR_JEDEC_FILE = 35,          /* invalid JEDEC file:   */
     ERR_JEDEC_NO_DEVICE = 36,     /* no device for JEDEC file:   */
     ERR_JEDEC_DEVICE = 37,        /* device cannot be simulated from a JEDEC file:   */
-    ERR_JEDEC_MODE = 38           /* mode fuses of the JEDEC file select another mode than device:   */
+    ERR_JEDEC_MODE = 38,          /* mode fuses of the JEDEC file select another mode than device:   */
+    ERR_JEDEC_DEAD_TERMS = 39     /* product terms without effect, the fuse map makes an input of pin:   */
 };
 
 /* -------------------------------------------------------------------------
