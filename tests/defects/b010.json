@@ -1,0 +1,73 @@
+{
+  "device": "g16v8ms",
+  "variants": [
+    {
+      "label": "g16v8ms a & b register first",
+      "device": "g16v8ms",
+      "source": "pin 1 = clk; pin 3 = a; pin 4 = b; pin 19 = y;\ny.d = a & b;\ny = b;\ny.oe = a & b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "label": "g16v8ms a & b combinational first",
+      "device": "g16v8ms",
+      "source": "pin 1 = clk; pin 3 = a; pin 4 = b; pin 19 = y;\ny = b;\ny.d = a & b;\ny.oe = a & b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "label": "g16v8ms !(a & b) register first",
+      "device": "g16v8ms",
+      "source": "pin 1 = clk; pin 3 = a; pin 4 = b; pin 19 = y;\ny.d = !(a & b);\ny = b;\ny.oe = !(a & b);",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "label": "g16v8ms !(a & b) combinational first",
+      "device": "g16v8ms",
+      "source": "pin 1 = clk; pin 3 = a; pin 4 = b; pin 19 = y;\ny = b;\ny.d = !(a & b);\ny.oe = !(a & b);",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "label": "g16v8ms separate output cells",
+      "device": "g16v8ms",
+      "source": "pin 1 = clk; pin 3 = a; pin 4 = b; pin 19 = y;\npin 18 = z; y.d = a; z = b;"
+    },
+    {
+      "label": "g16v8ms combinational output enable",
+      "device": "g16v8ms",
+      "source": "pin 1 = clk; pin 3 = a; pin 4 = b; pin 19 = y;\ny = a; y.oe = b;"
+    },
+    {
+      "label": "g20v8ms a & b register first",
+      "device": "g20v8ms",
+      "source": "pin 1 = clk; pin 3 = a; pin 4 = b; pin 22 = y;\ny.d = a & b;\ny = b;\ny.oe = a & b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "label": "g20v8ms a & b combinational first",
+      "device": "g20v8ms",
+      "source": "pin 1 = clk; pin 3 = a; pin 4 = b; pin 22 = y;\ny = b;\ny.d = a & b;\ny.oe = a & b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "label": "g20v8ms !(a & b) register first",
+      "device": "g20v8ms",
+      "source": "pin 1 = clk; pin 3 = a; pin 4 = b; pin 22 = y;\ny.d = !(a & b);\ny = b;\ny.oe = !(a & b);",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "label": "g20v8ms !(a & b) combinational first",
+      "device": "g20v8ms",
+      "source": "pin 1 = clk; pin 3 = a; pin 4 = b; pin 22 = y;\ny = b;\ny.d = !(a & b);\ny.oe = !(a & b);",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "label": "g20v8ms separate output cells",
+      "device": "g20v8ms",
+      "source": "pin 1 = clk; pin 3 = a; pin 4 = b; pin 22 = y;\npin 21 = z; y.d = a; z = b;"
+    },
+    {
+      "label": "g20v8ms combinational output enable",
+      "device": "g20v8ms",
+      "source": "pin 1 = clk; pin 3 = a; pin 4 = b; pin 22 = y;\ny = a; y.oe = b;"
+    }
+  ]
+}

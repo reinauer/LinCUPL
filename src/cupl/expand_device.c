@@ -763,6 +763,32 @@ static void add_linked_functions(void)
     }
 }
 
+/* Some macrocells describe combinational and registered modes as separate
+ * term arrays, although the two arrays overlap in the physical cell. */
+static void check_split_output_modes(void)
+{
+    for (int i = 0; i < expand_symbol_count; i++) {
+        const symbol_t *comb = &expand_symbols[i];
+        if (comb->node_fn < 0 || comb->ext_code != 0 || !(comb->flags & SYMF_OUTPUT) ||
+            comb->polarity == POL_FIXED || dev_u8(dev_nodefn(comb->node_fn, NODEFN_SHARING)) != 1) {
+            continue;
+        }
+        for (int j = 0; j < expand_symbol_count; j++) {
+            const symbol_t *reg = &expand_symbols[j];
+            if (reg->pin == comb->pin && reg->node_fn >= 0 && reg->ext_code == 1 &&
+                (reg->flags & SYMF_OUTPUT) && reg->polarity != POL_FIXED &&
+                dev_u8(dev_nodefn(reg->node_fn, NODEFN_SHARING)) == 1 &&
+                dev_u16(dev_nodefn(reg->node_fn, NODEFN_LINE)) !=
+                    dev_u16(dev_nodefn(comb->node_fn, NODEFN_LINE))) {
+                expand_report_pin_error(ERR_EXCLUDED_OUTPUT, reg);
+            }
+        }
+    }
+    if (expand_error_count > 0) {
+        expand_fatal_error(-1, "");
+    }
+}
+
 /* Allocate the usage maps for the current device and symbol table. */
 void expand_alloc_usage_maps(void)
 {
@@ -842,6 +868,7 @@ int expand_bind_symbols(char *alt_name, size_t alt_size)
     if (pick_alternative_device(alt_name, alt_size)) {
         return 1;
     }
+    check_split_output_modes();
     add_linked_functions();
     return 0;
 }
