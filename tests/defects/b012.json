@@ -1,0 +1,133 @@
+{
+  "device": "g24v10ms",
+  "variants": [
+    {
+      "label": "g24v10ms pin 19 7 terms combinational",
+      "device": "g24v10ms",
+      "source": "pin 1 = clk; pin [2,3,4,5] = [a,b,c,d]; pin 19 = y;\ny = a & !b & !c & !d\n # !a & b & !c & !d\n # !a & !b & c & !d\n # a & b & c & !d\n # !a & !b & !c & d\n # a & b & !c & d\n # a & !b & c & d;"
+    },
+    {
+      "label": "g24v10ms pin 19 8 terms combinational",
+      "device": "g24v10ms",
+      "source": "pin 1 = clk; pin [2,3,4,5] = [a,b,c,d]; pin 19 = y;\ny = a & !b & !c & !d\n # !a & b & !c & !d\n # !a & !b & c & !d\n # a & b & c & !d\n # !a & !b & !c & d\n # a & b & !c & d\n # a & !b & c & d\n # !a & b & c & d;",
+      "diagnostic": "\\[0006cc\\]"
+    },
+    {
+      "label": "g24v10ms pin 19 8 terms .d",
+      "device": "g24v10ms",
+      "source": "pin 1 = clk; pin [2,3,4,5] = [a,b,c,d]; pin 19 = y;\ny.d = a & !b & !c & !d\n # !a & b & !c & !d\n # !a & !b & c & !d\n # a & b & c & !d\n # !a & !b & !c & d\n # a & b & !c & d\n # a & !b & c & d\n # !a & b & c & d;"
+    },
+    {
+      "label": "g24v10ms pin 18 7 terms combinational",
+      "device": "g24v10ms",
+      "source": "pin 1 = clk; pin [2,3,4,5] = [a,b,c,d]; pin 18 = y;\ny = a & !b & !c & !d\n # !a & b & !c & !d\n # !a & !b & c & !d\n # a & b & c & !d\n # !a & !b & !c & d\n # a & b & !c & d\n # a & !b & c & d;"
+    },
+    {
+      "label": "g24v10ms pin 18 8 terms combinational",
+      "device": "g24v10ms",
+      "source": "pin 1 = clk; pin [2,3,4,5] = [a,b,c,d]; pin 18 = y;\ny = a & !b & !c & !d\n # !a & b & !c & !d\n # !a & !b & c & !d\n # a & b & c & !d\n # !a & !b & !c & d\n # a & b & !c & d\n # a & !b & c & d\n # !a & b & c & d;",
+      "diagnostic": "\\[0006cc\\]"
+    },
+    {
+      "label": "g24v10ms pin 18 8 terms .d",
+      "device": "g24v10ms",
+      "source": "pin 1 = clk; pin [2,3,4,5] = [a,b,c,d]; pin 18 = y;\ny.d = a & !b & !c & !d\n # !a & b & !c & !d\n # !a & !b & c & !d\n # a & b & c & !d\n # !a & !b & !c & d\n # a & b & !c & d\n # a & !b & c & d\n # !a & b & c & d;"
+    },
+    {
+      "label": "g24v10ms pin 17 7 terms combinational",
+      "device": "g24v10ms",
+      "source": "pin 1 = clk; pin [2,3,4,5] = [a,b,c,d]; pin 17 = y;\ny = a & !b & !c & !d\n # !a & b & !c & !d\n # !a & !b & c & !d\n # a & b & c & !d\n # !a & !b & !c & d\n # a & b & !c & d\n # a & !b & c & d;"
+    },
+    {
+      "label": "g24v10ms pin 17 8 terms combinational",
+      "device": "g24v10ms",
+      "source": "pin 1 = clk; pin [2,3,4,5] = [a,b,c,d]; pin 17 = y;\ny = a & !b & !c & !d\n # !a & b & !c & !d\n # !a & !b & c & !d\n # a & b & c & !d\n # !a & !b & !c & d\n # a & b & !c & d\n # a & !b & c & d\n # !a & b & c & d;",
+      "diagnostic": "\\[0006cc\\]"
+    },
+    {
+      "label": "g24v10ms pin 17 8 terms .d",
+      "device": "g24v10ms",
+      "source": "pin 1 = clk; pin [2,3,4,5] = [a,b,c,d]; pin 17 = y;\ny.d = a & !b & !c & !d\n # !a & b & !c & !d\n # !a & !b & c & !d\n # a & b & c & !d\n # !a & !b & !c & d\n # a & b & !c & d\n # a & !b & c & d\n # !a & b & c & d;"
+    },
+    {
+      "label": "g24v10ms pin 16 7 terms combinational",
+      "device": "g24v10ms",
+      "source": "pin 1 = clk; pin [2,3,4,5] = [a,b,c,d]; pin 16 = y;\ny = a & !b & !c & !d\n # !a & b & !c & !d\n # !a & !b & c & !d\n # a & b & c & !d\n # !a & !b & !c & d\n # a & b & !c & d\n # a & !b & c & d;"
+    },
+    {
+      "label": "g24v10ms pin 16 8 terms combinational",
+      "device": "g24v10ms",
+      "source": "pin 1 = clk; pin [2,3,4,5] = [a,b,c,d]; pin 16 = y;\ny = a & !b & !c & !d\n # !a & b & !c & !d\n # !a & !b & c & !d\n # a & b & c & !d\n # !a & !b & !c & d\n # a & b & !c & d\n # a & !b & c & d\n # !a & b & c & d;",
+      "diagnostic": "\\[0006cc\\]"
+    },
+    {
+      "label": "g24v10ms pin 16 8 terms .d",
+      "device": "g24v10ms",
+      "source": "pin 1 = clk; pin [2,3,4,5] = [a,b,c,d]; pin 16 = y;\ny.d = a & !b & !c & !d\n # !a & b & !c & !d\n # !a & !b & c & !d\n # a & b & c & !d\n # !a & !b & !c & d\n # a & b & !c & d\n # a & !b & c & d\n # !a & b & c & d;"
+    },
+    {
+      "label": "g24v10 pin 19 7 terms combinational",
+      "device": "g24v10",
+      "source": "pin 1 = clk; pin [2,3,4,5] = [a,b,c,d]; pin 19 = y;\npin 26 = r; r.d = a;\ny = a & !b & !c & !d\n # !a & b & !c & !d\n # !a & !b & c & !d\n # a & b & c & !d\n # !a & !b & !c & d\n # a & b & !c & d\n # a & !b & c & d;"
+    },
+    {
+      "label": "g24v10 pin 19 8 terms combinational",
+      "device": "g24v10",
+      "source": "pin 1 = clk; pin [2,3,4,5] = [a,b,c,d]; pin 19 = y;\npin 26 = r; r.d = a;\ny = a & !b & !c & !d\n # !a & b & !c & !d\n # !a & !b & c & !d\n # a & b & c & !d\n # !a & !b & !c & d\n # a & b & !c & d\n # a & !b & c & d\n # !a & b & c & d;",
+      "diagnostic": "\\[0006cc\\]"
+    },
+    {
+      "label": "g24v10 pin 19 8 terms .d",
+      "device": "g24v10",
+      "source": "pin 1 = clk; pin [2,3,4,5] = [a,b,c,d]; pin 19 = y;\npin 26 = r; r.d = a;\ny.d = a & !b & !c & !d\n # !a & b & !c & !d\n # !a & !b & c & !d\n # a & b & c & !d\n # !a & !b & !c & d\n # a & b & !c & d\n # a & !b & c & d\n # !a & b & c & d;"
+    },
+    {
+      "label": "g24v10 pin 18 7 terms combinational",
+      "device": "g24v10",
+      "source": "pin 1 = clk; pin [2,3,4,5] = [a,b,c,d]; pin 18 = y;\npin 26 = r; r.d = a;\ny = a & !b & !c & !d\n # !a & b & !c & !d\n # !a & !b & c & !d\n # a & b & c & !d\n # !a & !b & !c & d\n # a & b & !c & d\n # a & !b & c & d;"
+    },
+    {
+      "label": "g24v10 pin 18 8 terms combinational",
+      "device": "g24v10",
+      "source": "pin 1 = clk; pin [2,3,4,5] = [a,b,c,d]; pin 18 = y;\npin 26 = r; r.d = a;\ny = a & !b & !c & !d\n # !a & b & !c & !d\n # !a & !b & c & !d\n # a & b & c & !d\n # !a & !b & !c & d\n # a & b & !c & d\n # a & !b & c & d\n # !a & b & c & d;",
+      "diagnostic": "\\[0006cc\\]"
+    },
+    {
+      "label": "g24v10 pin 18 8 terms .d",
+      "device": "g24v10",
+      "source": "pin 1 = clk; pin [2,3,4,5] = [a,b,c,d]; pin 18 = y;\npin 26 = r; r.d = a;\ny.d = a & !b & !c & !d\n # !a & b & !c & !d\n # !a & !b & c & !d\n # a & b & c & !d\n # !a & !b & !c & d\n # a & b & !c & d\n # a & !b & c & d\n # !a & b & c & d;"
+    },
+    {
+      "label": "g24v10 pin 17 7 terms combinational",
+      "device": "g24v10",
+      "source": "pin 1 = clk; pin [2,3,4,5] = [a,b,c,d]; pin 17 = y;\npin 26 = r; r.d = a;\ny = a & !b & !c & !d\n # !a & b & !c & !d\n # !a & !b & c & !d\n # a & b & c & !d\n # !a & !b & !c & d\n # a & b & !c & d\n # a & !b & c & d;"
+    },
+    {
+      "label": "g24v10 pin 17 8 terms combinational",
+      "device": "g24v10",
+      "source": "pin 1 = clk; pin [2,3,4,5] = [a,b,c,d]; pin 17 = y;\npin 26 = r; r.d = a;\ny = a & !b & !c & !d\n # !a & b & !c & !d\n # !a & !b & c & !d\n # a & b & c & !d\n # !a & !b & !c & d\n # a & b & !c & d\n # a & !b & c & d\n # !a & b & c & d;",
+      "diagnostic": "\\[0006cc\\]"
+    },
+    {
+      "label": "g24v10 pin 17 8 terms .d",
+      "device": "g24v10",
+      "source": "pin 1 = clk; pin [2,3,4,5] = [a,b,c,d]; pin 17 = y;\npin 26 = r; r.d = a;\ny.d = a & !b & !c & !d\n # !a & b & !c & !d\n # !a & !b & c & !d\n # a & b & c & !d\n # !a & !b & !c & d\n # a & b & !c & d\n # a & !b & c & d\n # !a & b & c & d;"
+    },
+    {
+      "label": "g24v10 pin 16 7 terms combinational",
+      "device": "g24v10",
+      "source": "pin 1 = clk; pin [2,3,4,5] = [a,b,c,d]; pin 16 = y;\npin 26 = r; r.d = a;\ny = a & !b & !c & !d\n # !a & b & !c & !d\n # !a & !b & c & !d\n # a & b & c & !d\n # !a & !b & !c & d\n # a & b & !c & d\n # a & !b & c & d;"
+    },
+    {
+      "label": "g24v10 pin 16 8 terms combinational",
+      "device": "g24v10",
+      "source": "pin 1 = clk; pin [2,3,4,5] = [a,b,c,d]; pin 16 = y;\npin 26 = r; r.d = a;\ny = a & !b & !c & !d\n # !a & b & !c & !d\n # !a & !b & c & !d\n # a & b & c & !d\n # !a & !b & !c & d\n # a & b & !c & d\n # a & !b & c & d\n # !a & b & c & d;",
+      "diagnostic": "\\[0006cc\\]"
+    },
+    {
+      "label": "g24v10 pin 16 8 terms .d",
+      "device": "g24v10",
+      "source": "pin 1 = clk; pin [2,3,4,5] = [a,b,c,d]; pin 16 = y;\npin 26 = r; r.d = a;\ny.d = a & !b & !c & !d\n # !a & b & !c & !d\n # !a & !b & c & !d\n # a & b & c & !d\n # !a & !b & !c & d\n # a & b & !c & d\n # a & !b & c & d\n # !a & b & c & d;"
+    }
+  ]
+}

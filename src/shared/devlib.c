@@ -89,6 +89,19 @@ static void correct_gal24v10_rows(uint8_t *image, size_t size)
         if (rd16(n + 2) == 19 && n[4] == 14 && rd32(n + 10) == 2452) {
             wr32(n + 10, 2352);
         }
+        /* The combinational array loses one data row to output enable.
+         * Registered arrays on the same pin retain all eight rows. */
+        if (n[4] == 14 && rd16(n + 2) >= 16 && rd16(n + 2) <= 19 &&
+            rd16(n + 31) == 8) {
+            for (unsigned j = 0; j < count; j++) {
+                const uint8_t *output = nodes + j * NODE_SIZE;
+                if (output[4] == 0 && rd16(output) == rd16(n) &&
+                    rd16(output + 2) == rd16(n + 2)) {
+                    wr16(n + 31, 7);
+                    break;
+                }
+            }
+        }
     }
     uint8_t *initializers = image_records(image, size, INIT_SECTION, INIT_SIZE, &count);
     for (unsigned i = 0; i < count;) {
