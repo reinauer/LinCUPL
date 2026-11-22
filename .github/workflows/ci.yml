@@ -60,6 +60,9 @@ jobs:
       - name: Build
         run: cmake --build build --parallel 3
 
+      - name: Run tests
+        run: ctest --test-dir build --output-on-failure
+
       - name: Verify executables
         shell: bash
         run: |
