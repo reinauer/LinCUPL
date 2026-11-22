@@ -104,6 +104,25 @@ static void correct_gal24v10_rows(uint8_t *image, size_t size)
     }
 }
 
+static void correct_buried_d_polarity(uint8_t *image, size_t size)
+{
+    unsigned count;
+    const uint8_t *attrs = image_records(image, size, 3, 152, &count);
+    if (count != 1) {
+        return;
+    }
+    unsigned npins = attrs[8];
+    uint8_t *nodes = image_records(image, size, 7, 39, &count);
+    for (unsigned i = 0; i < count; i++) {
+        uint8_t *n = nodes + 39 * i;
+        /* Buried D registers have fixed positive polarity, not the
+         * polarity-neutral behavior used for control terms. */
+        if (rd16(n + 2) > npins && n[4] == 1 && n[5] == 4) {
+            n[5] = 2;
+        }
+    }
+}
+
 static void correct_pal26_feedback(uint8_t *image, size_t size)
 {
     unsigned count;
@@ -136,6 +155,9 @@ size_t dl_read_device_image(FILE *fp, const uint8_t *entry, uint8_t *image, size
         correct_gal24v10_rows(image, got);
     } else if (strcasecmp(name, "p26v12") == 0) {
         correct_pal26_feedback(image, got);
+    }
+    if (strncasecmp(name, "v750", 4) == 0 || strcasecmp(name, "v2500lcc") == 0) {
+        correct_buried_d_polarity(image, got);
     }
     return got;
 }

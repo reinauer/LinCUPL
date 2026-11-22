@@ -36,6 +36,31 @@ static void section(uint8_t *image, unsigned id, unsigned count,
     wr32(h + 8, offset);
 }
 
+static int check_buried_d_polarity(void)
+{
+    uint8_t input[IMAGE_SIZE] = { 0 }, fixed[IMAGE_SIZE], again[IMAGE_SIZE];
+    section(input, 3, 1, 152, 260);
+    input[268] = 24;
+    section(input, 7, 2, 39, 412);
+    wr16(input + 414, 25);
+    input[416] = 1;
+    input[417] = 4;
+    wr16(input + 453, 23);
+    input[455] = 1;
+    input[456] = 4;
+    CHECK(read_image(input, sizeof(input), "v750", 0, fixed) == 0);
+    CHECK(fixed[417] == 2);
+    CHECK(fixed[456] == 4);
+    CHECK(read_image(fixed, sizeof(fixed), "v750", 0, again) == 0);
+    CHECK(memcmp(fixed, again, sizeof(fixed)) == 0);
+    CHECK(read_image(input, sizeof(input), "v2500", 0, fixed) == 0);
+    CHECK(memcmp(input, fixed, sizeof(input)) == 0);
+    input[416] = 27; /* T data does not invert when Q is complemented. */
+    CHECK(read_image(input, sizeof(input), "v750", 0, fixed) == 0);
+    CHECK(memcmp(input, fixed, sizeof(input)) == 0);
+    return 0;
+}
+
 static int check_pal26_feedback(void)
 {
     uint8_t input[IMAGE_SIZE] = { 0 }, fixed[IMAGE_SIZE], again[IMAGE_SIZE];
@@ -92,6 +117,8 @@ int main(void)
     CHECK(memcmp(original, again, sizeof(original)) == 0);
     CHECK(read_image(original, sizeof(original), "g24v10ma", 0, again) == 0);
     CHECK(memcmp(original, again, sizeof(original)) == 0);
+
+    CHECK(check_buried_d_polarity() == 0);
 
     /* Cut-off records must not be interpreted or written past the bytes read. */
     memset(again, 0xa5, sizeof(again));

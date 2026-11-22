@@ -1,0 +1,201 @@
+{
+  "device": "v750",
+  "variants": [
+    {
+      "label": "v750 active-low node 25",
+      "device": "v750",
+      "source": "pin 1 = clk; pin 2 = a; pin 22 = y;\npinnode 25 = !q; q.d = a; q.ck = clk; y = q;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 22 = y;\npinnode 25 = q; q.d = !a; q.ck = clk; y = !q;",
+      "vectors": "order: clk, a, y;\nvectors:\n0 0 *\nC 1 H\n0 0 H\nC 0 L\n0 1 L\nC 1 H\n"
+    },
+    {
+      "label": "v750 active-low node 34",
+      "device": "v750",
+      "source": "pin 1 = clk; pin 2 = a; pin 22 = y;\npinnode 34 = !q; q.d = a; q.ck = clk; y = q;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 22 = y;\npinnode 34 = q; q.d = !a; q.ck = clk; y = !q;",
+      "vectors": "order: clk, a, y;\nvectors:\n0 0 *\nC 1 H\n0 0 H\nC 0 L\n0 1 L\nC 1 H\n"
+    },
+    {
+      "label": "v750b active-low node 25",
+      "device": "v750b",
+      "source": "pin 1 = clk; pin 2 = a; pin 22 = y;\npinnode 25 = !q; q.d = a; q.ck = clk; y = q;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 22 = y;\npinnode 25 = q; q.d = !a; q.ck = clk; y = !q;",
+      "vectors": "order: clk, a, y;\nvectors:\n0 0 *\nC 1 H\n0 0 H\nC 0 L\n0 1 L\nC 1 H\n"
+    },
+    {
+      "label": "v750b active-low node 34",
+      "device": "v750b",
+      "source": "pin 1 = clk; pin 2 = a; pin 22 = y;\npinnode 34 = !q; q.d = a; q.ck = clk; y = q;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 22 = y;\npinnode 34 = q; q.d = !a; q.ck = clk; y = !q;",
+      "vectors": "order: clk, a, y;\nvectors:\n0 0 *\nC 1 H\n0 0 H\nC 0 L\n0 1 L\nC 1 H\n"
+    },
+    {
+      "label": "v750c active-low node 25",
+      "device": "v750c",
+      "source": "pin 1 = clk; pin 2 = a; pin 22 = y;\npinnode 25 = !q; q.d = a; q.ck = clk; y = q;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 22 = y;\npinnode 25 = q; q.d = !a; q.ck = clk; y = !q;",
+      "vectors": "order: clk, a, y;\nvectors:\n0 0 *\nC 1 H\n0 0 H\nC 0 L\n0 1 L\nC 1 H\n"
+    },
+    {
+      "label": "v750c active-low node 34",
+      "device": "v750c",
+      "source": "pin 1 = clk; pin 2 = a; pin 22 = y;\npinnode 34 = !q; q.d = a; q.ck = clk; y = q;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 22 = y;\npinnode 34 = q; q.d = !a; q.ck = clk; y = !q;",
+      "vectors": "order: clk, a, y;\nvectors:\n0 0 *\nC 1 H\n0 0 H\nC 0 L\n0 1 L\nC 1 H\n"
+    },
+    {
+      "label": "v750cext active-low node 25",
+      "device": "v750cext",
+      "source": "pin 1 = clk; pin 2 = a; pin 22 = y;\npinnode 25 = !q; q.d = a; q.ck = clk; y = q;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 22 = y;\npinnode 25 = q; q.d = !a; q.ck = clk; y = !q;",
+      "vectors": "order: clk, a, y;\nvectors:\n0 0 *\nC 1 H\n0 0 H\nC 0 L\n0 1 L\nC 1 H\n"
+    },
+    {
+      "label": "v750cext active-low node 34",
+      "device": "v750cext",
+      "source": "pin 1 = clk; pin 2 = a; pin 22 = y;\npinnode 34 = !q; q.d = a; q.ck = clk; y = q;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 22 = y;\npinnode 34 = q; q.d = !a; q.ck = clk; y = !q;",
+      "vectors": "order: clk, a, y;\nvectors:\n0 0 *\nC 1 H\n0 0 H\nC 0 L\n0 1 L\nC 1 H\n"
+    },
+    {
+      "label": "v750cextppk active-low node 25",
+      "device": "v750cextppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 22 = y;\npinnode 25 = !q; q.d = a; q.ck = clk; y = q;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 22 = y;\npinnode 25 = q; q.d = !a; q.ck = clk; y = !q;",
+      "vectors": "order: clk, a, y;\nvectors:\n0 0 *\nC 1 H\n0 0 H\nC 0 L\n0 1 L\nC 1 H\n"
+    },
+    {
+      "label": "v750cextppk active-low node 34",
+      "device": "v750cextppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 22 = y;\npinnode 34 = !q; q.d = a; q.ck = clk; y = q;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 22 = y;\npinnode 34 = q; q.d = !a; q.ck = clk; y = !q;",
+      "vectors": "order: clk, a, y;\nvectors:\n0 0 *\nC 1 H\n0 0 H\nC 0 L\n0 1 L\nC 1 H\n"
+    },
+    {
+      "label": "v750cppk active-low node 25",
+      "device": "v750cppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 22 = y;\npinnode 25 = !q; q.d = a; q.ck = clk; y = q;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 22 = y;\npinnode 25 = q; q.d = !a; q.ck = clk; y = !q;",
+      "vectors": "order: clk, a, y;\nvectors:\n0 0 *\nC 1 H\n0 0 H\nC 0 L\n0 1 L\nC 1 H\n"
+    },
+    {
+      "label": "v750cppk active-low node 34",
+      "device": "v750cppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 22 = y;\npinnode 34 = !q; q.d = a; q.ck = clk; y = q;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 22 = y;\npinnode 34 = q; q.d = !a; q.ck = clk; y = !q;",
+      "vectors": "order: clk, a, y;\nvectors:\n0 0 *\nC 1 H\n0 0 H\nC 0 L\n0 1 L\nC 1 H\n"
+    },
+    {
+      "label": "v750lcc active-low node 29",
+      "device": "v750lcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 26 = y;\npinnode 29 = !q; q.d = a; q.ck = clk; y = q;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 26 = y;\npinnode 29 = q; q.d = !a; q.ck = clk; y = !q;",
+      "vectors": "order: clk, a, y;\nvectors:\n0 0 *\nC 1 H\n0 0 H\nC 0 L\n0 1 L\nC 1 H\n"
+    },
+    {
+      "label": "v750lcc active-low node 38",
+      "device": "v750lcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 26 = y;\npinnode 38 = !q; q.d = a; q.ck = clk; y = q;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 26 = y;\npinnode 38 = q; q.d = !a; q.ck = clk; y = !q;",
+      "vectors": "order: clk, a, y;\nvectors:\n0 0 *\nC 1 H\n0 0 H\nC 0 L\n0 1 L\nC 1 H\n"
+    },
+    {
+      "label": "v750blcc active-low node 29",
+      "device": "v750blcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 26 = y;\npinnode 29 = !q; q.d = a; q.ck = clk; y = q;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 26 = y;\npinnode 29 = q; q.d = !a; q.ck = clk; y = !q;",
+      "vectors": "order: clk, a, y;\nvectors:\n0 0 *\nC 1 H\n0 0 H\nC 0 L\n0 1 L\nC 1 H\n"
+    },
+    {
+      "label": "v750blcc active-low node 38",
+      "device": "v750blcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 26 = y;\npinnode 38 = !q; q.d = a; q.ck = clk; y = q;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 26 = y;\npinnode 38 = q; q.d = !a; q.ck = clk; y = !q;",
+      "vectors": "order: clk, a, y;\nvectors:\n0 0 *\nC 1 H\n0 0 H\nC 0 L\n0 1 L\nC 1 H\n"
+    },
+    {
+      "label": "v750clcc active-low node 29",
+      "device": "v750clcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 26 = y;\npinnode 29 = !q; q.d = a; q.ck = clk; y = q;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 26 = y;\npinnode 29 = q; q.d = !a; q.ck = clk; y = !q;",
+      "vectors": "order: clk, a, y;\nvectors:\n0 0 *\nC 1 H\n0 0 H\nC 0 L\n0 1 L\nC 1 H\n"
+    },
+    {
+      "label": "v750clcc active-low node 38",
+      "device": "v750clcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 26 = y;\npinnode 38 = !q; q.d = a; q.ck = clk; y = q;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 26 = y;\npinnode 38 = q; q.d = !a; q.ck = clk; y = !q;",
+      "vectors": "order: clk, a, y;\nvectors:\n0 0 *\nC 1 H\n0 0 H\nC 0 L\n0 1 L\nC 1 H\n"
+    },
+    {
+      "label": "v750cextlcc active-low node 29",
+      "device": "v750cextlcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 26 = y;\npinnode 29 = !q; q.d = a; q.ck = clk; y = q;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 26 = y;\npinnode 29 = q; q.d = !a; q.ck = clk; y = !q;",
+      "vectors": "order: clk, a, y;\nvectors:\n0 0 *\nC 1 H\n0 0 H\nC 0 L\n0 1 L\nC 1 H\n"
+    },
+    {
+      "label": "v750cextlcc active-low node 38",
+      "device": "v750cextlcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 26 = y;\npinnode 38 = !q; q.d = a; q.ck = clk; y = q;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 26 = y;\npinnode 38 = q; q.d = !a; q.ck = clk; y = !q;",
+      "vectors": "order: clk, a, y;\nvectors:\n0 0 *\nC 1 H\n0 0 H\nC 0 L\n0 1 L\nC 1 H\n"
+    },
+    {
+      "label": "v750cextppklcc active-low node 29",
+      "device": "v750cextppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 26 = y;\npinnode 29 = !q; q.d = a; q.ck = clk; y = q;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 26 = y;\npinnode 29 = q; q.d = !a; q.ck = clk; y = !q;",
+      "vectors": "order: clk, a, y;\nvectors:\n0 0 *\nC 1 H\n0 0 H\nC 0 L\n0 1 L\nC 1 H\n"
+    },
+    {
+      "label": "v750cextppklcc active-low node 38",
+      "device": "v750cextppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 26 = y;\npinnode 38 = !q; q.d = a; q.ck = clk; y = q;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 26 = y;\npinnode 38 = q; q.d = !a; q.ck = clk; y = !q;",
+      "vectors": "order: clk, a, y;\nvectors:\n0 0 *\nC 1 H\n0 0 H\nC 0 L\n0 1 L\nC 1 H\n"
+    },
+    {
+      "label": "v750cppklcc active-low node 29",
+      "device": "v750cppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 26 = y;\npinnode 29 = !q; q.d = a; q.ck = clk; y = q;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 26 = y;\npinnode 29 = q; q.d = !a; q.ck = clk; y = !q;",
+      "vectors": "order: clk, a, y;\nvectors:\n0 0 *\nC 1 H\n0 0 H\nC 0 L\n0 1 L\nC 1 H\n"
+    },
+    {
+      "label": "v750cppklcc active-low node 38",
+      "device": "v750cppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 26 = y;\npinnode 38 = !q; q.d = a; q.ck = clk; y = q;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 26 = y;\npinnode 38 = q; q.d = !a; q.ck = clk; y = !q;",
+      "vectors": "order: clk, a, y;\nvectors:\n0 0 *\nC 1 H\n0 0 H\nC 0 L\n0 1 L\nC 1 H\n"
+    },
+    {
+      "label": "v2500lcc active-low node 45",
+      "device": "v2500lcc",
+      "source": "pin 1 = clk; pin 2 = a; pin 5 = y;\npinnode 45 = !q; q.d = a; q.ck = clk; y = q;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 5 = y;\npinnode 45 = q; q.d = !a; q.ck = clk; y = !q;",
+      "vectors": "order: clk, a, y;\nvectors:\n0 0 *\nC 1 H\n0 0 H\nC 0 L\n0 1 L\nC 1 H\n"
+    },
+    {
+      "label": "v2500lcc active-low node 68",
+      "device": "v2500lcc",
+      "source": "pin 1 = clk; pin 2 = a; pin 5 = y;\npinnode 68 = !q; q.d = a; q.ck = clk; y = q;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 5 = y;\npinnode 68 = q; q.d = !a; q.ck = clk; y = !q;",
+      "vectors": "order: clk, a, y;\nvectors:\n0 0 *\nC 1 H\n0 0 H\nC 0 L\n0 1 L\nC 1 H\n"
+    },
+    {
+      "label": "v2500 active-low node 41",
+      "device": "v2500",
+      "source": "pin 1 = clk; pin 2 = a; pin 4 = y;\npinnode 41 = !q; q.d = a; q.ck = clk; y = q;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 4 = y;\npinnode 41 = q; q.d = !a; q.ck = clk; y = !q;",
+      "vectors": "order: clk, a, y;\nvectors:\n0 0 *\nC 1 H\n0 0 H\nC 0 L\n0 1 L\nC 1 H\n"
+    },
+    {
+      "label": "v2500 active-low node 64",
+      "device": "v2500",
+      "source": "pin 1 = clk; pin 2 = a; pin 4 = y;\npinnode 64 = !q; q.d = a; q.ck = clk; y = q;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 4 = y;\npinnode 64 = q; q.d = !a; q.ck = clk; y = !q;",
+      "vectors": "order: clk, a, y;\nvectors:\n0 0 *\nC 1 H\n0 0 H\nC 0 L\n0 1 L\nC 1 H\n"
+    }
+  ]
+}
