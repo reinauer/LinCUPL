@@ -1,0 +1,341 @@
+{
+  "device": "v2500b",
+  "variants": [
+    {
+      "label": "v2500b pin d positive enable",
+      "device": "v2500b",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = en; pin 19 = rst; pin 6 = y; pin 4 = q;\nq.d = a; q.ce = en; q.ar = rst; y = q;",
+      "vectors": "ORDER: clk, a, en, rst, q, y;\nVECTORS:\n0001 LL\nC100 LL\nC110 HH\nC000 HH\nC010 LL\nC100 LL\nC110 HH\n0101 LL\n"
+    },
+    {
+      "label": "v2500b pin d ! enable",
+      "device": "v2500b",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = !en; pin 19 = rst; pin 6 = y; pin 4 = q;\nq.d = a; q.ce = en; q.ar = rst; y = q;",
+      "vectors": "ORDER: clk, a, en, rst, q, y;\nVECTORS:\n0001 LL\nC100 LL\nC110 HH\nC000 HH\nC010 LL\nC100 LL\nC110 HH\n0101 LL\n"
+    },
+    {
+      "label": "v2500b pin t positive enable",
+      "device": "v2500b",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = en; pin 19 = rst; pin 6 = y; pin 4 = q;\nq.t = a; q.ce = en; q.ar = rst; y = q;",
+      "vectors": "ORDER: clk, a, en, rst, q, y;\nVECTORS:\n0001 LL\nC100 LL\nC110 HH\nC100 HH\nC110 LL\nC010 LL\nC110 HH\n0101 LL\n"
+    },
+    {
+      "label": "v2500b pin t ! enable",
+      "device": "v2500b",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = !en; pin 19 = rst; pin 6 = y; pin 4 = q;\nq.t = a; q.ce = en; q.ar = rst; y = q;",
+      "vectors": "ORDER: clk, a, en, rst, q, y;\nVECTORS:\n0001 LL\nC100 LL\nC110 HH\nC100 HH\nC110 LL\nC010 LL\nC110 HH\n0101 LL\n"
+    },
+    {
+      "label": "v2500b buried d positive enable",
+      "device": "v2500b",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = en; pin 19 = rst; pin 6 = y; pinnode 41 = q;\nq.d = a; q.ce = en; q.ar = rst; y = q;",
+      "vectors": "ORDER: clk, a, en, rst, q, y;\nVECTORS:\n0001 LL\nC100 LL\nC110 HH\nC000 HH\nC010 LL\nC100 LL\nC110 HH\n0101 LL\n"
+    },
+    {
+      "label": "v2500b buried d ! enable",
+      "device": "v2500b",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = !en; pin 19 = rst; pin 6 = y; pinnode 41 = q;\nq.d = a; q.ce = en; q.ar = rst; y = q;",
+      "vectors": "ORDER: clk, a, en, rst, q, y;\nVECTORS:\n0001 LL\nC100 LL\nC110 HH\nC000 HH\nC010 LL\nC100 LL\nC110 HH\n0101 LL\n"
+    },
+    {
+      "label": "v2500b buried t positive enable",
+      "device": "v2500b",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = en; pin 19 = rst; pin 6 = y; pinnode 41 = q;\nq.t = a; q.ce = en; q.ar = rst; y = q;",
+      "vectors": "ORDER: clk, a, en, rst, q, y;\nVECTORS:\n0001 LL\nC100 LL\nC110 HH\nC100 HH\nC110 LL\nC010 LL\nC110 HH\n0101 LL\n"
+    },
+    {
+      "label": "v2500b buried t ! enable",
+      "device": "v2500b",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = !en; pin 19 = rst; pin 6 = y; pinnode 41 = q;\nq.t = a; q.ce = en; q.ar = rst; y = q;",
+      "vectors": "ORDER: clk, a, en, rst, q, y;\nVECTORS:\n0001 LL\nC100 LL\nC110 HH\nC100 HH\nC110 LL\nC010 LL\nC110 HH\n0101 LL\n"
+    },
+    {
+      "label": "v2500b alias d positive enable",
+      "device": "v2500b",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = en; pin 19 = rst; pin 6 = y; pinnode 65 = q;\nq.d = a; q.ce = en; q.ar = rst; y = q;",
+      "vectors": "ORDER: clk, a, en, rst, q, y;\nVECTORS:\n0001 LL\nC100 LL\nC110 HH\nC000 HH\nC010 LL\nC100 LL\nC110 HH\n0101 LL\n"
+    },
+    {
+      "label": "v2500b alias d ! enable",
+      "device": "v2500b",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = !en; pin 19 = rst; pin 6 = y; pinnode 65 = q;\nq.d = a; q.ce = en; q.ar = rst; y = q;",
+      "vectors": "ORDER: clk, a, en, rst, q, y;\nVECTORS:\n0001 LL\nC100 LL\nC110 HH\nC000 HH\nC010 LL\nC100 LL\nC110 HH\n0101 LL\n"
+    },
+    {
+      "label": "v2500b alias t positive enable",
+      "device": "v2500b",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = en; pin 19 = rst; pin 6 = y; pinnode 65 = q;\nq.t = a; q.ce = en; q.ar = rst; y = q;",
+      "vectors": "ORDER: clk, a, en, rst, q, y;\nVECTORS:\n0001 LL\nC100 LL\nC110 HH\nC100 HH\nC110 LL\nC010 LL\nC110 HH\n0101 LL\n"
+    },
+    {
+      "label": "v2500b alias t ! enable",
+      "device": "v2500b",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = !en; pin 19 = rst; pin 6 = y; pinnode 65 = q;\nq.t = a; q.ce = en; q.ar = rst; y = q;",
+      "vectors": "ORDER: clk, a, en, rst, q, y;\nVECTORS:\n0001 LL\nC100 LL\nC110 HH\nC100 HH\nC110 LL\nC010 LL\nC110 HH\n0101 LL\n"
+    },
+    {
+      "label": "v2500blcc pin d positive enable",
+      "device": "v2500blcc",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = en; pin 19 = rst; pin 6 = y; pin 5 = q;\nq.d = a; q.ce = en; q.ar = rst; y = q;",
+      "vectors": "ORDER: clk, a, en, rst, q, y;\nVECTORS:\n0001 LL\nC100 LL\nC110 HH\nC000 HH\nC010 LL\nC100 LL\nC110 HH\n0101 LL\n"
+    },
+    {
+      "label": "v2500blcc pin d ! enable",
+      "device": "v2500blcc",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = !en; pin 19 = rst; pin 6 = y; pin 5 = q;\nq.d = a; q.ce = en; q.ar = rst; y = q;",
+      "vectors": "ORDER: clk, a, en, rst, q, y;\nVECTORS:\n0001 LL\nC100 LL\nC110 HH\nC000 HH\nC010 LL\nC100 LL\nC110 HH\n0101 LL\n"
+    },
+    {
+      "label": "v2500blcc pin t positive enable",
+      "device": "v2500blcc",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = en; pin 19 = rst; pin 6 = y; pin 5 = q;\nq.t = a; q.ce = en; q.ar = rst; y = q;",
+      "vectors": "ORDER: clk, a, en, rst, q, y;\nVECTORS:\n0001 LL\nC100 LL\nC110 HH\nC100 HH\nC110 LL\nC010 LL\nC110 HH\n0101 LL\n"
+    },
+    {
+      "label": "v2500blcc pin t ! enable",
+      "device": "v2500blcc",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = !en; pin 19 = rst; pin 6 = y; pin 5 = q;\nq.t = a; q.ce = en; q.ar = rst; y = q;",
+      "vectors": "ORDER: clk, a, en, rst, q, y;\nVECTORS:\n0001 LL\nC100 LL\nC110 HH\nC100 HH\nC110 LL\nC010 LL\nC110 HH\n0101 LL\n"
+    },
+    {
+      "label": "v2500blcc buried d positive enable",
+      "device": "v2500blcc",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = en; pin 19 = rst; pin 6 = y; pinnode 45 = q;\nq.d = a; q.ce = en; q.ar = rst; y = q;",
+      "vectors": "ORDER: clk, a, en, rst, q, y;\nVECTORS:\n0001 LL\nC100 LL\nC110 HH\nC000 HH\nC010 LL\nC100 LL\nC110 HH\n0101 LL\n"
+    },
+    {
+      "label": "v2500blcc buried d ! enable",
+      "device": "v2500blcc",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = !en; pin 19 = rst; pin 6 = y; pinnode 45 = q;\nq.d = a; q.ce = en; q.ar = rst; y = q;",
+      "vectors": "ORDER: clk, a, en, rst, q, y;\nVECTORS:\n0001 LL\nC100 LL\nC110 HH\nC000 HH\nC010 LL\nC100 LL\nC110 HH\n0101 LL\n"
+    },
+    {
+      "label": "v2500blcc buried t positive enable",
+      "device": "v2500blcc",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = en; pin 19 = rst; pin 6 = y; pinnode 45 = q;\nq.t = a; q.ce = en; q.ar = rst; y = q;",
+      "vectors": "ORDER: clk, a, en, rst, q, y;\nVECTORS:\n0001 LL\nC100 LL\nC110 HH\nC100 HH\nC110 LL\nC010 LL\nC110 HH\n0101 LL\n"
+    },
+    {
+      "label": "v2500blcc buried t ! enable",
+      "device": "v2500blcc",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = !en; pin 19 = rst; pin 6 = y; pinnode 45 = q;\nq.t = a; q.ce = en; q.ar = rst; y = q;",
+      "vectors": "ORDER: clk, a, en, rst, q, y;\nVECTORS:\n0001 LL\nC100 LL\nC110 HH\nC100 HH\nC110 LL\nC010 LL\nC110 HH\n0101 LL\n"
+    },
+    {
+      "label": "v2500blcc alias d positive enable",
+      "device": "v2500blcc",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = en; pin 19 = rst; pin 6 = y; pinnode 69 = q;\nq.d = a; q.ce = en; q.ar = rst; y = q;",
+      "vectors": "ORDER: clk, a, en, rst, q, y;\nVECTORS:\n0001 LL\nC100 LL\nC110 HH\nC000 HH\nC010 LL\nC100 LL\nC110 HH\n0101 LL\n"
+    },
+    {
+      "label": "v2500blcc alias d ! enable",
+      "device": "v2500blcc",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = !en; pin 19 = rst; pin 6 = y; pinnode 69 = q;\nq.d = a; q.ce = en; q.ar = rst; y = q;",
+      "vectors": "ORDER: clk, a, en, rst, q, y;\nVECTORS:\n0001 LL\nC100 LL\nC110 HH\nC000 HH\nC010 LL\nC100 LL\nC110 HH\n0101 LL\n"
+    },
+    {
+      "label": "v2500blcc alias t positive enable",
+      "device": "v2500blcc",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = en; pin 19 = rst; pin 6 = y; pinnode 69 = q;\nq.t = a; q.ce = en; q.ar = rst; y = q;",
+      "vectors": "ORDER: clk, a, en, rst, q, y;\nVECTORS:\n0001 LL\nC100 LL\nC110 HH\nC100 HH\nC110 LL\nC010 LL\nC110 HH\n0101 LL\n"
+    },
+    {
+      "label": "v2500blcc alias t ! enable",
+      "device": "v2500blcc",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = !en; pin 19 = rst; pin 6 = y; pinnode 69 = q;\nq.t = a; q.ce = en; q.ar = rst; y = q;",
+      "vectors": "ORDER: clk, a, en, rst, q, y;\nVECTORS:\n0001 LL\nC100 LL\nC110 HH\nC100 HH\nC110 LL\nC010 LL\nC110 HH\n0101 LL\n"
+    },
+    {
+      "label": "v2500c pin d positive enable",
+      "device": "v2500c",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = en; pin 19 = rst; pin 6 = y; pin 4 = q;\nq.d = a; q.ce = en; q.ar = rst; y = q;",
+      "vectors": "ORDER: clk, a, en, rst, q, y;\nVECTORS:\n0001 LL\nC100 LL\nC110 HH\nC000 HH\nC010 LL\nC100 LL\nC110 HH\n0101 LL\n"
+    },
+    {
+      "label": "v2500c pin d ! enable",
+      "device": "v2500c",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = !en; pin 19 = rst; pin 6 = y; pin 4 = q;\nq.d = a; q.ce = en; q.ar = rst; y = q;",
+      "vectors": "ORDER: clk, a, en, rst, q, y;\nVECTORS:\n0001 LL\nC100 LL\nC110 HH\nC000 HH\nC010 LL\nC100 LL\nC110 HH\n0101 LL\n"
+    },
+    {
+      "label": "v2500c pin t positive enable",
+      "device": "v2500c",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = en; pin 19 = rst; pin 6 = y; pin 4 = q;\nq.t = a; q.ce = en; q.ar = rst; y = q;",
+      "vectors": "ORDER: clk, a, en, rst, q, y;\nVECTORS:\n0001 LL\nC100 LL\nC110 HH\nC100 HH\nC110 LL\nC010 LL\nC110 HH\n0101 LL\n"
+    },
+    {
+      "label": "v2500c pin t ! enable",
+      "device": "v2500c",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = !en; pin 19 = rst; pin 6 = y; pin 4 = q;\nq.t = a; q.ce = en; q.ar = rst; y = q;",
+      "vectors": "ORDER: clk, a, en, rst, q, y;\nVECTORS:\n0001 LL\nC100 LL\nC110 HH\nC100 HH\nC110 LL\nC010 LL\nC110 HH\n0101 LL\n"
+    },
+    {
+      "label": "v2500c buried d positive enable",
+      "device": "v2500c",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = en; pin 19 = rst; pin 6 = y; pinnode 41 = q;\nq.d = a; q.ce = en; q.ar = rst; y = q;",
+      "vectors": "ORDER: clk, a, en, rst, q, y;\nVECTORS:\n0001 LL\nC100 LL\nC110 HH\nC000 HH\nC010 LL\nC100 LL\nC110 HH\n0101 LL\n"
+    },
+    {
+      "label": "v2500c buried d ! enable",
+      "device": "v2500c",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = !en; pin 19 = rst; pin 6 = y; pinnode 41 = q;\nq.d = a; q.ce = en; q.ar = rst; y = q;",
+      "vectors": "ORDER: clk, a, en, rst, q, y;\nVECTORS:\n0001 LL\nC100 LL\nC110 HH\nC000 HH\nC010 LL\nC100 LL\nC110 HH\n0101 LL\n"
+    },
+    {
+      "label": "v2500c buried t positive enable",
+      "device": "v2500c",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = en; pin 19 = rst; pin 6 = y; pinnode 41 = q;\nq.t = a; q.ce = en; q.ar = rst; y = q;",
+      "vectors": "ORDER: clk, a, en, rst, q, y;\nVECTORS:\n0001 LL\nC100 LL\nC110 HH\nC100 HH\nC110 LL\nC010 LL\nC110 HH\n0101 LL\n"
+    },
+    {
+      "label": "v2500c buried t ! enable",
+      "device": "v2500c",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = !en; pin 19 = rst; pin 6 = y; pinnode 41 = q;\nq.t = a; q.ce = en; q.ar = rst; y = q;",
+      "vectors": "ORDER: clk, a, en, rst, q, y;\nVECTORS:\n0001 LL\nC100 LL\nC110 HH\nC100 HH\nC110 LL\nC010 LL\nC110 HH\n0101 LL\n"
+    },
+    {
+      "label": "v2500c alias d positive enable",
+      "device": "v2500c",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = en; pin 19 = rst; pin 6 = y; pinnode 65 = q;\nq.d = a; q.ce = en; q.ar = rst; y = q;",
+      "vectors": "ORDER: clk, a, en, rst, q, y;\nVECTORS:\n0001 LL\nC100 LL\nC110 HH\nC000 HH\nC010 LL\nC100 LL\nC110 HH\n0101 LL\n"
+    },
+    {
+      "label": "v2500c alias d ! enable",
+      "device": "v2500c",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = !en; pin 19 = rst; pin 6 = y; pinnode 65 = q;\nq.d = a; q.ce = en; q.ar = rst; y = q;",
+      "vectors": "ORDER: clk, a, en, rst, q, y;\nVECTORS:\n0001 LL\nC100 LL\nC110 HH\nC000 HH\nC010 LL\nC100 LL\nC110 HH\n0101 LL\n"
+    },
+    {
+      "label": "v2500c alias t positive enable",
+      "device": "v2500c",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = en; pin 19 = rst; pin 6 = y; pinnode 65 = q;\nq.t = a; q.ce = en; q.ar = rst; y = q;",
+      "vectors": "ORDER: clk, a, en, rst, q, y;\nVECTORS:\n0001 LL\nC100 LL\nC110 HH\nC100 HH\nC110 LL\nC010 LL\nC110 HH\n0101 LL\n"
+    },
+    {
+      "label": "v2500c alias t ! enable",
+      "device": "v2500c",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = !en; pin 19 = rst; pin 6 = y; pinnode 65 = q;\nq.t = a; q.ce = en; q.ar = rst; y = q;",
+      "vectors": "ORDER: clk, a, en, rst, q, y;\nVECTORS:\n0001 LL\nC100 LL\nC110 HH\nC100 HH\nC110 LL\nC010 LL\nC110 HH\n0101 LL\n"
+    },
+    {
+      "label": "v2500clcc pin d positive enable",
+      "device": "v2500clcc",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = en; pin 19 = rst; pin 6 = y; pin 5 = q;\nq.d = a; q.ce = en; q.ar = rst; y = q;",
+      "vectors": "ORDER: clk, a, en, rst, q, y;\nVECTORS:\n0001 LL\nC100 LL\nC110 HH\nC000 HH\nC010 LL\nC100 LL\nC110 HH\n0101 LL\n"
+    },
+    {
+      "label": "v2500clcc pin d ! enable",
+      "device": "v2500clcc",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = !en; pin 19 = rst; pin 6 = y; pin 5 = q;\nq.d = a; q.ce = en; q.ar = rst; y = q;",
+      "vectors": "ORDER: clk, a, en, rst, q, y;\nVECTORS:\n0001 LL\nC100 LL\nC110 HH\nC000 HH\nC010 LL\nC100 LL\nC110 HH\n0101 LL\n"
+    },
+    {
+      "label": "v2500clcc pin t positive enable",
+      "device": "v2500clcc",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = en; pin 19 = rst; pin 6 = y; pin 5 = q;\nq.t = a; q.ce = en; q.ar = rst; y = q;",
+      "vectors": "ORDER: clk, a, en, rst, q, y;\nVECTORS:\n0001 LL\nC100 LL\nC110 HH\nC100 HH\nC110 LL\nC010 LL\nC110 HH\n0101 LL\n"
+    },
+    {
+      "label": "v2500clcc pin t ! enable",
+      "device": "v2500clcc",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = !en; pin 19 = rst; pin 6 = y; pin 5 = q;\nq.t = a; q.ce = en; q.ar = rst; y = q;",
+      "vectors": "ORDER: clk, a, en, rst, q, y;\nVECTORS:\n0001 LL\nC100 LL\nC110 HH\nC100 HH\nC110 LL\nC010 LL\nC110 HH\n0101 LL\n"
+    },
+    {
+      "label": "v2500clcc buried d positive enable",
+      "device": "v2500clcc",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = en; pin 19 = rst; pin 6 = y; pinnode 45 = q;\nq.d = a; q.ce = en; q.ar = rst; y = q;",
+      "vectors": "ORDER: clk, a, en, rst, q, y;\nVECTORS:\n0001 LL\nC100 LL\nC110 HH\nC000 HH\nC010 LL\nC100 LL\nC110 HH\n0101 LL\n"
+    },
+    {
+      "label": "v2500clcc buried d ! enable",
+      "device": "v2500clcc",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = !en; pin 19 = rst; pin 6 = y; pinnode 45 = q;\nq.d = a; q.ce = en; q.ar = rst; y = q;",
+      "vectors": "ORDER: clk, a, en, rst, q, y;\nVECTORS:\n0001 LL\nC100 LL\nC110 HH\nC000 HH\nC010 LL\nC100 LL\nC110 HH\n0101 LL\n"
+    },
+    {
+      "label": "v2500clcc buried t positive enable",
+      "device": "v2500clcc",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = en; pin 19 = rst; pin 6 = y; pinnode 45 = q;\nq.t = a; q.ce = en; q.ar = rst; y = q;",
+      "vectors": "ORDER: clk, a, en, rst, q, y;\nVECTORS:\n0001 LL\nC100 LL\nC110 HH\nC100 HH\nC110 LL\nC010 LL\nC110 HH\n0101 LL\n"
+    },
+    {
+      "label": "v2500clcc buried t ! enable",
+      "device": "v2500clcc",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = !en; pin 19 = rst; pin 6 = y; pinnode 45 = q;\nq.t = a; q.ce = en; q.ar = rst; y = q;",
+      "vectors": "ORDER: clk, a, en, rst, q, y;\nVECTORS:\n0001 LL\nC100 LL\nC110 HH\nC100 HH\nC110 LL\nC010 LL\nC110 HH\n0101 LL\n"
+    },
+    {
+      "label": "v2500clcc alias d positive enable",
+      "device": "v2500clcc",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = en; pin 19 = rst; pin 6 = y; pinnode 69 = q;\nq.d = a; q.ce = en; q.ar = rst; y = q;",
+      "vectors": "ORDER: clk, a, en, rst, q, y;\nVECTORS:\n0001 LL\nC100 LL\nC110 HH\nC000 HH\nC010 LL\nC100 LL\nC110 HH\n0101 LL\n"
+    },
+    {
+      "label": "v2500clcc alias d ! enable",
+      "device": "v2500clcc",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = !en; pin 19 = rst; pin 6 = y; pinnode 69 = q;\nq.d = a; q.ce = en; q.ar = rst; y = q;",
+      "vectors": "ORDER: clk, a, en, rst, q, y;\nVECTORS:\n0001 LL\nC100 LL\nC110 HH\nC000 HH\nC010 LL\nC100 LL\nC110 HH\n0101 LL\n"
+    },
+    {
+      "label": "v2500clcc alias t positive enable",
+      "device": "v2500clcc",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = en; pin 19 = rst; pin 6 = y; pinnode 69 = q;\nq.t = a; q.ce = en; q.ar = rst; y = q;",
+      "vectors": "ORDER: clk, a, en, rst, q, y;\nVECTORS:\n0001 LL\nC100 LL\nC110 HH\nC100 HH\nC110 LL\nC010 LL\nC110 HH\n0101 LL\n"
+    },
+    {
+      "label": "v2500clcc alias t ! enable",
+      "device": "v2500clcc",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = !en; pin 19 = rst; pin 6 = y; pinnode 69 = q;\nq.t = a; q.ce = en; q.ar = rst; y = q;",
+      "vectors": "ORDER: clk, a, en, rst, q, y;\nVECTORS:\n0001 LL\nC100 LL\nC110 HH\nC100 HH\nC110 LL\nC010 LL\nC110 HH\n0101 LL\n"
+    },
+    {
+      "label": "v2500b d unconditional clock control",
+      "device": "v2500b",
+      "source": "pin 1 = clk; pin 2 = a; pin 19 = rst; pin 4 = q; pin 6 = y; q.d = a; q.ar = rst; y = q;",
+      "vectors": "ORDER: clk, a, rst, q, y;\nVECTORS:\n000 LL\nC10 HH\nC00 LL\n010 LL\nC10 HH\n001 LL\n"
+    },
+    {
+      "label": "v2500b t unconditional clock control",
+      "device": "v2500b",
+      "source": "pin 1 = clk; pin 2 = a; pin 19 = rst; pin 4 = q; pin 6 = y; q.t = a; q.ar = rst; y = q;",
+      "vectors": "ORDER: clk, a, rst, q, y;\nVECTORS:\n001 LL\nC10 HH\nC00 HH\nC10 LL\nC10 HH\n001 LL\n"
+    },
+    {
+      "label": "v2500blcc d unconditional clock control",
+      "device": "v2500blcc",
+      "source": "pin 1 = clk; pin 2 = a; pin 19 = rst; pin 5 = q; pin 6 = y; q.d = a; q.ar = rst; y = q;",
+      "vectors": "ORDER: clk, a, rst, q, y;\nVECTORS:\n000 LL\nC10 HH\nC00 LL\n010 LL\nC10 HH\n001 LL\n"
+    },
+    {
+      "label": "v2500blcc t unconditional clock control",
+      "device": "v2500blcc",
+      "source": "pin 1 = clk; pin 2 = a; pin 19 = rst; pin 5 = q; pin 6 = y; q.t = a; q.ar = rst; y = q;",
+      "vectors": "ORDER: clk, a, rst, q, y;\nVECTORS:\n001 LL\nC10 HH\nC00 HH\nC10 LL\nC10 HH\n001 LL\n"
+    },
+    {
+      "label": "v2500c d unconditional clock control",
+      "device": "v2500c",
+      "source": "pin 1 = clk; pin 2 = a; pin 19 = rst; pin 4 = q; pin 6 = y; q.d = a; q.ar = rst; y = q;",
+      "vectors": "ORDER: clk, a, rst, q, y;\nVECTORS:\n000 LL\nC10 HH\nC00 LL\n010 LL\nC10 HH\n001 LL\n"
+    },
+    {
+      "label": "v2500c t unconditional clock control",
+      "device": "v2500c",
+      "source": "pin 1 = clk; pin 2 = a; pin 19 = rst; pin 4 = q; pin 6 = y; q.t = a; q.ar = rst; y = q;",
+      "vectors": "ORDER: clk, a, rst, q, y;\nVECTORS:\n001 LL\nC10 HH\nC00 HH\nC10 LL\nC10 HH\n001 LL\n"
+    },
+    {
+      "label": "v2500clcc d unconditional clock control",
+      "device": "v2500clcc",
+      "source": "pin 1 = clk; pin 2 = a; pin 19 = rst; pin 5 = q; pin 6 = y; q.d = a; q.ar = rst; y = q;",
+      "vectors": "ORDER: clk, a, rst, q, y;\nVECTORS:\n000 LL\nC10 HH\nC00 LL\n010 LL\nC10 HH\n001 LL\n"
+    },
+    {
+      "label": "v2500clcc t unconditional clock control",
+      "device": "v2500clcc",
+      "source": "pin 1 = clk; pin 2 = a; pin 19 = rst; pin 5 = q; pin 6 = y; q.t = a; q.ar = rst; y = q;",
+      "vectors": "ORDER: clk, a, rst, q, y;\nVECTORS:\n001 LL\nC10 HH\nC00 HH\nC10 LL\nC10 HH\n001 LL\n"
+    }
+  ]
+}

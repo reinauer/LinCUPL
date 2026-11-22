@@ -414,6 +414,20 @@ int eval_input_latch(int sym, int pass)
     return 0;
 }
 
+/* An unknown enable merges the held and clocked states. Resets and presets
+ * are handled before this selection and are independent of clock enable. */
+static int enabled_register_value(int sym, int held, int clocked)
+{
+    int enable = g_cells[sym].clock_enable;
+    if (enable < 0 || g_sig_value[enable] == LV_HIGH) {
+        return clocked;
+    }
+    if (g_sig_value[enable] == LV_LOW || held == clocked) {
+        return held;
+    }
+    return LV_UNKNOWN;
+}
+
 /* D flip-flop (node type 0x15) */
 int eval_d(int sym, int pass)
 {
@@ -438,7 +452,7 @@ int eval_d(int sym, int pass)
         } else if (!g_vsima && is_high(s[13])) {
             *state = LV_HIGH;       /* deliberate: the same signal resets when there is no edge */
         } else {
-            *state = (uint8_t)register_input(sym, s[0]);
+            *state = (uint8_t)enabled_register_value(sym, *state, register_input(sym, s[0]));
         }
     }
     g_sig_out[sym] = (uint8_t)drive_output(sym, 1, (int8_t)*state, s[2], s[3], s[4]);
@@ -471,7 +485,7 @@ int eval_d_feedback(int sym, int pass)
             }
         } else if (pass > 1) {
             if (!clocked_controls(state, s[6], s[7], s[9], s[8], g_vsima ? -1 : s[13])) {
-                *state = (uint8_t)register_input(sym, s[0]);
+                *state = (uint8_t)enabled_register_value(sym, *state, register_input(sym, s[0]));
             }
         }
     }
@@ -675,8 +689,9 @@ int eval_t(int sym, int pass)
             unstable = (int8_t)g_sig_unstable[s[1]];
         }
     } else if (pass > 1 && !clocked_controls(state, s[6], s[7], s[9], s[8], extra)) {
-        *state = (uint8_t)toggle((int8_t)g_sig_value[s[0]], (int8_t)*state);
-        *state = (uint8_t)toggle_polarity(sym, (int8_t)*state);
+        int next = toggle((int8_t)g_sig_value[s[0]], (int8_t)*state);
+        next = toggle_polarity(sym, next);
+        *state = (uint8_t)enabled_register_value(sym, *state, next);
     }
     g_sig_out[sym] = (uint8_t)drive_output(sym, 1, (int8_t)*state, s[2], s[3], -1);
     return unstable;
