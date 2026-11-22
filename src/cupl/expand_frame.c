@@ -691,7 +691,11 @@ static int check_shared_terms(const symbol_t *sym)
     switch (dev_u8(dev_nodefn(sym->node_fn, NODEFN_SHARING))) {
     case 1: {
         int other = expand_find_line_sharer(sym);
-        int conflict = other >= 0 && sym->polarity == POL_KEEP &&
+        /* Inverting the register equation does not free the sum used by
+         * another function of this pin.  POL_FIXED is an alternative
+         * implementation of the same equation, not another consumer. */
+        int conflict = other >= 0 && sym->polarity != POL_FIXED &&
+                       (sym->polarity == POL_KEEP || sym->pin == expand_symbols[other].pin) &&
                        map_test(expand_conflict_map, expand_conflict_words, other);
         if (conflict) {
             expand_report_pin_error(ERR_EXCLUDED_OUTPUT, sym);
