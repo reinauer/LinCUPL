@@ -1,0 +1,197 @@
+{
+  "device": "f18v8z",
+  "variants": [
+    {
+      "label": "f18v8z pin 12 positive enable",
+      "device": "f18v8z",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = en; pin 12 = q;\nq.d = a; q.oe = en;",
+      "vectors": "ORDER: clk, a, en, q;\nVECTORS:\nC11 H\n010 Z\nC00 Z\n001 L\nC10 Z\n011 H\nC01 L\n000 Z\n"
+    },
+    {
+      "label": "f18v8z pin 12 ! enable",
+      "device": "f18v8z",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = en; pin 12 = !q;\nq.d = a; q.oe = en;",
+      "vectors": "ORDER: clk, a, en, q;\nVECTORS:\nC11 H\n010 Z\nC00 Z\n001 L\nC10 Z\n011 H\nC01 L\n000 Z\n"
+    },
+    {
+      "label": "f18v8z pin 13 positive enable",
+      "device": "f18v8z",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = en; pin 13 = q;\nq.d = a; q.oe = en;",
+      "vectors": "ORDER: clk, a, en, q;\nVECTORS:\nC11 H\n010 Z\nC00 Z\n001 L\nC10 Z\n011 H\nC01 L\n000 Z\n"
+    },
+    {
+      "label": "f18v8z pin 13 ! enable",
+      "device": "f18v8z",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = en; pin 13 = !q;\nq.d = a; q.oe = en;",
+      "vectors": "ORDER: clk, a, en, q;\nVECTORS:\nC11 H\n010 Z\nC00 Z\n001 L\nC10 Z\n011 H\nC01 L\n000 Z\n"
+    },
+    {
+      "label": "f18v8z pin 14 positive enable",
+      "device": "f18v8z",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = en; pin 14 = q;\nq.d = a; q.oe = en;",
+      "vectors": "ORDER: clk, a, en, q;\nVECTORS:\nC11 H\n010 Z\nC00 Z\n001 L\nC10 Z\n011 H\nC01 L\n000 Z\n"
+    },
+    {
+      "label": "f18v8z pin 14 ! enable",
+      "device": "f18v8z",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = en; pin 14 = !q;\nq.d = a; q.oe = en;",
+      "vectors": "ORDER: clk, a, en, q;\nVECTORS:\nC11 H\n010 Z\nC00 Z\n001 L\nC10 Z\n011 H\nC01 L\n000 Z\n"
+    },
+    {
+      "label": "f18v8z pin 15 positive enable",
+      "device": "f18v8z",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = en; pin 15 = q;\nq.d = a; q.oe = en;",
+      "vectors": "ORDER: clk, a, en, q;\nVECTORS:\nC11 H\n010 Z\nC00 Z\n001 L\nC10 Z\n011 H\nC01 L\n000 Z\n"
+    },
+    {
+      "label": "f18v8z pin 15 ! enable",
+      "device": "f18v8z",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = en; pin 15 = !q;\nq.d = a; q.oe = en;",
+      "vectors": "ORDER: clk, a, en, q;\nVECTORS:\nC11 H\n010 Z\nC00 Z\n001 L\nC10 Z\n011 H\nC01 L\n000 Z\n"
+    },
+    {
+      "label": "f18v8z pin 16 positive enable",
+      "device": "f18v8z",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = en; pin 16 = q;\nq.d = a; q.oe = en;",
+      "vectors": "ORDER: clk, a, en, q;\nVECTORS:\nC11 H\n010 Z\nC00 Z\n001 L\nC10 Z\n011 H\nC01 L\n000 Z\n"
+    },
+    {
+      "label": "f18v8z pin 16 ! enable",
+      "device": "f18v8z",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = en; pin 16 = !q;\nq.d = a; q.oe = en;",
+      "vectors": "ORDER: clk, a, en, q;\nVECTORS:\nC11 H\n010 Z\nC00 Z\n001 L\nC10 Z\n011 H\nC01 L\n000 Z\n"
+    },
+    {
+      "label": "f18v8z pin 17 positive enable",
+      "device": "f18v8z",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = en; pin 17 = q;\nq.d = a; q.oe = en;",
+      "vectors": "ORDER: clk, a, en, q;\nVECTORS:\nC11 H\n010 Z\nC00 Z\n001 L\nC10 Z\n011 H\nC01 L\n000 Z\n"
+    },
+    {
+      "label": "f18v8z pin 17 ! enable",
+      "device": "f18v8z",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = en; pin 17 = !q;\nq.d = a; q.oe = en;",
+      "vectors": "ORDER: clk, a, en, q;\nVECTORS:\nC11 H\n010 Z\nC00 Z\n001 L\nC10 Z\n011 H\nC01 L\n000 Z\n"
+    },
+    {
+      "label": "f18v8z pin 18 positive enable",
+      "device": "f18v8z",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = en; pin 18 = q;\nq.d = a; q.oe = en;",
+      "vectors": "ORDER: clk, a, en, q;\nVECTORS:\nC11 H\n010 Z\nC00 Z\n001 L\nC10 Z\n011 H\nC01 L\n000 Z\n"
+    },
+    {
+      "label": "f18v8z pin 18 ! enable",
+      "device": "f18v8z",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = en; pin 18 = !q;\nq.d = a; q.oe = en;",
+      "vectors": "ORDER: clk, a, en, q;\nVECTORS:\nC11 H\n010 Z\nC00 Z\n001 L\nC10 Z\n011 H\nC01 L\n000 Z\n"
+    },
+    {
+      "label": "f18v8z pin 19 positive enable",
+      "device": "f18v8z",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = en; pin 19 = q;\nq.d = a; q.oe = en;",
+      "vectors": "ORDER: clk, a, en, q;\nVECTORS:\nC11 H\n010 Z\nC00 Z\n001 L\nC10 Z\n011 H\nC01 L\n000 Z\n"
+    },
+    {
+      "label": "f18v8z pin 19 ! enable",
+      "device": "f18v8z",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = en; pin 19 = !q;\nq.d = a; q.oe = en;",
+      "vectors": "ORDER: clk, a, en, q;\nVECTORS:\nC11 H\n010 Z\nC00 Z\n001 L\nC10 Z\n011 H\nC01 L\n000 Z\n"
+    },
+    {
+      "label": "f18v8zd pin 12 positive enable",
+      "device": "f18v8zd",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = en; pin 12 = q;\nq.d = a; q.oe = en;",
+      "vectors": "ORDER: clk, a, en, q;\nVECTORS:\nC11 H\n010 Z\nC00 Z\n001 L\nC10 Z\n011 H\nC01 L\n000 Z\n"
+    },
+    {
+      "label": "f18v8zd pin 12 ! enable",
+      "device": "f18v8zd",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = en; pin 12 = !q;\nq.d = a; q.oe = en;",
+      "vectors": "ORDER: clk, a, en, q;\nVECTORS:\nC11 H\n010 Z\nC00 Z\n001 L\nC10 Z\n011 H\nC01 L\n000 Z\n"
+    },
+    {
+      "label": "f18v8zd pin 13 positive enable",
+      "device": "f18v8zd",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = en; pin 13 = q;\nq.d = a; q.oe = en;",
+      "vectors": "ORDER: clk, a, en, q;\nVECTORS:\nC11 H\n010 Z\nC00 Z\n001 L\nC10 Z\n011 H\nC01 L\n000 Z\n"
+    },
+    {
+      "label": "f18v8zd pin 13 ! enable",
+      "device": "f18v8zd",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = en; pin 13 = !q;\nq.d = a; q.oe = en;",
+      "vectors": "ORDER: clk, a, en, q;\nVECTORS:\nC11 H\n010 Z\nC00 Z\n001 L\nC10 Z\n011 H\nC01 L\n000 Z\n"
+    },
+    {
+      "label": "f18v8zd pin 14 positive enable",
+      "device": "f18v8zd",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = en; pin 14 = q;\nq.d = a; q.oe = en;",
+      "vectors": "ORDER: clk, a, en, q;\nVECTORS:\nC11 H\n010 Z\nC00 Z\n001 L\nC10 Z\n011 H\nC01 L\n000 Z\n"
+    },
+    {
+      "label": "f18v8zd pin 14 ! enable",
+      "device": "f18v8zd",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = en; pin 14 = !q;\nq.d = a; q.oe = en;",
+      "vectors": "ORDER: clk, a, en, q;\nVECTORS:\nC11 H\n010 Z\nC00 Z\n001 L\nC10 Z\n011 H\nC01 L\n000 Z\n"
+    },
+    {
+      "label": "f18v8zd pin 15 positive enable",
+      "device": "f18v8zd",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = en; pin 15 = q;\nq.d = a; q.oe = en;",
+      "vectors": "ORDER: clk, a, en, q;\nVECTORS:\nC11 H\n010 Z\nC00 Z\n001 L\nC10 Z\n011 H\nC01 L\n000 Z\n"
+    },
+    {
+      "label": "f18v8zd pin 15 ! enable",
+      "device": "f18v8zd",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = en; pin 15 = !q;\nq.d = a; q.oe = en;",
+      "vectors": "ORDER: clk, a, en, q;\nVECTORS:\nC11 H\n010 Z\nC00 Z\n001 L\nC10 Z\n011 H\nC01 L\n000 Z\n"
+    },
+    {
+      "label": "f18v8zd pin 16 positive enable",
+      "device": "f18v8zd",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = en; pin 16 = q;\nq.d = a; q.oe = en;",
+      "vectors": "ORDER: clk, a, en, q;\nVECTORS:\nC11 H\n010 Z\nC00 Z\n001 L\nC10 Z\n011 H\nC01 L\n000 Z\n"
+    },
+    {
+      "label": "f18v8zd pin 16 ! enable",
+      "device": "f18v8zd",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = en; pin 16 = !q;\nq.d = a; q.oe = en;",
+      "vectors": "ORDER: clk, a, en, q;\nVECTORS:\nC11 H\n010 Z\nC00 Z\n001 L\nC10 Z\n011 H\nC01 L\n000 Z\n"
+    },
+    {
+      "label": "f18v8zd pin 17 positive enable",
+      "device": "f18v8zd",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = en; pin 17 = q;\nq.d = a; q.oe = en;",
+      "vectors": "ORDER: clk, a, en, q;\nVECTORS:\nC11 H\n010 Z\nC00 Z\n001 L\nC10 Z\n011 H\nC01 L\n000 Z\n"
+    },
+    {
+      "label": "f18v8zd pin 17 ! enable",
+      "device": "f18v8zd",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = en; pin 17 = !q;\nq.d = a; q.oe = en;",
+      "vectors": "ORDER: clk, a, en, q;\nVECTORS:\nC11 H\n010 Z\nC00 Z\n001 L\nC10 Z\n011 H\nC01 L\n000 Z\n"
+    },
+    {
+      "label": "f18v8zd pin 18 positive enable",
+      "device": "f18v8zd",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = en; pin 18 = q;\nq.d = a; q.oe = en;",
+      "vectors": "ORDER: clk, a, en, q;\nVECTORS:\nC11 H\n010 Z\nC00 Z\n001 L\nC10 Z\n011 H\nC01 L\n000 Z\n"
+    },
+    {
+      "label": "f18v8zd pin 18 ! enable",
+      "device": "f18v8zd",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = en; pin 18 = !q;\nq.d = a; q.oe = en;",
+      "vectors": "ORDER: clk, a, en, q;\nVECTORS:\nC11 H\n010 Z\nC00 Z\n001 L\nC10 Z\n011 H\nC01 L\n000 Z\n"
+    },
+    {
+      "label": "f18v8zd pin 19 positive enable",
+      "device": "f18v8zd",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = en; pin 19 = q;\nq.d = a; q.oe = en;",
+      "vectors": "ORDER: clk, a, en, q;\nVECTORS:\nC11 H\n010 Z\nC00 Z\n001 L\nC10 Z\n011 H\nC01 L\n000 Z\n"
+    },
+    {
+      "label": "f18v8zd pin 19 ! enable",
+      "device": "f18v8zd",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = en; pin 19 = !q;\nq.d = a; q.oe = en;",
+      "vectors": "ORDER: clk, a, en, q;\nVECTORS:\nC11 H\n010 Z\nC00 Z\n001 L\nC10 Z\n011 H\nC01 L\n000 Z\n"
+    }
+  ]
+}

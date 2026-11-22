@@ -843,6 +843,11 @@ static void bind_output_enable(int sym, int owner, int *oe_pin, int *oe_term)
     if (node < 0) {
         *oe_pin = find_related(owner, ROLE_OE_PIN);
         *oe_term = find_related(owner, ROLE_OE);
+        /* PEEL's registered function shares the combinational OE term,
+         * but its connection table only links that term to the latter. */
+        if (*oe_pin < 0 && *oe_term < 0 && strncmp(g_device_name, "f18v8z", 6) == 0) {
+            *oe_pin = find_node_of_type(owner, ROLE_OE_PIN);
+        }
     } else {
         int role;
         int found = pin_control_from_term(sym, node, &role, ROLE_OE, 1);
