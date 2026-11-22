@@ -12,6 +12,12 @@ The runner finds the locally extracted merged device library, or accepts
 not a passing test. `--keep /path/to/new-directory` retains sources, outputs
 and command logs. Each compiler and simulator invocation has a deadline.
 
+Configure with `-DLINCUPL_REQUIRE_TEST_DATA=ON` for a full regression run.
+This requires Python at configure time and makes missing device data a test
+failure. Extract the device libraries before configuring so the build can
+produce `lincupl.dl`. Without this option, data-free builds retain the skip
+behavior described above.
+
 Cases named `bNNN.json` use stable defect identifiers. These are independently
 written regressions; the suite requires no external compiler or fixture
 corpus. Each case contains a device name and labelled source variants.
