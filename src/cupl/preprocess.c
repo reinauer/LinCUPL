@@ -428,7 +428,10 @@ static FILE *open_file(const char *path, const char *mode)
             for (int i = 0; i < ndirs && fp == NULL; i++) {
                 char candidate[2 * PATH_MAX + 64];
                 char resolved[PATH_MAX];
-                snprintf(candidate, sizeof(candidate), "%s/%s", dirs[i], norm);
+                int n = snprintf(candidate, sizeof(candidate), "%s/%s", dirs[i], norm);
+                if (n < 0 || (size_t)n >= sizeof(candidate)) {
+                    continue;
+                }
                 if (lincupl_resolve_ci_path(candidate, resolved, sizeof(resolved)) == 0) {
                     fp = fopen(resolved, "r");
                 }

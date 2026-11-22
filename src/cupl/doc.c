@@ -7,6 +7,7 @@
  * device record; the same interpreter writes the HL download file.
  */
 #include "fusemap.h"
+#include "strutil.h"
 
 /* class letter of a symbol type */
 static const char k_type_class[] = "UFVI X01DNMT  GB";
@@ -297,9 +298,9 @@ static const char *symbol_label(const symbol_t *s)
     memset(s_label, 0, sizeof(s_label));
     if (s->flags & SYMF_INVERTED) {
         s_label[0] = '!';
-        strncpy(s_label + 1, s->name, 0x13);
+        lincupl_strcpy_trunc(s_label + 1, 0x14, s->name);
     } else {
-        strncpy(s_label, s->name, 0x14);
+        lincupl_strcpy_trunc(s_label, 0x15, s->name);
     }
     s_label[0x14] = '\0';
     return s_label;

@@ -930,7 +930,7 @@ int util_str_copy_n(char *dst, const char *src, size_t size, int warn)
     if (size - 1 <= strlen(src)) {
         if (warn != 0)
             util_report_error(FIT_ERR_TRUNCATED, src);
-        strncpy(dst, src, size);
+        memcpy(dst, src, size - 1);
         dst[size - 1] = '\0';
         return 0;
     }

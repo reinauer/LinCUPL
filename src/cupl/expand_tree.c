@@ -392,7 +392,9 @@ void expand_fold_tree(node_t *n)
     if (op != OP_AND && op != OP_OR) {
         return;
     }
-    operand_kind_t lk = left_kind(n), rk = right_kind(n);
+    int form = n->type - op;
+    operand_kind_t lk = (operand_kind_t)expand_form_left[form];
+    operand_kind_t rk = (operand_kind_t)expand_form_right[form];
     node_t *left = lk == K_NODE ? n->left.node : NULL;
     node_t *right = rk == K_NODE ? n->right.node : NULL;
     operand_kind_t new_lk = left != NULL ? kind_of(left) : lk;

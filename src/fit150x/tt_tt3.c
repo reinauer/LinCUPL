@@ -8,6 +8,7 @@
  * feedbacks.
  */
 #include "banner.h"
+#include "strutil.h"
 #include "tt_priv.h"
 
 int g_tt3_n_pterms;
@@ -572,6 +573,15 @@ static void add_control_fct(FitEntity *entity, FitEntity *orig, FitVariable *var
     list_add(entity->fcts, fct);
 }
 
+/* base followed by suffix in dst, truncated to the size of dst */
+static void tt3_suffixed_name(char *dst, size_t size, const char *base, const char *suffix)
+{
+    size_t n = lincupl_strcpy_trunc(dst, size, base);
+
+    if (n < size)
+        lincupl_strcpy_trunc(dst + n, size - n, suffix);
+}
+
 /* for every function whose variable belongs to a netlist
  * instance, rename the function to <node>.D (.T, .L, .TH), add functions
  * for the control terms and rename the feedback variables. */
@@ -646,16 +656,16 @@ static void tt3_name_register_inputs(FitEntity *entity)
             if (dv == NULL)
                 tt_unreachable("tt3_name_register_inputs: feedback of an instance is not a variable");
             if (kind == FIT_GATE_TH || kind == FIT_GATE_ITH || tt3_is_open_collector(orig, var))
-                snprintf(dv->name, sizeof dv->name, "%s.PIN", base);
+                tt3_suffixed_name(dv->name, sizeof dv->name, base, ".PIN");
             else
-                snprintf(dv->name, sizeof dv->name, "%s.Q", base);
+                tt3_suffixed_name(dv->name, sizeof dv->name, base, ".Q");
         }
         if (inst->pin != NULL) {
             FitVariable *pv = entity_var_by_id(entity, entity_var_id(entity, inst->pin));
 
             if (pv == NULL)
                 tt_unreachable("tt3_name_register_inputs: pad of an instance is not a variable");
-            snprintf(pv->name, sizeof pv->name, "%s.PIN", base);
+            tt3_suffixed_name(pv->name, sizeof pv->name, base, ".PIN");
         }
     }
 
