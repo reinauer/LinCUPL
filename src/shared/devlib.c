@@ -186,6 +186,26 @@ static void correct_peel_output_enable(uint8_t *image, size_t size)
     }
 }
 
+static void correct_ecl_reset_polarity(uint8_t *image, size_t size)
+{
+    unsigned count;
+    uint8_t *pins = image_records(image, size, 6, 16, &count);
+    for (unsigned i = 0; i < count; i++) {
+        uint8_t *p = pins + 16 * i;
+        /* LCC pin 2 is the same active-high master reset as DIP pin 1. */
+        if (rd16(p + 2) == 2 && p[5] == 0x12) {
+            p[5] = 0x18;
+        }
+    }
+    uint8_t *links = image_records(image, size, 10, 13, &count);
+    for (unsigned i = 0; i < count; i++) {
+        uint8_t *c = links + 13 * i;
+        if (rd16(c + 2) == 2 && rd16(c + 5) == 0x1a) {
+            wr16(c + 5, 0x2f);
+        }
+    }
+}
+
 size_t dl_read_device_image(FILE *fp, const uint8_t *entry, uint8_t *image, size_t size)
 {
     size_t got = dl_read_image(fp, image, size);
@@ -205,6 +225,9 @@ size_t dl_read_device_image(FILE *fp, const uint8_t *entry, uint8_t *image, size
     }
     if (strncasecmp(name, "v750", 4) == 0 || strcasecmp(name, "v2500lcc") == 0) {
         correct_buried_d_polarity(image, got);
+    }
+    if (strcasecmp(name, "p1016rd4lcc") == 0 || strcasecmp(name, "p1016rd8lcc") == 0) {
+        correct_ecl_reset_polarity(image, got);
     }
     return got;
 }

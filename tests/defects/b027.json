@@ -1,0 +1,53 @@
+{
+  "device": "p1016rd4",
+  "variants": [
+    {
+      "label": "p1016rd4 independent clocks and master reset",
+      "device": "p1016rd4",
+      "source": "pin 1 = rst;\npin 9 = c0;\npin 16 = c1;\npin 13 = dis;\npin 2 = a;\npin 3 = b;\npin 5 = q0;\npin 20 = q1;\nq0.d = a; q1.d = b;",
+      "vectors": "ORDER: rst, c0, c1, dis, a, b, q0, q1;\nVECTORS:\n100000 LL\n000011 LL\n0C0011 HL\n00C011 HH\n000000 HH\n0C0000 LH\n00C000 LL\n0CC011 HH\n100011 LL\n"
+    },
+    {
+      "label": "p1016rd8 independent clocks and master reset",
+      "device": "p1016rd8",
+      "source": "pin 1 = rst;\npin 9 = c0;\npin 16 = c1;\npin 13 = dis;\npin 2 = a;\npin 3 = b;\npin 5 = q0;\npin 20 = q1;\nq0.d = a; q1.d = b;",
+      "vectors": "ORDER: rst, c0, c1, dis, a, b, q0, q1;\nVECTORS:\n100000 LL\n000011 LL\n0C0011 HL\n00C011 HH\n000000 HH\n0C0000 LH\n00C000 LL\n0CC011 HH\n100011 LL\n"
+    },
+    {
+      "label": "p1016rd4lcc independent clocks and master reset",
+      "device": "p1016rd4lcc",
+      "source": "pin 2 = rst;\npin 11 = c0;\npin 19 = c1;\npin 16 = dis;\npin 3 = a;\npin 4 = b;\npin 6 = q0;\npin 24 = q1;\nq0.d = a; q1.d = b;",
+      "vectors": "ORDER: rst, c0, c1, dis, a, b, q0, q1;\nVECTORS:\n100000 LL\n000011 LL\n0C0011 HL\n00C011 HH\n000000 HH\n0C0000 LH\n00C000 LL\n0CC011 HH\n100011 LL\n"
+    },
+    {
+      "label": "p1016rd8lcc independent clocks and master reset",
+      "device": "p1016rd8lcc",
+      "source": "pin 2 = rst;\npin 11 = c0;\npin 19 = c1;\npin 16 = dis;\npin 3 = a;\npin 4 = b;\npin 6 = q0;\npin 24 = q1;\nq0.d = a; q1.d = b;",
+      "vectors": "ORDER: rst, c0, c1, dis, a, b, q0, q1;\nVECTORS:\n100000 LL\n000011 LL\n0C0011 HL\n00C011 HH\n000000 HH\n0C0000 LH\n00C000 LL\n0CC011 HH\n100011 LL\n"
+    },
+    {
+      "label": "p1016rd4 explicit edges and negative pulses",
+      "device": "p1016rd4",
+      "source": "pin 1 = rst;\npin 9 = c0;\npin 16 = c1;\npin 13 = dis;\npin 2 = a;\npin 3 = b;\npin 5 = q0;\npin 20 = q1;\nq0.d = a; q1.d = b;",
+      "vectors": "ORDER: rst, c0, c1, dis, a, b, q0, q1;\nVECTORS:\n100000 LL\n000011 LL\n010011 HL\n000011 HL\n001011 HH\n000000 HH\n010000 LH\n000000 LH\n001000 LL\n000011 LL\n0K0011 HL\n00K011 HH\n100011 LL\n"
+    },
+    {
+      "label": "p1016rd8 explicit edges and negative pulses",
+      "device": "p1016rd8",
+      "source": "pin 1 = rst;\npin 9 = c0;\npin 16 = c1;\npin 13 = dis;\npin 2 = a;\npin 3 = b;\npin 5 = q0;\npin 20 = q1;\nq0.d = a; q1.d = b;",
+      "vectors": "ORDER: rst, c0, c1, dis, a, b, q0, q1;\nVECTORS:\n100000 LL\n000011 LL\n010011 HL\n000011 HL\n001011 HH\n000000 HH\n010000 LH\n000000 LH\n001000 LL\n000011 LL\n0K0011 HL\n00K011 HH\n100011 LL\n"
+    },
+    {
+      "label": "p1016rd4lcc explicit edges and negative pulses",
+      "device": "p1016rd4lcc",
+      "source": "pin 2 = rst;\npin 11 = c0;\npin 19 = c1;\npin 16 = dis;\npin 3 = a;\npin 4 = b;\npin 6 = q0;\npin 24 = q1;\nq0.d = a; q1.d = b;",
+      "vectors": "ORDER: rst, c0, c1, dis, a, b, q0, q1;\nVECTORS:\n100000 LL\n000011 LL\n010011 HL\n000011 HL\n001011 HH\n000000 HH\n010000 LH\n000000 LH\n001000 LL\n000011 LL\n0K0011 HL\n00K011 HH\n100011 LL\n"
+    },
+    {
+      "label": "p1016rd8lcc explicit edges and negative pulses",
+      "device": "p1016rd8lcc",
+      "source": "pin 2 = rst;\npin 11 = c0;\npin 19 = c1;\npin 16 = dis;\npin 3 = a;\npin 4 = b;\npin 6 = q0;\npin 24 = q1;\nq0.d = a; q1.d = b;",
+      "vectors": "ORDER: rst, c0, c1, dis, a, b, q0, q1;\nVECTORS:\n100000 LL\n000011 LL\n010011 HL\n000011 HL\n001011 HH\n000000 HH\n010000 LH\n000000 LH\n001000 LL\n000011 LL\n0K0011 HL\n00K011 HH\n100011 LL\n"
+    }
+  ]
+}

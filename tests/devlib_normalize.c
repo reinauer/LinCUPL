@@ -136,6 +136,31 @@ static int check_atf750_feedback(void)
     return 0;
 }
 
+static int check_ecl_reset_polarity(void)
+{
+    uint8_t input[IMAGE_SIZE] = { 0 }, fixed[IMAGE_SIZE], again[IMAGE_SIZE];
+    section(input, 6, 2, 16, 260);
+    wr16(input + 262, 2);
+    input[265] = 0x12;
+    wr16(input + 278, 11);
+    input[281] = 5;
+    section(input, 10, 2, 13, 292);
+    wr16(input + 294, 2);
+    wr16(input + 297, 0x1a);
+    wr16(input + 307, 11);
+    wr16(input + 310, 15);
+    CHECK(read_image(input, sizeof(input), "p1016rd4lcc", 0, fixed) == 0);
+    CHECK(fixed[265] == 0x18);
+    CHECK(fixed[281] == 5);
+    CHECK(rd16(fixed + 297) == 0x2f);
+    CHECK(rd16(fixed + 310) == 15);
+    CHECK(read_image(fixed, sizeof(fixed), "p1016rd4lcc", 0, again) == 0);
+    CHECK(memcmp(fixed, again, sizeof(fixed)) == 0);
+    CHECK(read_image(input, sizeof(input), "p1016rd4", 0, fixed) == 0);
+    CHECK(memcmp(input, fixed, sizeof(input)) == 0);
+    return 0;
+}
+
 int main(void)
 {
     CHECK(check_pal26_feedback() == 0);
@@ -193,6 +218,7 @@ int main(void)
     CHECK(read_image(fixed, sizeof(fixed), "g24v10ms", 0, again) == 0);
     CHECK(memcmp(fixed, again, sizeof(fixed)) == 0);
 
+    CHECK(check_ecl_reset_polarity() == 0);
     puts("device normalization: passed");
     return 0;
 }
