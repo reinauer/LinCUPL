@@ -77,6 +77,28 @@ static uint8_t *image_records(uint8_t *image, size_t size, unsigned section,
     return image + offset;
 }
 
+static void correct_vp8_enable_pin(uint8_t *image, size_t size)
+{
+    unsigned pin_count, count;
+    const uint8_t *pins = image_records(image, size, 6, 16, &pin_count);
+    uint8_t *links = image_records(image, size, 10, 13, &count);
+    for (unsigned i = 0; i < count; i++) {
+        uint8_t *c = links + 13 * i;
+        if (rd16(c + 5) != 0x11) {
+            continue;
+        }
+        /* Resolve the enable by its pin record's line, not the stale
+         * package number in the registered-mode connection record. */
+        for (unsigned j = 0; j < pin_count; j++) {
+            const uint8_t *p = pins + 16 * j;
+            if (rd16(p) == rd16(c) && p[5] == 9) {
+                wr16(c + 2, rd16(p + 2));
+                break;
+            }
+        }
+    }
+}
+
 static void correct_atf750_feedback(uint8_t *image, size_t size)
 {
     unsigned count;
@@ -194,6 +216,9 @@ size_t dl_read_device_image(FILE *fp, const uint8_t *entry, uint8_t *image, size
     name[DL_ENTRY_NAME_SIZE] = '\0';
     if (strncasecmp(name, "v750c", 5) == 0) {
         correct_atf750_feedback(image, got);
+    }
+    if (strcasecmp(name, "g16vp8ms") == 0) {
+        correct_vp8_enable_pin(image, got);
     }
     if (strcasecmp(name, "g24v10ms") == 0) {
         correct_gal24v10_rows(image, got);
