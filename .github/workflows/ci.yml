@@ -98,10 +98,45 @@ jobs:
           path: dist/*.tar.gz
           if-no-files-found: error
 
+  regression:
+    name: Full regressions (${{ matrix.platform }})
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - runner: ubuntu-24.04
+            platform: linux-x86_64
+            cc: gcc
+          - runner: macos-15
+            platform: macos-arm64
+            cc: clang
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v7
+
+      - name: Download and verify device data
+        run: ./wincupl-extract-data
+
+      - name: Configure full regression build
+        run: >-
+          cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+          -DCMAKE_C_COMPILER=${{ matrix.cc }}
+          -DLINCUPL_BUILD_GUI=OFF
+          -DLINCUPL_REQUIRE_TEST_DATA=ON
+
+      - name: Build
+        run: cmake --build build --parallel 3
+
+      - name: Run full regressions
+        run: ctest --test-dir build --output-on-failure --no-tests=error
+
   release:
     name: Publish tagged binaries
     if: startsWith(github.ref, 'refs/tags/v')
-    needs: build
+    needs: [build, regression]
     runs-on: ubuntu-24.04
     permissions:
       contents: write
