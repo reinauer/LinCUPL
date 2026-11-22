@@ -166,6 +166,12 @@ int act_header_name(token_t *tok)
 /* DEVICE; a device given on the command line wins */
 int act_header_device(token_t *tok)
 {
+    if (tok->u.text == NULL || tok->u.text[0] == '\0') {
+        parse_error_at(ERR_SYNTAX, "empty DEVICE statement");
+        parse_pop_mode();
+        parse_token_free(tok);
+        return 0;
+    }
     if (g_parse_device_arg[0] == '&') {
         char *name = (char *)(uintptr_t)tok->u.text;
         g_parse_device_name = (name != NULL) ? name : "";
