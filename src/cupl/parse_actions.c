@@ -1153,6 +1153,7 @@ int act_flush_call_results(token_t *tok)
 /* "vars;" */
 int act_statement_no_expr(token_t *tok)
 {
+    parse_error_at(ERR_MISSING_SYMBOL, "=");
     parse_run_statement_end();
     return act_flush_call_results(tok);
 }
