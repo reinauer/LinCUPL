@@ -104,6 +104,28 @@ static void correct_gal24v10_rows(uint8_t *image, size_t size)
     }
 }
 
+static void correct_pal26_feedback(uint8_t *image, size_t size)
+{
+    unsigned count;
+    uint8_t *pins = image_records(image, size, 6, 16, &count);
+    for (unsigned i = 0; i < count; i++) {
+        uint8_t *io = pins + 16 * i;
+        if (io[4] != 0x25 || rd16(io + 2) < 15 || rd16(io + 2) > 20) {
+            continue;
+        }
+        /* IO and DFB select the same macrocell feedback mux. The IO
+         * records for these six pins point ten fuses before that mux. */
+        for (unsigned j = 0; j < count; j++) {
+            const uint8_t *dfb = pins + 16 * j;
+            if (dfb[4] == 0x22 && rd16(io + 2) == rd16(dfb + 2) &&
+                rd32(io + 12) + 10 == rd32(dfb + 12)) {
+                wr32(io + 12, rd32(dfb + 12));
+                break;
+            }
+        }
+    }
+}
+
 size_t dl_read_device_image(FILE *fp, const uint8_t *entry, uint8_t *image, size_t size)
 {
     size_t got = dl_read_image(fp, image, size);
@@ -112,6 +134,8 @@ size_t dl_read_device_image(FILE *fp, const uint8_t *entry, uint8_t *image, size
     name[DL_ENTRY_NAME_SIZE] = '\0';
     if (strcasecmp(name, "g24v10ms") == 0) {
         correct_gal24v10_rows(image, got);
+    } else if (strcasecmp(name, "p26v12") == 0) {
+        correct_pal26_feedback(image, got);
     }
     return got;
 }

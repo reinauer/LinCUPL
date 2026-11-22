@@ -1,0 +1,173 @@
+{
+  "device": "p26v12",
+  "variants": [
+    {
+      "label": "pin 27 .io feedback",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 27 = x; pin 24 = y;\nx = a; y = x.io & !b;",
+      "fuses": {
+        "7836": 1
+      }
+    },
+    {
+      "label": "pin 27 .dfb feedback",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 27 = x; pin 24 = y;\nx = a; y = x.dfb & !b;",
+      "fuses": {
+        "7836": 0
+      }
+    },
+    {
+      "label": "pin 26 .io feedback",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 26 = x; pin 24 = y;\nx = a; y = x.io & !b;",
+      "fuses": {
+        "7837": 1
+      }
+    },
+    {
+      "label": "pin 26 .dfb feedback",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 26 = x; pin 24 = y;\nx = a; y = x.dfb & !b;",
+      "fuses": {
+        "7837": 0
+      }
+    },
+    {
+      "label": "pin 25 .io feedback",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 25 = x; pin 24 = y;\nx = a; y = x.io & !b;",
+      "fuses": {
+        "7838": 1
+      }
+    },
+    {
+      "label": "pin 25 .dfb feedback",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 25 = x; pin 24 = y;\nx = a; y = x.dfb & !b;",
+      "fuses": {
+        "7838": 0
+      }
+    },
+    {
+      "label": "pin 24 .io feedback",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 24 = x; pin 25 = y;\nx = a; y = x.io & !b;",
+      "fuses": {
+        "7839": 1
+      }
+    },
+    {
+      "label": "pin 24 .dfb feedback",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 24 = x; pin 25 = y;\nx = a; y = x.dfb & !b;",
+      "fuses": {
+        "7839": 0
+      }
+    },
+    {
+      "label": "pin 23 .io feedback",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 23 = x; pin 24 = y;\nx = a; y = x.io & !b;",
+      "fuses": {
+        "7840": 1
+      }
+    },
+    {
+      "label": "pin 23 .dfb feedback",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 23 = x; pin 24 = y;\nx = a; y = x.dfb & !b;",
+      "fuses": {
+        "7840": 0
+      }
+    },
+    {
+      "label": "pin 22 .io feedback",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 22 = x; pin 24 = y;\nx = a; y = x.io & !b;",
+      "fuses": {
+        "7841": 1
+      }
+    },
+    {
+      "label": "pin 22 .dfb feedback",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 22 = x; pin 24 = y;\nx = a; y = x.dfb & !b;",
+      "fuses": {
+        "7841": 0
+      }
+    },
+    {
+      "label": "pin 20 .io feedback",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 20 = x; pin 24 = y;\nx = a; y = x.io & !b;",
+      "fuses": {
+        "7842": 1
+      }
+    },
+    {
+      "label": "pin 20 .dfb feedback",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 20 = x; pin 24 = y;\nx = a; y = x.dfb & !b;",
+      "fuses": {
+        "7842": 0
+      }
+    },
+    {
+      "label": "pin 19 .io feedback",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 19 = x; pin 24 = y;\nx = a; y = x.io & !b;",
+      "fuses": {
+        "7843": 1
+      }
+    },
+    {
+      "label": "pin 19 .dfb feedback",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 19 = x; pin 24 = y;\nx = a; y = x.dfb & !b;",
+      "fuses": {
+        "7843": 0
+      }
+    },
+    {
+      "label": "pin 18 .io feedback",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 18 = x; pin 24 = y;\nx = a; y = x.io & !b;",
+      "fuses": {
+        "7844": 1
+      }
+    },
+    {
+      "label": "pin 18 .dfb feedback",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 18 = x; pin 24 = y;\nx = a; y = x.dfb & !b;",
+      "fuses": {
+        "7844": 0
+      }
+    },
+    {
+      "label": "pin 17 .io feedback",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 17 = x; pin 24 = y;\nx = a; y = x.io & !b;",
+      "fuses": {
+        "7845": 1
+      }
+    },
+    {
+      "label": "pin 17 .dfb feedback",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 17 = x; pin 24 = y;\nx = a; y = x.dfb & !b;",
+      "fuses": {
+        "7845": 0
+      }
+    },
+    {
+      "label": "pin 16 .io feedback",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 16 = x; pin 24 = y;\nx = a; y = x.io & !b;",
+      "fuses": {
+        "7846": 1
+      }
+    },
+    {
+      "label": "pin 16 .dfb feedback",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 16 = x; pin 24 = y;\nx = a; y = x.dfb & !b;",
+      "fuses": {
+        "7846": 0
+      }
+    },
+    {
+      "label": "pin 15 .io feedback",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 15 = x; pin 24 = y;\nx = a; y = x.io & !b;",
+      "fuses": {
+        "7847": 1
+      }
+    },
+    {
+      "label": "pin 15 .dfb feedback",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 15 = x; pin 24 = y;\nx = a; y = x.dfb & !b;",
+      "fuses": {
+        "7847": 0
+      }
+    }
+  ]
+}

@@ -36,6 +36,29 @@ static void section(uint8_t *image, unsigned id, unsigned count,
     wr32(h + 8, offset);
 }
 
+static int check_pal26_feedback(void)
+{
+    uint8_t input[IMAGE_SIZE] = { 0 }, fixed[IMAGE_SIZE], again[IMAGE_SIZE];
+    section(input, 6, 2, 16, 260);
+    wr16(input + 262, 17);
+    input[264] = 0x25;
+    wr32(input + 272, 7835);
+    wr16(input + 278, 17);
+    input[280] = 0x22;
+    wr32(input + 288, 7845);
+    CHECK(read_image(input, sizeof(input), "p26v12", 0, fixed) == 0);
+    CHECK(rd32(fixed + 272) == 7845);
+    CHECK(read_image(fixed, sizeof(fixed), "p26v12", 0, again) == 0);
+    CHECK(memcmp(fixed, again, sizeof(fixed)) == 0);
+    CHECK(read_image(input, sizeof(input), "p22v10", 0, fixed) == 0);
+    CHECK(memcmp(input, fixed, sizeof(input)) == 0);
+    /* No matching DFB pin means there is no authoritative replacement. */
+    wr16(input + 278, 18);
+    CHECK(read_image(input, sizeof(input), "p26v12", 0, fixed) == 0);
+    CHECK(memcmp(input, fixed, sizeof(input)) == 0);
+    return 0;
+}
+
 static void initializer(uint8_t *record, unsigned first, unsigned last,
                         unsigned value)
 {
@@ -46,6 +69,7 @@ static void initializer(uint8_t *record, unsigned first, unsigned last,
 
 int main(void)
 {
+    CHECK(check_pal26_feedback() == 0);
     uint8_t original[IMAGE_SIZE] = { 0 }, fixed[IMAGE_SIZE], again[IMAGE_SIZE];
     section(original, 7, 1, 39, 260);
     section(original, 9, 3, 9, 299);
