@@ -76,20 +76,27 @@ enum {
 #define MAX_COLUMNS 128             /* column pairs of a product term row */
 #define NAME_SIZE 0x20
 
-/* The devices a fuse map is taken for when csim is not given one, by the
- * number of fuses, in the order they are tried; ptd_fuse is the first
- * product term disable fuse. */
+/* The devices a fuse map is taken for when neither csim nor the file names
+ * one, by the number of fuses, in the order they are tried; ptd_fuse is the
+ * first product term disable fuse.  The PLCC package of the GAL20V8 and the
+ * GAL22V10 has 28 pins and counts them differently: its devices are for a
+ * file that says so (QP28). */
 static const struct {
     uint32_t fuses;
+    uint8_t pins;               /* only for a file with this QP field; 0: for any */
     const char *device;
     uint32_t ptd_fuse;
 } k_families[] = {
-    { 2194, "g16v8", 2128 },
-    { 2194, "g16v8a", 2128 },
-    { 2706, "g20v8", 2640 },
-    { 2706, "g20v8a", 2640 },       /* Atmel.dl has the simple mode only as g20v8as */
-    { 5892, "g22v10", 0 },
-    { 5828, "g22v10", 0 }           /* 22V10 without the 64 signature fuses */
+    { 2706, 28, "g20v8lcc", 2640 },
+    { 2706, 28, "g20v8alcc", 2640 },
+    { 5892, 28, "g22v10lcc", 0 },
+    { 5828, 28, "g22v10lcc", 0 },
+    { 2194, 0, "g16v8", 2128 },
+    { 2194, 0, "g16v8a", 2128 },
+    { 2706, 0, "g20v8", 2640 },
+    { 2706, 0, "g20v8a", 2640 },    /* Atmel.dl has the simple mode only as g20v8as */
+    { 5892, 0, "g22v10", 0 },
+    { 5828, 0, "g22v10", 0 }        /* 22V10 without the 64 signature fuses */
 };
 
 typedef struct {
@@ -120,6 +127,8 @@ typedef struct {
 static struct {
     uint8_t *fuses;             /* one byte per fuse */
     uint32_t nfuses;
+    unsigned qp;                /* the QP field (number of pins), 0 if the file has none */
+    char device[DL_ENTRY_NAME_SIZE + 1]; /* the device the file names, in lower case, "" if none */
     uint32_t ptd_fuse;          /* 0: the device has no product term disable fuses */
     int npins;
     jpin_t pins[MAX_PINS + 1];  /* by pin number */
@@ -365,10 +374,12 @@ static int try_device(const char *device, const char *jed_name, char *entry, int
 
 /* Choose the device the fuse map is simulated as and load its library
  * entry: the device given to csim; else the device of the .pld file, if
- * there is one and the map can be a map of it; else the device that has
- * this number of fuses.  The names of the .pld file are for the pin numbers
- * of its device (a PLCC package counts them differently), so they are used
- * only with a device that has as many pins. */
+ * there is one and the map can be a map of it; else the device the JEDEC
+ * file names, on the same condition; else the device that has this number
+ * of fuses and, if the file says how many, of pins.  The names of the .pld
+ * file are for the pin numbers of its device (a PLCC package counts them
+ * differently), so they are used only with a device that has as many
+ * pins. */
 static void choose_device(const char *jed_name)
 {
     char entry[DL_ENTRY_NAME_SIZE + 1] = "";
@@ -389,9 +400,10 @@ static void choose_device(const char *jed_name)
     } else {
         char first_text[200] = "";
         int first_code = -1;
-        int found = 0;
+        int found = g_jed.device[0] != '\0' &&
+                    try_device(g_jed.device, jed_name, entry, &code, text, sizeof(text)) && mode_fuses_match();
         for (size_t i = 0; i < sizeof(k_families) / sizeof(k_families[0]) && !found; i++) {
-            if (k_families[i].fuses != g_jed.nfuses) {
+            if (k_families[i].fuses != g_jed.nfuses || (k_families[i].pins != 0 && k_families[i].pins != g_jed.qp)) {
                 continue;
             }
             found = try_device(k_families[i].device, jed_name, entry, &code, text, sizeof(text));
@@ -771,6 +783,37 @@ static void read_header_items(const char *design)
             memcpy(out, value[i], length[i]);
         }
         out += length[i] + 1;
+    }
+}
+
+/* The device a JEDEC file names in its design specification, as cupl
+ * writes it there ("Device   g22v10lcc  Library DLIB-h-40-2"), in lower
+ * case; "" if it names none. */
+static void read_header_device(const char *design)
+{
+    g_jed.device[0] = '\0';
+    for (const char *line = design; line != NULL && *line != '\0'; ) {
+        const char *end = strchr(line, '\n');
+        const char *s = line;
+        size_t len = 0;
+        while (*s == ' ' || *s == '\t') {
+            s++;
+        }
+        if (strncasecmp(s, "device", 6) == 0 && (s[6] == ' ' || s[6] == '\t' || s[6] == ':')) {
+            for (s += 6; *s == ' ' || *s == '\t' || *s == ':'; s++) {
+            }
+            while (is_alnum(s[len]) || s[len] == '_') {
+                len++;
+            }
+            if (len > 0 && len <= DL_ENTRY_NAME_SIZE) {
+                char word[DL_ENTRY_NAME_SIZE + 1];
+                memcpy(word, s, len);
+                word[len] = '\0';
+                copy_lowercase(g_jed.device, word);
+                return;
+            }
+        }
+        line = end != NULL ? end + 1 : NULL;
     }
 }
 
@@ -1279,11 +1322,13 @@ void load_design_jedec(void)
     close_file(fp);
     /* into tracked memory, so that an error from here on releases it */
     g_jed.nfuses = (uint32_t)map.nfuses;
+    g_jed.qp = map.pins;
     g_jed.fuses = alloc_tracked(map.nfuses + 1, "initialization");
     memcpy(g_jed.fuses, map.fuses, map.nfuses);
     design = dup_string(map.design != NULL ? map.design : "", "initialization");
     jed_free(&map);
 
+    read_header_device(design);
     read_pld();
     choose_device(jed_name);
     /* option j adds the vectors to the file that was read */
