@@ -136,6 +136,18 @@ static int symbol_of_node_connection(int sym)
             return i;
         }
     }
+    /* Shared reset/preset rows have one node record per destination pin.
+     * The equation may be attached to any of them; their array identifies
+     * the physical control term even when this pin has no own equation. */
+    if (c[5] == ROLE_AR || c[5] == ROLE_SP) {
+        for (int i = 0; i < g_nsyms; i++) {
+            const cell_t *other = &g_cells[i];
+            if (other != self && other->bound && other->node_type == c[5] &&
+                other->term == rd16(c)) {
+                return i;
+            }
+        }
+    }
     return -1;
 }
 
