@@ -1,0 +1,29 @@
+Name     pquirk;
+PartNo   00;
+Date     2026-01-01;
+Revision 01;
+Designer LinCUPL;
+Company  LinCUPL;
+Assembly None;
+Location None;
+Device   g16v8;
+
+/* Names as cupl's define pass leaves them (GAL16V8, simple mode).  The
+   pass looks ahead as far as the longest defined name is long, and writes
+   what it holds unchanged when a directive line comes.  So a name that
+   stands closer to the end of its line than that, in front of a directive,
+   is not replaced: pin 3 keeps the name that is written.  The comment
+   behind pin 4 is text that follows, and that name is replaced. */
+
+$define LONGNAME1 aa
+$define SHORT bb
+Pin 2 = LONGNAME1;
+Pin 3 = SHORT;
+$define OTHER cc
+Pin 4 = SHORT;        /* a comment between the name and the directive */
+$undef OTHER
+Pin 5 = OTHER;
+Pin 19 = o1;
+$undef SHORT
+
+o1 = aa & bb # SHORT & OTHER;
