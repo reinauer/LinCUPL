@@ -1,0 +1,17 @@
+{
+  "device": "g22v10",
+  "variants": [
+    {
+      "label": "idempotent product and independent expected vectors",
+      "source": "pin 3 = input; pin 22 = output;\noutput = input & input;\n",
+      "reference": "pin 3 = input; pin 22 = output;\noutput = input;\n",
+      "vectors": "ORDER: input, output;\nVECTORS:\n0 L\n1 H\n0 L\n",
+      "simulate": ["abs", "jed"]
+    },
+    {
+      "label": "syntax failure is diagnosed",
+      "source": "pin 3 = input; pin 22 = output;\noutput = ;\n",
+      "diagnostic": "\\[0007ca\\]"
+    }
+  ]
+}
