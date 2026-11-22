@@ -1,0 +1,57 @@
+{
+  "device": "v5000",
+  "variants": [
+    {
+      "label": "reject first to second",
+      "source": "pin 1 = input; pin 2 = clk; pin 6 = reg; pin 28 = output;\nreg.d = input; reg.ck = clk;\noutput = reg;",
+      "diagnostic": "\\[0015cc\\]"
+    },
+    {
+      "label": "pin feedback first to second",
+      "source": "pin 1 = input; pin 2 = clk; pin 6 = reg; pin 28 = output;\nreg.d = input; reg.ck = clk;\noutput = reg.io;"
+    },
+    {
+      "label": "reject second to first",
+      "source": "pin 1 = input; pin 2 = clk; pin 28 = reg; pin 6 = output;\nreg.d = input; reg.ck = clk;\noutput = reg;",
+      "diagnostic": "\\[0015cc\\]"
+    },
+    {
+      "label": "pin feedback second to first",
+      "source": "pin 1 = input; pin 2 = clk; pin 28 = reg; pin 6 = output;\nreg.d = input; reg.ck = clk;\noutput = reg.io;"
+    },
+    {
+      "label": "reject third to fourth",
+      "source": "pin 1 = input; pin 2 = clk; pin 40 = reg; pin 59 = output;\nreg.d = input; reg.ck = clk;\noutput = reg;",
+      "diagnostic": "\\[0015cc\\]"
+    },
+    {
+      "label": "pin feedback third to fourth",
+      "source": "pin 1 = input; pin 2 = clk; pin 40 = reg; pin 59 = output;\nreg.d = input; reg.ck = clk;\noutput = reg.io;"
+    },
+    {
+      "label": "reject fourth to third",
+      "source": "pin 1 = input; pin 2 = clk; pin 59 = reg; pin 40 = output;\nreg.d = input; reg.ck = clk;\noutput = reg;",
+      "diagnostic": "\\[0015cc\\]"
+    },
+    {
+      "label": "pin feedback fourth to third",
+      "source": "pin 1 = input; pin 2 = clk; pin 59 = reg; pin 40 = output;\nreg.d = input; reg.ck = clk;\noutput = reg.io;"
+    },
+    {
+      "label": "same quadrant first",
+      "source": "pin 1 = input; pin 2 = clk; pin 6 = reg; pin 7 = output;\nreg.d = input; reg.ck = clk; output = reg;"
+    },
+    {
+      "label": "same quadrant second",
+      "source": "pin 1 = input; pin 2 = clk; pin 28 = reg; pin 29 = output;\nreg.d = input; reg.ck = clk; output = reg;"
+    },
+    {
+      "label": "same quadrant third",
+      "source": "pin 1 = input; pin 2 = clk; pin 40 = reg; pin 41 = output;\nreg.d = input; reg.ck = clk; output = reg;"
+    },
+    {
+      "label": "same quadrant fourth",
+      "source": "pin 1 = input; pin 2 = clk; pin 59 = reg; pin 60 = output;\nreg.d = input; reg.ck = clk; output = reg;"
+    }
+  ]
+}

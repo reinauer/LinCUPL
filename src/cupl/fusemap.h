@@ -518,6 +518,7 @@ const char *header_string(int index);
 #define input_inverted      cuplc_input_inverted
 #define v5000_build         cuplc_v5000_build
 #define ep1800_check_array  cuplc_ep1800_check_array
+#define v5000_check_feedback cuplc_v5000_check_feedback
 #define dev_reset           cuplc_dev_reset
 #define doc_open            cuplc_doc_open
 #define doc_write_symbols   cuplc_doc_write_symbols
@@ -578,6 +579,7 @@ int input_inverted(int symbol, int pin_index);
 void dev_reset(void);
 void v5000_build(void);
 int ep1800_check_array(or_array_t *oa);
+int v5000_check_feedback(void);
 
 /* doc.c */
 void doc_reset(void);
