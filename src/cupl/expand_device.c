@@ -575,10 +575,15 @@ static void link_iter_init(link_iter_t *it, int node_fn, int link_class)
 static int link_iter_next_group(link_iter_t *it)
 {
     int count = (int)dev_u16(DEV_LINK_COUNT);
+    /* PEEL registered and combinational functions share the data array
+     * and OE, but the OE link names only the combinational function. */
+    int shared_enable = it->link_class == 1 && it->ext == 1 &&
+        (device_is("f18v8z") || device_is("f18v8zd"));
     for (int i = it->group_start < 0 ? 0 : it->group_start + 1; i < count; i++) {
         if (it->pin == dev_u16(dev_link(i, LINK_PIN)) &&
             it->link_class == dev_u8(dev_link(i, LINK_CLASS)) &&
-            it->ext == dev_u16(dev_link(i, LINK_EXT)) &&
+            (it->ext == dev_u16(dev_link(i, LINK_EXT)) ||
+             (shared_enable && dev_u16(dev_link(i, LINK_EXT)) == 0)) &&
             it->line == dev_u16(dev_link(i, LINK_LINE))) {
             it->group_start = i;
             it->self = (uint8_t)dev_u8(dev_link(i, LINK_MEMBER));

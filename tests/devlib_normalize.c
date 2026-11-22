@@ -84,6 +84,28 @@ static int check_pal26_feedback(void)
     return 0;
 }
 
+static int check_peel_enable(void)
+{
+    uint8_t input[IMAGE_SIZE] = { 0 }, fixed[IMAGE_SIZE], again[IMAGE_SIZE];
+    section(input, 7, 3, 39, 260);
+    input[260 + 4] = 2;
+    input[299 + 4] = 2;
+    input[299 + 34] = 1;
+    input[338 + 4] = 1;
+    const char *devices[] = { "f18v8z", "f18v8zd", "f18v8zs" };
+    for (unsigned i = 0; i < sizeof(devices) / sizeof(devices[0]); i++) {
+        CHECK(read_image(input, sizeof(input), devices[i], 0, fixed) == 0);
+        CHECK(fixed[260 + 34] == 2);
+        CHECK(fixed[299 + 34] == 1);
+        CHECK(fixed[338 + 34] == 0);
+        CHECK(read_image(fixed, sizeof(fixed), devices[i], 0, again) == 0);
+        CHECK(memcmp(fixed, again, sizeof(fixed)) == 0);
+    }
+    CHECK(read_image(input, sizeof(input), "g16v8", 0, fixed) == 0);
+    CHECK(memcmp(input, fixed, sizeof(input)) == 0);
+    return 0;
+}
+
 static void initializer(uint8_t *record, unsigned first, unsigned last,
                         unsigned value)
 {
@@ -135,6 +157,8 @@ int main(void)
     CHECK(memcmp(fixed + 308, original + 317, 9) == 0);
     CHECK(read_image(fixed, sizeof(fixed), "g24v10ms", 0, again) == 0);
     CHECK(memcmp(fixed, again, sizeof(fixed)) == 0);
+
+    CHECK(check_peel_enable() == 0);
 
     CHECK(read_image(original, sizeof(original), "g24v10ms", 1, again) == 0);
     CHECK(memcmp(original, again, sizeof(original)) == 0);

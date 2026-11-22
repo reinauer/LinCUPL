@@ -172,6 +172,20 @@ static void correct_pal26_feedback(uint8_t *image, size_t size)
     }
 }
 
+static void correct_peel_output_enable(uint8_t *image, size_t size)
+{
+    unsigned count;
+    uint8_t *nodes = image_records(image, size, 7, 39, &count);
+    for (unsigned i = 0; i < count; i++) {
+        uint8_t *n = nodes + 39 * i;
+        /* Generate a constant-true OE term only when no equation supplies
+         * it. Explicit output-enable equations keep their own value. */
+        if (n[4] == 2 && n[34] == 0) {
+            n[34] = 2;
+        }
+    }
+}
+
 size_t dl_read_device_image(FILE *fp, const uint8_t *entry, uint8_t *image, size_t size)
 {
     size_t got = dl_read_image(fp, image, size);
@@ -183,6 +197,9 @@ size_t dl_read_device_image(FILE *fp, const uint8_t *entry, uint8_t *image, size
     }
     if (strcasecmp(name, "g24v10ms") == 0) {
         correct_gal24v10_rows(image, got);
+    } else if (strcasecmp(name, "f18v8z") == 0 || strcasecmp(name, "f18v8zd") == 0 ||
+               strcasecmp(name, "f18v8zs") == 0) {
+        correct_peel_output_enable(image, got);
     } else if (strcasecmp(name, "p26v12") == 0) {
         correct_pal26_feedback(image, got);
     }
