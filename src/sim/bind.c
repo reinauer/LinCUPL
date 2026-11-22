@@ -1037,6 +1037,7 @@ static void init_input_latch(int sym)
 /* The part shared by the registers with slots 2..9. */
 static void bind_register_controls(int sym, int *s)
 {
+    g_cells[sym].clock_enable = find_node_of_type(sym, 0x1f);
     bind_output_enable(sym, sym, &s[2], &s[3]);
     s[4] = g_vsima ? -1 : find_related(sym, ROLE_14);
     s[5] = find_related(sym, ROLE_20);
