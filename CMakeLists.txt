@@ -367,6 +367,14 @@ if(Python3_EXECUTABLE)
         WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
     )
     set_tests_properties(csim_jed PROPERTIES SKIP_RETURN_CODE 77)
+    file(GLOB _defect_cases CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/tests/defects/*.json")
+    foreach(_case IN LISTS _defect_cases)
+        get_filename_component(_name "${_case}" NAME_WE)
+        add_test(NAME "defect_${_name}"
+            COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/defects.py"
+                "${_case}" --bin-dir "$<TARGET_FILE_DIR:cupl>")
+        set_tests_properties("defect_${_name}" PROPERTIES SKIP_RETURN_CODE 77 TIMEOUT 120)
+    endforeach()
 endif()
 
 # Install rules
