@@ -379,6 +379,39 @@ static int term_is_false(const uint16_t *care, const uint16_t *val)
     return (term_bit(care, 0) && term_bit(val, 0)) || (term_bit(care, 1) && !term_bit(val, 1));
 }
 
+/* Regional feedback columns name registers in the consumer's quadrant.
+ * Check their owners before any output file can contain a misrouted map. */
+int v5000_check_feedback(void)
+{
+    int bad = 0;
+    for (int a = 0; a < g.nor_arrays; a++) {
+        for (const equation_t *eq = g.or_arrays[a].eq; eq != NULL; eq = eq->next) {
+            const symbol_t *owner = &g.syms[eq->symbol];
+            int own = quadrant_of(owner->pin);
+            for (int t = 0; t < eq->nterms; t++) {
+                const uint16_t *care = TERM_CARE(eq, t);
+                if ((care[0] & TERM_DELETED) || term_is_false(care, TERM_VAL(eq, t))) {
+                    continue;
+                }
+                for (int i = 2; i < g.nsyms; i++) {
+                    const symbol_t *s = &g.syms[i];
+                    if (!term_bit(care, i) || s->pin_index < 0) {
+                        continue;
+                    }
+                    const uint8_t *p = pin_rec(s->pin_index);
+                    int other = quadrant_of(rd16(p + PIN_NUMBER));
+                    if (p[PIN_TRUE_COL] < LOCAL_WIDTH && p[PIN_COMP_COL] < LOCAL_WIDTH &&
+                        other != 5 && other != own) {
+                        report_from_to_error(ERR_LOCAL_FEEDBACK, s, owner);
+                        bad++;
+                    }
+                }
+            }
+        }
+    }
+    return bad;
+}
+
 /* Can the term be a local term of the macrocell's quadrant?
  * Returns 0 if it needs a global term. */
 static int term_is_local(const uint16_t *care, int owner_index)
@@ -401,14 +434,7 @@ static int term_is_local(const uint16_t *care, int owner_index)
             continue;
         }
         const uint8_t *p = pin_rec(s->pin_index);
-        if (p[PIN_TRUE_COL] < LOCAL_WIDTH && p[PIN_COMP_COL] < LOCAL_WIDTH) {
-            int own = quadrant_of(owner->pin);
-            int other = quadrant_of(rd16(p + PIN_NUMBER));
-            if (other != 5 && other != own) {
-                trace_printf("warning:  %s.%s  %s.%s in different quadrant\n", owner->name, SYM_EXT(owner), s->name,
-                             SYM_EXT(s));
-            }
-        } else {
+        if (p[PIN_TRUE_COL] >= LOCAL_WIDTH || p[PIN_COMP_COL] >= LOCAL_WIDTH) {
             local = 0;
         }
     }

@@ -1429,6 +1429,9 @@ static int process_device(void)
     if (!(g.options & OPT_NO_MERGE) && type != DEVT_VIRTUAL) {
         merge_shared_terms();
     }
+    if (g.dev_v5000 && v5000_check_feedback()) {
+        abort_phase();
+    }
     if (g.options & OPT_DOC) {
         doc_write_totals();
     }
