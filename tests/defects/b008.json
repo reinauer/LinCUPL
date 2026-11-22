@@ -1,0 +1,34 @@
+{
+  "device": "g22v10",
+  "variants": [
+    {
+      "label": "before declarations",
+      "source": "Name duplicate;\npin 3 = a; pin 22 = y;\ny = a;",
+      "diagnostic": "\\[0021ca\\]"
+    },
+    {
+      "label": "after equation",
+      "source": "pin 3 = a; pin 22 = y;\ny = a;\nName duplicate;",
+      "diagnostic": "\\[0021ca\\]"
+    },
+    {
+      "label": "same name",
+      "source": "pin 3 = a; pin 22 = y;\nName test;\ny = a;",
+      "diagnostic": "\\[0021ca\\]"
+    },
+    {
+      "label": "different case keyword",
+      "source": "pin 3 = a; pin 22 = y;\nnAmE duplicate;\ny = a;",
+      "diagnostic": "\\[0021ca\\]"
+    },
+    {
+      "label": "single name with ordinary headers",
+      "source": "Partno sample; Revision one;\npin 3 = a; pin 22 = y;\ny = a;",
+      "vectors": "ORDER: a, y;\nVECTORS:\n0 L\n1 H\n",
+      "simulate": [
+        "abs",
+        "jed"
+      ]
+    }
+  ]
+}
