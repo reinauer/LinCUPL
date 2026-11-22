@@ -1,0 +1,30 @@
+{
+  "device": "p16l8",
+  "variants": [
+    {
+      "label": "complemented one in a sum",
+      "source": "pin 3 = a; pin 4 = b; pin 19 = y;\none = 'b'1; y = a # !one;\n",
+      "reference": "pin 3 = a; pin 4 = b; pin 19 = y;\ny = a;\n"
+    },
+    {
+      "label": "complemented zero in a product",
+      "source": "pin 3 = a; pin 4 = b; pin 19 = y;\nzero = 'b'0; y = a & !zero;\n",
+      "reference": "pin 3 = a; pin 4 = b; pin 19 = y;\ny = a;\n"
+    },
+    {
+      "label": "constant on the left",
+      "source": "pin 3 = a; pin 4 = b; pin 19 = y;\none = 'b'1; y = !one # a;\n",
+      "reference": "pin 3 = a; pin 4 = b; pin 19 = y;\ny = a;\n"
+    },
+    {
+      "label": "nested complemented constants",
+      "source": "pin 3 = a; pin 4 = b; pin 19 = y;\none = 'b'1; y = (a # !one) & (b # !one);\n",
+      "reference": "pin 3 = a; pin 4 = b; pin 19 = y;\ny = a & b;\n"
+    },
+    {
+      "label": "negated equation with a complemented constant",
+      "source": "pin 3 = a; pin 4 = b; pin 19 = y;\none = 'b'1; y = !(a # !one);\n",
+      "reference": "pin 3 = a; pin 4 = b; pin 19 = y;\ny = !a;\n"
+    }
+  ]
+}
