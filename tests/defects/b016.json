@@ -1,0 +1,289 @@
+{
+  "device": "v2500b",
+  "variants": [
+    {
+      "label": "v2500b node 41 invalid q = a;",
+      "device": "v2500b",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 6 = y; pinnode 41 = q;\nq = a; y = q;",
+      "diagnostic": "\\[00(?:10|12)cb\\]"
+    },
+    {
+      "label": "v2500b node 41 invalid q.d = b; q = a;",
+      "device": "v2500b",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 6 = y; pinnode 41 = q;\nq.d = b; q = a; y = q;",
+      "diagnostic": "\\[00(?:10|12)cb\\]"
+    },
+    {
+      "label": "v2500b node 41 valid d",
+      "device": "v2500b",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 6 = y; pinnode 41 = q;\nq.d = a; q.ck = clk; y = q;"
+    },
+    {
+      "label": "v2500b node 41 valid t",
+      "device": "v2500b",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 6 = y; pinnode 41 = q;\nq.t = a; q.ck = clk; y = q;"
+    },
+    {
+      "label": "v2500b node 52 invalid q = a;",
+      "device": "v2500b",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 6 = y; pinnode 52 = q;\nq = a; y = q;",
+      "diagnostic": "\\[00(?:10|12)cb\\]"
+    },
+    {
+      "label": "v2500b node 52 invalid q.d = b; q = a;",
+      "device": "v2500b",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 6 = y; pinnode 52 = q;\nq.d = b; q = a; y = q;",
+      "diagnostic": "\\[00(?:10|12)cb\\]"
+    },
+    {
+      "label": "v2500b node 52 valid d",
+      "device": "v2500b",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 6 = y; pinnode 52 = q;\nq.d = a; q.ck = clk; y = q;"
+    },
+    {
+      "label": "v2500b node 52 valid t",
+      "device": "v2500b",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 6 = y; pinnode 52 = q;\nq.t = a; q.ck = clk; y = q;"
+    },
+    {
+      "label": "v2500b node 64 invalid q = a;",
+      "device": "v2500b",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 6 = y; pinnode 64 = q;\nq = a; y = q;",
+      "diagnostic": "\\[00(?:10|12)cb\\]"
+    },
+    {
+      "label": "v2500b node 64 invalid q.d = b; q = a;",
+      "device": "v2500b",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 6 = y; pinnode 64 = q;\nq.d = b; q = a; y = q;",
+      "diagnostic": "\\[00(?:10|12)cb\\]"
+    },
+    {
+      "label": "v2500b node 64 valid d",
+      "device": "v2500b",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 6 = y; pinnode 64 = q;\nq.d = a; q.ck = clk; y = q;"
+    },
+    {
+      "label": "v2500b node 64 valid t",
+      "device": "v2500b",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 6 = y; pinnode 64 = q;\nq.t = a; q.ck = clk; y = q;"
+    },
+    {
+      "label": "v2500b output-register alias remains valid",
+      "device": "v2500b",
+      "source": "pin 1 = clk; pin 2 = a; pin 6 = y; pinnode 65 = q; q.d = a; q.ck = clk; y = q;"
+    },
+    {
+      "label": "v2500c node 41 invalid q = a;",
+      "device": "v2500c",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 6 = y; pinnode 41 = q;\nq = a; y = q;",
+      "diagnostic": "\\[00(?:10|12)cb\\]"
+    },
+    {
+      "label": "v2500c node 41 invalid q.d = b; q = a;",
+      "device": "v2500c",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 6 = y; pinnode 41 = q;\nq.d = b; q = a; y = q;",
+      "diagnostic": "\\[00(?:10|12)cb\\]"
+    },
+    {
+      "label": "v2500c node 41 valid d",
+      "device": "v2500c",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 6 = y; pinnode 41 = q;\nq.d = a; q.ck = clk; y = q;"
+    },
+    {
+      "label": "v2500c node 41 valid t",
+      "device": "v2500c",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 6 = y; pinnode 41 = q;\nq.t = a; q.ck = clk; y = q;"
+    },
+    {
+      "label": "v2500c node 52 invalid q = a;",
+      "device": "v2500c",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 6 = y; pinnode 52 = q;\nq = a; y = q;",
+      "diagnostic": "\\[00(?:10|12)cb\\]"
+    },
+    {
+      "label": "v2500c node 52 invalid q.d = b; q = a;",
+      "device": "v2500c",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 6 = y; pinnode 52 = q;\nq.d = b; q = a; y = q;",
+      "diagnostic": "\\[00(?:10|12)cb\\]"
+    },
+    {
+      "label": "v2500c node 52 valid d",
+      "device": "v2500c",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 6 = y; pinnode 52 = q;\nq.d = a; q.ck = clk; y = q;"
+    },
+    {
+      "label": "v2500c node 52 valid t",
+      "device": "v2500c",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 6 = y; pinnode 52 = q;\nq.t = a; q.ck = clk; y = q;"
+    },
+    {
+      "label": "v2500c node 64 invalid q = a;",
+      "device": "v2500c",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 6 = y; pinnode 64 = q;\nq = a; y = q;",
+      "diagnostic": "\\[00(?:10|12)cb\\]"
+    },
+    {
+      "label": "v2500c node 64 invalid q.d = b; q = a;",
+      "device": "v2500c",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 6 = y; pinnode 64 = q;\nq.d = b; q = a; y = q;",
+      "diagnostic": "\\[00(?:10|12)cb\\]"
+    },
+    {
+      "label": "v2500c node 64 valid d",
+      "device": "v2500c",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 6 = y; pinnode 64 = q;\nq.d = a; q.ck = clk; y = q;"
+    },
+    {
+      "label": "v2500c node 64 valid t",
+      "device": "v2500c",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 6 = y; pinnode 64 = q;\nq.t = a; q.ck = clk; y = q;"
+    },
+    {
+      "label": "v2500c output-register alias remains valid",
+      "device": "v2500c",
+      "source": "pin 1 = clk; pin 2 = a; pin 6 = y; pinnode 65 = q; q.d = a; q.ck = clk; y = q;"
+    },
+    {
+      "label": "v2500blcc node 45 invalid q = a;",
+      "device": "v2500blcc",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 6 = y; pinnode 45 = q;\nq = a; y = q;",
+      "diagnostic": "\\[00(?:10|12)cb\\]"
+    },
+    {
+      "label": "v2500blcc node 45 invalid q.d = b; q = a;",
+      "device": "v2500blcc",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 6 = y; pinnode 45 = q;\nq.d = b; q = a; y = q;",
+      "diagnostic": "\\[00(?:10|12)cb\\]"
+    },
+    {
+      "label": "v2500blcc node 45 valid d",
+      "device": "v2500blcc",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 6 = y; pinnode 45 = q;\nq.d = a; q.ck = clk; y = q;"
+    },
+    {
+      "label": "v2500blcc node 45 valid t",
+      "device": "v2500blcc",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 6 = y; pinnode 45 = q;\nq.t = a; q.ck = clk; y = q;"
+    },
+    {
+      "label": "v2500blcc node 56 invalid q = a;",
+      "device": "v2500blcc",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 6 = y; pinnode 56 = q;\nq = a; y = q;",
+      "diagnostic": "\\[00(?:10|12)cb\\]"
+    },
+    {
+      "label": "v2500blcc node 56 invalid q.d = b; q = a;",
+      "device": "v2500blcc",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 6 = y; pinnode 56 = q;\nq.d = b; q = a; y = q;",
+      "diagnostic": "\\[00(?:10|12)cb\\]"
+    },
+    {
+      "label": "v2500blcc node 56 valid d",
+      "device": "v2500blcc",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 6 = y; pinnode 56 = q;\nq.d = a; q.ck = clk; y = q;"
+    },
+    {
+      "label": "v2500blcc node 56 valid t",
+      "device": "v2500blcc",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 6 = y; pinnode 56 = q;\nq.t = a; q.ck = clk; y = q;"
+    },
+    {
+      "label": "v2500blcc node 68 invalid q = a;",
+      "device": "v2500blcc",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 6 = y; pinnode 68 = q;\nq = a; y = q;",
+      "diagnostic": "\\[00(?:10|12)cb\\]"
+    },
+    {
+      "label": "v2500blcc node 68 invalid q.d = b; q = a;",
+      "device": "v2500blcc",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 6 = y; pinnode 68 = q;\nq.d = b; q = a; y = q;",
+      "diagnostic": "\\[00(?:10|12)cb\\]"
+    },
+    {
+      "label": "v2500blcc node 68 valid d",
+      "device": "v2500blcc",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 6 = y; pinnode 68 = q;\nq.d = a; q.ck = clk; y = q;"
+    },
+    {
+      "label": "v2500blcc node 68 valid t",
+      "device": "v2500blcc",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 6 = y; pinnode 68 = q;\nq.t = a; q.ck = clk; y = q;"
+    },
+    {
+      "label": "v2500blcc output-register alias remains valid",
+      "device": "v2500blcc",
+      "source": "pin 1 = clk; pin 2 = a; pin 6 = y; pinnode 69 = q; q.d = a; q.ck = clk; y = q;"
+    },
+    {
+      "label": "v2500clcc node 45 invalid q = a;",
+      "device": "v2500clcc",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 6 = y; pinnode 45 = q;\nq = a; y = q;",
+      "diagnostic": "\\[00(?:10|12)cb\\]"
+    },
+    {
+      "label": "v2500clcc node 45 invalid q.d = b; q = a;",
+      "device": "v2500clcc",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 6 = y; pinnode 45 = q;\nq.d = b; q = a; y = q;",
+      "diagnostic": "\\[00(?:10|12)cb\\]"
+    },
+    {
+      "label": "v2500clcc node 45 valid d",
+      "device": "v2500clcc",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 6 = y; pinnode 45 = q;\nq.d = a; q.ck = clk; y = q;"
+    },
+    {
+      "label": "v2500clcc node 45 valid t",
+      "device": "v2500clcc",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 6 = y; pinnode 45 = q;\nq.t = a; q.ck = clk; y = q;"
+    },
+    {
+      "label": "v2500clcc node 56 invalid q = a;",
+      "device": "v2500clcc",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 6 = y; pinnode 56 = q;\nq = a; y = q;",
+      "diagnostic": "\\[00(?:10|12)cb\\]"
+    },
+    {
+      "label": "v2500clcc node 56 invalid q.d = b; q = a;",
+      "device": "v2500clcc",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 6 = y; pinnode 56 = q;\nq.d = b; q = a; y = q;",
+      "diagnostic": "\\[00(?:10|12)cb\\]"
+    },
+    {
+      "label": "v2500clcc node 56 valid d",
+      "device": "v2500clcc",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 6 = y; pinnode 56 = q;\nq.d = a; q.ck = clk; y = q;"
+    },
+    {
+      "label": "v2500clcc node 56 valid t",
+      "device": "v2500clcc",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 6 = y; pinnode 56 = q;\nq.t = a; q.ck = clk; y = q;"
+    },
+    {
+      "label": "v2500clcc node 68 invalid q = a;",
+      "device": "v2500clcc",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 6 = y; pinnode 68 = q;\nq = a; y = q;",
+      "diagnostic": "\\[00(?:10|12)cb\\]"
+    },
+    {
+      "label": "v2500clcc node 68 invalid q.d = b; q = a;",
+      "device": "v2500clcc",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 6 = y; pinnode 68 = q;\nq.d = b; q = a; y = q;",
+      "diagnostic": "\\[00(?:10|12)cb\\]"
+    },
+    {
+      "label": "v2500clcc node 68 valid d",
+      "device": "v2500clcc",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 6 = y; pinnode 68 = q;\nq.d = a; q.ck = clk; y = q;"
+    },
+    {
+      "label": "v2500clcc node 68 valid t",
+      "device": "v2500clcc",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 6 = y; pinnode 68 = q;\nq.t = a; q.ck = clk; y = q;"
+    },
+    {
+      "label": "v2500clcc output-register alias remains valid",
+      "device": "v2500clcc",
+      "source": "pin 1 = clk; pin 2 = a; pin 6 = y; pinnode 69 = q; q.d = a; q.ck = clk; y = q;"
+    }
+  ]
+}

@@ -91,6 +91,29 @@ static void correct_atf750_feedback(uint8_t *image, size_t size)
     }
 }
 
+static void correct_2500_buried_functions(uint8_t *image, size_t size)
+{
+    unsigned count;
+    const uint8_t *attrs = image_records(image, size, 3, 152, &count);
+    if (count != 1) {
+        return;
+    }
+    unsigned npins = attrs[8];
+    uint8_t *nodes = image_records(image, size, 7, 39, &count);
+    for (unsigned i = 0; i < count;) {
+        uint8_t *n = nodes + 39 * i;
+        unsigned number = rd16(n + 2);
+        /* The first 24 internal nodes are buried registers. Their data
+         * sum has no combinational bypass; output-register aliases follow. */
+        if (number > npins && number <= npins + 24 && n[4] == 0) {
+            memmove(n, n + 39, (count - i - 1) * 39);
+            wr16(image + 7 * DL_SECTION_HEADER_SIZE + 4, --count);
+        } else {
+            i++;
+        }
+    }
+}
+
 static void correct_gal24v10_rows(uint8_t *image, size_t size)
 {
     enum { NODE_SECTION = 7, NODE_SIZE = 39, INIT_SECTION = 9, INIT_SIZE = 9 };
@@ -192,6 +215,10 @@ size_t dl_read_device_image(FILE *fp, const uint8_t *entry, uint8_t *image, size
     char name[DL_ENTRY_NAME_SIZE + 1];
     memcpy(name, entry, DL_ENTRY_NAME_SIZE);
     name[DL_ENTRY_NAME_SIZE] = '\0';
+    if (strcasecmp(name, "v2500b") == 0 || strcasecmp(name, "v2500blcc") == 0 ||
+        strcasecmp(name, "v2500c") == 0 || strcasecmp(name, "v2500clcc") == 0) {
+        correct_2500_buried_functions(image, got);
+    }
     if (strncasecmp(name, "v750c", 5) == 0) {
         correct_atf750_feedback(image, got);
     }

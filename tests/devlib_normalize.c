@@ -106,6 +106,27 @@ static int check_peel_enable(void)
     return 0;
 }
 
+static int check_2500_buried_functions(void)
+{
+    uint8_t input[640] = { 0 }, fixed[640], again[640];
+    section(input, 3, 1, 152, 260);
+    input[268] = 40;
+    section(input, 7, 4, 39, 412);
+    wr16(input + 414, 41); /* Unsupported buried combinational function. */
+    wr16(input + 453, 41);
+    input[455] = 1;        /* Valid buried D register. */
+    wr16(input + 492, 65); /* Output-register alias. */
+    wr16(input + 531, 4);  /* Physical output. */
+    CHECK(read_image(input, sizeof(input), "v2500b", 0, fixed) == 0);
+    CHECK(rd16(fixed + 7 * DL_SECTION_HEADER_SIZE + 4) == 3);
+    CHECK(memcmp(fixed + 412, input + 451, 3 * 39) == 0);
+    CHECK(read_image(fixed, sizeof(fixed), "v2500b", 0, again) == 0);
+    CHECK(memcmp(fixed, again, sizeof(fixed)) == 0);
+    CHECK(read_image(input, sizeof(input), "v2500", 0, fixed) == 0);
+    CHECK(memcmp(input, fixed, sizeof(input)) == 0);
+    return 0;
+}
+
 static void initializer(uint8_t *record, unsigned first, unsigned last,
                         unsigned value)
 {
@@ -166,6 +187,7 @@ int main(void)
     CHECK(memcmp(original, again, sizeof(original)) == 0);
 
     CHECK(check_buried_d_polarity() == 0);
+    CHECK(check_2500_buried_functions() == 0);
 
     /* Cut-off records must not be interpreted or written past the bytes read. */
     memset(again, 0xa5, sizeof(again));
