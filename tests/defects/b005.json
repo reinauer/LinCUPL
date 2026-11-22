@@ -1,0 +1,1917 @@
+{
+  "device": "p16c1",
+  "variants": [
+    {
+      "device": "p16c1",
+      "label": "p16c1 names False low False -jaxm0 mismatch",
+      "flags": "-jaxm0",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 16=y; pin 15=z;\ny=a&b; z=c;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p16c1",
+      "label": "p16c1 names False low False -jaxm0 same",
+      "flags": "-jaxm0",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 16=y; pin 15=z;\ny=a&b; z=a&b;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p16c1",
+      "label": "p16c1 names False low False -jaxm0 complement",
+      "flags": "-jaxm0",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 16=y; pin 15=z;\ny=a&b; z=!(a&b);",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 16=y; pin 15=z;\ny=a&b;",
+      "vectors": "order: a,b,c,y,z;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p16c1",
+      "label": "p16c1 names False low False -jaxm0 different cover",
+      "flags": "-jaxm0",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 16=y; pin 15=z;\ny=a; z=!((a&b)#(a&!b));",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 16=y; pin 15=z;\ny=a;",
+      "vectors": "order: a,b,c,y,z;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 H L\n1 0 1 H L\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p16c1",
+      "label": "p16c1 names False low False -jaxm0 constant",
+      "flags": "-jaxm0",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 16=y; pin 15=z;\ny='b'0; z='b'1;",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 16=y; pin 15=z;\ny='b'0;",
+      "vectors": "order: a,b,c,y,z;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 L H\n1 1 1 L H\n"
+    },
+    {
+      "device": "p16c1",
+      "label": "p16c1 names False low False -jaxm1 mismatch",
+      "flags": "-jaxm1",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 16=y; pin 15=z;\ny=a&b; z=c;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p16c1",
+      "label": "p16c1 names False low False -jaxm1 same",
+      "flags": "-jaxm1",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 16=y; pin 15=z;\ny=a&b; z=a&b;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p16c1",
+      "label": "p16c1 names False low False -jaxm1 complement",
+      "flags": "-jaxm1",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 16=y; pin 15=z;\ny=a&b; z=!(a&b);",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 16=y; pin 15=z;\ny=a&b;",
+      "vectors": "order: a,b,c,y,z;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p16c1",
+      "label": "p16c1 names False low False -jaxm1 different cover",
+      "flags": "-jaxm1",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 16=y; pin 15=z;\ny=a; z=!((a&b)#(a&!b));",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 16=y; pin 15=z;\ny=a;",
+      "vectors": "order: a,b,c,y,z;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 H L\n1 0 1 H L\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p16c1",
+      "label": "p16c1 names False low False -jaxm1 constant",
+      "flags": "-jaxm1",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 16=y; pin 15=z;\ny='b'0; z='b'1;",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 16=y; pin 15=z;\ny='b'0;",
+      "vectors": "order: a,b,c,y,z;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 L H\n1 1 1 L H\n"
+    },
+    {
+      "device": "p16c1",
+      "label": "p16c1 names False low False -jaxm4 mismatch",
+      "flags": "-jaxm4",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 16=y; pin 15=z;\ny=a&b; z=c;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p16c1",
+      "label": "p16c1 names False low False -jaxm4 same",
+      "flags": "-jaxm4",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 16=y; pin 15=z;\ny=a&b; z=a&b;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p16c1",
+      "label": "p16c1 names False low False -jaxm4 complement",
+      "flags": "-jaxm4",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 16=y; pin 15=z;\ny=a&b; z=!(a&b);",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 16=y; pin 15=z;\ny=a&b;",
+      "vectors": "order: a,b,c,y,z;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p16c1",
+      "label": "p16c1 names False low False -jaxm4 different cover",
+      "flags": "-jaxm4",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 16=y; pin 15=z;\ny=a; z=!((a&b)#(a&!b));",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 16=y; pin 15=z;\ny=a;",
+      "vectors": "order: a,b,c,y,z;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 H L\n1 0 1 H L\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p16c1",
+      "label": "p16c1 names False low False -jaxm4 constant",
+      "flags": "-jaxm4",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 16=y; pin 15=z;\ny='b'0; z='b'1;",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 16=y; pin 15=z;\ny='b'0;",
+      "vectors": "order: a,b,c,y,z;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 L H\n1 1 1 L H\n"
+    },
+    {
+      "device": "p16c1",
+      "label": "p16c1 names False low True -jaxm0 mismatch",
+      "flags": "-jaxm0",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 16=y; pin 15=!z;\ny=a&b; !z=c;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p16c1",
+      "label": "p16c1 names False low True -jaxm0 same",
+      "flags": "-jaxm0",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 16=y; pin 15=!z;\ny=a&b; !z=a&b;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p16c1",
+      "label": "p16c1 names False low True -jaxm0 complement",
+      "flags": "-jaxm0",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 16=y; pin 15=!z;\ny=a&b; !z=!(a&b);",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 16=y; pin 15=!z;\ny=a&b;",
+      "vectors": "order: a,b,c,y,!z;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p16c1",
+      "label": "p16c1 names False low True -jaxm0 different cover",
+      "flags": "-jaxm0",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 16=y; pin 15=!z;\ny=a; !z=!((a&b)#(a&!b));",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 16=y; pin 15=!z;\ny=a;",
+      "vectors": "order: a,b,c,y,!z;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 H L\n1 0 1 H L\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p16c1",
+      "label": "p16c1 names False low True -jaxm0 constant",
+      "flags": "-jaxm0",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 16=y; pin 15=!z;\ny='b'0; !z='b'1;",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 16=y; pin 15=!z;\ny='b'0;",
+      "vectors": "order: a,b,c,y,!z;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 L H\n1 1 1 L H\n"
+    },
+    {
+      "device": "p16c1",
+      "label": "p16c1 names False low True -jaxm1 mismatch",
+      "flags": "-jaxm1",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 16=y; pin 15=!z;\ny=a&b; !z=c;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p16c1",
+      "label": "p16c1 names False low True -jaxm1 same",
+      "flags": "-jaxm1",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 16=y; pin 15=!z;\ny=a&b; !z=a&b;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p16c1",
+      "label": "p16c1 names False low True -jaxm1 complement",
+      "flags": "-jaxm1",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 16=y; pin 15=!z;\ny=a&b; !z=!(a&b);",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 16=y; pin 15=!z;\ny=a&b;",
+      "vectors": "order: a,b,c,y,!z;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p16c1",
+      "label": "p16c1 names False low True -jaxm1 different cover",
+      "flags": "-jaxm1",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 16=y; pin 15=!z;\ny=a; !z=!((a&b)#(a&!b));",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 16=y; pin 15=!z;\ny=a;",
+      "vectors": "order: a,b,c,y,!z;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 H L\n1 0 1 H L\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p16c1",
+      "label": "p16c1 names False low True -jaxm1 constant",
+      "flags": "-jaxm1",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 16=y; pin 15=!z;\ny='b'0; !z='b'1;",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 16=y; pin 15=!z;\ny='b'0;",
+      "vectors": "order: a,b,c,y,!z;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 L H\n1 1 1 L H\n"
+    },
+    {
+      "device": "p16c1",
+      "label": "p16c1 names False low True -jaxm4 mismatch",
+      "flags": "-jaxm4",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 16=y; pin 15=!z;\ny=a&b; !z=c;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p16c1",
+      "label": "p16c1 names False low True -jaxm4 same",
+      "flags": "-jaxm4",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 16=y; pin 15=!z;\ny=a&b; !z=a&b;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p16c1",
+      "label": "p16c1 names False low True -jaxm4 complement",
+      "flags": "-jaxm4",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 16=y; pin 15=!z;\ny=a&b; !z=!(a&b);",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 16=y; pin 15=!z;\ny=a&b;",
+      "vectors": "order: a,b,c,y,!z;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p16c1",
+      "label": "p16c1 names False low True -jaxm4 different cover",
+      "flags": "-jaxm4",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 16=y; pin 15=!z;\ny=a; !z=!((a&b)#(a&!b));",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 16=y; pin 15=!z;\ny=a;",
+      "vectors": "order: a,b,c,y,!z;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 H L\n1 0 1 H L\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p16c1",
+      "label": "p16c1 names False low True -jaxm4 constant",
+      "flags": "-jaxm4",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 16=y; pin 15=!z;\ny='b'0; !z='b'1;",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 16=y; pin 15=!z;\ny='b'0;",
+      "vectors": "order: a,b,c,y,!z;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 L H\n1 1 1 L H\n"
+    },
+    {
+      "device": "p16c1",
+      "label": "p16c1 names True low False -jaxm0 mismatch",
+      "flags": "-jaxm0",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 16=z; pin 15=y;\nz=a&b; y=c;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p16c1",
+      "label": "p16c1 names True low False -jaxm0 same",
+      "flags": "-jaxm0",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 16=z; pin 15=y;\nz=a&b; y=a&b;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p16c1",
+      "label": "p16c1 names True low False -jaxm0 complement",
+      "flags": "-jaxm0",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 16=z; pin 15=y;\nz=a&b; y=!(a&b);",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 16=z; pin 15=y;\nz=a&b;",
+      "vectors": "order: a,b,c,z,y;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p16c1",
+      "label": "p16c1 names True low False -jaxm0 different cover",
+      "flags": "-jaxm0",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 16=z; pin 15=y;\nz=a; y=!((a&b)#(a&!b));",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 16=z; pin 15=y;\nz=a;",
+      "vectors": "order: a,b,c,z,y;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 H L\n1 0 1 H L\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p16c1",
+      "label": "p16c1 names True low False -jaxm0 constant",
+      "flags": "-jaxm0",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 16=z; pin 15=y;\nz='b'0; y='b'1;",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 16=z; pin 15=y;\nz='b'0;",
+      "vectors": "order: a,b,c,z,y;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 L H\n1 1 1 L H\n"
+    },
+    {
+      "device": "p16c1",
+      "label": "p16c1 names True low False -jaxm1 mismatch",
+      "flags": "-jaxm1",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 16=z; pin 15=y;\nz=a&b; y=c;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p16c1",
+      "label": "p16c1 names True low False -jaxm1 same",
+      "flags": "-jaxm1",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 16=z; pin 15=y;\nz=a&b; y=a&b;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p16c1",
+      "label": "p16c1 names True low False -jaxm1 complement",
+      "flags": "-jaxm1",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 16=z; pin 15=y;\nz=a&b; y=!(a&b);",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 16=z; pin 15=y;\nz=a&b;",
+      "vectors": "order: a,b,c,z,y;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p16c1",
+      "label": "p16c1 names True low False -jaxm1 different cover",
+      "flags": "-jaxm1",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 16=z; pin 15=y;\nz=a; y=!((a&b)#(a&!b));",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 16=z; pin 15=y;\nz=a;",
+      "vectors": "order: a,b,c,z,y;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 H L\n1 0 1 H L\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p16c1",
+      "label": "p16c1 names True low False -jaxm1 constant",
+      "flags": "-jaxm1",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 16=z; pin 15=y;\nz='b'0; y='b'1;",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 16=z; pin 15=y;\nz='b'0;",
+      "vectors": "order: a,b,c,z,y;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 L H\n1 1 1 L H\n"
+    },
+    {
+      "device": "p16c1",
+      "label": "p16c1 names True low False -jaxm4 mismatch",
+      "flags": "-jaxm4",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 16=z; pin 15=y;\nz=a&b; y=c;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p16c1",
+      "label": "p16c1 names True low False -jaxm4 same",
+      "flags": "-jaxm4",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 16=z; pin 15=y;\nz=a&b; y=a&b;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p16c1",
+      "label": "p16c1 names True low False -jaxm4 complement",
+      "flags": "-jaxm4",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 16=z; pin 15=y;\nz=a&b; y=!(a&b);",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 16=z; pin 15=y;\nz=a&b;",
+      "vectors": "order: a,b,c,z,y;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p16c1",
+      "label": "p16c1 names True low False -jaxm4 different cover",
+      "flags": "-jaxm4",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 16=z; pin 15=y;\nz=a; y=!((a&b)#(a&!b));",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 16=z; pin 15=y;\nz=a;",
+      "vectors": "order: a,b,c,z,y;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 H L\n1 0 1 H L\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p16c1",
+      "label": "p16c1 names True low False -jaxm4 constant",
+      "flags": "-jaxm4",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 16=z; pin 15=y;\nz='b'0; y='b'1;",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 16=z; pin 15=y;\nz='b'0;",
+      "vectors": "order: a,b,c,z,y;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 L H\n1 1 1 L H\n"
+    },
+    {
+      "device": "p16c1",
+      "label": "p16c1 names True low True -jaxm0 mismatch",
+      "flags": "-jaxm0",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 16=z; pin 15=!y;\nz=a&b; !y=c;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p16c1",
+      "label": "p16c1 names True low True -jaxm0 same",
+      "flags": "-jaxm0",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 16=z; pin 15=!y;\nz=a&b; !y=a&b;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p16c1",
+      "label": "p16c1 names True low True -jaxm0 complement",
+      "flags": "-jaxm0",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 16=z; pin 15=!y;\nz=a&b; !y=!(a&b);",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 16=z; pin 15=!y;\nz=a&b;",
+      "vectors": "order: a,b,c,z,!y;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p16c1",
+      "label": "p16c1 names True low True -jaxm0 different cover",
+      "flags": "-jaxm0",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 16=z; pin 15=!y;\nz=a; !y=!((a&b)#(a&!b));",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 16=z; pin 15=!y;\nz=a;",
+      "vectors": "order: a,b,c,z,!y;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 H L\n1 0 1 H L\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p16c1",
+      "label": "p16c1 names True low True -jaxm0 constant",
+      "flags": "-jaxm0",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 16=z; pin 15=!y;\nz='b'0; !y='b'1;",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 16=z; pin 15=!y;\nz='b'0;",
+      "vectors": "order: a,b,c,z,!y;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 L H\n1 1 1 L H\n"
+    },
+    {
+      "device": "p16c1",
+      "label": "p16c1 names True low True -jaxm1 mismatch",
+      "flags": "-jaxm1",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 16=z; pin 15=!y;\nz=a&b; !y=c;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p16c1",
+      "label": "p16c1 names True low True -jaxm1 same",
+      "flags": "-jaxm1",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 16=z; pin 15=!y;\nz=a&b; !y=a&b;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p16c1",
+      "label": "p16c1 names True low True -jaxm1 complement",
+      "flags": "-jaxm1",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 16=z; pin 15=!y;\nz=a&b; !y=!(a&b);",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 16=z; pin 15=!y;\nz=a&b;",
+      "vectors": "order: a,b,c,z,!y;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p16c1",
+      "label": "p16c1 names True low True -jaxm1 different cover",
+      "flags": "-jaxm1",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 16=z; pin 15=!y;\nz=a; !y=!((a&b)#(a&!b));",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 16=z; pin 15=!y;\nz=a;",
+      "vectors": "order: a,b,c,z,!y;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 H L\n1 0 1 H L\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p16c1",
+      "label": "p16c1 names True low True -jaxm1 constant",
+      "flags": "-jaxm1",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 16=z; pin 15=!y;\nz='b'0; !y='b'1;",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 16=z; pin 15=!y;\nz='b'0;",
+      "vectors": "order: a,b,c,z,!y;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 L H\n1 1 1 L H\n"
+    },
+    {
+      "device": "p16c1",
+      "label": "p16c1 names True low True -jaxm4 mismatch",
+      "flags": "-jaxm4",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 16=z; pin 15=!y;\nz=a&b; !y=c;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p16c1",
+      "label": "p16c1 names True low True -jaxm4 same",
+      "flags": "-jaxm4",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 16=z; pin 15=!y;\nz=a&b; !y=a&b;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p16c1",
+      "label": "p16c1 names True low True -jaxm4 complement",
+      "flags": "-jaxm4",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 16=z; pin 15=!y;\nz=a&b; !y=!(a&b);",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 16=z; pin 15=!y;\nz=a&b;",
+      "vectors": "order: a,b,c,z,!y;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p16c1",
+      "label": "p16c1 names True low True -jaxm4 different cover",
+      "flags": "-jaxm4",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 16=z; pin 15=!y;\nz=a; !y=!((a&b)#(a&!b));",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 16=z; pin 15=!y;\nz=a;",
+      "vectors": "order: a,b,c,z,!y;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 H L\n1 0 1 H L\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p16c1",
+      "label": "p16c1 names True low True -jaxm4 constant",
+      "flags": "-jaxm4",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 16=z; pin 15=!y;\nz='b'0; !y='b'1;",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 16=z; pin 15=!y;\nz='b'0;",
+      "vectors": "order: a,b,c,z,!y;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 L H\n1 1 1 L H\n"
+    },
+    {
+      "device": "p20c1",
+      "label": "p20c1 names False low False -jaxm0 mismatch",
+      "flags": "-jaxm0",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 19=y; pin 18=z;\ny=a&b; z=c;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p20c1",
+      "label": "p20c1 names False low False -jaxm0 same",
+      "flags": "-jaxm0",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 19=y; pin 18=z;\ny=a&b; z=a&b;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p20c1",
+      "label": "p20c1 names False low False -jaxm0 complement",
+      "flags": "-jaxm0",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 19=y; pin 18=z;\ny=a&b; z=!(a&b);",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 19=y; pin 18=z;\ny=a&b;",
+      "vectors": "order: a,b,c,y,z;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p20c1",
+      "label": "p20c1 names False low False -jaxm0 different cover",
+      "flags": "-jaxm0",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 19=y; pin 18=z;\ny=a; z=!((a&b)#(a&!b));",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 19=y; pin 18=z;\ny=a;",
+      "vectors": "order: a,b,c,y,z;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 H L\n1 0 1 H L\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p20c1",
+      "label": "p20c1 names False low False -jaxm0 constant",
+      "flags": "-jaxm0",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 19=y; pin 18=z;\ny='b'0; z='b'1;",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 19=y; pin 18=z;\ny='b'0;",
+      "vectors": "order: a,b,c,y,z;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 L H\n1 1 1 L H\n"
+    },
+    {
+      "device": "p20c1",
+      "label": "p20c1 names False low False -jaxm1 mismatch",
+      "flags": "-jaxm1",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 19=y; pin 18=z;\ny=a&b; z=c;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p20c1",
+      "label": "p20c1 names False low False -jaxm1 same",
+      "flags": "-jaxm1",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 19=y; pin 18=z;\ny=a&b; z=a&b;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p20c1",
+      "label": "p20c1 names False low False -jaxm1 complement",
+      "flags": "-jaxm1",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 19=y; pin 18=z;\ny=a&b; z=!(a&b);",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 19=y; pin 18=z;\ny=a&b;",
+      "vectors": "order: a,b,c,y,z;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p20c1",
+      "label": "p20c1 names False low False -jaxm1 different cover",
+      "flags": "-jaxm1",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 19=y; pin 18=z;\ny=a; z=!((a&b)#(a&!b));",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 19=y; pin 18=z;\ny=a;",
+      "vectors": "order: a,b,c,y,z;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 H L\n1 0 1 H L\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p20c1",
+      "label": "p20c1 names False low False -jaxm1 constant",
+      "flags": "-jaxm1",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 19=y; pin 18=z;\ny='b'0; z='b'1;",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 19=y; pin 18=z;\ny='b'0;",
+      "vectors": "order: a,b,c,y,z;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 L H\n1 1 1 L H\n"
+    },
+    {
+      "device": "p20c1",
+      "label": "p20c1 names False low False -jaxm4 mismatch",
+      "flags": "-jaxm4",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 19=y; pin 18=z;\ny=a&b; z=c;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p20c1",
+      "label": "p20c1 names False low False -jaxm4 same",
+      "flags": "-jaxm4",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 19=y; pin 18=z;\ny=a&b; z=a&b;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p20c1",
+      "label": "p20c1 names False low False -jaxm4 complement",
+      "flags": "-jaxm4",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 19=y; pin 18=z;\ny=a&b; z=!(a&b);",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 19=y; pin 18=z;\ny=a&b;",
+      "vectors": "order: a,b,c,y,z;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p20c1",
+      "label": "p20c1 names False low False -jaxm4 different cover",
+      "flags": "-jaxm4",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 19=y; pin 18=z;\ny=a; z=!((a&b)#(a&!b));",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 19=y; pin 18=z;\ny=a;",
+      "vectors": "order: a,b,c,y,z;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 H L\n1 0 1 H L\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p20c1",
+      "label": "p20c1 names False low False -jaxm4 constant",
+      "flags": "-jaxm4",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 19=y; pin 18=z;\ny='b'0; z='b'1;",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 19=y; pin 18=z;\ny='b'0;",
+      "vectors": "order: a,b,c,y,z;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 L H\n1 1 1 L H\n"
+    },
+    {
+      "device": "p20c1",
+      "label": "p20c1 names False low True -jaxm0 mismatch",
+      "flags": "-jaxm0",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 19=y; pin 18=!z;\ny=a&b; !z=c;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p20c1",
+      "label": "p20c1 names False low True -jaxm0 same",
+      "flags": "-jaxm0",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 19=y; pin 18=!z;\ny=a&b; !z=a&b;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p20c1",
+      "label": "p20c1 names False low True -jaxm0 complement",
+      "flags": "-jaxm0",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 19=y; pin 18=!z;\ny=a&b; !z=!(a&b);",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 19=y; pin 18=!z;\ny=a&b;",
+      "vectors": "order: a,b,c,y,!z;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p20c1",
+      "label": "p20c1 names False low True -jaxm0 different cover",
+      "flags": "-jaxm0",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 19=y; pin 18=!z;\ny=a; !z=!((a&b)#(a&!b));",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 19=y; pin 18=!z;\ny=a;",
+      "vectors": "order: a,b,c,y,!z;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 H L\n1 0 1 H L\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p20c1",
+      "label": "p20c1 names False low True -jaxm0 constant",
+      "flags": "-jaxm0",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 19=y; pin 18=!z;\ny='b'0; !z='b'1;",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 19=y; pin 18=!z;\ny='b'0;",
+      "vectors": "order: a,b,c,y,!z;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 L H\n1 1 1 L H\n"
+    },
+    {
+      "device": "p20c1",
+      "label": "p20c1 names False low True -jaxm1 mismatch",
+      "flags": "-jaxm1",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 19=y; pin 18=!z;\ny=a&b; !z=c;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p20c1",
+      "label": "p20c1 names False low True -jaxm1 same",
+      "flags": "-jaxm1",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 19=y; pin 18=!z;\ny=a&b; !z=a&b;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p20c1",
+      "label": "p20c1 names False low True -jaxm1 complement",
+      "flags": "-jaxm1",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 19=y; pin 18=!z;\ny=a&b; !z=!(a&b);",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 19=y; pin 18=!z;\ny=a&b;",
+      "vectors": "order: a,b,c,y,!z;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p20c1",
+      "label": "p20c1 names False low True -jaxm1 different cover",
+      "flags": "-jaxm1",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 19=y; pin 18=!z;\ny=a; !z=!((a&b)#(a&!b));",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 19=y; pin 18=!z;\ny=a;",
+      "vectors": "order: a,b,c,y,!z;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 H L\n1 0 1 H L\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p20c1",
+      "label": "p20c1 names False low True -jaxm1 constant",
+      "flags": "-jaxm1",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 19=y; pin 18=!z;\ny='b'0; !z='b'1;",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 19=y; pin 18=!z;\ny='b'0;",
+      "vectors": "order: a,b,c,y,!z;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 L H\n1 1 1 L H\n"
+    },
+    {
+      "device": "p20c1",
+      "label": "p20c1 names False low True -jaxm4 mismatch",
+      "flags": "-jaxm4",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 19=y; pin 18=!z;\ny=a&b; !z=c;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p20c1",
+      "label": "p20c1 names False low True -jaxm4 same",
+      "flags": "-jaxm4",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 19=y; pin 18=!z;\ny=a&b; !z=a&b;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p20c1",
+      "label": "p20c1 names False low True -jaxm4 complement",
+      "flags": "-jaxm4",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 19=y; pin 18=!z;\ny=a&b; !z=!(a&b);",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 19=y; pin 18=!z;\ny=a&b;",
+      "vectors": "order: a,b,c,y,!z;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p20c1",
+      "label": "p20c1 names False low True -jaxm4 different cover",
+      "flags": "-jaxm4",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 19=y; pin 18=!z;\ny=a; !z=!((a&b)#(a&!b));",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 19=y; pin 18=!z;\ny=a;",
+      "vectors": "order: a,b,c,y,!z;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 H L\n1 0 1 H L\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p20c1",
+      "label": "p20c1 names False low True -jaxm4 constant",
+      "flags": "-jaxm4",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 19=y; pin 18=!z;\ny='b'0; !z='b'1;",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 19=y; pin 18=!z;\ny='b'0;",
+      "vectors": "order: a,b,c,y,!z;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 L H\n1 1 1 L H\n"
+    },
+    {
+      "device": "p20c1",
+      "label": "p20c1 names True low False -jaxm0 mismatch",
+      "flags": "-jaxm0",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 19=z; pin 18=y;\nz=a&b; y=c;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p20c1",
+      "label": "p20c1 names True low False -jaxm0 same",
+      "flags": "-jaxm0",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 19=z; pin 18=y;\nz=a&b; y=a&b;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p20c1",
+      "label": "p20c1 names True low False -jaxm0 complement",
+      "flags": "-jaxm0",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 19=z; pin 18=y;\nz=a&b; y=!(a&b);",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 19=z; pin 18=y;\nz=a&b;",
+      "vectors": "order: a,b,c,z,y;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p20c1",
+      "label": "p20c1 names True low False -jaxm0 different cover",
+      "flags": "-jaxm0",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 19=z; pin 18=y;\nz=a; y=!((a&b)#(a&!b));",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 19=z; pin 18=y;\nz=a;",
+      "vectors": "order: a,b,c,z,y;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 H L\n1 0 1 H L\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p20c1",
+      "label": "p20c1 names True low False -jaxm0 constant",
+      "flags": "-jaxm0",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 19=z; pin 18=y;\nz='b'0; y='b'1;",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 19=z; pin 18=y;\nz='b'0;",
+      "vectors": "order: a,b,c,z,y;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 L H\n1 1 1 L H\n"
+    },
+    {
+      "device": "p20c1",
+      "label": "p20c1 names True low False -jaxm1 mismatch",
+      "flags": "-jaxm1",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 19=z; pin 18=y;\nz=a&b; y=c;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p20c1",
+      "label": "p20c1 names True low False -jaxm1 same",
+      "flags": "-jaxm1",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 19=z; pin 18=y;\nz=a&b; y=a&b;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p20c1",
+      "label": "p20c1 names True low False -jaxm1 complement",
+      "flags": "-jaxm1",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 19=z; pin 18=y;\nz=a&b; y=!(a&b);",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 19=z; pin 18=y;\nz=a&b;",
+      "vectors": "order: a,b,c,z,y;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p20c1",
+      "label": "p20c1 names True low False -jaxm1 different cover",
+      "flags": "-jaxm1",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 19=z; pin 18=y;\nz=a; y=!((a&b)#(a&!b));",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 19=z; pin 18=y;\nz=a;",
+      "vectors": "order: a,b,c,z,y;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 H L\n1 0 1 H L\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p20c1",
+      "label": "p20c1 names True low False -jaxm1 constant",
+      "flags": "-jaxm1",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 19=z; pin 18=y;\nz='b'0; y='b'1;",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 19=z; pin 18=y;\nz='b'0;",
+      "vectors": "order: a,b,c,z,y;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 L H\n1 1 1 L H\n"
+    },
+    {
+      "device": "p20c1",
+      "label": "p20c1 names True low False -jaxm4 mismatch",
+      "flags": "-jaxm4",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 19=z; pin 18=y;\nz=a&b; y=c;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p20c1",
+      "label": "p20c1 names True low False -jaxm4 same",
+      "flags": "-jaxm4",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 19=z; pin 18=y;\nz=a&b; y=a&b;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p20c1",
+      "label": "p20c1 names True low False -jaxm4 complement",
+      "flags": "-jaxm4",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 19=z; pin 18=y;\nz=a&b; y=!(a&b);",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 19=z; pin 18=y;\nz=a&b;",
+      "vectors": "order: a,b,c,z,y;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p20c1",
+      "label": "p20c1 names True low False -jaxm4 different cover",
+      "flags": "-jaxm4",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 19=z; pin 18=y;\nz=a; y=!((a&b)#(a&!b));",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 19=z; pin 18=y;\nz=a;",
+      "vectors": "order: a,b,c,z,y;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 H L\n1 0 1 H L\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p20c1",
+      "label": "p20c1 names True low False -jaxm4 constant",
+      "flags": "-jaxm4",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 19=z; pin 18=y;\nz='b'0; y='b'1;",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 19=z; pin 18=y;\nz='b'0;",
+      "vectors": "order: a,b,c,z,y;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 L H\n1 1 1 L H\n"
+    },
+    {
+      "device": "p20c1",
+      "label": "p20c1 names True low True -jaxm0 mismatch",
+      "flags": "-jaxm0",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 19=z; pin 18=!y;\nz=a&b; !y=c;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p20c1",
+      "label": "p20c1 names True low True -jaxm0 same",
+      "flags": "-jaxm0",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 19=z; pin 18=!y;\nz=a&b; !y=a&b;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p20c1",
+      "label": "p20c1 names True low True -jaxm0 complement",
+      "flags": "-jaxm0",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 19=z; pin 18=!y;\nz=a&b; !y=!(a&b);",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 19=z; pin 18=!y;\nz=a&b;",
+      "vectors": "order: a,b,c,z,!y;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p20c1",
+      "label": "p20c1 names True low True -jaxm0 different cover",
+      "flags": "-jaxm0",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 19=z; pin 18=!y;\nz=a; !y=!((a&b)#(a&!b));",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 19=z; pin 18=!y;\nz=a;",
+      "vectors": "order: a,b,c,z,!y;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 H L\n1 0 1 H L\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p20c1",
+      "label": "p20c1 names True low True -jaxm0 constant",
+      "flags": "-jaxm0",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 19=z; pin 18=!y;\nz='b'0; !y='b'1;",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 19=z; pin 18=!y;\nz='b'0;",
+      "vectors": "order: a,b,c,z,!y;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 L H\n1 1 1 L H\n"
+    },
+    {
+      "device": "p20c1",
+      "label": "p20c1 names True low True -jaxm1 mismatch",
+      "flags": "-jaxm1",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 19=z; pin 18=!y;\nz=a&b; !y=c;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p20c1",
+      "label": "p20c1 names True low True -jaxm1 same",
+      "flags": "-jaxm1",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 19=z; pin 18=!y;\nz=a&b; !y=a&b;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p20c1",
+      "label": "p20c1 names True low True -jaxm1 complement",
+      "flags": "-jaxm1",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 19=z; pin 18=!y;\nz=a&b; !y=!(a&b);",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 19=z; pin 18=!y;\nz=a&b;",
+      "vectors": "order: a,b,c,z,!y;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p20c1",
+      "label": "p20c1 names True low True -jaxm1 different cover",
+      "flags": "-jaxm1",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 19=z; pin 18=!y;\nz=a; !y=!((a&b)#(a&!b));",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 19=z; pin 18=!y;\nz=a;",
+      "vectors": "order: a,b,c,z,!y;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 H L\n1 0 1 H L\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p20c1",
+      "label": "p20c1 names True low True -jaxm1 constant",
+      "flags": "-jaxm1",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 19=z; pin 18=!y;\nz='b'0; !y='b'1;",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 19=z; pin 18=!y;\nz='b'0;",
+      "vectors": "order: a,b,c,z,!y;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 L H\n1 1 1 L H\n"
+    },
+    {
+      "device": "p20c1",
+      "label": "p20c1 names True low True -jaxm4 mismatch",
+      "flags": "-jaxm4",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 19=z; pin 18=!y;\nz=a&b; !y=c;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p20c1",
+      "label": "p20c1 names True low True -jaxm4 same",
+      "flags": "-jaxm4",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 19=z; pin 18=!y;\nz=a&b; !y=a&b;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p20c1",
+      "label": "p20c1 names True low True -jaxm4 complement",
+      "flags": "-jaxm4",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 19=z; pin 18=!y;\nz=a&b; !y=!(a&b);",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 19=z; pin 18=!y;\nz=a&b;",
+      "vectors": "order: a,b,c,z,!y;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p20c1",
+      "label": "p20c1 names True low True -jaxm4 different cover",
+      "flags": "-jaxm4",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 19=z; pin 18=!y;\nz=a; !y=!((a&b)#(a&!b));",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 19=z; pin 18=!y;\nz=a;",
+      "vectors": "order: a,b,c,z,!y;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 H L\n1 0 1 H L\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p20c1",
+      "label": "p20c1 names True low True -jaxm4 constant",
+      "flags": "-jaxm4",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 19=z; pin 18=!y;\nz='b'0; !y='b'1;",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 19=z; pin 18=!y;\nz='b'0;",
+      "vectors": "order: a,b,c,z,!y;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 L H\n1 1 1 L H\n"
+    },
+    {
+      "device": "p20c1lcc",
+      "label": "p20c1lcc names False low False -jaxm0 mismatch",
+      "flags": "-jaxm0",
+      "source": "pin 3=a; pin 4=b; pin 5=c; pin 23=y; pin 21=z;\ny=a&b; z=c;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p20c1lcc",
+      "label": "p20c1lcc names False low False -jaxm0 same",
+      "flags": "-jaxm0",
+      "source": "pin 3=a; pin 4=b; pin 5=c; pin 23=y; pin 21=z;\ny=a&b; z=a&b;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p20c1lcc",
+      "label": "p20c1lcc names False low False -jaxm0 complement",
+      "flags": "-jaxm0",
+      "source": "pin 3=a; pin 4=b; pin 5=c; pin 23=y; pin 21=z;\ny=a&b; z=!(a&b);",
+      "reference": "pin 3=a; pin 4=b; pin 5=c; pin 23=y; pin 21=z;\ny=a&b;",
+      "vectors": "order: a,b,c,y,z;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p20c1lcc",
+      "label": "p20c1lcc names False low False -jaxm0 different cover",
+      "flags": "-jaxm0",
+      "source": "pin 3=a; pin 4=b; pin 5=c; pin 23=y; pin 21=z;\ny=a; z=!((a&b)#(a&!b));",
+      "reference": "pin 3=a; pin 4=b; pin 5=c; pin 23=y; pin 21=z;\ny=a;",
+      "vectors": "order: a,b,c,y,z;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 H L\n1 0 1 H L\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p20c1lcc",
+      "label": "p20c1lcc names False low False -jaxm0 constant",
+      "flags": "-jaxm0",
+      "source": "pin 3=a; pin 4=b; pin 5=c; pin 23=y; pin 21=z;\ny='b'0; z='b'1;",
+      "reference": "pin 3=a; pin 4=b; pin 5=c; pin 23=y; pin 21=z;\ny='b'0;",
+      "vectors": "order: a,b,c,y,z;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 L H\n1 1 1 L H\n"
+    },
+    {
+      "device": "p20c1lcc",
+      "label": "p20c1lcc names False low False -jaxm1 mismatch",
+      "flags": "-jaxm1",
+      "source": "pin 3=a; pin 4=b; pin 5=c; pin 23=y; pin 21=z;\ny=a&b; z=c;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p20c1lcc",
+      "label": "p20c1lcc names False low False -jaxm1 same",
+      "flags": "-jaxm1",
+      "source": "pin 3=a; pin 4=b; pin 5=c; pin 23=y; pin 21=z;\ny=a&b; z=a&b;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p20c1lcc",
+      "label": "p20c1lcc names False low False -jaxm1 complement",
+      "flags": "-jaxm1",
+      "source": "pin 3=a; pin 4=b; pin 5=c; pin 23=y; pin 21=z;\ny=a&b; z=!(a&b);",
+      "reference": "pin 3=a; pin 4=b; pin 5=c; pin 23=y; pin 21=z;\ny=a&b;",
+      "vectors": "order: a,b,c,y,z;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p20c1lcc",
+      "label": "p20c1lcc names False low False -jaxm1 different cover",
+      "flags": "-jaxm1",
+      "source": "pin 3=a; pin 4=b; pin 5=c; pin 23=y; pin 21=z;\ny=a; z=!((a&b)#(a&!b));",
+      "reference": "pin 3=a; pin 4=b; pin 5=c; pin 23=y; pin 21=z;\ny=a;",
+      "vectors": "order: a,b,c,y,z;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 H L\n1 0 1 H L\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p20c1lcc",
+      "label": "p20c1lcc names False low False -jaxm1 constant",
+      "flags": "-jaxm1",
+      "source": "pin 3=a; pin 4=b; pin 5=c; pin 23=y; pin 21=z;\ny='b'0; z='b'1;",
+      "reference": "pin 3=a; pin 4=b; pin 5=c; pin 23=y; pin 21=z;\ny='b'0;",
+      "vectors": "order: a,b,c,y,z;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 L H\n1 1 1 L H\n"
+    },
+    {
+      "device": "p20c1lcc",
+      "label": "p20c1lcc names False low False -jaxm4 mismatch",
+      "flags": "-jaxm4",
+      "source": "pin 3=a; pin 4=b; pin 5=c; pin 23=y; pin 21=z;\ny=a&b; z=c;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p20c1lcc",
+      "label": "p20c1lcc names False low False -jaxm4 same",
+      "flags": "-jaxm4",
+      "source": "pin 3=a; pin 4=b; pin 5=c; pin 23=y; pin 21=z;\ny=a&b; z=a&b;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p20c1lcc",
+      "label": "p20c1lcc names False low False -jaxm4 complement",
+      "flags": "-jaxm4",
+      "source": "pin 3=a; pin 4=b; pin 5=c; pin 23=y; pin 21=z;\ny=a&b; z=!(a&b);",
+      "reference": "pin 3=a; pin 4=b; pin 5=c; pin 23=y; pin 21=z;\ny=a&b;",
+      "vectors": "order: a,b,c,y,z;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p20c1lcc",
+      "label": "p20c1lcc names False low False -jaxm4 different cover",
+      "flags": "-jaxm4",
+      "source": "pin 3=a; pin 4=b; pin 5=c; pin 23=y; pin 21=z;\ny=a; z=!((a&b)#(a&!b));",
+      "reference": "pin 3=a; pin 4=b; pin 5=c; pin 23=y; pin 21=z;\ny=a;",
+      "vectors": "order: a,b,c,y,z;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 H L\n1 0 1 H L\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p20c1lcc",
+      "label": "p20c1lcc names False low False -jaxm4 constant",
+      "flags": "-jaxm4",
+      "source": "pin 3=a; pin 4=b; pin 5=c; pin 23=y; pin 21=z;\ny='b'0; z='b'1;",
+      "reference": "pin 3=a; pin 4=b; pin 5=c; pin 23=y; pin 21=z;\ny='b'0;",
+      "vectors": "order: a,b,c,y,z;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 L H\n1 1 1 L H\n"
+    },
+    {
+      "device": "p20c1lcc",
+      "label": "p20c1lcc names False low True -jaxm0 mismatch",
+      "flags": "-jaxm0",
+      "source": "pin 3=a; pin 4=b; pin 5=c; pin 23=y; pin 21=!z;\ny=a&b; !z=c;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p20c1lcc",
+      "label": "p20c1lcc names False low True -jaxm0 same",
+      "flags": "-jaxm0",
+      "source": "pin 3=a; pin 4=b; pin 5=c; pin 23=y; pin 21=!z;\ny=a&b; !z=a&b;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p20c1lcc",
+      "label": "p20c1lcc names False low True -jaxm0 complement",
+      "flags": "-jaxm0",
+      "source": "pin 3=a; pin 4=b; pin 5=c; pin 23=y; pin 21=!z;\ny=a&b; !z=!(a&b);",
+      "reference": "pin 3=a; pin 4=b; pin 5=c; pin 23=y; pin 21=!z;\ny=a&b;",
+      "vectors": "order: a,b,c,y,!z;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p20c1lcc",
+      "label": "p20c1lcc names False low True -jaxm0 different cover",
+      "flags": "-jaxm0",
+      "source": "pin 3=a; pin 4=b; pin 5=c; pin 23=y; pin 21=!z;\ny=a; !z=!((a&b)#(a&!b));",
+      "reference": "pin 3=a; pin 4=b; pin 5=c; pin 23=y; pin 21=!z;\ny=a;",
+      "vectors": "order: a,b,c,y,!z;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 H L\n1 0 1 H L\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p20c1lcc",
+      "label": "p20c1lcc names False low True -jaxm0 constant",
+      "flags": "-jaxm0",
+      "source": "pin 3=a; pin 4=b; pin 5=c; pin 23=y; pin 21=!z;\ny='b'0; !z='b'1;",
+      "reference": "pin 3=a; pin 4=b; pin 5=c; pin 23=y; pin 21=!z;\ny='b'0;",
+      "vectors": "order: a,b,c,y,!z;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 L H\n1 1 1 L H\n"
+    },
+    {
+      "device": "p20c1lcc",
+      "label": "p20c1lcc names False low True -jaxm1 mismatch",
+      "flags": "-jaxm1",
+      "source": "pin 3=a; pin 4=b; pin 5=c; pin 23=y; pin 21=!z;\ny=a&b; !z=c;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p20c1lcc",
+      "label": "p20c1lcc names False low True -jaxm1 same",
+      "flags": "-jaxm1",
+      "source": "pin 3=a; pin 4=b; pin 5=c; pin 23=y; pin 21=!z;\ny=a&b; !z=a&b;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p20c1lcc",
+      "label": "p20c1lcc names False low True -jaxm1 complement",
+      "flags": "-jaxm1",
+      "source": "pin 3=a; pin 4=b; pin 5=c; pin 23=y; pin 21=!z;\ny=a&b; !z=!(a&b);",
+      "reference": "pin 3=a; pin 4=b; pin 5=c; pin 23=y; pin 21=!z;\ny=a&b;",
+      "vectors": "order: a,b,c,y,!z;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p20c1lcc",
+      "label": "p20c1lcc names False low True -jaxm1 different cover",
+      "flags": "-jaxm1",
+      "source": "pin 3=a; pin 4=b; pin 5=c; pin 23=y; pin 21=!z;\ny=a; !z=!((a&b)#(a&!b));",
+      "reference": "pin 3=a; pin 4=b; pin 5=c; pin 23=y; pin 21=!z;\ny=a;",
+      "vectors": "order: a,b,c,y,!z;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 H L\n1 0 1 H L\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p20c1lcc",
+      "label": "p20c1lcc names False low True -jaxm1 constant",
+      "flags": "-jaxm1",
+      "source": "pin 3=a; pin 4=b; pin 5=c; pin 23=y; pin 21=!z;\ny='b'0; !z='b'1;",
+      "reference": "pin 3=a; pin 4=b; pin 5=c; pin 23=y; pin 21=!z;\ny='b'0;",
+      "vectors": "order: a,b,c,y,!z;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 L H\n1 1 1 L H\n"
+    },
+    {
+      "device": "p20c1lcc",
+      "label": "p20c1lcc names False low True -jaxm4 mismatch",
+      "flags": "-jaxm4",
+      "source": "pin 3=a; pin 4=b; pin 5=c; pin 23=y; pin 21=!z;\ny=a&b; !z=c;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p20c1lcc",
+      "label": "p20c1lcc names False low True -jaxm4 same",
+      "flags": "-jaxm4",
+      "source": "pin 3=a; pin 4=b; pin 5=c; pin 23=y; pin 21=!z;\ny=a&b; !z=a&b;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p20c1lcc",
+      "label": "p20c1lcc names False low True -jaxm4 complement",
+      "flags": "-jaxm4",
+      "source": "pin 3=a; pin 4=b; pin 5=c; pin 23=y; pin 21=!z;\ny=a&b; !z=!(a&b);",
+      "reference": "pin 3=a; pin 4=b; pin 5=c; pin 23=y; pin 21=!z;\ny=a&b;",
+      "vectors": "order: a,b,c,y,!z;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p20c1lcc",
+      "label": "p20c1lcc names False low True -jaxm4 different cover",
+      "flags": "-jaxm4",
+      "source": "pin 3=a; pin 4=b; pin 5=c; pin 23=y; pin 21=!z;\ny=a; !z=!((a&b)#(a&!b));",
+      "reference": "pin 3=a; pin 4=b; pin 5=c; pin 23=y; pin 21=!z;\ny=a;",
+      "vectors": "order: a,b,c,y,!z;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 H L\n1 0 1 H L\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p20c1lcc",
+      "label": "p20c1lcc names False low True -jaxm4 constant",
+      "flags": "-jaxm4",
+      "source": "pin 3=a; pin 4=b; pin 5=c; pin 23=y; pin 21=!z;\ny='b'0; !z='b'1;",
+      "reference": "pin 3=a; pin 4=b; pin 5=c; pin 23=y; pin 21=!z;\ny='b'0;",
+      "vectors": "order: a,b,c,y,!z;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 L H\n1 1 1 L H\n"
+    },
+    {
+      "device": "p20c1lcc",
+      "label": "p20c1lcc names True low False -jaxm0 mismatch",
+      "flags": "-jaxm0",
+      "source": "pin 3=a; pin 4=b; pin 5=c; pin 23=z; pin 21=y;\nz=a&b; y=c;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p20c1lcc",
+      "label": "p20c1lcc names True low False -jaxm0 same",
+      "flags": "-jaxm0",
+      "source": "pin 3=a; pin 4=b; pin 5=c; pin 23=z; pin 21=y;\nz=a&b; y=a&b;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p20c1lcc",
+      "label": "p20c1lcc names True low False -jaxm0 complement",
+      "flags": "-jaxm0",
+      "source": "pin 3=a; pin 4=b; pin 5=c; pin 23=z; pin 21=y;\nz=a&b; y=!(a&b);",
+      "reference": "pin 3=a; pin 4=b; pin 5=c; pin 23=z; pin 21=y;\nz=a&b;",
+      "vectors": "order: a,b,c,z,y;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p20c1lcc",
+      "label": "p20c1lcc names True low False -jaxm0 different cover",
+      "flags": "-jaxm0",
+      "source": "pin 3=a; pin 4=b; pin 5=c; pin 23=z; pin 21=y;\nz=a; y=!((a&b)#(a&!b));",
+      "reference": "pin 3=a; pin 4=b; pin 5=c; pin 23=z; pin 21=y;\nz=a;",
+      "vectors": "order: a,b,c,z,y;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 H L\n1 0 1 H L\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p20c1lcc",
+      "label": "p20c1lcc names True low False -jaxm0 constant",
+      "flags": "-jaxm0",
+      "source": "pin 3=a; pin 4=b; pin 5=c; pin 23=z; pin 21=y;\nz='b'0; y='b'1;",
+      "reference": "pin 3=a; pin 4=b; pin 5=c; pin 23=z; pin 21=y;\nz='b'0;",
+      "vectors": "order: a,b,c,z,y;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 L H\n1 1 1 L H\n"
+    },
+    {
+      "device": "p20c1lcc",
+      "label": "p20c1lcc names True low False -jaxm1 mismatch",
+      "flags": "-jaxm1",
+      "source": "pin 3=a; pin 4=b; pin 5=c; pin 23=z; pin 21=y;\nz=a&b; y=c;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p20c1lcc",
+      "label": "p20c1lcc names True low False -jaxm1 same",
+      "flags": "-jaxm1",
+      "source": "pin 3=a; pin 4=b; pin 5=c; pin 23=z; pin 21=y;\nz=a&b; y=a&b;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p20c1lcc",
+      "label": "p20c1lcc names True low False -jaxm1 complement",
+      "flags": "-jaxm1",
+      "source": "pin 3=a; pin 4=b; pin 5=c; pin 23=z; pin 21=y;\nz=a&b; y=!(a&b);",
+      "reference": "pin 3=a; pin 4=b; pin 5=c; pin 23=z; pin 21=y;\nz=a&b;",
+      "vectors": "order: a,b,c,z,y;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p20c1lcc",
+      "label": "p20c1lcc names True low False -jaxm1 different cover",
+      "flags": "-jaxm1",
+      "source": "pin 3=a; pin 4=b; pin 5=c; pin 23=z; pin 21=y;\nz=a; y=!((a&b)#(a&!b));",
+      "reference": "pin 3=a; pin 4=b; pin 5=c; pin 23=z; pin 21=y;\nz=a;",
+      "vectors": "order: a,b,c,z,y;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 H L\n1 0 1 H L\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p20c1lcc",
+      "label": "p20c1lcc names True low False -jaxm1 constant",
+      "flags": "-jaxm1",
+      "source": "pin 3=a; pin 4=b; pin 5=c; pin 23=z; pin 21=y;\nz='b'0; y='b'1;",
+      "reference": "pin 3=a; pin 4=b; pin 5=c; pin 23=z; pin 21=y;\nz='b'0;",
+      "vectors": "order: a,b,c,z,y;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 L H\n1 1 1 L H\n"
+    },
+    {
+      "device": "p20c1lcc",
+      "label": "p20c1lcc names True low False -jaxm4 mismatch",
+      "flags": "-jaxm4",
+      "source": "pin 3=a; pin 4=b; pin 5=c; pin 23=z; pin 21=y;\nz=a&b; y=c;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p20c1lcc",
+      "label": "p20c1lcc names True low False -jaxm4 same",
+      "flags": "-jaxm4",
+      "source": "pin 3=a; pin 4=b; pin 5=c; pin 23=z; pin 21=y;\nz=a&b; y=a&b;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p20c1lcc",
+      "label": "p20c1lcc names True low False -jaxm4 complement",
+      "flags": "-jaxm4",
+      "source": "pin 3=a; pin 4=b; pin 5=c; pin 23=z; pin 21=y;\nz=a&b; y=!(a&b);",
+      "reference": "pin 3=a; pin 4=b; pin 5=c; pin 23=z; pin 21=y;\nz=a&b;",
+      "vectors": "order: a,b,c,z,y;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p20c1lcc",
+      "label": "p20c1lcc names True low False -jaxm4 different cover",
+      "flags": "-jaxm4",
+      "source": "pin 3=a; pin 4=b; pin 5=c; pin 23=z; pin 21=y;\nz=a; y=!((a&b)#(a&!b));",
+      "reference": "pin 3=a; pin 4=b; pin 5=c; pin 23=z; pin 21=y;\nz=a;",
+      "vectors": "order: a,b,c,z,y;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 H L\n1 0 1 H L\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p20c1lcc",
+      "label": "p20c1lcc names True low False -jaxm4 constant",
+      "flags": "-jaxm4",
+      "source": "pin 3=a; pin 4=b; pin 5=c; pin 23=z; pin 21=y;\nz='b'0; y='b'1;",
+      "reference": "pin 3=a; pin 4=b; pin 5=c; pin 23=z; pin 21=y;\nz='b'0;",
+      "vectors": "order: a,b,c,z,y;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 L H\n1 1 1 L H\n"
+    },
+    {
+      "device": "p20c1lcc",
+      "label": "p20c1lcc names True low True -jaxm0 mismatch",
+      "flags": "-jaxm0",
+      "source": "pin 3=a; pin 4=b; pin 5=c; pin 23=z; pin 21=!y;\nz=a&b; !y=c;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p20c1lcc",
+      "label": "p20c1lcc names True low True -jaxm0 same",
+      "flags": "-jaxm0",
+      "source": "pin 3=a; pin 4=b; pin 5=c; pin 23=z; pin 21=!y;\nz=a&b; !y=a&b;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p20c1lcc",
+      "label": "p20c1lcc names True low True -jaxm0 complement",
+      "flags": "-jaxm0",
+      "source": "pin 3=a; pin 4=b; pin 5=c; pin 23=z; pin 21=!y;\nz=a&b; !y=!(a&b);",
+      "reference": "pin 3=a; pin 4=b; pin 5=c; pin 23=z; pin 21=!y;\nz=a&b;",
+      "vectors": "order: a,b,c,z,!y;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p20c1lcc",
+      "label": "p20c1lcc names True low True -jaxm0 different cover",
+      "flags": "-jaxm0",
+      "source": "pin 3=a; pin 4=b; pin 5=c; pin 23=z; pin 21=!y;\nz=a; !y=!((a&b)#(a&!b));",
+      "reference": "pin 3=a; pin 4=b; pin 5=c; pin 23=z; pin 21=!y;\nz=a;",
+      "vectors": "order: a,b,c,z,!y;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 H L\n1 0 1 H L\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p20c1lcc",
+      "label": "p20c1lcc names True low True -jaxm0 constant",
+      "flags": "-jaxm0",
+      "source": "pin 3=a; pin 4=b; pin 5=c; pin 23=z; pin 21=!y;\nz='b'0; !y='b'1;",
+      "reference": "pin 3=a; pin 4=b; pin 5=c; pin 23=z; pin 21=!y;\nz='b'0;",
+      "vectors": "order: a,b,c,z,!y;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 L H\n1 1 1 L H\n"
+    },
+    {
+      "device": "p20c1lcc",
+      "label": "p20c1lcc names True low True -jaxm1 mismatch",
+      "flags": "-jaxm1",
+      "source": "pin 3=a; pin 4=b; pin 5=c; pin 23=z; pin 21=!y;\nz=a&b; !y=c;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p20c1lcc",
+      "label": "p20c1lcc names True low True -jaxm1 same",
+      "flags": "-jaxm1",
+      "source": "pin 3=a; pin 4=b; pin 5=c; pin 23=z; pin 21=!y;\nz=a&b; !y=a&b;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p20c1lcc",
+      "label": "p20c1lcc names True low True -jaxm1 complement",
+      "flags": "-jaxm1",
+      "source": "pin 3=a; pin 4=b; pin 5=c; pin 23=z; pin 21=!y;\nz=a&b; !y=!(a&b);",
+      "reference": "pin 3=a; pin 4=b; pin 5=c; pin 23=z; pin 21=!y;\nz=a&b;",
+      "vectors": "order: a,b,c,z,!y;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p20c1lcc",
+      "label": "p20c1lcc names True low True -jaxm1 different cover",
+      "flags": "-jaxm1",
+      "source": "pin 3=a; pin 4=b; pin 5=c; pin 23=z; pin 21=!y;\nz=a; !y=!((a&b)#(a&!b));",
+      "reference": "pin 3=a; pin 4=b; pin 5=c; pin 23=z; pin 21=!y;\nz=a;",
+      "vectors": "order: a,b,c,z,!y;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 H L\n1 0 1 H L\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p20c1lcc",
+      "label": "p20c1lcc names True low True -jaxm1 constant",
+      "flags": "-jaxm1",
+      "source": "pin 3=a; pin 4=b; pin 5=c; pin 23=z; pin 21=!y;\nz='b'0; !y='b'1;",
+      "reference": "pin 3=a; pin 4=b; pin 5=c; pin 23=z; pin 21=!y;\nz='b'0;",
+      "vectors": "order: a,b,c,z,!y;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 L H\n1 1 1 L H\n"
+    },
+    {
+      "device": "p20c1lcc",
+      "label": "p20c1lcc names True low True -jaxm4 mismatch",
+      "flags": "-jaxm4",
+      "source": "pin 3=a; pin 4=b; pin 5=c; pin 23=z; pin 21=!y;\nz=a&b; !y=c;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p20c1lcc",
+      "label": "p20c1lcc names True low True -jaxm4 same",
+      "flags": "-jaxm4",
+      "source": "pin 3=a; pin 4=b; pin 5=c; pin 23=z; pin 21=!y;\nz=a&b; !y=a&b;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p20c1lcc",
+      "label": "p20c1lcc names True low True -jaxm4 complement",
+      "flags": "-jaxm4",
+      "source": "pin 3=a; pin 4=b; pin 5=c; pin 23=z; pin 21=!y;\nz=a&b; !y=!(a&b);",
+      "reference": "pin 3=a; pin 4=b; pin 5=c; pin 23=z; pin 21=!y;\nz=a&b;",
+      "vectors": "order: a,b,c,z,!y;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p20c1lcc",
+      "label": "p20c1lcc names True low True -jaxm4 different cover",
+      "flags": "-jaxm4",
+      "source": "pin 3=a; pin 4=b; pin 5=c; pin 23=z; pin 21=!y;\nz=a; !y=!((a&b)#(a&!b));",
+      "reference": "pin 3=a; pin 4=b; pin 5=c; pin 23=z; pin 21=!y;\nz=a;",
+      "vectors": "order: a,b,c,z,!y;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 H L\n1 0 1 H L\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p20c1lcc",
+      "label": "p20c1lcc names True low True -jaxm4 constant",
+      "flags": "-jaxm4",
+      "source": "pin 3=a; pin 4=b; pin 5=c; pin 23=z; pin 21=!y;\nz='b'0; !y='b'1;",
+      "reference": "pin 3=a; pin 4=b; pin 5=c; pin 23=z; pin 21=!y;\nz='b'0;",
+      "vectors": "order: a,b,c,z,!y;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 L H\n1 1 1 L H\n"
+    },
+    {
+      "device": "p20c1mlcc",
+      "label": "p20c1mlcc names False low False -jaxm0 mismatch",
+      "flags": "-jaxm0",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 23=y; pin 22=z;\ny=a&b; z=c;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p20c1mlcc",
+      "label": "p20c1mlcc names False low False -jaxm0 same",
+      "flags": "-jaxm0",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 23=y; pin 22=z;\ny=a&b; z=a&b;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p20c1mlcc",
+      "label": "p20c1mlcc names False low False -jaxm0 complement",
+      "flags": "-jaxm0",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 23=y; pin 22=z;\ny=a&b; z=!(a&b);",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 23=y; pin 22=z;\ny=a&b;",
+      "vectors": "order: a,b,c,y,z;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p20c1mlcc",
+      "label": "p20c1mlcc names False low False -jaxm0 different cover",
+      "flags": "-jaxm0",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 23=y; pin 22=z;\ny=a; z=!((a&b)#(a&!b));",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 23=y; pin 22=z;\ny=a;",
+      "vectors": "order: a,b,c,y,z;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 H L\n1 0 1 H L\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p20c1mlcc",
+      "label": "p20c1mlcc names False low False -jaxm0 constant",
+      "flags": "-jaxm0",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 23=y; pin 22=z;\ny='b'0; z='b'1;",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 23=y; pin 22=z;\ny='b'0;",
+      "vectors": "order: a,b,c,y,z;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 L H\n1 1 1 L H\n"
+    },
+    {
+      "device": "p20c1mlcc",
+      "label": "p20c1mlcc names False low False -jaxm1 mismatch",
+      "flags": "-jaxm1",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 23=y; pin 22=z;\ny=a&b; z=c;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p20c1mlcc",
+      "label": "p20c1mlcc names False low False -jaxm1 same",
+      "flags": "-jaxm1",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 23=y; pin 22=z;\ny=a&b; z=a&b;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p20c1mlcc",
+      "label": "p20c1mlcc names False low False -jaxm1 complement",
+      "flags": "-jaxm1",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 23=y; pin 22=z;\ny=a&b; z=!(a&b);",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 23=y; pin 22=z;\ny=a&b;",
+      "vectors": "order: a,b,c,y,z;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p20c1mlcc",
+      "label": "p20c1mlcc names False low False -jaxm1 different cover",
+      "flags": "-jaxm1",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 23=y; pin 22=z;\ny=a; z=!((a&b)#(a&!b));",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 23=y; pin 22=z;\ny=a;",
+      "vectors": "order: a,b,c,y,z;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 H L\n1 0 1 H L\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p20c1mlcc",
+      "label": "p20c1mlcc names False low False -jaxm1 constant",
+      "flags": "-jaxm1",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 23=y; pin 22=z;\ny='b'0; z='b'1;",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 23=y; pin 22=z;\ny='b'0;",
+      "vectors": "order: a,b,c,y,z;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 L H\n1 1 1 L H\n"
+    },
+    {
+      "device": "p20c1mlcc",
+      "label": "p20c1mlcc names False low False -jaxm4 mismatch",
+      "flags": "-jaxm4",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 23=y; pin 22=z;\ny=a&b; z=c;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p20c1mlcc",
+      "label": "p20c1mlcc names False low False -jaxm4 same",
+      "flags": "-jaxm4",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 23=y; pin 22=z;\ny=a&b; z=a&b;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p20c1mlcc",
+      "label": "p20c1mlcc names False low False -jaxm4 complement",
+      "flags": "-jaxm4",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 23=y; pin 22=z;\ny=a&b; z=!(a&b);",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 23=y; pin 22=z;\ny=a&b;",
+      "vectors": "order: a,b,c,y,z;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p20c1mlcc",
+      "label": "p20c1mlcc names False low False -jaxm4 different cover",
+      "flags": "-jaxm4",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 23=y; pin 22=z;\ny=a; z=!((a&b)#(a&!b));",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 23=y; pin 22=z;\ny=a;",
+      "vectors": "order: a,b,c,y,z;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 H L\n1 0 1 H L\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p20c1mlcc",
+      "label": "p20c1mlcc names False low False -jaxm4 constant",
+      "flags": "-jaxm4",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 23=y; pin 22=z;\ny='b'0; z='b'1;",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 23=y; pin 22=z;\ny='b'0;",
+      "vectors": "order: a,b,c,y,z;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 L H\n1 1 1 L H\n"
+    },
+    {
+      "device": "p20c1mlcc",
+      "label": "p20c1mlcc names False low True -jaxm0 mismatch",
+      "flags": "-jaxm0",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 23=y; pin 22=!z;\ny=a&b; !z=c;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p20c1mlcc",
+      "label": "p20c1mlcc names False low True -jaxm0 same",
+      "flags": "-jaxm0",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 23=y; pin 22=!z;\ny=a&b; !z=a&b;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p20c1mlcc",
+      "label": "p20c1mlcc names False low True -jaxm0 complement",
+      "flags": "-jaxm0",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 23=y; pin 22=!z;\ny=a&b; !z=!(a&b);",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 23=y; pin 22=!z;\ny=a&b;",
+      "vectors": "order: a,b,c,y,!z;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p20c1mlcc",
+      "label": "p20c1mlcc names False low True -jaxm0 different cover",
+      "flags": "-jaxm0",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 23=y; pin 22=!z;\ny=a; !z=!((a&b)#(a&!b));",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 23=y; pin 22=!z;\ny=a;",
+      "vectors": "order: a,b,c,y,!z;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 H L\n1 0 1 H L\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p20c1mlcc",
+      "label": "p20c1mlcc names False low True -jaxm0 constant",
+      "flags": "-jaxm0",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 23=y; pin 22=!z;\ny='b'0; !z='b'1;",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 23=y; pin 22=!z;\ny='b'0;",
+      "vectors": "order: a,b,c,y,!z;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 L H\n1 1 1 L H\n"
+    },
+    {
+      "device": "p20c1mlcc",
+      "label": "p20c1mlcc names False low True -jaxm1 mismatch",
+      "flags": "-jaxm1",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 23=y; pin 22=!z;\ny=a&b; !z=c;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p20c1mlcc",
+      "label": "p20c1mlcc names False low True -jaxm1 same",
+      "flags": "-jaxm1",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 23=y; pin 22=!z;\ny=a&b; !z=a&b;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p20c1mlcc",
+      "label": "p20c1mlcc names False low True -jaxm1 complement",
+      "flags": "-jaxm1",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 23=y; pin 22=!z;\ny=a&b; !z=!(a&b);",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 23=y; pin 22=!z;\ny=a&b;",
+      "vectors": "order: a,b,c,y,!z;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p20c1mlcc",
+      "label": "p20c1mlcc names False low True -jaxm1 different cover",
+      "flags": "-jaxm1",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 23=y; pin 22=!z;\ny=a; !z=!((a&b)#(a&!b));",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 23=y; pin 22=!z;\ny=a;",
+      "vectors": "order: a,b,c,y,!z;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 H L\n1 0 1 H L\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p20c1mlcc",
+      "label": "p20c1mlcc names False low True -jaxm1 constant",
+      "flags": "-jaxm1",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 23=y; pin 22=!z;\ny='b'0; !z='b'1;",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 23=y; pin 22=!z;\ny='b'0;",
+      "vectors": "order: a,b,c,y,!z;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 L H\n1 1 1 L H\n"
+    },
+    {
+      "device": "p20c1mlcc",
+      "label": "p20c1mlcc names False low True -jaxm4 mismatch",
+      "flags": "-jaxm4",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 23=y; pin 22=!z;\ny=a&b; !z=c;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p20c1mlcc",
+      "label": "p20c1mlcc names False low True -jaxm4 same",
+      "flags": "-jaxm4",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 23=y; pin 22=!z;\ny=a&b; !z=a&b;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p20c1mlcc",
+      "label": "p20c1mlcc names False low True -jaxm4 complement",
+      "flags": "-jaxm4",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 23=y; pin 22=!z;\ny=a&b; !z=!(a&b);",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 23=y; pin 22=!z;\ny=a&b;",
+      "vectors": "order: a,b,c,y,!z;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p20c1mlcc",
+      "label": "p20c1mlcc names False low True -jaxm4 different cover",
+      "flags": "-jaxm4",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 23=y; pin 22=!z;\ny=a; !z=!((a&b)#(a&!b));",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 23=y; pin 22=!z;\ny=a;",
+      "vectors": "order: a,b,c,y,!z;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 H L\n1 0 1 H L\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p20c1mlcc",
+      "label": "p20c1mlcc names False low True -jaxm4 constant",
+      "flags": "-jaxm4",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 23=y; pin 22=!z;\ny='b'0; !z='b'1;",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 23=y; pin 22=!z;\ny='b'0;",
+      "vectors": "order: a,b,c,y,!z;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 L H\n1 1 1 L H\n"
+    },
+    {
+      "device": "p20c1mlcc",
+      "label": "p20c1mlcc names True low False -jaxm0 mismatch",
+      "flags": "-jaxm0",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 23=z; pin 22=y;\nz=a&b; y=c;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p20c1mlcc",
+      "label": "p20c1mlcc names True low False -jaxm0 same",
+      "flags": "-jaxm0",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 23=z; pin 22=y;\nz=a&b; y=a&b;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p20c1mlcc",
+      "label": "p20c1mlcc names True low False -jaxm0 complement",
+      "flags": "-jaxm0",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 23=z; pin 22=y;\nz=a&b; y=!(a&b);",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 23=z; pin 22=y;\nz=a&b;",
+      "vectors": "order: a,b,c,z,y;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p20c1mlcc",
+      "label": "p20c1mlcc names True low False -jaxm0 different cover",
+      "flags": "-jaxm0",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 23=z; pin 22=y;\nz=a; y=!((a&b)#(a&!b));",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 23=z; pin 22=y;\nz=a;",
+      "vectors": "order: a,b,c,z,y;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 H L\n1 0 1 H L\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p20c1mlcc",
+      "label": "p20c1mlcc names True low False -jaxm0 constant",
+      "flags": "-jaxm0",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 23=z; pin 22=y;\nz='b'0; y='b'1;",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 23=z; pin 22=y;\nz='b'0;",
+      "vectors": "order: a,b,c,z,y;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 L H\n1 1 1 L H\n"
+    },
+    {
+      "device": "p20c1mlcc",
+      "label": "p20c1mlcc names True low False -jaxm1 mismatch",
+      "flags": "-jaxm1",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 23=z; pin 22=y;\nz=a&b; y=c;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p20c1mlcc",
+      "label": "p20c1mlcc names True low False -jaxm1 same",
+      "flags": "-jaxm1",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 23=z; pin 22=y;\nz=a&b; y=a&b;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p20c1mlcc",
+      "label": "p20c1mlcc names True low False -jaxm1 complement",
+      "flags": "-jaxm1",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 23=z; pin 22=y;\nz=a&b; y=!(a&b);",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 23=z; pin 22=y;\nz=a&b;",
+      "vectors": "order: a,b,c,z,y;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p20c1mlcc",
+      "label": "p20c1mlcc names True low False -jaxm1 different cover",
+      "flags": "-jaxm1",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 23=z; pin 22=y;\nz=a; y=!((a&b)#(a&!b));",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 23=z; pin 22=y;\nz=a;",
+      "vectors": "order: a,b,c,z,y;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 H L\n1 0 1 H L\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p20c1mlcc",
+      "label": "p20c1mlcc names True low False -jaxm1 constant",
+      "flags": "-jaxm1",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 23=z; pin 22=y;\nz='b'0; y='b'1;",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 23=z; pin 22=y;\nz='b'0;",
+      "vectors": "order: a,b,c,z,y;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 L H\n1 1 1 L H\n"
+    },
+    {
+      "device": "p20c1mlcc",
+      "label": "p20c1mlcc names True low False -jaxm4 mismatch",
+      "flags": "-jaxm4",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 23=z; pin 22=y;\nz=a&b; y=c;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p20c1mlcc",
+      "label": "p20c1mlcc names True low False -jaxm4 same",
+      "flags": "-jaxm4",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 23=z; pin 22=y;\nz=a&b; y=a&b;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p20c1mlcc",
+      "label": "p20c1mlcc names True low False -jaxm4 complement",
+      "flags": "-jaxm4",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 23=z; pin 22=y;\nz=a&b; y=!(a&b);",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 23=z; pin 22=y;\nz=a&b;",
+      "vectors": "order: a,b,c,z,y;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p20c1mlcc",
+      "label": "p20c1mlcc names True low False -jaxm4 different cover",
+      "flags": "-jaxm4",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 23=z; pin 22=y;\nz=a; y=!((a&b)#(a&!b));",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 23=z; pin 22=y;\nz=a;",
+      "vectors": "order: a,b,c,z,y;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 H L\n1 0 1 H L\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p20c1mlcc",
+      "label": "p20c1mlcc names True low False -jaxm4 constant",
+      "flags": "-jaxm4",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 23=z; pin 22=y;\nz='b'0; y='b'1;",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 23=z; pin 22=y;\nz='b'0;",
+      "vectors": "order: a,b,c,z,y;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 L H\n1 1 1 L H\n"
+    },
+    {
+      "device": "p20c1mlcc",
+      "label": "p20c1mlcc names True low True -jaxm0 mismatch",
+      "flags": "-jaxm0",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 23=z; pin 22=!y;\nz=a&b; !y=c;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p20c1mlcc",
+      "label": "p20c1mlcc names True low True -jaxm0 same",
+      "flags": "-jaxm0",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 23=z; pin 22=!y;\nz=a&b; !y=a&b;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p20c1mlcc",
+      "label": "p20c1mlcc names True low True -jaxm0 complement",
+      "flags": "-jaxm0",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 23=z; pin 22=!y;\nz=a&b; !y=!(a&b);",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 23=z; pin 22=!y;\nz=a&b;",
+      "vectors": "order: a,b,c,z,!y;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p20c1mlcc",
+      "label": "p20c1mlcc names True low True -jaxm0 different cover",
+      "flags": "-jaxm0",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 23=z; pin 22=!y;\nz=a; !y=!((a&b)#(a&!b));",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 23=z; pin 22=!y;\nz=a;",
+      "vectors": "order: a,b,c,z,!y;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 H L\n1 0 1 H L\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p20c1mlcc",
+      "label": "p20c1mlcc names True low True -jaxm0 constant",
+      "flags": "-jaxm0",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 23=z; pin 22=!y;\nz='b'0; !y='b'1;",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 23=z; pin 22=!y;\nz='b'0;",
+      "vectors": "order: a,b,c,z,!y;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 L H\n1 1 1 L H\n"
+    },
+    {
+      "device": "p20c1mlcc",
+      "label": "p20c1mlcc names True low True -jaxm1 mismatch",
+      "flags": "-jaxm1",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 23=z; pin 22=!y;\nz=a&b; !y=c;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p20c1mlcc",
+      "label": "p20c1mlcc names True low True -jaxm1 same",
+      "flags": "-jaxm1",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 23=z; pin 22=!y;\nz=a&b; !y=a&b;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p20c1mlcc",
+      "label": "p20c1mlcc names True low True -jaxm1 complement",
+      "flags": "-jaxm1",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 23=z; pin 22=!y;\nz=a&b; !y=!(a&b);",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 23=z; pin 22=!y;\nz=a&b;",
+      "vectors": "order: a,b,c,z,!y;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p20c1mlcc",
+      "label": "p20c1mlcc names True low True -jaxm1 different cover",
+      "flags": "-jaxm1",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 23=z; pin 22=!y;\nz=a; !y=!((a&b)#(a&!b));",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 23=z; pin 22=!y;\nz=a;",
+      "vectors": "order: a,b,c,z,!y;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 H L\n1 0 1 H L\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p20c1mlcc",
+      "label": "p20c1mlcc names True low True -jaxm1 constant",
+      "flags": "-jaxm1",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 23=z; pin 22=!y;\nz='b'0; !y='b'1;",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 23=z; pin 22=!y;\nz='b'0;",
+      "vectors": "order: a,b,c,z,!y;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 L H\n1 1 1 L H\n"
+    },
+    {
+      "device": "p20c1mlcc",
+      "label": "p20c1mlcc names True low True -jaxm4 mismatch",
+      "flags": "-jaxm4",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 23=z; pin 22=!y;\nz=a&b; !y=c;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p20c1mlcc",
+      "label": "p20c1mlcc names True low True -jaxm4 same",
+      "flags": "-jaxm4",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 23=z; pin 22=!y;\nz=a&b; !y=a&b;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p20c1mlcc",
+      "label": "p20c1mlcc names True low True -jaxm4 complement",
+      "flags": "-jaxm4",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 23=z; pin 22=!y;\nz=a&b; !y=!(a&b);",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 23=z; pin 22=!y;\nz=a&b;",
+      "vectors": "order: a,b,c,z,!y;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p20c1mlcc",
+      "label": "p20c1mlcc names True low True -jaxm4 different cover",
+      "flags": "-jaxm4",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 23=z; pin 22=!y;\nz=a; !y=!((a&b)#(a&!b));",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 23=z; pin 22=!y;\nz=a;",
+      "vectors": "order: a,b,c,z,!y;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 H L\n1 0 1 H L\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p20c1mlcc",
+      "label": "p20c1mlcc names True low True -jaxm4 constant",
+      "flags": "-jaxm4",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 23=z; pin 22=!y;\nz='b'0; !y='b'1;",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 23=z; pin 22=!y;\nz='b'0;",
+      "vectors": "order: a,b,c,z,!y;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 L H\n1 1 1 L H\n"
+    },
+    {
+      "device": "p16c1",
+      "label": "p16c1 names False low False -jaxm0 complement without term merging",
+      "flags": "-jaxm0r",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 16=y; pin 15=z;\ny=a&b; z=!(a&b);",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 16=y; pin 15=z;\ny=a&b;",
+      "vectors": "order: a,b,c,y,z;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p16c1",
+      "label": "p16c1 names False low False -jaxm0 mismatch without term merging",
+      "flags": "-jaxm0r",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 16=y; pin 15=z;\ny=a&b; z=c;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p16c1",
+      "label": "p16c1 all 16 inputs",
+      "source": "pin 1=i0; pin 2=i1; pin 3=i2; pin 4=i3; pin 5=i4; pin 6=i5; pin 7=i6; pin 8=i7; pin 9=i8; pin 11=i9; pin 12=i10; pin 13=i11; pin 14=i12; pin 17=i13; pin 18=i14; pin 19=i15; pin 16=y; pin 15=z;\ny=i0&i1&i2&i3&i4&i5&i6&i7&i8&i9&i10&i11&i12&i13&i14&i15;z=!(i0&i1&i2&i3&i4&i5&i6&i7&i8&i9&i10&i11&i12&i13&i14&i15);",
+      "reference": "pin 1=i0; pin 2=i1; pin 3=i2; pin 4=i3; pin 5=i4; pin 6=i5; pin 7=i6; pin 8=i7; pin 9=i8; pin 11=i9; pin 12=i10; pin 13=i11; pin 14=i12; pin 17=i13; pin 18=i14; pin 19=i15; pin 16=y; pin 15=z;\ny=i0&i1&i2&i3&i4&i5&i6&i7&i8&i9&i10&i11&i12&i13&i14&i15;",
+      "timeout": 10
+    },
+    {
+      "device": "p20c1",
+      "label": "p20c1 names False low False -jaxm0 complement without term merging",
+      "flags": "-jaxm0r",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 19=y; pin 18=z;\ny=a&b; z=!(a&b);",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 19=y; pin 18=z;\ny=a&b;",
+      "vectors": "order: a,b,c,y,z;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p20c1",
+      "label": "p20c1 names False low False -jaxm0 mismatch without term merging",
+      "flags": "-jaxm0r",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 19=y; pin 18=z;\ny=a&b; z=c;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p20c1",
+      "label": "p20c1 all 20 inputs",
+      "source": "pin 1=i0; pin 2=i1; pin 3=i2; pin 4=i3; pin 5=i4; pin 6=i5; pin 7=i6; pin 8=i7; pin 9=i8; pin 10=i9; pin 11=i10; pin 23=i11; pin 22=i12; pin 21=i13; pin 20=i14; pin 17=i15; pin 16=i16; pin 15=i17; pin 14=i18; pin 13=i19; pin 19=y; pin 18=z;\ny=i0&i1&i2&i3&i4&i5&i6&i7&i8&i9&i10&i11&i12&i13&i14&i15&i16&i17&i18&i19;z=!(i0&i1&i2&i3&i4&i5&i6&i7&i8&i9&i10&i11&i12&i13&i14&i15&i16&i17&i18&i19);",
+      "reference": "pin 1=i0; pin 2=i1; pin 3=i2; pin 4=i3; pin 5=i4; pin 6=i5; pin 7=i6; pin 8=i7; pin 9=i8; pin 10=i9; pin 11=i10; pin 23=i11; pin 22=i12; pin 21=i13; pin 20=i14; pin 17=i15; pin 16=i16; pin 15=i17; pin 14=i18; pin 13=i19; pin 19=y; pin 18=z;\ny=i0&i1&i2&i3&i4&i5&i6&i7&i8&i9&i10&i11&i12&i13&i14&i15&i16&i17&i18&i19;",
+      "timeout": 10
+    },
+    {
+      "device": "p20c1lcc",
+      "label": "p20c1lcc names False low False -jaxm0 complement without term merging",
+      "flags": "-jaxm0r",
+      "source": "pin 3=a; pin 4=b; pin 5=c; pin 23=y; pin 21=z;\ny=a&b; z=!(a&b);",
+      "reference": "pin 3=a; pin 4=b; pin 5=c; pin 23=y; pin 21=z;\ny=a&b;",
+      "vectors": "order: a,b,c,y,z;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p20c1lcc",
+      "label": "p20c1lcc names False low False -jaxm0 mismatch without term merging",
+      "flags": "-jaxm0r",
+      "source": "pin 3=a; pin 4=b; pin 5=c; pin 23=y; pin 21=z;\ny=a&b; z=c;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p20c1lcc",
+      "label": "p20c1lcc all 20 inputs",
+      "source": "pin 2=i0; pin 3=i1; pin 4=i2; pin 5=i3; pin 6=i4; pin 7=i5; pin 9=i6; pin 10=i7; pin 11=i8; pin 12=i9; pin 13=i10; pin 27=i11; pin 26=i12; pin 25=i13; pin 24=i14; pin 20=i15; pin 19=i16; pin 18=i17; pin 17=i18; pin 16=i19; pin 23=y; pin 21=z;\ny=i0&i1&i2&i3&i4&i5&i6&i7&i8&i9&i10&i11&i12&i13&i14&i15&i16&i17&i18&i19;z=!(i0&i1&i2&i3&i4&i5&i6&i7&i8&i9&i10&i11&i12&i13&i14&i15&i16&i17&i18&i19);",
+      "reference": "pin 2=i0; pin 3=i1; pin 4=i2; pin 5=i3; pin 6=i4; pin 7=i5; pin 9=i6; pin 10=i7; pin 11=i8; pin 12=i9; pin 13=i10; pin 27=i11; pin 26=i12; pin 25=i13; pin 24=i14; pin 20=i15; pin 19=i16; pin 18=i17; pin 17=i18; pin 16=i19; pin 23=y; pin 21=z;\ny=i0&i1&i2&i3&i4&i5&i6&i7&i8&i9&i10&i11&i12&i13&i14&i15&i16&i17&i18&i19;",
+      "timeout": 10
+    },
+    {
+      "device": "p20c1mlcc",
+      "label": "p20c1mlcc names False low False -jaxm0 complement without term merging",
+      "flags": "-jaxm0r",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 23=y; pin 22=z;\ny=a&b; z=!(a&b);",
+      "reference": "pin 2=a; pin 3=b; pin 4=c; pin 23=y; pin 22=z;\ny=a&b;",
+      "vectors": "order: a,b,c,y,z;\nvectors:\n0 0 0 L H\n0 0 1 L H\n0 1 0 L H\n0 1 1 L H\n1 0 0 L H\n1 0 1 L H\n1 1 0 H L\n1 1 1 H L\n"
+    },
+    {
+      "device": "p20c1mlcc",
+      "label": "p20c1mlcc names False low False -jaxm0 mismatch without term merging",
+      "flags": "-jaxm0r",
+      "source": "pin 2=a; pin 3=b; pin 4=c; pin 23=y; pin 22=z;\ny=a&b; z=c;",
+      "diagnostic": "\\[0013cc\\]"
+    },
+    {
+      "device": "p20c1mlcc",
+      "label": "p20c1mlcc all 20 inputs",
+      "source": "pin 1=i0; pin 2=i1; pin 3=i2; pin 4=i3; pin 6=i4; pin 7=i5; pin 9=i6; pin 10=i7; pin 12=i8; pin 13=i9; pin 14=i10; pin 27=i11; pin 26=i12; pin 25=i13; pin 24=i14; pin 21=i15; pin 20=i16; pin 18=i17; pin 17=i18; pin 16=i19; pin 23=y; pin 22=z;\ny=i0&i1&i2&i3&i4&i5&i6&i7&i8&i9&i10&i11&i12&i13&i14&i15&i16&i17&i18&i19;z=!(i0&i1&i2&i3&i4&i5&i6&i7&i8&i9&i10&i11&i12&i13&i14&i15&i16&i17&i18&i19);",
+      "reference": "pin 1=i0; pin 2=i1; pin 3=i2; pin 4=i3; pin 6=i4; pin 7=i5; pin 9=i6; pin 10=i7; pin 12=i8; pin 13=i9; pin 14=i10; pin 27=i11; pin 26=i12; pin 25=i13; pin 24=i14; pin 21=i15; pin 20=i16; pin 18=i17; pin 17=i18; pin 16=i19; pin 23=y; pin 22=z;\ny=i0&i1&i2&i3&i4&i5&i6&i7&i8&i9&i10&i11&i12&i13&i14&i15&i16&i17&i18&i19;",
+      "timeout": 10
+    }
+  ]
+}
