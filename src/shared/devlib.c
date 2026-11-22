@@ -195,6 +195,48 @@ static void correct_buried_d_polarity(uint8_t *image, size_t size)
     }
 }
 
+static void correct_atf750_alias_columns(uint8_t *image, size_t size)
+{
+    unsigned count, pin_count;
+    const uint8_t *attrs = image_records(image, size, 3, 152, &count);
+    if (count != 1) {
+        return;
+    }
+    unsigned npins = attrs[8];
+    const uint8_t *nodes = image_records(image, size, 7, 39, &count);
+    uint8_t *pins = image_records(image, size, 6, 16, &pin_count);
+    for (unsigned i = 0; i < count; i++) {
+        const uint8_t *alias = nodes + 39 * i;
+        if (rd16(alias + 2) <= npins || alias[4] != 1) {
+            continue;
+        }
+        for (unsigned j = 0; j < count; j++) {
+            const uint8_t *parent = nodes + 39 * j;
+            if (rd16(parent) != rd16(alias) || rd16(parent + 2) > npins ||
+                parent[4] != 1 || parent[5] != 7) {
+                continue;
+            }
+            for (unsigned k = 0; k < pin_count; k++) {
+                const uint8_t *source = pins + 16 * k;
+                if (rd16(source + 2) != rd16(parent + 2) || source[4] != 0 || source[6] != 1) {
+                    continue;
+                }
+                /* A register alias has fixed polarity. Derive its columns
+                 * from the positive physical output's register feedback. */
+                unsigned flip = (alias[6] != 0) != (parent[6] != 0);
+                for (unsigned p = 0; p < pin_count; p++) {
+                    uint8_t *target = pins + 16 * p;
+                    if (rd16(target + 2) == rd16(alias + 2) && target[4] == 0 &&
+                        target[5] == 0x17 && target[6] == 0) {
+                        target[7] = source[7 + flip];
+                        target[8] = source[8 - flip];
+                    }
+                }
+            }
+        }
+    }
+}
+
 static void correct_pal26_feedback(uint8_t *image, size_t size)
 {
     unsigned count;
@@ -285,6 +327,7 @@ size_t dl_read_device_image(FILE *fp, const uint8_t *entry, uint8_t *image, size
     }
     if (strncasecmp(name, "v750c", 5) == 0) {
         correct_atf750_feedback(image, got);
+        correct_atf750_alias_columns(image, got);
     }
     if (strcasecmp(name, "g16vp8ms") == 0) {
         correct_vp8_enable_pin(image, got);
