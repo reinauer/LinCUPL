@@ -198,6 +198,7 @@ static const char *error_text(int code)
     case ERR_JEDEC_NO_DEVICE: return "no device for JEDEC file:  ";
     case ERR_JEDEC_DEVICE: return "device cannot be simulated from a JEDEC file:  ";
     case ERR_JEDEC_MODE: return "mode fuses of the JEDEC file select another mode than device:  ";
+    case ERR_JEDEC_DEAD_TERMS: return "product terms without effect, the fuse map makes an input of pin:  ";
     default: break;
     }
     if (g_vsima && code == ERR_NO_PIN_NUMBER) {
