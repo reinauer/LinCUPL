@@ -1,0 +1,261 @@
+{
+  "device": "p18v8",
+  "variants": [
+    {
+      "label": "pin 12 active-high input only",
+      "source": "pin 1 = clk; pin 2 = a; pin 12 = x; pin 19 = y; y = x & a;",
+      "fuses": {
+        "2679": 1,
+        "2268": 0,
+        "2269": 0
+      }
+    },
+    {
+      "label": "pin 12 active-low input only",
+      "source": "pin 1 = clk; pin 2 = a; pin 12 = !x; pin 19 = y; y = x & a;",
+      "fuses": {
+        "2679": 1,
+        "2268": 0,
+        "2269": 0
+      }
+    },
+    {
+      "label": "pin 12 driven combinational feedback",
+      "source": "pin 1 = clk; pin 2 = a; pin 12 = x; pin 19 = y; x = a; y = x;",
+      "fuses": {
+        "2679": 1
+      }
+    },
+    {
+      "label": "pin 12 driven .d feedback",
+      "source": "pin 1 = clk; pin 2 = a; pin 12 = x; pin 19 = y; x.d = a; y = x;",
+      "fuses": {
+        "2679": 0
+      }
+    },
+    {
+      "label": "pin 13 active-high input only",
+      "source": "pin 1 = clk; pin 2 = a; pin 13 = x; pin 19 = y; y = x & a;",
+      "fuses": {
+        "2677": 1,
+        "1944": 0,
+        "1945": 0
+      }
+    },
+    {
+      "label": "pin 13 active-low input only",
+      "source": "pin 1 = clk; pin 2 = a; pin 13 = !x; pin 19 = y; y = x & a;",
+      "fuses": {
+        "2677": 1,
+        "1944": 0,
+        "1945": 0
+      }
+    },
+    {
+      "label": "pin 13 driven combinational feedback",
+      "source": "pin 1 = clk; pin 2 = a; pin 13 = x; pin 19 = y; x = a; y = x;",
+      "fuses": {
+        "2677": 1
+      }
+    },
+    {
+      "label": "pin 13 driven .d feedback",
+      "source": "pin 1 = clk; pin 2 = a; pin 13 = x; pin 19 = y; x.d = a; y = x;",
+      "fuses": {
+        "2677": 0
+      }
+    },
+    {
+      "label": "pin 14 active-high input only",
+      "source": "pin 1 = clk; pin 2 = a; pin 14 = x; pin 19 = y; y = x & a;",
+      "fuses": {
+        "2675": 1,
+        "1620": 0,
+        "1621": 0
+      }
+    },
+    {
+      "label": "pin 14 active-low input only",
+      "source": "pin 1 = clk; pin 2 = a; pin 14 = !x; pin 19 = y; y = x & a;",
+      "fuses": {
+        "2675": 1,
+        "1620": 0,
+        "1621": 0
+      }
+    },
+    {
+      "label": "pin 14 driven combinational feedback",
+      "source": "pin 1 = clk; pin 2 = a; pin 14 = x; pin 19 = y; x = a; y = x;",
+      "fuses": {
+        "2675": 1
+      }
+    },
+    {
+      "label": "pin 14 driven .d feedback",
+      "source": "pin 1 = clk; pin 2 = a; pin 14 = x; pin 19 = y; x.d = a; y = x;",
+      "fuses": {
+        "2675": 0
+      }
+    },
+    {
+      "label": "pin 15 active-high input only",
+      "source": "pin 1 = clk; pin 2 = a; pin 15 = x; pin 19 = y; y = x & a;",
+      "fuses": {
+        "2673": 1,
+        "1296": 0,
+        "1297": 0
+      }
+    },
+    {
+      "label": "pin 15 active-low input only",
+      "source": "pin 1 = clk; pin 2 = a; pin 15 = !x; pin 19 = y; y = x & a;",
+      "fuses": {
+        "2673": 1,
+        "1296": 0,
+        "1297": 0
+      }
+    },
+    {
+      "label": "pin 15 driven combinational feedback",
+      "source": "pin 1 = clk; pin 2 = a; pin 15 = x; pin 19 = y; x = a; y = x;",
+      "fuses": {
+        "2673": 1
+      }
+    },
+    {
+      "label": "pin 15 driven .d feedback",
+      "source": "pin 1 = clk; pin 2 = a; pin 15 = x; pin 19 = y; x.d = a; y = x;",
+      "fuses": {
+        "2673": 0
+      }
+    },
+    {
+      "label": "pin 16 active-high input only",
+      "source": "pin 1 = clk; pin 2 = a; pin 16 = x; pin 19 = y; y = x & a;",
+      "fuses": {
+        "2671": 1,
+        "972": 0,
+        "973": 0
+      }
+    },
+    {
+      "label": "pin 16 active-low input only",
+      "source": "pin 1 = clk; pin 2 = a; pin 16 = !x; pin 19 = y; y = x & a;",
+      "fuses": {
+        "2671": 1,
+        "972": 0,
+        "973": 0
+      }
+    },
+    {
+      "label": "pin 16 driven combinational feedback",
+      "source": "pin 1 = clk; pin 2 = a; pin 16 = x; pin 19 = y; x = a; y = x;",
+      "fuses": {
+        "2671": 1
+      }
+    },
+    {
+      "label": "pin 16 driven .d feedback",
+      "source": "pin 1 = clk; pin 2 = a; pin 16 = x; pin 19 = y; x.d = a; y = x;",
+      "fuses": {
+        "2671": 0
+      }
+    },
+    {
+      "label": "pin 17 active-high input only",
+      "source": "pin 1 = clk; pin 2 = a; pin 17 = x; pin 19 = y; y = x & a;",
+      "fuses": {
+        "2669": 1,
+        "648": 0,
+        "649": 0
+      }
+    },
+    {
+      "label": "pin 17 active-low input only",
+      "source": "pin 1 = clk; pin 2 = a; pin 17 = !x; pin 19 = y; y = x & a;",
+      "fuses": {
+        "2669": 1,
+        "648": 0,
+        "649": 0
+      }
+    },
+    {
+      "label": "pin 17 driven combinational feedback",
+      "source": "pin 1 = clk; pin 2 = a; pin 17 = x; pin 19 = y; x = a; y = x;",
+      "fuses": {
+        "2669": 1
+      }
+    },
+    {
+      "label": "pin 17 driven .d feedback",
+      "source": "pin 1 = clk; pin 2 = a; pin 17 = x; pin 19 = y; x.d = a; y = x;",
+      "fuses": {
+        "2669": 0
+      }
+    },
+    {
+      "label": "pin 18 active-high input only",
+      "source": "pin 1 = clk; pin 2 = a; pin 18 = x; pin 19 = y; y = x & a;",
+      "fuses": {
+        "2667": 1,
+        "324": 0,
+        "325": 0
+      }
+    },
+    {
+      "label": "pin 18 active-low input only",
+      "source": "pin 1 = clk; pin 2 = a; pin 18 = !x; pin 19 = y; y = x & a;",
+      "fuses": {
+        "2667": 1,
+        "324": 0,
+        "325": 0
+      }
+    },
+    {
+      "label": "pin 18 driven combinational feedback",
+      "source": "pin 1 = clk; pin 2 = a; pin 18 = x; pin 19 = y; x = a; y = x;",
+      "fuses": {
+        "2667": 1
+      }
+    },
+    {
+      "label": "pin 18 driven .d feedback",
+      "source": "pin 1 = clk; pin 2 = a; pin 18 = x; pin 19 = y; x.d = a; y = x;",
+      "fuses": {
+        "2667": 0
+      }
+    },
+    {
+      "label": "pin 19 active-high input only",
+      "source": "pin 1 = clk; pin 2 = a; pin 19 = x; pin 18 = y; y = x & a;",
+      "fuses": {
+        "2665": 1,
+        "0": 0,
+        "1": 0
+      }
+    },
+    {
+      "label": "pin 19 active-low input only",
+      "source": "pin 1 = clk; pin 2 = a; pin 19 = !x; pin 18 = y; y = x & a;",
+      "fuses": {
+        "2665": 1,
+        "0": 0,
+        "1": 0
+      }
+    },
+    {
+      "label": "pin 19 driven combinational feedback",
+      "source": "pin 1 = clk; pin 2 = a; pin 19 = x; pin 18 = y; x = a; y = x;",
+      "fuses": {
+        "2665": 1
+      }
+    },
+    {
+      "label": "pin 19 driven .d feedback",
+      "source": "pin 1 = clk; pin 2 = a; pin 19 = x; pin 18 = y; x.d = a; y = x;",
+      "fuses": {
+        "2665": 0
+      }
+    }
+  ]
+}
