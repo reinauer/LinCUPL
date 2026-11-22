@@ -123,6 +123,9 @@ void parse_actions_begin(void)
 int act_header_keyword(token_t *tok)
 {
     g_header_keyword = tok->type;
+    if (g_header_keyword == TOK_REV) g_header_keyword = TOK_REVISION;
+    if (g_header_keyword == TOK_ASSY) g_header_keyword = TOK_ASSEMBLY;
+    if (g_header_keyword == TOK_LOC) g_header_keyword = TOK_LOCATION;
     parse_push_mode();
     parse_lex_header_text_mode();
     parse_token_free(tok);
