@@ -744,6 +744,49 @@ static void write_cell_modes(void)
     }
 }
 
+/* The regional clock is gated by the clock product term. A register with
+ * no CK or CE equation needs a true term and the regional-clock selector,
+ * just as if its CE equation had explicitly been written constant true. */
+static void write_default_clocks(void)
+{
+    uint8_t row[GLOBAL_WIDTH];
+    memset(row, 1, sizeof(row));
+    for (int i = 0; i < g.nsyms; i++) {
+        const symbol_t *s = &g.syms[i];
+        if (!(s->flags & 0x40) || s->node_index < 0) {
+            continue;
+        }
+        unsigned ext = node8(s->node_index, NODE_EXT);
+        if (ext != 1 && ext != 0x1b) {
+            continue;
+        }
+        for (int ce = 0; ce < nnodes(); ce++) {
+            if (node16(ce, NODE_NUMBER) != s->pin || node8(ce, NODE_EXT) != 0x1f) {
+                continue;
+            }
+            unsigned array = node16(ce, NODE_ARRAY);
+            if (array >= (unsigned)g.nor_arrays || g.or_arrays[array].eq != NULL) {
+                continue;
+            }
+            for (int term = 0; term < nnodes(); term++) {
+                if (node16(term, NODE_ARRAY) == array && node8(term, NODE_EXT) == 0x0e) {
+                    unsigned width = node8(term, NODE_ROW_WIDTH);
+                    if (width > sizeof(row)) {
+                        fatal_error(1025, "default clock term");
+                    }
+                    write_fuse_row(row, node32(term, NODE_ROW_FUSE), (int)width);
+                    unsigned select = node16(ce, NODE_SEL_VALUE);
+                    for (unsigned bit = 0; bit < node8(ce, NODE_ROW_WIDTH); bit++) {
+                        set_fuse(node32(ce, NODE_ROW_FUSE) + bit, select & 1);
+                        select >>= 1;
+                    }
+                    break;
+                }
+            }
+        }
+    }
+}
+
 /* Product-term placement of the ATV5000, called while the fuse map is
  * built.  The arrays are placed by pin range: I/O cells of the quadrants,
  * buried cells, then the remaining pins and nodes. */
@@ -767,6 +810,7 @@ void v5000_build(void)
         }
     }
     write_cell_modes();
+    write_default_clocks();
 }
 
 /* -------------------------------------------------------------------------

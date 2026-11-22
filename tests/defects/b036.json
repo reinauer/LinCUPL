@@ -1,0 +1,253 @@
+{
+  "device": "v5000",
+  "variants": [
+    {
+      "label": "node 5 d positive default clock",
+      "source": "pin 1 = a; pin 5 = q; q.d = a;",
+      "reference": "pin 1 = a; pin 5 = q; q.d = a; q.ce = 'b'1;"
+    },
+    {
+      "label": "node 5 d ! default clock",
+      "source": "pin 1 = a; pin 5 = !q; q.d = a;",
+      "reference": "pin 1 = a; pin 5 = !q; q.d = a; q.ce = 'b'1;"
+    },
+    {
+      "label": "node 5 t positive default clock",
+      "source": "pin 1 = a; pin 5 = q; q.t = a;",
+      "reference": "pin 1 = a; pin 5 = q; q.t = a; q.ce = 'b'1;"
+    },
+    {
+      "label": "node 5 t ! default clock",
+      "source": "pin 1 = a; pin 5 = !q; q.t = a;",
+      "reference": "pin 1 = a; pin 5 = !q; q.t = a; q.ce = 'b'1;"
+    },
+    {
+      "label": "node 31 d positive default clock",
+      "source": "pin 1 = a; pin 31 = q; q.d = a;",
+      "reference": "pin 1 = a; pin 31 = q; q.d = a; q.ce = 'b'1;"
+    },
+    {
+      "label": "node 31 d ! default clock",
+      "source": "pin 1 = a; pin 31 = !q; q.d = a;",
+      "reference": "pin 1 = a; pin 31 = !q; q.d = a; q.ce = 'b'1;"
+    },
+    {
+      "label": "node 31 t positive default clock",
+      "source": "pin 1 = a; pin 31 = q; q.t = a;",
+      "reference": "pin 1 = a; pin 31 = q; q.t = a; q.ce = 'b'1;"
+    },
+    {
+      "label": "node 31 t ! default clock",
+      "source": "pin 1 = a; pin 31 = !q; q.t = a;",
+      "reference": "pin 1 = a; pin 31 = !q; q.t = a; q.ce = 'b'1;"
+    },
+    {
+      "label": "node 38 d positive default clock",
+      "source": "pin 1 = a; pin 38 = q; q.d = a;",
+      "reference": "pin 1 = a; pin 38 = q; q.d = a; q.ce = 'b'1;"
+    },
+    {
+      "label": "node 38 d ! default clock",
+      "source": "pin 1 = a; pin 38 = !q; q.d = a;",
+      "reference": "pin 1 = a; pin 38 = !q; q.d = a; q.ce = 'b'1;"
+    },
+    {
+      "label": "node 38 t positive default clock",
+      "source": "pin 1 = a; pin 38 = q; q.t = a;",
+      "reference": "pin 1 = a; pin 38 = q; q.t = a; q.ce = 'b'1;"
+    },
+    {
+      "label": "node 38 t ! default clock",
+      "source": "pin 1 = a; pin 38 = !q; q.t = a;",
+      "reference": "pin 1 = a; pin 38 = !q; q.t = a; q.ce = 'b'1;"
+    },
+    {
+      "label": "node 65 d positive default clock",
+      "source": "pin 1 = a; pin 65 = q; q.d = a;",
+      "reference": "pin 1 = a; pin 65 = q; q.d = a; q.ce = 'b'1;"
+    },
+    {
+      "label": "node 65 d ! default clock",
+      "source": "pin 1 = a; pin 65 = !q; q.d = a;",
+      "reference": "pin 1 = a; pin 65 = !q; q.d = a; q.ce = 'b'1;"
+    },
+    {
+      "label": "node 65 t positive default clock",
+      "source": "pin 1 = a; pin 65 = q; q.t = a;",
+      "reference": "pin 1 = a; pin 65 = q; q.t = a; q.ce = 'b'1;"
+    },
+    {
+      "label": "node 65 t ! default clock",
+      "source": "pin 1 = a; pin 65 = !q; q.t = a;",
+      "reference": "pin 1 = a; pin 65 = !q; q.t = a; q.ce = 'b'1;"
+    },
+    {
+      "label": "node 69 d positive default clock",
+      "source": "pin 1 = a; pinnode 69 = q; q.d = a;",
+      "reference": "pin 1 = a; pinnode 69 = q; q.d = a; q.ce = 'b'1;"
+    },
+    {
+      "label": "node 69 d ! default clock",
+      "source": "pin 1 = a; pinnode 69 = !q; q.d = a;",
+      "reference": "pin 1 = a; pinnode 69 = !q; q.d = a; q.ce = 'b'1;"
+    },
+    {
+      "label": "node 69 t positive default clock",
+      "source": "pin 1 = a; pinnode 69 = q; q.t = a;",
+      "reference": "pin 1 = a; pinnode 69 = q; q.t = a; q.ce = 'b'1;"
+    },
+    {
+      "label": "node 69 t ! default clock",
+      "source": "pin 1 = a; pinnode 69 = !q; q.t = a;",
+      "reference": "pin 1 = a; pinnode 69 = !q; q.t = a; q.ce = 'b'1;"
+    },
+    {
+      "label": "node 75 d positive default clock",
+      "source": "pin 1 = a; pinnode 75 = q; q.d = a;",
+      "reference": "pin 1 = a; pinnode 75 = q; q.d = a; q.ce = 'b'1;"
+    },
+    {
+      "label": "node 75 d ! default clock",
+      "source": "pin 1 = a; pinnode 75 = !q; q.d = a;",
+      "reference": "pin 1 = a; pinnode 75 = !q; q.d = a; q.ce = 'b'1;"
+    },
+    {
+      "label": "node 75 t positive default clock",
+      "source": "pin 1 = a; pinnode 75 = q; q.t = a;",
+      "reference": "pin 1 = a; pinnode 75 = q; q.t = a; q.ce = 'b'1;"
+    },
+    {
+      "label": "node 75 t ! default clock",
+      "source": "pin 1 = a; pinnode 75 = !q; q.t = a;",
+      "reference": "pin 1 = a; pinnode 75 = !q; q.t = a; q.ce = 'b'1;"
+    },
+    {
+      "label": "node 93 d positive default clock",
+      "source": "pin 1 = a; pinnode 93 = q; q.d = a;",
+      "reference": "pin 1 = a; pinnode 93 = q; q.d = a; q.ce = 'b'1;"
+    },
+    {
+      "label": "node 93 d ! default clock",
+      "source": "pin 1 = a; pinnode 93 = !q; q.d = a;",
+      "reference": "pin 1 = a; pinnode 93 = !q; q.d = a; q.ce = 'b'1;"
+    },
+    {
+      "label": "node 93 t positive default clock",
+      "source": "pin 1 = a; pinnode 93 = q; q.t = a;",
+      "reference": "pin 1 = a; pinnode 93 = q; q.t = a; q.ce = 'b'1;"
+    },
+    {
+      "label": "node 93 t ! default clock",
+      "source": "pin 1 = a; pinnode 93 = !q; q.t = a;",
+      "reference": "pin 1 = a; pinnode 93 = !q; q.t = a; q.ce = 'b'1;"
+    },
+    {
+      "label": "node 120 d positive default clock",
+      "source": "pin 1 = a; pinnode 120 = q; q.d = a;",
+      "reference": "pin 1 = a; pinnode 120 = q; q.d = a; q.ce = 'b'1;"
+    },
+    {
+      "label": "node 120 d ! default clock",
+      "source": "pin 1 = a; pinnode 120 = !q; q.d = a;",
+      "reference": "pin 1 = a; pinnode 120 = !q; q.d = a; q.ce = 'b'1;"
+    },
+    {
+      "label": "node 120 t positive default clock",
+      "source": "pin 1 = a; pinnode 120 = q; q.t = a;",
+      "reference": "pin 1 = a; pinnode 120 = q; q.t = a; q.ce = 'b'1;"
+    },
+    {
+      "label": "node 120 t ! default clock",
+      "source": "pin 1 = a; pinnode 120 = !q; q.t = a;",
+      "reference": "pin 1 = a; pinnode 120 = !q; q.t = a; q.ce = 'b'1;"
+    },
+    {
+      "label": "node 5 explicit ck 0",
+      "source": "pin 1 = a; pin 5 = q; q.d = a; q.ck = 'b'0;",
+      "fuses": {
+        "1840": 0,
+        "1919": 0,
+        "1920": 0,
+        "2023": 0,
+        "162635": 0
+      }
+    },
+    {
+      "label": "node 5 explicit ck 1",
+      "source": "pin 1 = a; pin 5 = q; q.d = a; q.ck = 'b'1;",
+      "fuses": {
+        "1840": 1,
+        "1919": 1,
+        "1920": 1,
+        "2023": 1,
+        "162635": 0
+      }
+    },
+    {
+      "label": "node 5 explicit ce 0",
+      "source": "pin 1 = a; pin 5 = q; q.d = a; q.ce = 'b'0;",
+      "fuses": {
+        "1840": 0,
+        "1919": 0,
+        "1920": 0,
+        "2023": 0,
+        "162635": 1
+      }
+    },
+    {
+      "label": "node 5 explicit ce 1",
+      "source": "pin 1 = a; pin 5 = q; q.d = a; q.ce = 'b'1;",
+      "fuses": {
+        "1840": 1,
+        "1919": 1,
+        "1920": 1,
+        "2023": 1,
+        "162635": 1
+      }
+    },
+    {
+      "label": "node 69 explicit ck 0",
+      "source": "pin 1 = a; pinnode 69 = q; q.d = a; q.ck = 'b'0;",
+      "fuses": {
+        "140960": 0,
+        "141039": 0,
+        "141040": 0,
+        "141143": 0,
+        "163108": 0
+      }
+    },
+    {
+      "label": "node 69 explicit ck 1",
+      "source": "pin 1 = a; pinnode 69 = q; q.d = a; q.ck = 'b'1;",
+      "fuses": {
+        "140960": 1,
+        "141039": 1,
+        "141040": 1,
+        "141143": 1,
+        "163108": 0
+      }
+    },
+    {
+      "label": "node 69 explicit ce 0",
+      "source": "pin 1 = a; pinnode 69 = q; q.d = a; q.ce = 'b'0;",
+      "fuses": {
+        "140960": 0,
+        "141039": 0,
+        "141040": 0,
+        "141143": 0,
+        "163108": 1
+      }
+    },
+    {
+      "label": "node 69 explicit ce 1",
+      "source": "pin 1 = a; pinnode 69 = q; q.d = a; q.ce = 'b'1;",
+      "fuses": {
+        "140960": 1,
+        "141039": 1,
+        "141040": 1,
+        "141143": 1,
+        "163108": 1
+      }
+    }
+  ]
+}
