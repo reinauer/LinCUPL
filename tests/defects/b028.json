@@ -1,0 +1,197 @@
+{
+  "device": "g16vp8ms",
+  "variants": [
+    {
+      "label": "g16vp8 pin 11 positive enable pin",
+      "device": "g16vp8",
+      "source": "pin 1 = clk; pin 2 = a; pin 10 = oe; pin 11 = q; q.d = a;",
+      "vectors": "ORDER: clk, a, oe, q;\nVECTORS:\nC10 H\n011 Z\nC01 Z\n000 L\nC10 H\n"
+    },
+    {
+      "label": "g16vp8 pin 11 ! enable pin",
+      "device": "g16vp8",
+      "source": "pin 1 = clk; pin 2 = a; pin 10 = oe; pin 11 = !q; q.d = a;",
+      "vectors": "ORDER: clk, a, oe, q;\nVECTORS:\nC10 H\n011 Z\nC01 Z\n000 L\nC10 H\n"
+    },
+    {
+      "label": "g16vp8 pin 12 positive enable pin",
+      "device": "g16vp8",
+      "source": "pin 1 = clk; pin 2 = a; pin 10 = oe; pin 12 = q; q.d = a; pin 11 = b;",
+      "vectors": "ORDER: clk, a, oe, b, q;\nVECTORS:\nC100 H\n0101 H\n0110 Z\nC011 Z\n0000 L\n0001 L\nC100 H\n"
+    },
+    {
+      "label": "g16vp8 pin 12 ! enable pin",
+      "device": "g16vp8",
+      "source": "pin 1 = clk; pin 2 = a; pin 10 = oe; pin 12 = !q; q.d = a; pin 11 = b;",
+      "vectors": "ORDER: clk, a, oe, b, q;\nVECTORS:\nC100 H\n0101 H\n0110 Z\nC011 Z\n0000 L\n0001 L\nC100 H\n"
+    },
+    {
+      "label": "g16vp8 pin 13 positive enable pin",
+      "device": "g16vp8",
+      "source": "pin 1 = clk; pin 2 = a; pin 10 = oe; pin 13 = q; q.d = a; pin 11 = b;",
+      "vectors": "ORDER: clk, a, oe, b, q;\nVECTORS:\nC100 H\n0101 H\n0110 Z\nC011 Z\n0000 L\n0001 L\nC100 H\n"
+    },
+    {
+      "label": "g16vp8 pin 13 ! enable pin",
+      "device": "g16vp8",
+      "source": "pin 1 = clk; pin 2 = a; pin 10 = oe; pin 13 = !q; q.d = a; pin 11 = b;",
+      "vectors": "ORDER: clk, a, oe, b, q;\nVECTORS:\nC100 H\n0101 H\n0110 Z\nC011 Z\n0000 L\n0001 L\nC100 H\n"
+    },
+    {
+      "label": "g16vp8 pin 14 positive enable pin",
+      "device": "g16vp8",
+      "source": "pin 1 = clk; pin 2 = a; pin 10 = oe; pin 14 = q; q.d = a; pin 11 = b;",
+      "vectors": "ORDER: clk, a, oe, b, q;\nVECTORS:\nC100 H\n0101 H\n0110 Z\nC011 Z\n0000 L\n0001 L\nC100 H\n"
+    },
+    {
+      "label": "g16vp8 pin 14 ! enable pin",
+      "device": "g16vp8",
+      "source": "pin 1 = clk; pin 2 = a; pin 10 = oe; pin 14 = !q; q.d = a; pin 11 = b;",
+      "vectors": "ORDER: clk, a, oe, b, q;\nVECTORS:\nC100 H\n0101 H\n0110 Z\nC011 Z\n0000 L\n0001 L\nC100 H\n"
+    },
+    {
+      "label": "g16vp8 pin 16 positive enable pin",
+      "device": "g16vp8",
+      "source": "pin 1 = clk; pin 2 = a; pin 10 = oe; pin 16 = q; q.d = a; pin 11 = b;",
+      "vectors": "ORDER: clk, a, oe, b, q;\nVECTORS:\nC100 H\n0101 H\n0110 Z\nC011 Z\n0000 L\n0001 L\nC100 H\n"
+    },
+    {
+      "label": "g16vp8 pin 16 ! enable pin",
+      "device": "g16vp8",
+      "source": "pin 1 = clk; pin 2 = a; pin 10 = oe; pin 16 = !q; q.d = a; pin 11 = b;",
+      "vectors": "ORDER: clk, a, oe, b, q;\nVECTORS:\nC100 H\n0101 H\n0110 Z\nC011 Z\n0000 L\n0001 L\nC100 H\n"
+    },
+    {
+      "label": "g16vp8 pin 17 positive enable pin",
+      "device": "g16vp8",
+      "source": "pin 1 = clk; pin 2 = a; pin 10 = oe; pin 17 = q; q.d = a; pin 11 = b;",
+      "vectors": "ORDER: clk, a, oe, b, q;\nVECTORS:\nC100 H\n0101 H\n0110 Z\nC011 Z\n0000 L\n0001 L\nC100 H\n"
+    },
+    {
+      "label": "g16vp8 pin 17 ! enable pin",
+      "device": "g16vp8",
+      "source": "pin 1 = clk; pin 2 = a; pin 10 = oe; pin 17 = !q; q.d = a; pin 11 = b;",
+      "vectors": "ORDER: clk, a, oe, b, q;\nVECTORS:\nC100 H\n0101 H\n0110 Z\nC011 Z\n0000 L\n0001 L\nC100 H\n"
+    },
+    {
+      "label": "g16vp8 pin 18 positive enable pin",
+      "device": "g16vp8",
+      "source": "pin 1 = clk; pin 2 = a; pin 10 = oe; pin 18 = q; q.d = a; pin 11 = b;",
+      "vectors": "ORDER: clk, a, oe, b, q;\nVECTORS:\nC100 H\n0101 H\n0110 Z\nC011 Z\n0000 L\n0001 L\nC100 H\n"
+    },
+    {
+      "label": "g16vp8 pin 18 ! enable pin",
+      "device": "g16vp8",
+      "source": "pin 1 = clk; pin 2 = a; pin 10 = oe; pin 18 = !q; q.d = a; pin 11 = b;",
+      "vectors": "ORDER: clk, a, oe, b, q;\nVECTORS:\nC100 H\n0101 H\n0110 Z\nC011 Z\n0000 L\n0001 L\nC100 H\n"
+    },
+    {
+      "label": "g16vp8 pin 19 positive enable pin",
+      "device": "g16vp8",
+      "source": "pin 1 = clk; pin 2 = a; pin 10 = oe; pin 19 = q; q.d = a; pin 11 = b;",
+      "vectors": "ORDER: clk, a, oe, b, q;\nVECTORS:\nC100 H\n0101 H\n0110 Z\nC011 Z\n0000 L\n0001 L\nC100 H\n"
+    },
+    {
+      "label": "g16vp8 pin 19 ! enable pin",
+      "device": "g16vp8",
+      "source": "pin 1 = clk; pin 2 = a; pin 10 = oe; pin 19 = !q; q.d = a; pin 11 = b;",
+      "vectors": "ORDER: clk, a, oe, b, q;\nVECTORS:\nC100 H\n0101 H\n0110 Z\nC011 Z\n0000 L\n0001 L\nC100 H\n"
+    },
+    {
+      "label": "g16vp8ms pin 11 positive enable pin",
+      "device": "g16vp8ms",
+      "source": "pin 1 = clk; pin 2 = a; pin 10 = oe; pin 11 = q; q.d = a;",
+      "vectors": "ORDER: clk, a, oe, q;\nVECTORS:\nC10 H\n011 Z\nC01 Z\n000 L\nC10 H\n"
+    },
+    {
+      "label": "g16vp8ms pin 11 ! enable pin",
+      "device": "g16vp8ms",
+      "source": "pin 1 = clk; pin 2 = a; pin 10 = oe; pin 11 = !q; q.d = a;",
+      "vectors": "ORDER: clk, a, oe, q;\nVECTORS:\nC10 H\n011 Z\nC01 Z\n000 L\nC10 H\n"
+    },
+    {
+      "label": "g16vp8ms pin 12 positive enable pin",
+      "device": "g16vp8ms",
+      "source": "pin 1 = clk; pin 2 = a; pin 10 = oe; pin 12 = q; q.d = a; pin 11 = b;",
+      "vectors": "ORDER: clk, a, oe, b, q;\nVECTORS:\nC100 H\n0101 H\n0110 Z\nC011 Z\n0000 L\n0001 L\nC100 H\n"
+    },
+    {
+      "label": "g16vp8ms pin 12 ! enable pin",
+      "device": "g16vp8ms",
+      "source": "pin 1 = clk; pin 2 = a; pin 10 = oe; pin 12 = !q; q.d = a; pin 11 = b;",
+      "vectors": "ORDER: clk, a, oe, b, q;\nVECTORS:\nC100 H\n0101 H\n0110 Z\nC011 Z\n0000 L\n0001 L\nC100 H\n"
+    },
+    {
+      "label": "g16vp8ms pin 13 positive enable pin",
+      "device": "g16vp8ms",
+      "source": "pin 1 = clk; pin 2 = a; pin 10 = oe; pin 13 = q; q.d = a; pin 11 = b;",
+      "vectors": "ORDER: clk, a, oe, b, q;\nVECTORS:\nC100 H\n0101 H\n0110 Z\nC011 Z\n0000 L\n0001 L\nC100 H\n"
+    },
+    {
+      "label": "g16vp8ms pin 13 ! enable pin",
+      "device": "g16vp8ms",
+      "source": "pin 1 = clk; pin 2 = a; pin 10 = oe; pin 13 = !q; q.d = a; pin 11 = b;",
+      "vectors": "ORDER: clk, a, oe, b, q;\nVECTORS:\nC100 H\n0101 H\n0110 Z\nC011 Z\n0000 L\n0001 L\nC100 H\n"
+    },
+    {
+      "label": "g16vp8ms pin 14 positive enable pin",
+      "device": "g16vp8ms",
+      "source": "pin 1 = clk; pin 2 = a; pin 10 = oe; pin 14 = q; q.d = a; pin 11 = b;",
+      "vectors": "ORDER: clk, a, oe, b, q;\nVECTORS:\nC100 H\n0101 H\n0110 Z\nC011 Z\n0000 L\n0001 L\nC100 H\n"
+    },
+    {
+      "label": "g16vp8ms pin 14 ! enable pin",
+      "device": "g16vp8ms",
+      "source": "pin 1 = clk; pin 2 = a; pin 10 = oe; pin 14 = !q; q.d = a; pin 11 = b;",
+      "vectors": "ORDER: clk, a, oe, b, q;\nVECTORS:\nC100 H\n0101 H\n0110 Z\nC011 Z\n0000 L\n0001 L\nC100 H\n"
+    },
+    {
+      "label": "g16vp8ms pin 16 positive enable pin",
+      "device": "g16vp8ms",
+      "source": "pin 1 = clk; pin 2 = a; pin 10 = oe; pin 16 = q; q.d = a; pin 11 = b;",
+      "vectors": "ORDER: clk, a, oe, b, q;\nVECTORS:\nC100 H\n0101 H\n0110 Z\nC011 Z\n0000 L\n0001 L\nC100 H\n"
+    },
+    {
+      "label": "g16vp8ms pin 16 ! enable pin",
+      "device": "g16vp8ms",
+      "source": "pin 1 = clk; pin 2 = a; pin 10 = oe; pin 16 = !q; q.d = a; pin 11 = b;",
+      "vectors": "ORDER: clk, a, oe, b, q;\nVECTORS:\nC100 H\n0101 H\n0110 Z\nC011 Z\n0000 L\n0001 L\nC100 H\n"
+    },
+    {
+      "label": "g16vp8ms pin 17 positive enable pin",
+      "device": "g16vp8ms",
+      "source": "pin 1 = clk; pin 2 = a; pin 10 = oe; pin 17 = q; q.d = a; pin 11 = b;",
+      "vectors": "ORDER: clk, a, oe, b, q;\nVECTORS:\nC100 H\n0101 H\n0110 Z\nC011 Z\n0000 L\n0001 L\nC100 H\n"
+    },
+    {
+      "label": "g16vp8ms pin 17 ! enable pin",
+      "device": "g16vp8ms",
+      "source": "pin 1 = clk; pin 2 = a; pin 10 = oe; pin 17 = !q; q.d = a; pin 11 = b;",
+      "vectors": "ORDER: clk, a, oe, b, q;\nVECTORS:\nC100 H\n0101 H\n0110 Z\nC011 Z\n0000 L\n0001 L\nC100 H\n"
+    },
+    {
+      "label": "g16vp8ms pin 18 positive enable pin",
+      "device": "g16vp8ms",
+      "source": "pin 1 = clk; pin 2 = a; pin 10 = oe; pin 18 = q; q.d = a; pin 11 = b;",
+      "vectors": "ORDER: clk, a, oe, b, q;\nVECTORS:\nC100 H\n0101 H\n0110 Z\nC011 Z\n0000 L\n0001 L\nC100 H\n"
+    },
+    {
+      "label": "g16vp8ms pin 18 ! enable pin",
+      "device": "g16vp8ms",
+      "source": "pin 1 = clk; pin 2 = a; pin 10 = oe; pin 18 = !q; q.d = a; pin 11 = b;",
+      "vectors": "ORDER: clk, a, oe, b, q;\nVECTORS:\nC100 H\n0101 H\n0110 Z\nC011 Z\n0000 L\n0001 L\nC100 H\n"
+    },
+    {
+      "label": "g16vp8ms pin 19 positive enable pin",
+      "device": "g16vp8ms",
+      "source": "pin 1 = clk; pin 2 = a; pin 10 = oe; pin 19 = q; q.d = a; pin 11 = b;",
+      "vectors": "ORDER: clk, a, oe, b, q;\nVECTORS:\nC100 H\n0101 H\n0110 Z\nC011 Z\n0000 L\n0001 L\nC100 H\n"
+    },
+    {
+      "label": "g16vp8ms pin 19 ! enable pin",
+      "device": "g16vp8ms",
+      "source": "pin 1 = clk; pin 2 = a; pin 10 = oe; pin 19 = !q; q.d = a; pin 11 = b;",
+      "vectors": "ORDER: clk, a, oe, b, q;\nVECTORS:\nC100 H\n0101 H\n0110 Z\nC011 Z\n0000 L\n0001 L\nC100 H\n"
+    }
+  ]
+}

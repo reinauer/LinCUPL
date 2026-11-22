@@ -36,6 +36,30 @@ static void section(uint8_t *image, unsigned id, unsigned count,
     wr32(h + 8, offset);
 }
 
+static int check_vp8_enable_pin(void)
+{
+    uint8_t input[IMAGE_SIZE] = { 0 }, fixed[IMAGE_SIZE], again[IMAGE_SIZE];
+    section(input, 6, 1, 16, 260);
+    wr16(input + 260, 18);
+    wr16(input + 262, 10);
+    input[265] = 9;
+    section(input, 10, 2, 13, 276);
+    wr16(input + 276, 18);
+    wr16(input + 278, 11);
+    wr16(input + 281, 0x11);
+    wr16(input + 289, 18);
+    wr16(input + 291, 11);
+    wr16(input + 294, 15);
+    CHECK(read_image(input, sizeof(input), "g16vp8ms", 0, fixed) == 0);
+    CHECK(rd16(fixed + 278) == 10);
+    CHECK(rd16(fixed + 291) == 11);
+    CHECK(read_image(fixed, sizeof(fixed), "g16vp8ms", 0, again) == 0);
+    CHECK(memcmp(fixed, again, sizeof(fixed)) == 0);
+    CHECK(read_image(input, sizeof(input), "g16v8ms", 0, fixed) == 0);
+    CHECK(memcmp(input, fixed, sizeof(input)) == 0);
+    return 0;
+}
+
 static int check_buried_d_polarity(void)
 {
     uint8_t input[IMAGE_SIZE] = { 0 }, fixed[IMAGE_SIZE], again[IMAGE_SIZE];
@@ -163,6 +187,7 @@ static int check_ecl_reset_polarity(void)
 
 int main(void)
 {
+    CHECK(check_vp8_enable_pin() == 0);
     CHECK(check_pal26_feedback() == 0);
     CHECK(check_atf750_feedback() == 0);
     uint8_t original[IMAGE_SIZE] = { 0 }, fixed[IMAGE_SIZE], again[IMAGE_SIZE];
