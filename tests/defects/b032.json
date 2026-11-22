@@ -1,0 +1,50 @@
+{
+  "device": "g22v10",
+  "variants": [
+    {
+      "label": "Rev then Revision",
+      "source": "Rev first; Revision second;\npin 3 = a; pin 22 = y; y = a;\n",
+      "diagnostic": "\\[0021ca\\]"
+    },
+    {
+      "label": "Revision then Rev",
+      "source": "Revision first; Rev second;\npin 3 = a; pin 22 = y; y = a;\n",
+      "diagnostic": "\\[0021ca\\]"
+    },
+    {
+      "label": "single Rev alias",
+      "source": "Rev value;\npin 3 = a; pin 22 = y; y = a;\n",
+      "reference": "Revision value;\npin 3 = a; pin 22 = y; y = a;\n"
+    },
+    {
+      "label": "Assy then Assembly",
+      "source": "Assy first; Assembly second;\npin 3 = a; pin 22 = y; y = a;\n",
+      "diagnostic": "\\[0021ca\\]"
+    },
+    {
+      "label": "Assembly then Assy",
+      "source": "Assembly first; Assy second;\npin 3 = a; pin 22 = y; y = a;\n",
+      "diagnostic": "\\[0021ca\\]"
+    },
+    {
+      "label": "single Assy alias",
+      "source": "Assy value;\npin 3 = a; pin 22 = y; y = a;\n",
+      "reference": "Assembly value;\npin 3 = a; pin 22 = y; y = a;\n"
+    },
+    {
+      "label": "Loc then Location",
+      "source": "Loc first; Location second;\npin 3 = a; pin 22 = y; y = a;\n",
+      "diagnostic": "\\[0021ca\\]"
+    },
+    {
+      "label": "Location then Loc",
+      "source": "Location first; Loc second;\npin 3 = a; pin 22 = y; y = a;\n",
+      "diagnostic": "\\[0021ca\\]"
+    },
+    {
+      "label": "single Loc alias",
+      "source": "Loc value;\npin 3 = a; pin 22 = y; y = a;\n",
+      "reference": "Location value;\npin 3 = a; pin 22 = y; y = a;\n"
+    }
+  ]
+}
