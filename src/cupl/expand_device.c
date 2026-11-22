@@ -736,6 +736,23 @@ static void add_linked_function(const symbol_t *sym, const link_iter_t *it)
  * outputs in use (output enables, resets, ...) but have no equation */
 static void add_linked_functions(void)
 {
+    /* Explicit equations select bank modes too, even when no linked
+     * default function needs to be generated for the output. */
+    for (int i = 0; i < expand_symbol_count; i++) {
+        const symbol_t *sym = &expand_symbols[i];
+        if (sym->node_fn < 0 || !(sym->flags & SYMF_OUTPUT) ||
+            sym->polarity == POL_FIXED) {
+            continue;
+        }
+        unsigned rule = dev_u8(dev_nodefn(sym->node_fn, NODEFN_DEFAULT));
+        if (rule >= 4 && rule <= 7) {
+            check_bank((int)rule - 4, sym);
+        }
+    }
+    if (expand_error_count > 0) {
+        expand_fatal_error(-1, "");
+    }
+
     expand_extra_max = (int)dev_u16(dev_info(INFO_EXTRA_SYMBOLS)) + 1;
     expand_extra_symbols = expand_alloc_tracked((size_t)(expand_extra_max + 1) * sizeof(symbol_t), "symbol table");
     expand_extra_count = 0;
