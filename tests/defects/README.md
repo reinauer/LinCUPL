@@ -12,10 +12,10 @@ The runner finds the locally extracted merged device library, or accepts
 not a passing test. `--keep /path/to/new-directory` retains sources, outputs
 and command logs. Each compiler and simulator invocation has a deadline.
 
-Cases named `bNNN.json` refer to the defect identifiers in FreeCUPL's
-published defect catalogue. These are independently written regressions;
-the suite does not require FreeCUPL or copy its fixture corpus. Each case
-contains a device name and labelled source variants. A variant can check:
+Cases named `bNNN.json` use stable defect identifiers. These are independently
+written regressions; the suite requires no external compiler or fixture
+corpus. Each case contains a device name and labelled source variants.
+A variant can check:
 
 * A required diagnostic and the absence of a JEDEC file on rejection.
 * Fuse equality against an independently expressed reference equation.
