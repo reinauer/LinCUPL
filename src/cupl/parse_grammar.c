@@ -110,10 +110,13 @@ const keyword_t *parse_find_punctuation(const char *text)
  * ========================================================================= */
 
 /* abandon the statement after a syntax error */
-static void recover(void)
+static void recover(const token_t *tok)
 {
+    int at_end = tok->type == TOK_SEMI || tok->type == TOK_EOF;
     parse_run_statement_end();
-    parse_lex_recover(g_parse_name_buf);
+    if (!at_end) {
+        parse_lex_recover(g_parse_name_buf);
+    }
     parse_work_reset();
     g_recovering = 1;
 }
@@ -170,6 +173,9 @@ static int parse_rules(const rule_t *rule, token_t *tok)
                 }
                 break;
             case RK_ALWAYS:
+                if (tok->type == TOK_EOF) {
+                    parse_fatal_error(ERR_SYNTAX, "unexpected end of file");
+                }
                 matched = 1;
                 break;
             default:
@@ -203,7 +209,7 @@ static int parse_rules(const rule_t *rule, token_t *tok)
             case RK_REQUIRED:
             case RK_REQUIRED_END:
                 parse_error_at(ERR_MISSING_SYMBOL, parse_keyword_name((int16_t)rule->token));
-                recover();
+                recover(tok);
                 return 1;
             case RK_OR_RESTART:
                 parse_error_at(ERR_SYNTAX, parse_token_text(tok));
@@ -212,7 +218,7 @@ static int parse_rules(const rule_t *rule, token_t *tok)
                 break;
             case RK_GROUP_REQUIRED:
                 parse_error_at(ERR_SYNTAX, parse_token_text(tok));
-                recover();
+                recover(tok);
                 return 1;
             case RK_OR_COMPLAIN:
             case RK_GROUP_COMPLAIN:

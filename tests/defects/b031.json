@@ -1,0 +1,77 @@
+{
+  "device": "g22v10",
+  "variants": [
+    {
+      "label": "assignment without name",
+      "source": "pin 3 = a; pin 22 = y;\ny = a;\nproperty = a;",
+      "diagnostic": "\\[000[79]ca\\]",
+      "timeout": 2
+    },
+    {
+      "label": "name missing",
+      "source": "pin 3 = a; pin 22 = y;\ny = a;\nproperty;",
+      "diagnostic": "\\[000[79]ca\\]",
+      "timeout": 2
+    },
+    {
+      "label": "numeric name",
+      "source": "pin 3 = a; pin 22 = y;\ny = a;\nproperty 5 { x };",
+      "diagnostic": "\\[000[79]ca\\]",
+      "timeout": 2
+    },
+    {
+      "label": "keyword name",
+      "source": "pin 3 = a; pin 22 = y;\ny = a;\nproperty pin { x };",
+      "diagnostic": "\\[000[79]ca\\]",
+      "timeout": 2
+    },
+    {
+      "label": "body opener missing",
+      "source": "pin 3 = a; pin 22 = y;\ny = a;\nproperty atmel x;",
+      "diagnostic": "\\[000[79]ca\\]",
+      "timeout": 2
+    },
+    {
+      "label": "body ends at EOF",
+      "source": "pin 3 = a; pin 22 = y;\ny = a;\nproperty atmel { x",
+      "diagnostic": "\\[000[79]ca\\]",
+      "timeout": 2
+    },
+    {
+      "label": "empty device",
+      "source": "pin 3 = a; pin 22 = y;\ny = a;\nDevice ;",
+      "diagnostic": "\\[000[79]ca\\]",
+      "timeout": 2
+    },
+    {
+      "label": "valid property atmel { preassign = keep };",
+      "source": "pin 3 = a; pin 22 = y;\nproperty atmel { preassign = keep };\ny = a;\n",
+      "reference": "pin 3 = a; pin 22 = y;\ny = a;\n",
+      "timeout": 2
+    },
+    {
+      "label": "valid property atmel {};",
+      "source": "pin 3 = a; pin 22 = y;\nproperty atmel {};\ny = a;\n",
+      "reference": "pin 3 = a; pin 22 = y;\ny = a;\n",
+      "timeout": 2
+    },
+    {
+      "label": "whitespace-only device",
+      "source": "Device   \t ;\npin 3 = a; pin 22 = y; y = a;",
+      "diagnostic": "\\[0007ca\\]",
+      "timeout": 2
+    },
+    {
+      "label": "recover to a later malformed statement",
+      "source": "property;\nproperty;\npin 3 = a; pin 22 = y; y = a;",
+      "diagnostic": "(?s)\\[0009ca\\].*\\[0009ca\\]",
+      "timeout": 2
+    },
+    {
+      "label": "property name ending in digits",
+      "source": "property fitter2 { keep = all };\npin 3 = a; pin 22 = y; y = a;",
+      "reference": "pin 3 = a; pin 22 = y; y = a;",
+      "timeout": 2
+    }
+  ]
+}
