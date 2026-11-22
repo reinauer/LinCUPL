@@ -1,0 +1,29 @@
+{
+  "device": "g22v10",
+  "variants": [
+    {
+      "label": "y;",
+      "source": "pin 3 = a; pin 22 = y; pin 21 = z;\ny;",
+      "diagnostic": "\\[0009ca\\].*="
+    },
+    {
+      "label": "!y;",
+      "source": "pin 3 = a; pin 22 = y; pin 21 = z;\n!y;",
+      "diagnostic": "\\[0009ca\\].*="
+    },
+    {
+      "label": "[y,z];",
+      "source": "pin 3 = a; pin 22 = y; pin 21 = z;\n[y,z];",
+      "diagnostic": "\\[0009ca\\].*="
+    },
+    {
+      "label": "explicit constant and ordinary equation",
+      "source": "pin 3 = a; pin 22 = y; pin 21 = z;\ny = 'b'1; z = a;",
+      "vectors": "ORDER: a, y, z;\nVECTORS:\n0 H L\n1 H H\n",
+      "simulate": [
+        "abs",
+        "jed"
+      ]
+    }
+  ]
+}
