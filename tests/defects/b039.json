@@ -1,0 +1,125 @@
+{
+  "device": "v5000",
+  "variants": [
+    {
+      "label": "inputs 1/2 polarity 0/0 order 0",
+      "source": "pin 1 = a; pin 2 = b; pin 7 = x; pin 9 = y; x = a # b; y = a & !b;",
+      "vectors": "ORDER: a, b, x, y;\nVECTORS:\n00 LL\n01 HL\n10 HH\n11 HL\n"
+    },
+    {
+      "label": "inputs 1/2 polarity 0/0 order 1",
+      "source": "pin 1 = a; pin 2 = b; pin 7 = x; pin 9 = y; x = a # b; y = a & !b;",
+      "vectors": "ORDER: !a, b, x, y;\nVECTORS:\n00 HH\n01 HL\n10 LL\n11 HL\n"
+    },
+    {
+      "label": "inputs 1/2 polarity 0/1 order 0",
+      "source": "pin 1 = a; pin 2 = !b; pin 7 = x; pin 9 = y; x = a # b; y = a & !b;",
+      "vectors": "ORDER: a, b, x, y;\nVECTORS:\n00 LL\n01 HL\n10 HH\n11 HL\n"
+    },
+    {
+      "label": "inputs 1/2 polarity 0/1 order 1",
+      "source": "pin 1 = a; pin 2 = !b; pin 7 = x; pin 9 = y; x = a # b; y = a & !b;",
+      "vectors": "ORDER: !a, b, x, y;\nVECTORS:\n00 HH\n01 HL\n10 LL\n11 HL\n"
+    },
+    {
+      "label": "inputs 1/2 polarity 1/0 order 0",
+      "source": "pin 1 = !a; pin 2 = b; pin 7 = x; pin 9 = y; x = a # b; y = a & !b;",
+      "vectors": "ORDER: a, b, x, y;\nVECTORS:\n00 LL\n01 HL\n10 HH\n11 HL\n"
+    },
+    {
+      "label": "inputs 1/2 polarity 1/0 order 1",
+      "source": "pin 1 = !a; pin 2 = b; pin 7 = x; pin 9 = y; x = a # b; y = a & !b;",
+      "vectors": "ORDER: !a, b, x, y;\nVECTORS:\n00 HH\n01 HL\n10 LL\n11 HL\n"
+    },
+    {
+      "label": "inputs 1/2 polarity 1/1 order 0",
+      "source": "pin 1 = !a; pin 2 = !b; pin 7 = x; pin 9 = y; x = a # b; y = a & !b;",
+      "vectors": "ORDER: a, b, x, y;\nVECTORS:\n00 LL\n01 HL\n10 HH\n11 HL\n"
+    },
+    {
+      "label": "inputs 1/2 polarity 1/1 order 1",
+      "source": "pin 1 = !a; pin 2 = !b; pin 7 = x; pin 9 = y; x = a # b; y = a & !b;",
+      "vectors": "ORDER: !a, b, x, y;\nVECTORS:\n00 HH\n01 HL\n10 LL\n11 HL\n"
+    },
+    {
+      "label": "inputs 32/34 polarity 0/0 order 0",
+      "source": "pin 32 = a; pin 34 = b; pin 7 = x; pin 9 = y; x = a # b; y = a & !b;",
+      "vectors": "ORDER: a, b, x, y;\nVECTORS:\n00 LL\n01 HL\n10 HH\n11 HL\n"
+    },
+    {
+      "label": "inputs 32/34 polarity 0/0 order 1",
+      "source": "pin 32 = a; pin 34 = b; pin 7 = x; pin 9 = y; x = a # b; y = a & !b;",
+      "vectors": "ORDER: !a, b, x, y;\nVECTORS:\n00 HH\n01 HL\n10 LL\n11 HL\n"
+    },
+    {
+      "label": "inputs 32/34 polarity 0/1 order 0",
+      "source": "pin 32 = a; pin 34 = !b; pin 7 = x; pin 9 = y; x = a # b; y = a & !b;",
+      "vectors": "ORDER: a, b, x, y;\nVECTORS:\n00 LL\n01 HL\n10 HH\n11 HL\n"
+    },
+    {
+      "label": "inputs 32/34 polarity 0/1 order 1",
+      "source": "pin 32 = a; pin 34 = !b; pin 7 = x; pin 9 = y; x = a # b; y = a & !b;",
+      "vectors": "ORDER: !a, b, x, y;\nVECTORS:\n00 HH\n01 HL\n10 LL\n11 HL\n"
+    },
+    {
+      "label": "inputs 32/34 polarity 1/0 order 0",
+      "source": "pin 32 = !a; pin 34 = b; pin 7 = x; pin 9 = y; x = a # b; y = a & !b;",
+      "vectors": "ORDER: a, b, x, y;\nVECTORS:\n00 LL\n01 HL\n10 HH\n11 HL\n"
+    },
+    {
+      "label": "inputs 32/34 polarity 1/0 order 1",
+      "source": "pin 32 = !a; pin 34 = b; pin 7 = x; pin 9 = y; x = a # b; y = a & !b;",
+      "vectors": "ORDER: !a, b, x, y;\nVECTORS:\n00 HH\n01 HL\n10 LL\n11 HL\n"
+    },
+    {
+      "label": "inputs 32/34 polarity 1/1 order 0",
+      "source": "pin 32 = !a; pin 34 = !b; pin 7 = x; pin 9 = y; x = a # b; y = a & !b;",
+      "vectors": "ORDER: a, b, x, y;\nVECTORS:\n00 LL\n01 HL\n10 HH\n11 HL\n"
+    },
+    {
+      "label": "inputs 32/34 polarity 1/1 order 1",
+      "source": "pin 32 = !a; pin 34 = !b; pin 7 = x; pin 9 = y; x = a # b; y = a & !b;",
+      "vectors": "ORDER: !a, b, x, y;\nVECTORS:\n00 HH\n01 HL\n10 LL\n11 HL\n"
+    },
+    {
+      "label": "positive register data input",
+      "source": "pin 1 = a; pin 2 = clk; pin 5 = q; q.d = a; q.ck = clk;",
+      "vectors": "ORDER: clk, a, q;\nVECTORS:\nC0 L\n01 L\nC1 H\n00 H\nC0 L\n"
+    },
+    {
+      "label": "! register data input",
+      "source": "pin 1 = !a; pin 2 = clk; pin 5 = q; q.d = a; q.ck = clk;",
+      "vectors": "ORDER: clk, a, q;\nVECTORS:\nC0 L\n01 L\nC1 H\n00 H\nC0 L\n"
+    },
+    {
+      "label": "positive clock pin as data",
+      "source": "pin 2 = a; pin 7 = x; pin 9 = y; x = a; y = !a;",
+      "vectors": "ORDER: a, x, y;\nVECTORS:\n0 LH\nC LH\n1 HL\nK HL\n"
+    },
+    {
+      "label": "! clock pin as data",
+      "source": "pin 2 = !a; pin 7 = x; pin 9 = y; x = a; y = !a;",
+      "vectors": "ORDER: a, x, y;\nVECTORS:\n0 LH\nC LH\n1 HL\nK HL\n"
+    },
+    {
+      "label": "clock declaration positive expression positive",
+      "source": "pin 1 = a; pin 2 = clk; pin 32 = rst; pin 5 = q; q.d = a; q.ck = clk; q.ar = rst;",
+      "vectors": "ORDER: clk, a, rst, q;\nVECTORS:\n001 L\n000 L\n010 L\n110 H\n100 H\n000 H\n100 L\nC10 H\nK00 L\n"
+    },
+    {
+      "label": "clock declaration positive expression !",
+      "source": "pin 1 = a; pin 2 = clk; pin 32 = rst; pin 5 = q; q.d = a; q.ck = !clk; q.ar = rst;",
+      "vectors": "ORDER: clk, a, rst, q;\nVECTORS:\n001 L\n000 L\n110 L\n010 H\n000 H\n100 H\n000 L\nC10 H\nK00 L\n"
+    },
+    {
+      "label": "clock declaration ! expression positive",
+      "source": "pin 1 = a; pin 2 = !clk; pin 32 = rst; pin 5 = q; q.d = a; q.ck = clk; q.ar = rst;",
+      "vectors": "ORDER: clk, a, rst, q;\nVECTORS:\n001 L\n000 L\n010 L\n110 H\n100 H\n000 H\n100 L\nC10 H\nK00 L\n"
+    },
+    {
+      "label": "clock declaration ! expression !",
+      "source": "pin 1 = a; pin 2 = !clk; pin 32 = rst; pin 5 = q; q.d = a; q.ck = !clk; q.ar = rst;",
+      "vectors": "ORDER: clk, a, rst, q;\nVECTORS:\n001 L\n000 L\n110 L\n010 H\n000 H\n100 H\n000 L\nC10 H\nK00 L\n"
+    }
+  ]
+}

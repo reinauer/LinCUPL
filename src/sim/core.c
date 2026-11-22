@@ -598,6 +598,16 @@ static void bad_test_value(const order_t *o, int index)
     set_input_unknown(index);
 }
 
+/* ATV5000 ABS terms retain logical variable polarity. Pin and clock
+ * levels remain physical; only the equation input plane needs conversion. */
+static void set_vector_input_value(int value, int sym)
+{
+    if (strcmp(g_device_name, "v5000") == 0 && (g_syms[sym].flags & 0x10)) {
+        value = k_invert_level[value & 7];
+    }
+    set_input_value(value, sym);
+}
+
 /* Apply the test values of the vector to the inputs. */
 static void apply_vector(void)
 {
@@ -695,7 +705,7 @@ static void apply_vector(void)
                 } else if (!g_preload) {
                     set_pin_value(sym, value == T_VAL_C ? LV_LOW : LV_HIGH);
                 }
-                set_input_value(value == T_VAL_C ? LV_LOW : LV_HIGH, sym);
+                set_vector_input_value(value == T_VAL_C ? LV_LOW : LV_HIGH, sym);
                 break;
             }
             if (s->pin_rec < 0 ||
@@ -711,7 +721,7 @@ static void apply_vector(void)
                 o->value = T_VAL_K;
             }
             if (kind == 0xc || kind == 0x16 || kind == 0x10 || kind == 0x17 || kind == 0 || kind == 0x11) {
-                set_input_value(value == T_VAL_C ? LV_LOW : LV_HIGH, sym);
+                set_vector_input_value(value == T_VAL_C ? LV_LOW : LV_HIGH, sym);
             }
             break;
         case T_VAL_N:
@@ -736,10 +746,10 @@ static void apply_vector(void)
             }
             fb = (int16_t)find_feedback_symbol(sym, 0x25);
             if (fb < 1) {
-                set_input_value(LV_LOW, sym);
+                set_vector_input_value(LV_LOW, sym);
                 set_pin_value(sym, kind == 0x12 ? LV_HIGH : LV_LOW);
             } else {
-                set_input_value(LV_LOW, fb);
+                set_vector_input_value(LV_LOW, fb);
                 set_pin_value(fb, LV_LOW);
             }
             break;
@@ -760,10 +770,10 @@ static void apply_vector(void)
             }
             fb = (int16_t)find_feedback_symbol(sym, 0x25);
             if (fb < 1) {
-                set_input_value(LV_HIGH, sym);
+                set_vector_input_value(LV_HIGH, sym);
                 set_pin_value(sym, kind == 0x12 ? LV_LOW : LV_HIGH);
             } else {
-                set_input_value(LV_HIGH, fb);
+                set_vector_input_value(LV_HIGH, fb);
                 set_pin_value(fb, LV_HIGH);
             }
             break;
@@ -783,15 +793,20 @@ static int drive_clocks(int phase)
         int sym = o->sym_index;
         const sym_t *s = &g_syms[sym];
         int kind;
+        int value = o->value;
+        if (strcmp(g_device_name, "v5000") == 0 && !o->positive) {
+            if (value == T_VAL_C) value = T_VAL_K;
+            else if (value == T_VAL_K) value = T_VAL_C;
+        }
         if (s->pin_rec < 0) {
             continue;
         }
         if (g_vsima) {
-            if ((o->value == T_VAL_C && phase == 3) || (o->value == T_VAL_K && phase == 2)) {
+            if ((value == T_VAL_C && phase == 3) || (value == T_VAL_K && phase == 2)) {
                 g_sig_value[sym] = LV_LOW;
-            } else if ((o->value == T_VAL_C && phase == 2) || (o->value == T_VAL_K && phase == 3)) {
+            } else if ((value == T_VAL_C && phase == 2) || (value == T_VAL_K && phase == 3)) {
                 g_sig_value[sym] = LV_HIGH;
-                if (o->value == T_VAL_C) {
+                if (value == T_VAL_C) {
                     g_sig_prev[sym] = LV_LOW;
                 }
             }
@@ -802,18 +817,18 @@ static int drive_clocks(int phase)
         if (kind != 5 && kind != 0xc && kind != 0x16 && kind != 0x10 && kind != 0x17) {
             continue;
         }
-        if ((o->value == T_VAL_C && phase == 3) || (o->value == T_VAL_K && phase == 2)) {
+        if ((value == T_VAL_C && phase == 3) || (value == T_VAL_K && phase == 2)) {
             g_sig_value[sym] = LV_LOW;
             if (kind != 5) {
-                set_input_value(LV_LOW, sym);
+                set_vector_input_value(LV_LOW, sym);
             }
-        } else if ((o->value == T_VAL_C && phase == 2) || (o->value == T_VAL_K && phase == 3)) {
+        } else if ((value == T_VAL_C && phase == 2) || (value == T_VAL_K && phase == 3)) {
             g_sig_value[sym] = LV_HIGH;
-            if (o->value == T_VAL_C && phase == 2 && g_sig_prev[sym] == LV_UNKNOWN) {
+            if (value == T_VAL_C && phase == 2 && g_sig_prev[sym] == LV_UNKNOWN) {
                 g_sig_prev[sym] = LV_LOW;
             }
             if (kind != 5) {
-                set_input_value(LV_HIGH, sym);
+                set_vector_input_value(LV_HIGH, sym);
             }
         }
         any = 1;
