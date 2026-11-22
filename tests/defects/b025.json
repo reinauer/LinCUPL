@@ -1,0 +1,243 @@
+{
+  "device": "g22v10",
+  "variants": [
+    {
+      "label": "g22v10 positive q1 AR q0 SP q0",
+      "device": "g22v10",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = r; pin 4 = s; pin 23 = q0; pin 22 = q1;\nq0.d = a; q1.d = a; q0.ar = r; q0.sp = s;",
+      "vectors": "ORDER: clk, a, r, s, q0, q1;\nVECTORS:\nC100 HH\n0010 LL\n0000 LL\n0001 LL\nC001 HH\n0000 HH\nC000 LL\nC100 HH\n0011 LL\nC011 LL\n",
+      "simulate": [
+        "abs",
+        "jed"
+      ]
+    },
+    {
+      "label": "g22v10 positive q1 AR q1 SP q1",
+      "device": "g22v10",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = r; pin 4 = s; pin 23 = q0; pin 22 = q1;\nq0.d = a; q1.d = a; q1.ar = r; q1.sp = s;",
+      "vectors": "ORDER: clk, a, r, s, q0, q1;\nVECTORS:\nC100 HH\n0010 LL\n0000 LL\n0001 LL\nC001 HH\n0000 HH\nC000 LL\nC100 HH\n0011 LL\nC011 LL\n",
+      "simulate": [
+        "abs",
+        "jed"
+      ]
+    },
+    {
+      "label": "g22v10 positive q1 AR q0 SP q1",
+      "device": "g22v10",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = r; pin 4 = s; pin 23 = q0; pin 22 = q1;\nq0.d = a; q1.d = a; q0.ar = r; q1.sp = s;",
+      "vectors": "ORDER: clk, a, r, s, q0, q1;\nVECTORS:\nC100 HH\n0010 LL\n0000 LL\n0001 LL\nC001 HH\n0000 HH\nC000 LL\nC100 HH\n0011 LL\nC011 LL\n",
+      "simulate": [
+        "abs",
+        "jed"
+      ]
+    },
+    {
+      "label": "g22v10 positive q1 AR q1 SP q0",
+      "device": "g22v10",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = r; pin 4 = s; pin 23 = q0; pin 22 = q1;\nq0.d = a; q1.d = a; q1.ar = r; q0.sp = s;",
+      "vectors": "ORDER: clk, a, r, s, q0, q1;\nVECTORS:\nC100 HH\n0010 LL\n0000 LL\n0001 LL\nC001 HH\n0000 HH\nC000 LL\nC100 HH\n0011 LL\nC011 LL\n",
+      "simulate": [
+        "abs",
+        "jed"
+      ]
+    },
+    {
+      "label": "g22v10 ! q1 AR q0 SP q0",
+      "device": "g22v10",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = r; pin 4 = s; pin 23 = q0; pin 22 = !q1;\nq0.d = a; q1.d = a; q0.ar = r; q0.sp = s;",
+      "vectors": "ORDER: clk, a, r, s, q0, q1;\nVECTORS:\nC100 HH\n0010 LL\n0000 LL\n0001 LL\nC001 HH\n0000 HH\nC000 LL\nC100 HH\n0011 LL\nC011 LL\n",
+      "simulate": [
+        "abs",
+        "jed"
+      ]
+    },
+    {
+      "label": "g22v10 ! q1 AR q1 SP q1",
+      "device": "g22v10",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = r; pin 4 = s; pin 23 = q0; pin 22 = !q1;\nq0.d = a; q1.d = a; q1.ar = r; q1.sp = s;",
+      "vectors": "ORDER: clk, a, r, s, q0, q1;\nVECTORS:\nC100 HH\n0010 LL\n0000 LL\n0001 LL\nC001 HH\n0000 HH\nC000 LL\nC100 HH\n0011 LL\nC011 LL\n",
+      "simulate": [
+        "abs",
+        "jed"
+      ]
+    },
+    {
+      "label": "g22v10 ! q1 AR q0 SP q1",
+      "device": "g22v10",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = r; pin 4 = s; pin 23 = q0; pin 22 = !q1;\nq0.d = a; q1.d = a; q0.ar = r; q1.sp = s;",
+      "vectors": "ORDER: clk, a, r, s, q0, q1;\nVECTORS:\nC100 HH\n0010 LL\n0000 LL\n0001 LL\nC001 HH\n0000 HH\nC000 LL\nC100 HH\n0011 LL\nC011 LL\n",
+      "simulate": [
+        "abs",
+        "jed"
+      ]
+    },
+    {
+      "label": "g22v10 ! q1 AR q1 SP q0",
+      "device": "g22v10",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = r; pin 4 = s; pin 23 = q0; pin 22 = !q1;\nq0.d = a; q1.d = a; q1.ar = r; q0.sp = s;",
+      "vectors": "ORDER: clk, a, r, s, q0, q1;\nVECTORS:\nC100 HH\n0010 LL\n0000 LL\n0001 LL\nC001 HH\n0000 HH\nC000 LL\nC100 HH\n0011 LL\nC011 LL\n",
+      "simulate": [
+        "abs",
+        "jed"
+      ]
+    },
+    {
+      "label": "p22v10 positive q1 AR q0 SP q0",
+      "device": "p22v10",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = r; pin 4 = s; pin 23 = q0; pin 22 = q1;\nq0.d = a; q1.d = a; q0.ar = r; q0.sp = s;",
+      "vectors": "ORDER: clk, a, r, s, q0, q1;\nVECTORS:\nC100 HH\n0010 LL\n0000 LL\n0001 LL\nC001 HH\n0000 HH\nC000 LL\nC100 HH\n0011 LL\nC011 LL\n",
+      "simulate": [
+        "abs",
+        "jed"
+      ]
+    },
+    {
+      "label": "p22v10 positive q1 AR q1 SP q1",
+      "device": "p22v10",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = r; pin 4 = s; pin 23 = q0; pin 22 = q1;\nq0.d = a; q1.d = a; q1.ar = r; q1.sp = s;",
+      "vectors": "ORDER: clk, a, r, s, q0, q1;\nVECTORS:\nC100 HH\n0010 LL\n0000 LL\n0001 LL\nC001 HH\n0000 HH\nC000 LL\nC100 HH\n0011 LL\nC011 LL\n",
+      "simulate": [
+        "abs",
+        "jed"
+      ]
+    },
+    {
+      "label": "p22v10 positive q1 AR q0 SP q1",
+      "device": "p22v10",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = r; pin 4 = s; pin 23 = q0; pin 22 = q1;\nq0.d = a; q1.d = a; q0.ar = r; q1.sp = s;",
+      "vectors": "ORDER: clk, a, r, s, q0, q1;\nVECTORS:\nC100 HH\n0010 LL\n0000 LL\n0001 LL\nC001 HH\n0000 HH\nC000 LL\nC100 HH\n0011 LL\nC011 LL\n",
+      "simulate": [
+        "abs",
+        "jed"
+      ]
+    },
+    {
+      "label": "p22v10 positive q1 AR q1 SP q0",
+      "device": "p22v10",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = r; pin 4 = s; pin 23 = q0; pin 22 = q1;\nq0.d = a; q1.d = a; q1.ar = r; q0.sp = s;",
+      "vectors": "ORDER: clk, a, r, s, q0, q1;\nVECTORS:\nC100 HH\n0010 LL\n0000 LL\n0001 LL\nC001 HH\n0000 HH\nC000 LL\nC100 HH\n0011 LL\nC011 LL\n",
+      "simulate": [
+        "abs",
+        "jed"
+      ]
+    },
+    {
+      "label": "p22v10 ! q1 AR q0 SP q0",
+      "device": "p22v10",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = r; pin 4 = s; pin 23 = q0; pin 22 = !q1;\nq0.d = a; q1.d = a; q0.ar = r; q0.sp = s;",
+      "vectors": "ORDER: clk, a, r, s, q0, q1;\nVECTORS:\nC100 HH\n0010 LL\n0000 LL\n0001 LL\nC001 HH\n0000 HH\nC000 LL\nC100 HH\n0011 LL\nC011 LL\n",
+      "simulate": [
+        "abs",
+        "jed"
+      ]
+    },
+    {
+      "label": "p22v10 ! q1 AR q1 SP q1",
+      "device": "p22v10",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = r; pin 4 = s; pin 23 = q0; pin 22 = !q1;\nq0.d = a; q1.d = a; q1.ar = r; q1.sp = s;",
+      "vectors": "ORDER: clk, a, r, s, q0, q1;\nVECTORS:\nC100 HH\n0010 LL\n0000 LL\n0001 LL\nC001 HH\n0000 HH\nC000 LL\nC100 HH\n0011 LL\nC011 LL\n",
+      "simulate": [
+        "abs",
+        "jed"
+      ]
+    },
+    {
+      "label": "p22v10 ! q1 AR q0 SP q1",
+      "device": "p22v10",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = r; pin 4 = s; pin 23 = q0; pin 22 = !q1;\nq0.d = a; q1.d = a; q0.ar = r; q1.sp = s;",
+      "vectors": "ORDER: clk, a, r, s, q0, q1;\nVECTORS:\nC100 HH\n0010 LL\n0000 LL\n0001 LL\nC001 HH\n0000 HH\nC000 LL\nC100 HH\n0011 LL\nC011 LL\n",
+      "simulate": [
+        "abs",
+        "jed"
+      ]
+    },
+    {
+      "label": "p22v10 ! q1 AR q1 SP q0",
+      "device": "p22v10",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = r; pin 4 = s; pin 23 = q0; pin 22 = !q1;\nq0.d = a; q1.d = a; q1.ar = r; q0.sp = s;",
+      "vectors": "ORDER: clk, a, r, s, q0, q1;\nVECTORS:\nC100 HH\n0010 LL\n0000 LL\n0001 LL\nC001 HH\n0000 HH\nC000 LL\nC100 HH\n0011 LL\nC011 LL\n",
+      "simulate": [
+        "abs",
+        "jed"
+      ]
+    },
+    {
+      "label": "g22v10cp positive q1 AR q0 SP q0",
+      "device": "g22v10cp",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = r; pin 5 = s; pin 23 = q0; pin 22 = q1;\nq0.d = a; q1.d = a; q0.ar = r; q0.sp = s;",
+      "vectors": "ORDER: clk, a, r, s, q0, q1;\nVECTORS:\nC100 HH\n0010 LL\n0000 LL\n0001 LL\nC001 HH\n0000 HH\nC000 LL\nC100 HH\n0011 LL\nC011 LL\n",
+      "simulate": [
+        "abs"
+      ]
+    },
+    {
+      "label": "g22v10cp positive q1 AR q1 SP q1",
+      "device": "g22v10cp",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = r; pin 5 = s; pin 23 = q0; pin 22 = q1;\nq0.d = a; q1.d = a; q1.ar = r; q1.sp = s;",
+      "vectors": "ORDER: clk, a, r, s, q0, q1;\nVECTORS:\nC100 HH\n0010 LL\n0000 LL\n0001 LL\nC001 HH\n0000 HH\nC000 LL\nC100 HH\n0011 LL\nC011 LL\n",
+      "simulate": [
+        "abs"
+      ]
+    },
+    {
+      "label": "g22v10cp positive q1 AR q0 SP q1",
+      "device": "g22v10cp",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = r; pin 5 = s; pin 23 = q0; pin 22 = q1;\nq0.d = a; q1.d = a; q0.ar = r; q1.sp = s;",
+      "vectors": "ORDER: clk, a, r, s, q0, q1;\nVECTORS:\nC100 HH\n0010 LL\n0000 LL\n0001 LL\nC001 HH\n0000 HH\nC000 LL\nC100 HH\n0011 LL\nC011 LL\n",
+      "simulate": [
+        "abs"
+      ]
+    },
+    {
+      "label": "g22v10cp positive q1 AR q1 SP q0",
+      "device": "g22v10cp",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = r; pin 5 = s; pin 23 = q0; pin 22 = q1;\nq0.d = a; q1.d = a; q1.ar = r; q0.sp = s;",
+      "vectors": "ORDER: clk, a, r, s, q0, q1;\nVECTORS:\nC100 HH\n0010 LL\n0000 LL\n0001 LL\nC001 HH\n0000 HH\nC000 LL\nC100 HH\n0011 LL\nC011 LL\n",
+      "simulate": [
+        "abs"
+      ]
+    },
+    {
+      "label": "g22v10cp ! q1 AR q0 SP q0",
+      "device": "g22v10cp",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = r; pin 5 = s; pin 23 = q0; pin 22 = !q1;\nq0.d = a; q1.d = a; q0.ar = r; q0.sp = s;",
+      "vectors": "ORDER: clk, a, r, s, q0, q1;\nVECTORS:\nC100 HH\n0010 LL\n0000 LL\n0001 LL\nC001 HH\n0000 HH\nC000 LL\nC100 HH\n0011 LL\nC011 LL\n",
+      "simulate": [
+        "abs"
+      ]
+    },
+    {
+      "label": "g22v10cp ! q1 AR q1 SP q1",
+      "device": "g22v10cp",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = r; pin 5 = s; pin 23 = q0; pin 22 = !q1;\nq0.d = a; q1.d = a; q1.ar = r; q1.sp = s;",
+      "vectors": "ORDER: clk, a, r, s, q0, q1;\nVECTORS:\nC100 HH\n0010 LL\n0000 LL\n0001 LL\nC001 HH\n0000 HH\nC000 LL\nC100 HH\n0011 LL\nC011 LL\n",
+      "simulate": [
+        "abs"
+      ]
+    },
+    {
+      "label": "g22v10cp ! q1 AR q0 SP q1",
+      "device": "g22v10cp",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = r; pin 5 = s; pin 23 = q0; pin 22 = !q1;\nq0.d = a; q1.d = a; q0.ar = r; q1.sp = s;",
+      "vectors": "ORDER: clk, a, r, s, q0, q1;\nVECTORS:\nC100 HH\n0010 LL\n0000 LL\n0001 LL\nC001 HH\n0000 HH\nC000 LL\nC100 HH\n0011 LL\nC011 LL\n",
+      "simulate": [
+        "abs"
+      ]
+    },
+    {
+      "label": "g22v10cp ! q1 AR q1 SP q0",
+      "device": "g22v10cp",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = r; pin 5 = s; pin 23 = q0; pin 22 = !q1;\nq0.d = a; q1.d = a; q1.ar = r; q0.sp = s;",
+      "vectors": "ORDER: clk, a, r, s, q0, q1;\nVECTORS:\nC100 HH\n0010 LL\n0000 LL\n0001 LL\nC001 HH\n0000 HH\nC000 LL\nC100 HH\n0011 LL\nC011 LL\n",
+      "simulate": [
+        "abs"
+      ]
+    },
+    {
+      "label": "independent ATV750 resets stay independent",
+      "device": "v750",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = r; pin 23 = q0; pin 22 = q1;\nq0.d = a; q1.d = a; q0.ck = clk; q1.ck = clk; q0.ar = r;",
+      "vectors": "ORDER: clk, a, r, q0, q1;\nVECTORS:\nC10 HH\n001 LH\n000 LH\nC10 HH\n"
+    }
+  ]
+}
