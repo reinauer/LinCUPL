@@ -172,6 +172,28 @@ static void correct_pal26_feedback(uint8_t *image, size_t size)
     }
 }
 
+static void correct_5000_latch_selector(uint8_t *image, size_t size)
+{
+    unsigned count;
+    uint8_t *pins = image_records(image, size, 6, 16, &count);
+    for (unsigned i = 0; i < count; i++) {
+        uint8_t *iol = pins + 16 * i;
+        if (rd16(iol + 2) != 25 || iol[4] != 0x34) {
+            continue;
+        }
+        /* IOL and LQ select the same input latch. The pin 25 IOL record
+         * instead names the sum-C join fuse of a different macrocell. */
+        for (unsigned j = 0; j < count; j++) {
+            const uint8_t *lq = pins + 16 * j;
+            if (lq[4] == 0x18 && rd16(lq) == rd16(iol) &&
+                rd16(lq + 2) == rd16(iol + 2) && lq[11] == iol[11]) {
+                wr32(iol + 12, rd32(lq + 12));
+                break;
+            }
+        }
+    }
+}
+
 static void correct_peel_output_enable(uint8_t *image, size_t size)
 {
     unsigned count;
@@ -200,6 +222,8 @@ size_t dl_read_device_image(FILE *fp, const uint8_t *entry, uint8_t *image, size
     } else if (strcasecmp(name, "f18v8z") == 0 || strcasecmp(name, "f18v8zd") == 0 ||
                strcasecmp(name, "f18v8zs") == 0) {
         correct_peel_output_enable(image, got);
+    } else if (strcasecmp(name, "v5000") == 0) {
+        correct_5000_latch_selector(image, got);
     } else if (strcasecmp(name, "p26v12") == 0) {
         correct_pal26_feedback(image, got);
     }
