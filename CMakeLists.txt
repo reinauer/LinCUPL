@@ -359,6 +359,10 @@ endif()
 # test is skipped where no device library is found (build/share/lincupl, else
 # the directory LINCUPL_SHARE names).
 enable_testing()
+add_executable(devlib_normalize_test tests/devlib_normalize.c)
+target_link_libraries(devlib_normalize_test PRIVATE lincupl_shared)
+target_compile_options(devlib_normalize_test PRIVATE ${_cli_warn_flags})
+add_test(NAME devlib_normalize COMMAND devlib_normalize_test)
 find_package(Python3 COMPONENTS Interpreter QUIET)
 if(Python3_EXECUTABLE)
     add_test(

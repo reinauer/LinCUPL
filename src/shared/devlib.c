@@ -57,3 +57,61 @@ size_t dl_read_image(FILE *fp, uint8_t *image, size_t size)
     }
     return done;
 }
+
+/* A bounded view of fixed-width records in an image section. */
+static uint8_t *image_records(uint8_t *image, size_t size, unsigned section,
+                              unsigned width, unsigned *count)
+{
+    *count = 0;
+    if (size < DL_SECTIONS * DL_SECTION_HEADER_SIZE || section >= DL_SECTIONS) {
+        return NULL;
+    }
+    const uint8_t *header = image + section * DL_SECTION_HEADER_SIZE;
+    size_t offset = rd32(header + 8);
+    unsigned n = rd16(header + 4);
+    if (rd16(header + 6) != width || offset > size || n > (size - offset) / width ||
+        (n != 0 && offset < DL_SECTIONS * DL_SECTION_HEADER_SIZE)) {
+        return NULL;
+    }
+    *count = n;
+    return image + offset;
+}
+
+static void correct_gal24v10_rows(uint8_t *image, size_t size)
+{
+    enum { NODE_SECTION = 7, NODE_SIZE = 39, INIT_SECTION = 9, INIT_SIZE = 9 };
+    unsigned count;
+    uint8_t *nodes = image_records(image, size, NODE_SECTION, NODE_SIZE, &count);
+    for (unsigned i = 0; i < count; i++) {
+        uint8_t *n = nodes + i * NODE_SIZE;
+        /* Pin 19 has eight 48-fuse rows at 2304. Combinational mode
+         * reserves the first for OE, so data starts at 2352. */
+        if (rd16(n + 2) == 19 && n[4] == 14 && rd32(n + 10) == 2452) {
+            wr32(n + 10, 2352);
+        }
+    }
+    uint8_t *initializers = image_records(image, size, INIT_SECTION, INIT_SIZE, &count);
+    for (unsigned i = 0; i < count;) {
+        uint8_t *r = initializers + i * INIT_SIZE;
+        /* This GAL20V8 product-term-disable range is inside the GAL24V10
+         * AND array. Removing it leaves unused rows at constant false. */
+        if (rd32(r) == 2640 && rd32(r + 4) == 2703 && r[8] == 1) {
+            memmove(r, r + INIT_SIZE, (count - i - 1) * INIT_SIZE);
+            wr16(image + INIT_SECTION * DL_SECTION_HEADER_SIZE + 4, --count);
+        } else {
+            i++;
+        }
+    }
+}
+
+size_t dl_read_device_image(FILE *fp, const uint8_t *entry, uint8_t *image, size_t size)
+{
+    size_t got = dl_read_image(fp, image, size);
+    char name[DL_ENTRY_NAME_SIZE + 1];
+    memcpy(name, entry, DL_ENTRY_NAME_SIZE);
+    name[DL_ENTRY_NAME_SIZE] = '\0';
+    if (strcasecmp(name, "g24v10ms") == 0) {
+        correct_gal24v10_rows(image, got);
+    }
+    return got;
+}

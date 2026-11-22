@@ -265,7 +265,7 @@ static int cuplk_device_uses_vsima(const char *dev_name, const char *lib_path)
         if (sec_size >= 0x48u && dl_seek_image(fp, entry)) {
             sec_data = (uint8_t *)malloc(sec_size);
         }
-        if (sec_data && dl_read_image(fp, sec_data, sec_size) != sec_size) {
+        if (sec_data && dl_read_device_image(fp, entry, sec_data, sec_size) != sec_size) {
             free(sec_data);
             sec_data = NULL;
         }

@@ -466,7 +466,7 @@ static int read_device_library(const char *dev_name, const char *lib_path) {
         fatal_error(4, "device library processing", 0);
     }
 
-    if (dl_read_image(fp, rec_buf, rec_size) != rec_size) {
+    if (dl_read_device_image(fp, dir_entry, rec_buf, rec_size) != rec_size) {
         free(rec_buf);
         fclose(fp);
         fatal_error(15, dev_name, 0);

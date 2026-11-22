@@ -101,7 +101,7 @@ static void load_device(void)
     if (dl_seek_image(g_lib.fp, g_lib.entry) && size < 0x1000000) {
         g_dev_rec_size = size;
         g_dev_rec = alloc_tracked((size_t)size + 0x200, "device library processing");
-        got = dl_read_image(g_lib.fp, g_dev_rec, size);
+        got = dl_read_device_image(g_lib.fp, g_lib.entry, g_dev_rec, size);
     }
     if (got == 0 || size < DL_SECTIONS * DL_SECTION_HEADER_SIZE) {
         fatal_error(ERR_BAD_LIBRARY, g_lib.name);

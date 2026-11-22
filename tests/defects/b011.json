@@ -1,0 +1,15 @@
+{
+  "device": "g24v10ms",
+  "variants": [
+    {
+      "label": "pin 19 combinational data follows its OE row",
+      "source": "pin 3 = input; pin 19 = output;\noutput = input;\n",
+      "fuses": {"2356": 0, "2357": 1, "2640": 0, "2687": 0}
+    },
+    {
+      "label": "unused register terms remain false",
+      "source": "pin 1 = clk; pin 3 = input; pin 19 = output;\noutput.d = input;\n",
+      "fuses": {"2308": 0, "2309": 1, "2640": 0, "2687": 0}
+    }
+  ]
+}
