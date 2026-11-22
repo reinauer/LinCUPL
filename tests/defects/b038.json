@@ -1,0 +1,85 @@
+{
+  "device": "v5000",
+  "variants": [
+    {
+      "label": "pin 5 positive input latch",
+      "source": "pin 1 = a; pin 2 = b; pin 32 = c; pin 34 = d; pin 35 = e; pin 5 = p; pin 26 = q; pin 30 = o;\nq = p.iol; o = a & b # a & c # a & d # a & e # b & c # b & d # b & e # c & d # c & e # d & e;",
+      "reference": "pin 1 = a; pin 2 = b; pin 32 = c; pin 34 = d; pin 35 = e; pin 5 = p; pin 26 = q; pin 30 = o;\nq = p.lq; o = a & b # a & c # a & d # a & e # b & c # b & d # b & e # c & d # c & e # d & e;"
+    },
+    {
+      "label": "pin 5 ! input latch",
+      "source": "pin 1 = a; pin 2 = b; pin 32 = c; pin 34 = d; pin 35 = e; pin 5 = p; pin 26 = !q; pin 30 = o;\nq = p.iol; o = a & b # a & c # a & d # a & e # b & c # b & d # b & e # c & d # c & e # d & e;",
+      "reference": "pin 1 = a; pin 2 = b; pin 32 = c; pin 34 = d; pin 35 = e; pin 5 = p; pin 26 = !q; pin 30 = o;\nq = p.lq; o = a & b # a & c # a & d # a & e # b & c # b & d # b & e # c & d # c & e # d & e;"
+    },
+    {
+      "label": "pin 14 positive input latch",
+      "source": "pin 1 = a; pin 2 = b; pin 32 = c; pin 34 = d; pin 35 = e; pin 14 = p; pin 26 = q; pin 30 = o;\nq = p.iol; o = a & b # a & c # a & d # a & e # b & c # b & d # b & e # c & d # c & e # d & e;",
+      "reference": "pin 1 = a; pin 2 = b; pin 32 = c; pin 34 = d; pin 35 = e; pin 14 = p; pin 26 = q; pin 30 = o;\nq = p.lq; o = a & b # a & c # a & d # a & e # b & c # b & d # b & e # c & d # c & e # d & e;"
+    },
+    {
+      "label": "pin 14 ! input latch",
+      "source": "pin 1 = a; pin 2 = b; pin 32 = c; pin 34 = d; pin 35 = e; pin 14 = p; pin 26 = !q; pin 30 = o;\nq = p.iol; o = a & b # a & c # a & d # a & e # b & c # b & d # b & e # c & d # c & e # d & e;",
+      "reference": "pin 1 = a; pin 2 = b; pin 32 = c; pin 34 = d; pin 35 = e; pin 14 = p; pin 26 = !q; pin 30 = o;\nq = p.lq; o = a & b # a & c # a & d # a & e # b & c # b & d # b & e # c & d # c & e # d & e;"
+    },
+    {
+      "label": "pin 24 positive input latch",
+      "source": "pin 1 = a; pin 2 = b; pin 32 = c; pin 34 = d; pin 35 = e; pin 24 = p; pin 26 = q; pin 30 = o;\nq = p.iol; o = a & b # a & c # a & d # a & e # b & c # b & d # b & e # c & d # c & e # d & e;",
+      "reference": "pin 1 = a; pin 2 = b; pin 32 = c; pin 34 = d; pin 35 = e; pin 24 = p; pin 26 = q; pin 30 = o;\nq = p.lq; o = a & b # a & c # a & d # a & e # b & c # b & d # b & e # c & d # c & e # d & e;"
+    },
+    {
+      "label": "pin 24 ! input latch",
+      "source": "pin 1 = a; pin 2 = b; pin 32 = c; pin 34 = d; pin 35 = e; pin 24 = p; pin 26 = !q; pin 30 = o;\nq = p.iol; o = a & b # a & c # a & d # a & e # b & c # b & d # b & e # c & d # c & e # d & e;",
+      "reference": "pin 1 = a; pin 2 = b; pin 32 = c; pin 34 = d; pin 35 = e; pin 24 = p; pin 26 = !q; pin 30 = o;\nq = p.lq; o = a & b # a & c # a & d # a & e # b & c # b & d # b & e # c & d # c & e # d & e;"
+    },
+    {
+      "label": "pin 25 positive input latch",
+      "source": "pin 1 = a; pin 2 = b; pin 32 = c; pin 34 = d; pin 35 = e; pin 25 = p; pin 26 = q; pin 30 = o;\nq = p.iol; o = a & b # a & c # a & d # a & e # b & c # b & d # b & e # c & d # c & e # d & e;",
+      "reference": "pin 1 = a; pin 2 = b; pin 32 = c; pin 34 = d; pin 35 = e; pin 25 = p; pin 26 = q; pin 30 = o;\nq = p.lq; o = a & b # a & c # a & d # a & e # b & c # b & d # b & e # c & d # c & e # d & e;"
+    },
+    {
+      "label": "pin 25 ! input latch",
+      "source": "pin 1 = a; pin 2 = b; pin 32 = c; pin 34 = d; pin 35 = e; pin 25 = p; pin 26 = !q; pin 30 = o;\nq = p.iol; o = a & b # a & c # a & d # a & e # b & c # b & d # b & e # c & d # c & e # d & e;",
+      "reference": "pin 1 = a; pin 2 = b; pin 32 = c; pin 34 = d; pin 35 = e; pin 25 = p; pin 26 = !q; pin 30 = o;\nq = p.lq; o = a & b # a & c # a & d # a & e # b & c # b & d # b & e # c & d # c & e # d & e;"
+    },
+    {
+      "label": "pin 27 positive input latch",
+      "source": "pin 1 = a; pin 2 = b; pin 32 = c; pin 34 = d; pin 35 = e; pin 27 = p; pin 26 = q; pin 30 = o;\nq = p.iol; o = a & b # a & c # a & d # a & e # b & c # b & d # b & e # c & d # c & e # d & e;",
+      "reference": "pin 1 = a; pin 2 = b; pin 32 = c; pin 34 = d; pin 35 = e; pin 27 = p; pin 26 = q; pin 30 = o;\nq = p.lq; o = a & b # a & c # a & d # a & e # b & c # b & d # b & e # c & d # c & e # d & e;"
+    },
+    {
+      "label": "pin 27 ! input latch",
+      "source": "pin 1 = a; pin 2 = b; pin 32 = c; pin 34 = d; pin 35 = e; pin 27 = p; pin 26 = !q; pin 30 = o;\nq = p.iol; o = a & b # a & c # a & d # a & e # b & c # b & d # b & e # c & d # c & e # d & e;",
+      "reference": "pin 1 = a; pin 2 = b; pin 32 = c; pin 34 = d; pin 35 = e; pin 27 = p; pin 26 = !q; pin 30 = o;\nq = p.lq; o = a & b # a & c # a & d # a & e # b & c # b & d # b & e # c & d # c & e # d & e;"
+    },
+    {
+      "label": "pin 29 positive input latch",
+      "source": "pin 1 = a; pin 2 = b; pin 32 = c; pin 34 = d; pin 35 = e; pin 29 = p; pin 26 = q; pin 30 = o;\nq = p.iol; o = a & b # a & c # a & d # a & e # b & c # b & d # b & e # c & d # c & e # d & e;",
+      "reference": "pin 1 = a; pin 2 = b; pin 32 = c; pin 34 = d; pin 35 = e; pin 29 = p; pin 26 = q; pin 30 = o;\nq = p.lq; o = a & b # a & c # a & d # a & e # b & c # b & d # b & e # c & d # c & e # d & e;"
+    },
+    {
+      "label": "pin 29 ! input latch",
+      "source": "pin 1 = a; pin 2 = b; pin 32 = c; pin 34 = d; pin 35 = e; pin 29 = p; pin 26 = !q; pin 30 = o;\nq = p.iol; o = a & b # a & c # a & d # a & e # b & c # b & d # b & e # c & d # c & e # d & e;",
+      "reference": "pin 1 = a; pin 2 = b; pin 32 = c; pin 34 = d; pin 35 = e; pin 29 = p; pin 26 = !q; pin 30 = o;\nq = p.lq; o = a & b # a & c # a & d # a & e # b & c # b & d # b & e # c & d # c & e # d & e;"
+    },
+    {
+      "label": "pin 38 positive input latch",
+      "source": "pin 1 = a; pin 2 = b; pin 32 = c; pin 34 = d; pin 35 = e; pin 38 = p; pin 26 = q; pin 30 = o;\nq = p.iol; o = a & b # a & c # a & d # a & e # b & c # b & d # b & e # c & d # c & e # d & e;",
+      "reference": "pin 1 = a; pin 2 = b; pin 32 = c; pin 34 = d; pin 35 = e; pin 38 = p; pin 26 = q; pin 30 = o;\nq = p.lq; o = a & b # a & c # a & d # a & e # b & c # b & d # b & e # c & d # c & e # d & e;"
+    },
+    {
+      "label": "pin 38 ! input latch",
+      "source": "pin 1 = a; pin 2 = b; pin 32 = c; pin 34 = d; pin 35 = e; pin 38 = p; pin 26 = !q; pin 30 = o;\nq = p.iol; o = a & b # a & c # a & d # a & e # b & c # b & d # b & e # c & d # c & e # d & e;",
+      "reference": "pin 1 = a; pin 2 = b; pin 32 = c; pin 34 = d; pin 35 = e; pin 38 = p; pin 26 = !q; pin 30 = o;\nq = p.lq; o = a & b # a & c # a & d # a & e # b & c # b & d # b & e # c & d # c & e # d & e;"
+    },
+    {
+      "label": "pin 65 positive input latch",
+      "source": "pin 1 = a; pin 2 = b; pin 32 = c; pin 34 = d; pin 35 = e; pin 65 = p; pin 26 = q; pin 30 = o;\nq = p.iol; o = a & b # a & c # a & d # a & e # b & c # b & d # b & e # c & d # c & e # d & e;",
+      "reference": "pin 1 = a; pin 2 = b; pin 32 = c; pin 34 = d; pin 35 = e; pin 65 = p; pin 26 = q; pin 30 = o;\nq = p.lq; o = a & b # a & c # a & d # a & e # b & c # b & d # b & e # c & d # c & e # d & e;"
+    },
+    {
+      "label": "pin 65 ! input latch",
+      "source": "pin 1 = a; pin 2 = b; pin 32 = c; pin 34 = d; pin 35 = e; pin 65 = p; pin 26 = !q; pin 30 = o;\nq = p.iol; o = a & b # a & c # a & d # a & e # b & c # b & d # b & e # c & d # c & e # d & e;",
+      "reference": "pin 1 = a; pin 2 = b; pin 32 = c; pin 34 = d; pin 35 = e; pin 65 = p; pin 26 = !q; pin 30 = o;\nq = p.lq; o = a & b # a & c # a & d # a & e # b & c # b & d # b & e # c & d # c & e # d & e;"
+    }
+  ]
+}

@@ -108,6 +108,30 @@ static int check_pal26_feedback(void)
     return 0;
 }
 
+static int check_5000_latch_selector(void)
+{
+    uint8_t input[IMAGE_SIZE] = { 0 }, fixed[IMAGE_SIZE], again[IMAGE_SIZE];
+    section(input, 6, 3, 16, 260);
+    wr16(input + 260, 151);
+    wr16(input + 262, 25);
+    input[264] = 0x34;
+    input[271] = 1;
+    wr32(input + 272, 162843);
+    memcpy(input + 276, input + 260, 16);
+    input[280] = 0x18;
+    wr32(input + 288, 162803);
+    memcpy(input + 292, input + 260, 16);
+    wr16(input + 294, 26);
+    CHECK(read_image(input, sizeof(input), "v5000", 0, fixed) == 0);
+    CHECK(rd32(fixed + 272) == 162803);
+    CHECK(memcmp(fixed + 276, input + 276, 32) == 0);
+    CHECK(read_image(fixed, sizeof(fixed), "v5000", 0, again) == 0);
+    CHECK(memcmp(fixed, again, sizeof(fixed)) == 0);
+    CHECK(read_image(input, sizeof(input), "v2500b", 0, fixed) == 0);
+    CHECK(memcmp(input, fixed, sizeof(input)) == 0);
+    return 0;
+}
+
 static int check_peel_enable(void)
 {
     uint8_t input[IMAGE_SIZE] = { 0 }, fixed[IMAGE_SIZE], again[IMAGE_SIZE];
@@ -230,6 +254,7 @@ int main(void)
     CHECK(memcmp(fixed, again, sizeof(fixed)) == 0);
 
     CHECK(check_peel_enable() == 0);
+    CHECK(check_5000_latch_selector() == 0);
 
     CHECK(read_image(original, sizeof(original), "g24v10ms", 1, again) == 0);
     CHECK(memcmp(original, again, sizeof(original)) == 0);
