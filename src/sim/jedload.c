@@ -138,9 +138,12 @@ static struct {
 } g_jed;
 
 /* What was read from <design>.pld (see "Pin names from the design file") */
-#define PLD_MAX_TEXT 0x100000       /* characters of the file that are looked at */
+#define PLD_MAX_TEXT 0x100000       /* characters of the text that are looked at */
 #define PLD_MAX_LIST 64             /* entries of a pin or name list */
 #define PLD_MAX_PINS 512            /* pin declarations */
+#define PLD_MAX_DEFINES 256         /* names defined with $DEFINE */
+#define PLD_MAX_DEFINE_NAME 63      /* characters of such a name */
+#define PLD_MAX_NESTING 16          /* $IFDEF levels, $INCLUDE files inside each other */
 
 typedef struct {
     char name[NAME_SIZE];
@@ -158,6 +161,28 @@ typedef struct pld_field {
     pld_name_t *members;
     struct pld_field *next;
 } pld_field_t;
+
+typedef struct {
+    char *name;
+    char *value;
+    int length;                 /* of the name */
+    uint8_t defined;            /* 0 after $UNDEF */
+} pld_define_t;
+
+/* The text of the .pld file with the directives carried out */
+static struct {
+    char *text;
+    size_t length;
+    pld_define_t defines[PLD_MAX_DEFINES];
+    int ndefines;
+    int longest;                /* length of the longest defined name */
+    char pending[PLD_MAX_DEFINE_NAME + 1]; /* characters not yet written: a name may start here */
+    int npending;
+    int nesting;                /* $IFDEF levels */
+    uint8_t outer[PLD_MAX_NESTING + 1]; /* per level: the text around it is read, */
+    uint8_t taken[PLD_MAX_NESTING + 1]; /* its condition holds */
+    int reading;                /* the text is read (no level skips it) */
+} g_pp;
 
 static struct {
     char *file;                 /* name of the file, NULL if there is none */
@@ -827,9 +852,14 @@ static void read_header_device(const char *design)
  * with the polarity csim gives a compiled design: a vector value of 1 for
  * a pin declared as !name is a low level.  FIELD <name> = [<names>];
  * statements over such pins define the fields, and DEVICE names the device
- * whose pin numbers these are.  Everything else in the file is skipped:
- * nothing is preprocessed, so names made with $DEFINE or declared in an
- * $INCLUDE file are not found.
+ * whose pin numbers these are.  Everything else in the file is skipped.
+ *
+ * The declarations are read from the text as the define pass of cupl's
+ * preprocessor leaves it (src/cupl/preprocess.c): $INCLUDE files are read
+ * in place, names defined with $DEFINE are replaced by their text, and
+ * $IFDEF / $IFNDEF / $ELSE / $ENDIF choose what is read.  The macro pass
+ * is not carried out: declarations that $REPEAT or $MACRO make are not
+ * found.
  * ------------------------------------------------------------------------- */
 static void skip_blanks(const char **s)
 {
@@ -1076,49 +1106,312 @@ static int is_declaration(const char *s)
     return 0;
 }
 
+/* -- the define pass ------------------------------------------------------
+ * As in cupl, character by character and with its comments in the text: a
+ * defined name is replaced wherever it stands and no letter follows it,
+ * the longest name first; its text is not looked at again.  Characters
+ * wait in `pending` as long as a name could start with them.  So a name of
+ * the greatest length is replaced whatever follows it, and what is pending
+ * in front of a directive line is written as it is: a name that stands
+ * there, closer to the end of its line than the longest name is long, is
+ * not replaced. */
+static void pp_write(int c)
+{
+    if (g_pp.length < PLD_MAX_TEXT) {
+        g_pp.text[g_pp.length++] = (char)c;
+    }
+}
+
+/* The defined name at the front of the pending characters, NULL if none */
+static const pld_define_t *pp_match(void)
+{
+    const pld_define_t *best = NULL;
+    for (int i = 0; i < g_pp.ndefines; i++) {
+        const pld_define_t *d = &g_pp.defines[i];
+        if (!d->defined || d->length > g_pp.npending || (best != NULL && d->length <= best->length) ||
+            memcmp(g_pp.pending, d->name, (size_t)d->length) != 0) {
+            continue;
+        }
+        if (d->length == g_pp.npending || !is_alpha((unsigned char)g_pp.pending[d->length])) {
+            best = d;
+        }
+    }
+    return best;
+}
+
+static void pp_drop(int count)
+{
+    memmove(g_pp.pending, g_pp.pending + count, (size_t)(g_pp.npending - count));
+    g_pp.npending -= count;
+}
+
+static void pp_replace(const pld_define_t *d)
+{
+    pp_drop(d->length);
+    for (const char *v = d->value; *v != '\0'; v++) {
+        pp_write(*v);
+    }
+}
+
+/* One character of the text */
+static void pp_put(int c)
+{
+    const pld_define_t *d;
+    g_pp.pending[g_pp.npending++] = (char)c;
+    if (g_pp.npending > g_pp.longest) {
+        pp_write(g_pp.pending[0]);
+        pp_drop(1);
+    }
+    if (g_pp.npending >= g_pp.longest && (d = pp_match()) != NULL) {
+        pp_replace(d);
+    }
+}
+
+/* Write what is pending: at the end of a file names are still replaced,
+ * in front of a directive line they are not. */
+static void pp_flush(int replacing)
+{
+    while (g_pp.npending > 0) {
+        const pld_define_t *d = replacing ? pp_match() : NULL;
+        if (d != NULL) {
+            pp_replace(d);
+        } else {
+            pp_write(g_pp.pending[0]);
+            pp_drop(1);
+        }
+    }
+}
+
+static pld_define_t *pp_find(const char *name)
+{
+    for (int i = 0; i < g_pp.ndefines; i++) {
+        if (strcmp(g_pp.defines[i].name, name) == 0) {
+            return &g_pp.defines[i];
+        }
+    }
+    return NULL;
+}
+
+/* The next word of a directive line (anything up to a blank), "" at its end */
+static void pp_word(const char **s, char *out, size_t size)
+{
+    size_t len = 0;
+    while (**s == ' ' || **s == '\t') {
+        (*s)++;
+    }
+    for (; **s != '\0' && **s != ' ' && **s != '\t'; (*s)++) {
+        if (len + 1 < size) {
+            out[len++] = **s;
+        }
+    }
+    out[len] = '\0';
+}
+
+/* $DEFINE name text: the text is the rest of the line without a comment
+ * and the blanks in front of it.  A name that is defined keeps its text. */
+static void pp_define(const char *s)
+{
+    char name[PLD_MAX_DEFINE_NAME + 2];
+    pld_define_t *d;
+    size_t len;
+    pp_word(&s, name, sizeof(name));
+    if (name[0] == '\0' || strlen(name) > PLD_MAX_DEFINE_NAME) {
+        return;
+    }
+    d = pp_find(name);
+    if (d != NULL && d->defined) {
+        return;
+    }
+    while (*s == ' ' || *s == '\t') {
+        s++;
+    }
+    len = strstr(s, "/*") != NULL ? (size_t)(strstr(s, "/*") - s) : strlen(s);
+    for (; len > 0 && (s[len - 1] == ' ' || s[len - 1] == '\t'); len--) {
+    }
+    if (d == NULL) {
+        if (g_pp.ndefines >= PLD_MAX_DEFINES) {
+            return;
+        }
+        d = &g_pp.defines[g_pp.ndefines++];
+        d->name = dup_string(name, "initialization");
+        d->length = (int)strlen(name);
+        d->defined = 1;
+        /* as in cupl, only a new name changes how far ahead is looked */
+        g_pp.longest = 0;
+        for (int i = 0; i < g_pp.ndefines; i++) {
+            if (g_pp.defines[i].defined && g_pp.defines[i].length > g_pp.longest) {
+                g_pp.longest = g_pp.defines[i].length;
+            }
+        }
+    }
+    d->defined = 1;
+    d->value = alloc_tracked(len + 1, "initialization");
+    memcpy(d->value, s, len);
+    d->value[len] = '\0';
+}
+
+static void pp_read_file(FILE *fp, int depth);
+
+/* $INCLUDE file: the file is looked for as cupl does, next to the design
+ * and in the directory of the device library and its Macro directory. */
+static void pp_include(const char *s, int depth)
+{
+    static const char *const k_sub[3] = { "", "", "Macro/" };
+    char name[260];
+    const char *dirs[3];
+    char *lib_dir = dup_string(g_args[2] != NULL ? g_args[2] : "", "initialization");
+    char *slash = strrchr(lib_dir, '/');
+    FILE *fp;
+    pp_word(&s, name, sizeof(name));
+    if (name[0] == '\0' || depth >= PLD_MAX_NESTING) {
+        return;
+    }
+    if (slash != NULL) {
+        slash[1] = '\0';
+    } else {
+        lib_dir[0] = '\0';
+    }
+    dirs[0] = g_dir_prefix;
+    dirs[1] = dirs[2] = lib_dir;
+    fp = open_file(name, "rt");
+    for (int i = 0; fp == NULL && i < 3 && strchr(name, '/') == NULL && strchr(name, '\\') == NULL; i++) {
+        size_t size = strlen(dirs[i]) + strlen(k_sub[i]) + strlen(name) + 1;
+        char *path = alloc_tracked(size, "initialization");
+        snprintf(path, size, "%s%s%s", dirs[i], k_sub[i], name);
+        if (dirs[i][0] != '\0') {
+            fp = open_file(path, "rt");
+        }
+        free_tracked(path);
+    }
+    free_tracked(lib_dir);
+    if (fp != NULL) {
+        pp_read_file(fp, depth + 1);
+    }
+}
+
+/* A line that starts with '$'; s is what follows the '$'.  The directives
+ * of the macro pass are left out; for the define pass an $INCLUDE file is
+ * already part of the text. */
+static void pp_directive(const char *s, int depth)
+{
+    static const char *const k_define_pass[6] = { "ifdef", "ifndef", "else", "endif", "define", "undef" };
+    char word[16], name[PLD_MAX_DEFINE_NAME + 2];
+    pld_define_t *d;
+    pp_word(&s, word, sizeof(word));
+    copy_lowercase(word, word);
+    for (int i = 0; i < 6; i++) {
+        if (strcmp(word, k_define_pass[i]) == 0) {
+            pp_flush(0);
+        }
+    }
+    if (strcmp(word, "ifdef") == 0 || strcmp(word, "ifndef") == 0) {
+        pp_word(&s, name, sizeof(name));
+        d = pp_find(name);
+        if (g_pp.nesting < PLD_MAX_NESTING) {
+            g_pp.nesting++;
+            g_pp.outer[g_pp.nesting] = (uint8_t)g_pp.reading;
+            g_pp.taken[g_pp.nesting] = (uint8_t)((d != NULL && d->defined) == (word[2] == 'd'));
+            g_pp.reading = g_pp.reading && g_pp.taken[g_pp.nesting];
+        }
+    } else if (strcmp(word, "else") == 0) {
+        if (g_pp.nesting > 0) {
+            g_pp.reading = g_pp.outer[g_pp.nesting] && !g_pp.taken[g_pp.nesting];
+        }
+    } else if (strcmp(word, "endif") == 0) {
+        if (g_pp.nesting > 0) {
+            g_pp.reading = g_pp.outer[g_pp.nesting--];
+        }
+    } else if (!g_pp.reading) {
+        return;
+    } else if (strcmp(word, "define") == 0) {
+        pp_define(s);
+    } else if (strcmp(word, "undef") == 0) {
+        pp_word(&s, name, sizeof(name));
+        d = pp_find(name);
+        if (d != NULL) {
+            d->defined = 0;
+        }
+    } else if (strcmp(word, "include") == 0) {
+        pp_include(s, depth);
+    }
+}
+
+/* One file: a line that starts with '$' is a directive, the other lines
+ * are text. */
+static void pp_read_file(FILE *fp, int depth)
+{
+    size_t size = 256, len = 0;
+    char *line = alloc_tracked(size, "initialization");
+    const char *start;
+    int c;
+    do {
+        c = read_char(fp);
+        if (c != '\n' && c != EOF) {
+            if (len + 2 > size) {
+                char *grown = alloc_tracked(size * 2, "initialization");
+                memcpy(grown, line, len);
+                free_tracked(line);
+                line = grown;
+                size *= 2;
+            }
+            line[len++] = (char)(c == '\0' || c == '\r' ? ' ' : c);
+            continue;
+        }
+        line[len] = '\0';
+        for (start = line; *start == ' ' || *start == '\t'; start++) {
+        }
+        if (*start == '$') {
+            pp_directive(start + 1, depth);
+        } else if (g_pp.reading) {
+            for (size_t i = 0; i < len; i++) {
+                pp_put(line[i]);
+            }
+            pp_put('\n');
+        }
+        len = 0;
+    } while (c != EOF);
+    free_tracked(line);
+    close_file(fp);
+}
+
+/* Blank out the comments of the text */
+static void blank_comments(char *text)
+{
+    int in_comment = 0;
+    for (char *s = text; *s != '\0'; s++) {
+        if (!in_comment && s[0] == '/' && s[1] == '*') {
+            in_comment = 1;
+            *s++ = ' ';
+            *s = ' ';
+        } else if (in_comment && s[0] == '*' && s[1] == '/') {
+            in_comment = 0;
+            *s++ = ' ';
+            *s = ' ';
+        } else if (in_comment && *s != '\n') {
+            *s = ' ';
+        }
+    }
+}
+
 /* Read the declarations of <design>.pld, if the file is there. */
 static void read_pld(void)
 {
     char *name = make_file_name(g_dir_prefix, g_base_name, ".pld");
     FILE *fp = open_file(name, "rt");
     char *text;
-    size_t len = 0;
-    int c, prev = 0, in_comment = 0, line_start = 1, skip_line = 0;
     memset(&g_pld, 0, sizeof(g_pld));
     if (fp == NULL) {
         return;
     }
     g_pld.file = name;
     g_pld.pins = alloc_tracked(PLD_MAX_PINS * sizeof(pld_pin_t), "initialization");
-    /* the text without comments and without preprocessor lines ($...) */
-    text = alloc_tracked(PLD_MAX_TEXT + 2, "initialization");
-    while ((c = read_char(fp)) != EOF && len < PLD_MAX_TEXT) {
-        if (in_comment) {
-            if (prev == '*' && c == '/') {
-                in_comment = 0;
-                c = ' ';
-            }
-            prev = c;
-            continue;
-        }
-        if (prev == '/' && c == '*') {
-            in_comment = 1;
-            text[len - 1] = ' ';
-            prev = 0;
-            continue;
-        }
-        if (c == '\n') {
-            line_start = 1;
-            skip_line = 0;
-        } else if (line_start && !is_space(c)) {
-            line_start = 0;
-            skip_line = (c == '$');
-        }
-        text[len++] = (char)((skip_line || c == '\0') ? ' ' : c);
-        prev = c;
-    }
-    text[len] = '\0';
-    close_file(fp);
+    memset(&g_pp, 0, sizeof(g_pp));
+    g_pp.reading = 1;
+    text = g_pp.text = alloc_tracked(PLD_MAX_TEXT + 2, "initialization");
+    pp_read_file(fp, 0);
+    pp_flush(1);
+    text[g_pp.length] = '\0';
+    blank_comments(text);
     /* statements end with ';'; a declaration also starts at the start of
      * a line, whatever stands in front of it */
     for (char *s = text; *s != '\0'; ) {
