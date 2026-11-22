@@ -1,0 +1,27 @@
+{
+  "device": "g22v10",
+  "variants": [
+    {
+      "label": "negation ends at a numeric operand",
+      "source": "pin 3 = a; pin 4 = b; pin 22 = y; pin 21 = z;\ny = a & !'b'1; z = a # b;\n",
+      "reference": "pin 3 = a; pin 4 = b; pin 22 = y; pin 21 = z;\ny = 'b'0; z = a # b;\n",
+      "vectors": "ORDER: a, b, y, z;\nVECTORS:\n0 0 L L\n0 1 L H\n1 0 L H\n1 1 L H\n",
+      "simulate": ["abs", "jed"]
+    },
+    {
+      "label": "standalone negated zero",
+      "source": "pin 3 = a; pin 22 = y; pin 21 = z;\ny = !'b'0; z = a;\n",
+      "reference": "pin 3 = a; pin 22 = y; pin 21 = z;\ny = 'b'1; z = a;\n"
+    },
+    {
+      "label": "adjacent negations belong to their own operands",
+      "source": "pin 3 = a; pin 22 = y;\ny = !'b'1 # !a;\n",
+      "reference": "pin 3 = a; pin 22 = y;\ny = !a;\n"
+    },
+    {
+      "label": "ordinary constants remain unchanged",
+      "source": "pin 3 = a; pin 22 = y;\ny = 'b'1 & a;\n",
+      "reference": "pin 3 = a; pin 22 = y;\ny = a;\n"
+    }
+  ]
+}
