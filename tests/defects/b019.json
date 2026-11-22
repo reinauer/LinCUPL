@@ -1,0 +1,1385 @@
+{
+  "device": "v750",
+  "variants": [
+    {
+      "device": "v750",
+      "label": "v750 d lhs False names False order False",
+      "source": "pin 2=a; pin 3=b; pin 16=f; pinnode 37=q;\nq.d=a;\nf=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750",
+      "label": "v750 d lhs False names False order True",
+      "source": "pin 2=a; pin 3=b; pin 16=f; pinnode 37=q;\nf=b;\nq.d=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750",
+      "label": "v750 d lhs False names True order False",
+      "source": "pin 2=a; pin 3=b; pin 16=z; pinnode 37=q;\nq.d=a;\nz=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750",
+      "label": "v750 d lhs False names True order True",
+      "source": "pin 2=a; pin 3=b; pin 16=z; pinnode 37=q;\nz=b;\nq.d=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750",
+      "label": "v750 d lhs True names False order False",
+      "source": "pin 2=a; pin 3=b; pin 16=f; pinnode 37=q;\n!q.d=a;\nf=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750",
+      "label": "v750 d lhs True names False order True",
+      "source": "pin 2=a; pin 3=b; pin 16=f; pinnode 37=q;\nf=b;\n!q.d=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750",
+      "label": "v750 d lhs True names True order False",
+      "source": "pin 2=a; pin 3=b; pin 16=z; pinnode 37=q;\n!q.d=a;\nz=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750",
+      "label": "v750 d lhs True names True order True",
+      "source": "pin 2=a; pin 3=b; pin 16=z; pinnode 37=q;\nz=b;\n!q.d=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750",
+      "label": "v750 single alias -jaxm1",
+      "flags": "-jaxm1",
+      "source": "pin 2=a; pin 3=b; pinnode 37=q;\nq.d=!(a&b);",
+      "reference": "pin 2=a; pin 3=b; pinnode 37=q;\nq.d=!a#!b;"
+    },
+    {
+      "device": "v750",
+      "label": "v750 single alias -jaxm1kb",
+      "flags": "-jaxm1kb",
+      "source": "pin 2=a; pin 3=b; pinnode 37=q;\nq.d=!(a&b);",
+      "reference": "pin 2=a; pin 3=b; pinnode 37=q;\nq.d=!a#!b;"
+    },
+    {
+      "device": "v750",
+      "label": "v750 single alias -jaxm1kd",
+      "flags": "-jaxm1kd",
+      "source": "pin 2=a; pin 3=b; pinnode 37=q;\nq.d=!(a&b);",
+      "reference": "pin 2=a; pin 3=b; pinnode 37=q;\nq.d=!a#!b;"
+    },
+    {
+      "device": "v750lcc",
+      "label": "v750lcc d lhs False names False order False",
+      "source": "pin 3=a; pin 4=b; pin 19=f; pinnode 41=q;\nq.d=a;\nf=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750lcc",
+      "label": "v750lcc d lhs False names False order True",
+      "source": "pin 3=a; pin 4=b; pin 19=f; pinnode 41=q;\nf=b;\nq.d=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750lcc",
+      "label": "v750lcc d lhs False names True order False",
+      "source": "pin 3=a; pin 4=b; pin 19=z; pinnode 41=q;\nq.d=a;\nz=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750lcc",
+      "label": "v750lcc d lhs False names True order True",
+      "source": "pin 3=a; pin 4=b; pin 19=z; pinnode 41=q;\nz=b;\nq.d=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750lcc",
+      "label": "v750lcc d lhs True names False order False",
+      "source": "pin 3=a; pin 4=b; pin 19=f; pinnode 41=q;\n!q.d=a;\nf=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750lcc",
+      "label": "v750lcc d lhs True names False order True",
+      "source": "pin 3=a; pin 4=b; pin 19=f; pinnode 41=q;\nf=b;\n!q.d=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750lcc",
+      "label": "v750lcc d lhs True names True order False",
+      "source": "pin 3=a; pin 4=b; pin 19=z; pinnode 41=q;\n!q.d=a;\nz=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750lcc",
+      "label": "v750lcc d lhs True names True order True",
+      "source": "pin 3=a; pin 4=b; pin 19=z; pinnode 41=q;\nz=b;\n!q.d=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750lcc",
+      "label": "v750lcc single alias -jaxm1",
+      "flags": "-jaxm1",
+      "source": "pin 3=a; pin 4=b; pinnode 41=q;\nq.d=!(a&b);",
+      "reference": "pin 3=a; pin 4=b; pinnode 41=q;\nq.d=!a#!b;"
+    },
+    {
+      "device": "v750lcc",
+      "label": "v750lcc single alias -jaxm1kb",
+      "flags": "-jaxm1kb",
+      "source": "pin 3=a; pin 4=b; pinnode 41=q;\nq.d=!(a&b);",
+      "reference": "pin 3=a; pin 4=b; pinnode 41=q;\nq.d=!a#!b;"
+    },
+    {
+      "device": "v750lcc",
+      "label": "v750lcc single alias -jaxm1kd",
+      "flags": "-jaxm1kd",
+      "source": "pin 3=a; pin 4=b; pinnode 41=q;\nq.d=!(a&b);",
+      "reference": "pin 3=a; pin 4=b; pinnode 41=q;\nq.d=!a#!b;"
+    },
+    {
+      "device": "v750b",
+      "label": "v750b d lhs False names False order False",
+      "source": "pin 2=a; pin 3=b; pin 16=f; pinnode 37=q;\nq.d=a;\nf=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750b",
+      "label": "v750b d lhs False names False order True",
+      "source": "pin 2=a; pin 3=b; pin 16=f; pinnode 37=q;\nf=b;\nq.d=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750b",
+      "label": "v750b d lhs False names True order False",
+      "source": "pin 2=a; pin 3=b; pin 16=z; pinnode 37=q;\nq.d=a;\nz=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750b",
+      "label": "v750b d lhs False names True order True",
+      "source": "pin 2=a; pin 3=b; pin 16=z; pinnode 37=q;\nz=b;\nq.d=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750b",
+      "label": "v750b d lhs True names False order False",
+      "source": "pin 2=a; pin 3=b; pin 16=f; pinnode 37=q;\n!q.d=a;\nf=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750b",
+      "label": "v750b d lhs True names False order True",
+      "source": "pin 2=a; pin 3=b; pin 16=f; pinnode 37=q;\nf=b;\n!q.d=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750b",
+      "label": "v750b d lhs True names True order False",
+      "source": "pin 2=a; pin 3=b; pin 16=z; pinnode 37=q;\n!q.d=a;\nz=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750b",
+      "label": "v750b d lhs True names True order True",
+      "source": "pin 2=a; pin 3=b; pin 16=z; pinnode 37=q;\nz=b;\n!q.d=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750b",
+      "label": "v750b t lhs False names False order False",
+      "source": "pin 2=a; pin 3=b; pin 16=f; pinnode 37=q;\nq.t=a;\nf=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750b",
+      "label": "v750b t lhs False names False order True",
+      "source": "pin 2=a; pin 3=b; pin 16=f; pinnode 37=q;\nf=b;\nq.t=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750b",
+      "label": "v750b t lhs False names True order False",
+      "source": "pin 2=a; pin 3=b; pin 16=z; pinnode 37=q;\nq.t=a;\nz=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750b",
+      "label": "v750b t lhs False names True order True",
+      "source": "pin 2=a; pin 3=b; pin 16=z; pinnode 37=q;\nz=b;\nq.t=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750b",
+      "label": "v750b t lhs True names False order False",
+      "source": "pin 2=a; pin 3=b; pin 16=f; pinnode 37=q;\n!q.t=a;\nf=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750b",
+      "label": "v750b t lhs True names False order True",
+      "source": "pin 2=a; pin 3=b; pin 16=f; pinnode 37=q;\nf=b;\n!q.t=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750b",
+      "label": "v750b t lhs True names True order False",
+      "source": "pin 2=a; pin 3=b; pin 16=z; pinnode 37=q;\n!q.t=a;\nz=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750b",
+      "label": "v750b t lhs True names True order True",
+      "source": "pin 2=a; pin 3=b; pin 16=z; pinnode 37=q;\nz=b;\n!q.t=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750b",
+      "label": "v750b single alias -jaxm1",
+      "flags": "-jaxm1",
+      "source": "pin 2=a; pin 3=b; pinnode 37=q;\nq.d=!(a&b);",
+      "reference": "pin 2=a; pin 3=b; pinnode 37=q;\nq.d=!a#!b;"
+    },
+    {
+      "device": "v750b",
+      "label": "v750b single alias -jaxm1kb",
+      "flags": "-jaxm1kb",
+      "source": "pin 2=a; pin 3=b; pinnode 37=q;\nq.d=!(a&b);",
+      "reference": "pin 2=a; pin 3=b; pinnode 37=q;\nq.d=!a#!b;"
+    },
+    {
+      "device": "v750b",
+      "label": "v750b single alias -jaxm1kd",
+      "flags": "-jaxm1kd",
+      "source": "pin 2=a; pin 3=b; pinnode 37=q;\nq.d=!(a&b);",
+      "reference": "pin 2=a; pin 3=b; pinnode 37=q;\nq.d=!a#!b;"
+    },
+    {
+      "device": "v750blcc",
+      "label": "v750blcc d lhs False names False order False",
+      "source": "pin 3=a; pin 4=b; pin 19=f; pinnode 41=q;\nq.d=a;\nf=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750blcc",
+      "label": "v750blcc d lhs False names False order True",
+      "source": "pin 3=a; pin 4=b; pin 19=f; pinnode 41=q;\nf=b;\nq.d=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750blcc",
+      "label": "v750blcc d lhs False names True order False",
+      "source": "pin 3=a; pin 4=b; pin 19=z; pinnode 41=q;\nq.d=a;\nz=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750blcc",
+      "label": "v750blcc d lhs False names True order True",
+      "source": "pin 3=a; pin 4=b; pin 19=z; pinnode 41=q;\nz=b;\nq.d=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750blcc",
+      "label": "v750blcc d lhs True names False order False",
+      "source": "pin 3=a; pin 4=b; pin 19=f; pinnode 41=q;\n!q.d=a;\nf=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750blcc",
+      "label": "v750blcc d lhs True names False order True",
+      "source": "pin 3=a; pin 4=b; pin 19=f; pinnode 41=q;\nf=b;\n!q.d=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750blcc",
+      "label": "v750blcc d lhs True names True order False",
+      "source": "pin 3=a; pin 4=b; pin 19=z; pinnode 41=q;\n!q.d=a;\nz=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750blcc",
+      "label": "v750blcc d lhs True names True order True",
+      "source": "pin 3=a; pin 4=b; pin 19=z; pinnode 41=q;\nz=b;\n!q.d=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750blcc",
+      "label": "v750blcc t lhs False names False order False",
+      "source": "pin 3=a; pin 4=b; pin 19=f; pinnode 41=q;\nq.t=a;\nf=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750blcc",
+      "label": "v750blcc t lhs False names False order True",
+      "source": "pin 3=a; pin 4=b; pin 19=f; pinnode 41=q;\nf=b;\nq.t=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750blcc",
+      "label": "v750blcc t lhs False names True order False",
+      "source": "pin 3=a; pin 4=b; pin 19=z; pinnode 41=q;\nq.t=a;\nz=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750blcc",
+      "label": "v750blcc t lhs False names True order True",
+      "source": "pin 3=a; pin 4=b; pin 19=z; pinnode 41=q;\nz=b;\nq.t=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750blcc",
+      "label": "v750blcc t lhs True names False order False",
+      "source": "pin 3=a; pin 4=b; pin 19=f; pinnode 41=q;\n!q.t=a;\nf=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750blcc",
+      "label": "v750blcc t lhs True names False order True",
+      "source": "pin 3=a; pin 4=b; pin 19=f; pinnode 41=q;\nf=b;\n!q.t=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750blcc",
+      "label": "v750blcc t lhs True names True order False",
+      "source": "pin 3=a; pin 4=b; pin 19=z; pinnode 41=q;\n!q.t=a;\nz=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750blcc",
+      "label": "v750blcc t lhs True names True order True",
+      "source": "pin 3=a; pin 4=b; pin 19=z; pinnode 41=q;\nz=b;\n!q.t=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750blcc",
+      "label": "v750blcc single alias -jaxm1",
+      "flags": "-jaxm1",
+      "source": "pin 3=a; pin 4=b; pinnode 41=q;\nq.d=!(a&b);",
+      "reference": "pin 3=a; pin 4=b; pinnode 41=q;\nq.d=!a#!b;"
+    },
+    {
+      "device": "v750blcc",
+      "label": "v750blcc single alias -jaxm1kb",
+      "flags": "-jaxm1kb",
+      "source": "pin 3=a; pin 4=b; pinnode 41=q;\nq.d=!(a&b);",
+      "reference": "pin 3=a; pin 4=b; pinnode 41=q;\nq.d=!a#!b;"
+    },
+    {
+      "device": "v750blcc",
+      "label": "v750blcc single alias -jaxm1kd",
+      "flags": "-jaxm1kd",
+      "source": "pin 3=a; pin 4=b; pinnode 41=q;\nq.d=!(a&b);",
+      "reference": "pin 3=a; pin 4=b; pinnode 41=q;\nq.d=!a#!b;"
+    },
+    {
+      "device": "v750c",
+      "label": "v750c d lhs False names False order False",
+      "source": "pin 2=a; pin 3=b; pin 16=f; pinnode 37=q;\nq.d=a;\nf=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750c",
+      "label": "v750c d lhs False names False order True",
+      "source": "pin 2=a; pin 3=b; pin 16=f; pinnode 37=q;\nf=b;\nq.d=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750c",
+      "label": "v750c d lhs False names True order False",
+      "source": "pin 2=a; pin 3=b; pin 16=z; pinnode 37=q;\nq.d=a;\nz=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750c",
+      "label": "v750c d lhs False names True order True",
+      "source": "pin 2=a; pin 3=b; pin 16=z; pinnode 37=q;\nz=b;\nq.d=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750c",
+      "label": "v750c d lhs True names False order False",
+      "source": "pin 2=a; pin 3=b; pin 16=f; pinnode 37=q;\n!q.d=a;\nf=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750c",
+      "label": "v750c d lhs True names False order True",
+      "source": "pin 2=a; pin 3=b; pin 16=f; pinnode 37=q;\nf=b;\n!q.d=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750c",
+      "label": "v750c d lhs True names True order False",
+      "source": "pin 2=a; pin 3=b; pin 16=z; pinnode 37=q;\n!q.d=a;\nz=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750c",
+      "label": "v750c d lhs True names True order True",
+      "source": "pin 2=a; pin 3=b; pin 16=z; pinnode 37=q;\nz=b;\n!q.d=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750c",
+      "label": "v750c t lhs False names False order False",
+      "source": "pin 2=a; pin 3=b; pin 16=f; pinnode 37=q;\nq.t=a;\nf=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750c",
+      "label": "v750c t lhs False names False order True",
+      "source": "pin 2=a; pin 3=b; pin 16=f; pinnode 37=q;\nf=b;\nq.t=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750c",
+      "label": "v750c t lhs False names True order False",
+      "source": "pin 2=a; pin 3=b; pin 16=z; pinnode 37=q;\nq.t=a;\nz=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750c",
+      "label": "v750c t lhs False names True order True",
+      "source": "pin 2=a; pin 3=b; pin 16=z; pinnode 37=q;\nz=b;\nq.t=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750c",
+      "label": "v750c t lhs True names False order False",
+      "source": "pin 2=a; pin 3=b; pin 16=f; pinnode 37=q;\n!q.t=a;\nf=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750c",
+      "label": "v750c t lhs True names False order True",
+      "source": "pin 2=a; pin 3=b; pin 16=f; pinnode 37=q;\nf=b;\n!q.t=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750c",
+      "label": "v750c t lhs True names True order False",
+      "source": "pin 2=a; pin 3=b; pin 16=z; pinnode 37=q;\n!q.t=a;\nz=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750c",
+      "label": "v750c t lhs True names True order True",
+      "source": "pin 2=a; pin 3=b; pin 16=z; pinnode 37=q;\nz=b;\n!q.t=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750c",
+      "label": "v750c single alias -jaxm1",
+      "flags": "-jaxm1",
+      "source": "pin 2=a; pin 3=b; pinnode 37=q;\nq.d=!(a&b);",
+      "reference": "pin 2=a; pin 3=b; pinnode 37=q;\nq.d=!a#!b;"
+    },
+    {
+      "device": "v750c",
+      "label": "v750c single alias -jaxm1kb",
+      "flags": "-jaxm1kb",
+      "source": "pin 2=a; pin 3=b; pinnode 37=q;\nq.d=!(a&b);",
+      "reference": "pin 2=a; pin 3=b; pinnode 37=q;\nq.d=!a#!b;"
+    },
+    {
+      "device": "v750c",
+      "label": "v750c single alias -jaxm1kd",
+      "flags": "-jaxm1kd",
+      "source": "pin 2=a; pin 3=b; pinnode 37=q;\nq.d=!(a&b);",
+      "reference": "pin 2=a; pin 3=b; pinnode 37=q;\nq.d=!a#!b;"
+    },
+    {
+      "device": "v750cext",
+      "label": "v750cext d lhs False names False order False",
+      "source": "pin 2=a; pin 3=b; pin 16=f; pinnode 37=q;\nq.d=a;\nf=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cext",
+      "label": "v750cext d lhs False names False order True",
+      "source": "pin 2=a; pin 3=b; pin 16=f; pinnode 37=q;\nf=b;\nq.d=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cext",
+      "label": "v750cext d lhs False names True order False",
+      "source": "pin 2=a; pin 3=b; pin 16=z; pinnode 37=q;\nq.d=a;\nz=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cext",
+      "label": "v750cext d lhs False names True order True",
+      "source": "pin 2=a; pin 3=b; pin 16=z; pinnode 37=q;\nz=b;\nq.d=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cext",
+      "label": "v750cext d lhs True names False order False",
+      "source": "pin 2=a; pin 3=b; pin 16=f; pinnode 37=q;\n!q.d=a;\nf=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cext",
+      "label": "v750cext d lhs True names False order True",
+      "source": "pin 2=a; pin 3=b; pin 16=f; pinnode 37=q;\nf=b;\n!q.d=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cext",
+      "label": "v750cext d lhs True names True order False",
+      "source": "pin 2=a; pin 3=b; pin 16=z; pinnode 37=q;\n!q.d=a;\nz=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cext",
+      "label": "v750cext d lhs True names True order True",
+      "source": "pin 2=a; pin 3=b; pin 16=z; pinnode 37=q;\nz=b;\n!q.d=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cext",
+      "label": "v750cext t lhs False names False order False",
+      "source": "pin 2=a; pin 3=b; pin 16=f; pinnode 37=q;\nq.t=a;\nf=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cext",
+      "label": "v750cext t lhs False names False order True",
+      "source": "pin 2=a; pin 3=b; pin 16=f; pinnode 37=q;\nf=b;\nq.t=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cext",
+      "label": "v750cext t lhs False names True order False",
+      "source": "pin 2=a; pin 3=b; pin 16=z; pinnode 37=q;\nq.t=a;\nz=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cext",
+      "label": "v750cext t lhs False names True order True",
+      "source": "pin 2=a; pin 3=b; pin 16=z; pinnode 37=q;\nz=b;\nq.t=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cext",
+      "label": "v750cext t lhs True names False order False",
+      "source": "pin 2=a; pin 3=b; pin 16=f; pinnode 37=q;\n!q.t=a;\nf=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cext",
+      "label": "v750cext t lhs True names False order True",
+      "source": "pin 2=a; pin 3=b; pin 16=f; pinnode 37=q;\nf=b;\n!q.t=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cext",
+      "label": "v750cext t lhs True names True order False",
+      "source": "pin 2=a; pin 3=b; pin 16=z; pinnode 37=q;\n!q.t=a;\nz=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cext",
+      "label": "v750cext t lhs True names True order True",
+      "source": "pin 2=a; pin 3=b; pin 16=z; pinnode 37=q;\nz=b;\n!q.t=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cext",
+      "label": "v750cext single alias -jaxm1",
+      "flags": "-jaxm1",
+      "source": "pin 2=a; pin 3=b; pinnode 37=q;\nq.d=!(a&b);",
+      "reference": "pin 2=a; pin 3=b; pinnode 37=q;\nq.d=!a#!b;"
+    },
+    {
+      "device": "v750cext",
+      "label": "v750cext single alias -jaxm1kb",
+      "flags": "-jaxm1kb",
+      "source": "pin 2=a; pin 3=b; pinnode 37=q;\nq.d=!(a&b);",
+      "reference": "pin 2=a; pin 3=b; pinnode 37=q;\nq.d=!a#!b;"
+    },
+    {
+      "device": "v750cext",
+      "label": "v750cext single alias -jaxm1kd",
+      "flags": "-jaxm1kd",
+      "source": "pin 2=a; pin 3=b; pinnode 37=q;\nq.d=!(a&b);",
+      "reference": "pin 2=a; pin 3=b; pinnode 37=q;\nq.d=!a#!b;"
+    },
+    {
+      "device": "v750cextppk",
+      "label": "v750cextppk d lhs False names False order False",
+      "source": "pin 2=a; pin 3=b; pin 16=f; pinnode 37=q;\nq.d=a;\nf=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cextppk",
+      "label": "v750cextppk d lhs False names False order True",
+      "source": "pin 2=a; pin 3=b; pin 16=f; pinnode 37=q;\nf=b;\nq.d=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cextppk",
+      "label": "v750cextppk d lhs False names True order False",
+      "source": "pin 2=a; pin 3=b; pin 16=z; pinnode 37=q;\nq.d=a;\nz=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cextppk",
+      "label": "v750cextppk d lhs False names True order True",
+      "source": "pin 2=a; pin 3=b; pin 16=z; pinnode 37=q;\nz=b;\nq.d=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cextppk",
+      "label": "v750cextppk d lhs True names False order False",
+      "source": "pin 2=a; pin 3=b; pin 16=f; pinnode 37=q;\n!q.d=a;\nf=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cextppk",
+      "label": "v750cextppk d lhs True names False order True",
+      "source": "pin 2=a; pin 3=b; pin 16=f; pinnode 37=q;\nf=b;\n!q.d=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cextppk",
+      "label": "v750cextppk d lhs True names True order False",
+      "source": "pin 2=a; pin 3=b; pin 16=z; pinnode 37=q;\n!q.d=a;\nz=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cextppk",
+      "label": "v750cextppk d lhs True names True order True",
+      "source": "pin 2=a; pin 3=b; pin 16=z; pinnode 37=q;\nz=b;\n!q.d=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cextppk",
+      "label": "v750cextppk t lhs False names False order False",
+      "source": "pin 2=a; pin 3=b; pin 16=f; pinnode 37=q;\nq.t=a;\nf=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cextppk",
+      "label": "v750cextppk t lhs False names False order True",
+      "source": "pin 2=a; pin 3=b; pin 16=f; pinnode 37=q;\nf=b;\nq.t=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cextppk",
+      "label": "v750cextppk t lhs False names True order False",
+      "source": "pin 2=a; pin 3=b; pin 16=z; pinnode 37=q;\nq.t=a;\nz=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cextppk",
+      "label": "v750cextppk t lhs False names True order True",
+      "source": "pin 2=a; pin 3=b; pin 16=z; pinnode 37=q;\nz=b;\nq.t=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cextppk",
+      "label": "v750cextppk t lhs True names False order False",
+      "source": "pin 2=a; pin 3=b; pin 16=f; pinnode 37=q;\n!q.t=a;\nf=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cextppk",
+      "label": "v750cextppk t lhs True names False order True",
+      "source": "pin 2=a; pin 3=b; pin 16=f; pinnode 37=q;\nf=b;\n!q.t=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cextppk",
+      "label": "v750cextppk t lhs True names True order False",
+      "source": "pin 2=a; pin 3=b; pin 16=z; pinnode 37=q;\n!q.t=a;\nz=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cextppk",
+      "label": "v750cextppk t lhs True names True order True",
+      "source": "pin 2=a; pin 3=b; pin 16=z; pinnode 37=q;\nz=b;\n!q.t=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cextppk",
+      "label": "v750cextppk single alias -jaxm1",
+      "flags": "-jaxm1",
+      "source": "pin 2=a; pin 3=b; pinnode 37=q;\nq.d=!(a&b);",
+      "reference": "pin 2=a; pin 3=b; pinnode 37=q;\nq.d=!a#!b;"
+    },
+    {
+      "device": "v750cextppk",
+      "label": "v750cextppk single alias -jaxm1kb",
+      "flags": "-jaxm1kb",
+      "source": "pin 2=a; pin 3=b; pinnode 37=q;\nq.d=!(a&b);",
+      "reference": "pin 2=a; pin 3=b; pinnode 37=q;\nq.d=!a#!b;"
+    },
+    {
+      "device": "v750cextppk",
+      "label": "v750cextppk single alias -jaxm1kd",
+      "flags": "-jaxm1kd",
+      "source": "pin 2=a; pin 3=b; pinnode 37=q;\nq.d=!(a&b);",
+      "reference": "pin 2=a; pin 3=b; pinnode 37=q;\nq.d=!a#!b;"
+    },
+    {
+      "device": "v750cppk",
+      "label": "v750cppk d lhs False names False order False",
+      "source": "pin 2=a; pin 3=b; pin 16=f; pinnode 37=q;\nq.d=a;\nf=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cppk",
+      "label": "v750cppk d lhs False names False order True",
+      "source": "pin 2=a; pin 3=b; pin 16=f; pinnode 37=q;\nf=b;\nq.d=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cppk",
+      "label": "v750cppk d lhs False names True order False",
+      "source": "pin 2=a; pin 3=b; pin 16=z; pinnode 37=q;\nq.d=a;\nz=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cppk",
+      "label": "v750cppk d lhs False names True order True",
+      "source": "pin 2=a; pin 3=b; pin 16=z; pinnode 37=q;\nz=b;\nq.d=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cppk",
+      "label": "v750cppk d lhs True names False order False",
+      "source": "pin 2=a; pin 3=b; pin 16=f; pinnode 37=q;\n!q.d=a;\nf=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cppk",
+      "label": "v750cppk d lhs True names False order True",
+      "source": "pin 2=a; pin 3=b; pin 16=f; pinnode 37=q;\nf=b;\n!q.d=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cppk",
+      "label": "v750cppk d lhs True names True order False",
+      "source": "pin 2=a; pin 3=b; pin 16=z; pinnode 37=q;\n!q.d=a;\nz=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cppk",
+      "label": "v750cppk d lhs True names True order True",
+      "source": "pin 2=a; pin 3=b; pin 16=z; pinnode 37=q;\nz=b;\n!q.d=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cppk",
+      "label": "v750cppk t lhs False names False order False",
+      "source": "pin 2=a; pin 3=b; pin 16=f; pinnode 37=q;\nq.t=a;\nf=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cppk",
+      "label": "v750cppk t lhs False names False order True",
+      "source": "pin 2=a; pin 3=b; pin 16=f; pinnode 37=q;\nf=b;\nq.t=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cppk",
+      "label": "v750cppk t lhs False names True order False",
+      "source": "pin 2=a; pin 3=b; pin 16=z; pinnode 37=q;\nq.t=a;\nz=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cppk",
+      "label": "v750cppk t lhs False names True order True",
+      "source": "pin 2=a; pin 3=b; pin 16=z; pinnode 37=q;\nz=b;\nq.t=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cppk",
+      "label": "v750cppk t lhs True names False order False",
+      "source": "pin 2=a; pin 3=b; pin 16=f; pinnode 37=q;\n!q.t=a;\nf=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cppk",
+      "label": "v750cppk t lhs True names False order True",
+      "source": "pin 2=a; pin 3=b; pin 16=f; pinnode 37=q;\nf=b;\n!q.t=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cppk",
+      "label": "v750cppk t lhs True names True order False",
+      "source": "pin 2=a; pin 3=b; pin 16=z; pinnode 37=q;\n!q.t=a;\nz=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cppk",
+      "label": "v750cppk t lhs True names True order True",
+      "source": "pin 2=a; pin 3=b; pin 16=z; pinnode 37=q;\nz=b;\n!q.t=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cppk",
+      "label": "v750cppk single alias -jaxm1",
+      "flags": "-jaxm1",
+      "source": "pin 2=a; pin 3=b; pinnode 37=q;\nq.d=!(a&b);",
+      "reference": "pin 2=a; pin 3=b; pinnode 37=q;\nq.d=!a#!b;"
+    },
+    {
+      "device": "v750cppk",
+      "label": "v750cppk single alias -jaxm1kb",
+      "flags": "-jaxm1kb",
+      "source": "pin 2=a; pin 3=b; pinnode 37=q;\nq.d=!(a&b);",
+      "reference": "pin 2=a; pin 3=b; pinnode 37=q;\nq.d=!a#!b;"
+    },
+    {
+      "device": "v750cppk",
+      "label": "v750cppk single alias -jaxm1kd",
+      "flags": "-jaxm1kd",
+      "source": "pin 2=a; pin 3=b; pinnode 37=q;\nq.d=!(a&b);",
+      "reference": "pin 2=a; pin 3=b; pinnode 37=q;\nq.d=!a#!b;"
+    },
+    {
+      "device": "v750clcc",
+      "label": "v750clcc d lhs False names False order False",
+      "source": "pin 3=a; pin 4=b; pin 19=f; pinnode 41=q;\nq.d=a;\nf=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750clcc",
+      "label": "v750clcc d lhs False names False order True",
+      "source": "pin 3=a; pin 4=b; pin 19=f; pinnode 41=q;\nf=b;\nq.d=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750clcc",
+      "label": "v750clcc d lhs False names True order False",
+      "source": "pin 3=a; pin 4=b; pin 19=z; pinnode 41=q;\nq.d=a;\nz=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750clcc",
+      "label": "v750clcc d lhs False names True order True",
+      "source": "pin 3=a; pin 4=b; pin 19=z; pinnode 41=q;\nz=b;\nq.d=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750clcc",
+      "label": "v750clcc d lhs True names False order False",
+      "source": "pin 3=a; pin 4=b; pin 19=f; pinnode 41=q;\n!q.d=a;\nf=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750clcc",
+      "label": "v750clcc d lhs True names False order True",
+      "source": "pin 3=a; pin 4=b; pin 19=f; pinnode 41=q;\nf=b;\n!q.d=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750clcc",
+      "label": "v750clcc d lhs True names True order False",
+      "source": "pin 3=a; pin 4=b; pin 19=z; pinnode 41=q;\n!q.d=a;\nz=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750clcc",
+      "label": "v750clcc d lhs True names True order True",
+      "source": "pin 3=a; pin 4=b; pin 19=z; pinnode 41=q;\nz=b;\n!q.d=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750clcc",
+      "label": "v750clcc t lhs False names False order False",
+      "source": "pin 3=a; pin 4=b; pin 19=f; pinnode 41=q;\nq.t=a;\nf=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750clcc",
+      "label": "v750clcc t lhs False names False order True",
+      "source": "pin 3=a; pin 4=b; pin 19=f; pinnode 41=q;\nf=b;\nq.t=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750clcc",
+      "label": "v750clcc t lhs False names True order False",
+      "source": "pin 3=a; pin 4=b; pin 19=z; pinnode 41=q;\nq.t=a;\nz=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750clcc",
+      "label": "v750clcc t lhs False names True order True",
+      "source": "pin 3=a; pin 4=b; pin 19=z; pinnode 41=q;\nz=b;\nq.t=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750clcc",
+      "label": "v750clcc t lhs True names False order False",
+      "source": "pin 3=a; pin 4=b; pin 19=f; pinnode 41=q;\n!q.t=a;\nf=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750clcc",
+      "label": "v750clcc t lhs True names False order True",
+      "source": "pin 3=a; pin 4=b; pin 19=f; pinnode 41=q;\nf=b;\n!q.t=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750clcc",
+      "label": "v750clcc t lhs True names True order False",
+      "source": "pin 3=a; pin 4=b; pin 19=z; pinnode 41=q;\n!q.t=a;\nz=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750clcc",
+      "label": "v750clcc t lhs True names True order True",
+      "source": "pin 3=a; pin 4=b; pin 19=z; pinnode 41=q;\nz=b;\n!q.t=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750clcc",
+      "label": "v750clcc single alias -jaxm1",
+      "flags": "-jaxm1",
+      "source": "pin 3=a; pin 4=b; pinnode 41=q;\nq.d=!(a&b);",
+      "reference": "pin 3=a; pin 4=b; pinnode 41=q;\nq.d=!a#!b;"
+    },
+    {
+      "device": "v750clcc",
+      "label": "v750clcc single alias -jaxm1kb",
+      "flags": "-jaxm1kb",
+      "source": "pin 3=a; pin 4=b; pinnode 41=q;\nq.d=!(a&b);",
+      "reference": "pin 3=a; pin 4=b; pinnode 41=q;\nq.d=!a#!b;"
+    },
+    {
+      "device": "v750clcc",
+      "label": "v750clcc single alias -jaxm1kd",
+      "flags": "-jaxm1kd",
+      "source": "pin 3=a; pin 4=b; pinnode 41=q;\nq.d=!(a&b);",
+      "reference": "pin 3=a; pin 4=b; pinnode 41=q;\nq.d=!a#!b;"
+    },
+    {
+      "device": "v750cextlcc",
+      "label": "v750cextlcc d lhs False names False order False",
+      "source": "pin 3=a; pin 4=b; pin 19=f; pinnode 41=q;\nq.d=a;\nf=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cextlcc",
+      "label": "v750cextlcc d lhs False names False order True",
+      "source": "pin 3=a; pin 4=b; pin 19=f; pinnode 41=q;\nf=b;\nq.d=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cextlcc",
+      "label": "v750cextlcc d lhs False names True order False",
+      "source": "pin 3=a; pin 4=b; pin 19=z; pinnode 41=q;\nq.d=a;\nz=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cextlcc",
+      "label": "v750cextlcc d lhs False names True order True",
+      "source": "pin 3=a; pin 4=b; pin 19=z; pinnode 41=q;\nz=b;\nq.d=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cextlcc",
+      "label": "v750cextlcc d lhs True names False order False",
+      "source": "pin 3=a; pin 4=b; pin 19=f; pinnode 41=q;\n!q.d=a;\nf=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cextlcc",
+      "label": "v750cextlcc d lhs True names False order True",
+      "source": "pin 3=a; pin 4=b; pin 19=f; pinnode 41=q;\nf=b;\n!q.d=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cextlcc",
+      "label": "v750cextlcc d lhs True names True order False",
+      "source": "pin 3=a; pin 4=b; pin 19=z; pinnode 41=q;\n!q.d=a;\nz=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cextlcc",
+      "label": "v750cextlcc d lhs True names True order True",
+      "source": "pin 3=a; pin 4=b; pin 19=z; pinnode 41=q;\nz=b;\n!q.d=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cextlcc",
+      "label": "v750cextlcc t lhs False names False order False",
+      "source": "pin 3=a; pin 4=b; pin 19=f; pinnode 41=q;\nq.t=a;\nf=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cextlcc",
+      "label": "v750cextlcc t lhs False names False order True",
+      "source": "pin 3=a; pin 4=b; pin 19=f; pinnode 41=q;\nf=b;\nq.t=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cextlcc",
+      "label": "v750cextlcc t lhs False names True order False",
+      "source": "pin 3=a; pin 4=b; pin 19=z; pinnode 41=q;\nq.t=a;\nz=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cextlcc",
+      "label": "v750cextlcc t lhs False names True order True",
+      "source": "pin 3=a; pin 4=b; pin 19=z; pinnode 41=q;\nz=b;\nq.t=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cextlcc",
+      "label": "v750cextlcc t lhs True names False order False",
+      "source": "pin 3=a; pin 4=b; pin 19=f; pinnode 41=q;\n!q.t=a;\nf=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cextlcc",
+      "label": "v750cextlcc t lhs True names False order True",
+      "source": "pin 3=a; pin 4=b; pin 19=f; pinnode 41=q;\nf=b;\n!q.t=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cextlcc",
+      "label": "v750cextlcc t lhs True names True order False",
+      "source": "pin 3=a; pin 4=b; pin 19=z; pinnode 41=q;\n!q.t=a;\nz=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cextlcc",
+      "label": "v750cextlcc t lhs True names True order True",
+      "source": "pin 3=a; pin 4=b; pin 19=z; pinnode 41=q;\nz=b;\n!q.t=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cextlcc",
+      "label": "v750cextlcc single alias -jaxm1",
+      "flags": "-jaxm1",
+      "source": "pin 3=a; pin 4=b; pinnode 41=q;\nq.d=!(a&b);",
+      "reference": "pin 3=a; pin 4=b; pinnode 41=q;\nq.d=!a#!b;"
+    },
+    {
+      "device": "v750cextlcc",
+      "label": "v750cextlcc single alias -jaxm1kb",
+      "flags": "-jaxm1kb",
+      "source": "pin 3=a; pin 4=b; pinnode 41=q;\nq.d=!(a&b);",
+      "reference": "pin 3=a; pin 4=b; pinnode 41=q;\nq.d=!a#!b;"
+    },
+    {
+      "device": "v750cextlcc",
+      "label": "v750cextlcc single alias -jaxm1kd",
+      "flags": "-jaxm1kd",
+      "source": "pin 3=a; pin 4=b; pinnode 41=q;\nq.d=!(a&b);",
+      "reference": "pin 3=a; pin 4=b; pinnode 41=q;\nq.d=!a#!b;"
+    },
+    {
+      "device": "v750cextppklcc",
+      "label": "v750cextppklcc d lhs False names False order False",
+      "source": "pin 3=a; pin 4=b; pin 19=f; pinnode 41=q;\nq.d=a;\nf=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cextppklcc",
+      "label": "v750cextppklcc d lhs False names False order True",
+      "source": "pin 3=a; pin 4=b; pin 19=f; pinnode 41=q;\nf=b;\nq.d=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cextppklcc",
+      "label": "v750cextppklcc d lhs False names True order False",
+      "source": "pin 3=a; pin 4=b; pin 19=z; pinnode 41=q;\nq.d=a;\nz=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cextppklcc",
+      "label": "v750cextppklcc d lhs False names True order True",
+      "source": "pin 3=a; pin 4=b; pin 19=z; pinnode 41=q;\nz=b;\nq.d=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cextppklcc",
+      "label": "v750cextppklcc d lhs True names False order False",
+      "source": "pin 3=a; pin 4=b; pin 19=f; pinnode 41=q;\n!q.d=a;\nf=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cextppklcc",
+      "label": "v750cextppklcc d lhs True names False order True",
+      "source": "pin 3=a; pin 4=b; pin 19=f; pinnode 41=q;\nf=b;\n!q.d=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cextppklcc",
+      "label": "v750cextppklcc d lhs True names True order False",
+      "source": "pin 3=a; pin 4=b; pin 19=z; pinnode 41=q;\n!q.d=a;\nz=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cextppklcc",
+      "label": "v750cextppklcc d lhs True names True order True",
+      "source": "pin 3=a; pin 4=b; pin 19=z; pinnode 41=q;\nz=b;\n!q.d=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cextppklcc",
+      "label": "v750cextppklcc t lhs False names False order False",
+      "source": "pin 3=a; pin 4=b; pin 19=f; pinnode 41=q;\nq.t=a;\nf=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cextppklcc",
+      "label": "v750cextppklcc t lhs False names False order True",
+      "source": "pin 3=a; pin 4=b; pin 19=f; pinnode 41=q;\nf=b;\nq.t=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cextppklcc",
+      "label": "v750cextppklcc t lhs False names True order False",
+      "source": "pin 3=a; pin 4=b; pin 19=z; pinnode 41=q;\nq.t=a;\nz=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cextppklcc",
+      "label": "v750cextppklcc t lhs False names True order True",
+      "source": "pin 3=a; pin 4=b; pin 19=z; pinnode 41=q;\nz=b;\nq.t=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cextppklcc",
+      "label": "v750cextppklcc t lhs True names False order False",
+      "source": "pin 3=a; pin 4=b; pin 19=f; pinnode 41=q;\n!q.t=a;\nf=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cextppklcc",
+      "label": "v750cextppklcc t lhs True names False order True",
+      "source": "pin 3=a; pin 4=b; pin 19=f; pinnode 41=q;\nf=b;\n!q.t=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cextppklcc",
+      "label": "v750cextppklcc t lhs True names True order False",
+      "source": "pin 3=a; pin 4=b; pin 19=z; pinnode 41=q;\n!q.t=a;\nz=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cextppklcc",
+      "label": "v750cextppklcc t lhs True names True order True",
+      "source": "pin 3=a; pin 4=b; pin 19=z; pinnode 41=q;\nz=b;\n!q.t=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cextppklcc",
+      "label": "v750cextppklcc single alias -jaxm1",
+      "flags": "-jaxm1",
+      "source": "pin 3=a; pin 4=b; pinnode 41=q;\nq.d=!(a&b);",
+      "reference": "pin 3=a; pin 4=b; pinnode 41=q;\nq.d=!a#!b;"
+    },
+    {
+      "device": "v750cextppklcc",
+      "label": "v750cextppklcc single alias -jaxm1kb",
+      "flags": "-jaxm1kb",
+      "source": "pin 3=a; pin 4=b; pinnode 41=q;\nq.d=!(a&b);",
+      "reference": "pin 3=a; pin 4=b; pinnode 41=q;\nq.d=!a#!b;"
+    },
+    {
+      "device": "v750cextppklcc",
+      "label": "v750cextppklcc single alias -jaxm1kd",
+      "flags": "-jaxm1kd",
+      "source": "pin 3=a; pin 4=b; pinnode 41=q;\nq.d=!(a&b);",
+      "reference": "pin 3=a; pin 4=b; pinnode 41=q;\nq.d=!a#!b;"
+    },
+    {
+      "device": "v750cppklcc",
+      "label": "v750cppklcc d lhs False names False order False",
+      "source": "pin 3=a; pin 4=b; pin 19=f; pinnode 41=q;\nq.d=a;\nf=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cppklcc",
+      "label": "v750cppklcc d lhs False names False order True",
+      "source": "pin 3=a; pin 4=b; pin 19=f; pinnode 41=q;\nf=b;\nq.d=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cppklcc",
+      "label": "v750cppklcc d lhs False names True order False",
+      "source": "pin 3=a; pin 4=b; pin 19=z; pinnode 41=q;\nq.d=a;\nz=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cppklcc",
+      "label": "v750cppklcc d lhs False names True order True",
+      "source": "pin 3=a; pin 4=b; pin 19=z; pinnode 41=q;\nz=b;\nq.d=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cppklcc",
+      "label": "v750cppklcc d lhs True names False order False",
+      "source": "pin 3=a; pin 4=b; pin 19=f; pinnode 41=q;\n!q.d=a;\nf=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cppklcc",
+      "label": "v750cppklcc d lhs True names False order True",
+      "source": "pin 3=a; pin 4=b; pin 19=f; pinnode 41=q;\nf=b;\n!q.d=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cppklcc",
+      "label": "v750cppklcc d lhs True names True order False",
+      "source": "pin 3=a; pin 4=b; pin 19=z; pinnode 41=q;\n!q.d=a;\nz=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cppklcc",
+      "label": "v750cppklcc d lhs True names True order True",
+      "source": "pin 3=a; pin 4=b; pin 19=z; pinnode 41=q;\nz=b;\n!q.d=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cppklcc",
+      "label": "v750cppklcc t lhs False names False order False",
+      "source": "pin 3=a; pin 4=b; pin 19=f; pinnode 41=q;\nq.t=a;\nf=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cppklcc",
+      "label": "v750cppklcc t lhs False names False order True",
+      "source": "pin 3=a; pin 4=b; pin 19=f; pinnode 41=q;\nf=b;\nq.t=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cppklcc",
+      "label": "v750cppklcc t lhs False names True order False",
+      "source": "pin 3=a; pin 4=b; pin 19=z; pinnode 41=q;\nq.t=a;\nz=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cppklcc",
+      "label": "v750cppklcc t lhs False names True order True",
+      "source": "pin 3=a; pin 4=b; pin 19=z; pinnode 41=q;\nz=b;\nq.t=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cppklcc",
+      "label": "v750cppklcc t lhs True names False order False",
+      "source": "pin 3=a; pin 4=b; pin 19=f; pinnode 41=q;\n!q.t=a;\nf=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cppklcc",
+      "label": "v750cppklcc t lhs True names False order True",
+      "source": "pin 3=a; pin 4=b; pin 19=f; pinnode 41=q;\nf=b;\n!q.t=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cppklcc",
+      "label": "v750cppklcc t lhs True names True order False",
+      "source": "pin 3=a; pin 4=b; pin 19=z; pinnode 41=q;\n!q.t=a;\nz=b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cppklcc",
+      "label": "v750cppklcc t lhs True names True order True",
+      "source": "pin 3=a; pin 4=b; pin 19=z; pinnode 41=q;\nz=b;\n!q.t=a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "device": "v750cppklcc",
+      "label": "v750cppklcc single alias -jaxm1",
+      "flags": "-jaxm1",
+      "source": "pin 3=a; pin 4=b; pinnode 41=q;\nq.d=!(a&b);",
+      "reference": "pin 3=a; pin 4=b; pinnode 41=q;\nq.d=!a#!b;"
+    },
+    {
+      "device": "v750cppklcc",
+      "label": "v750cppklcc single alias -jaxm1kb",
+      "flags": "-jaxm1kb",
+      "source": "pin 3=a; pin 4=b; pinnode 41=q;\nq.d=!(a&b);",
+      "reference": "pin 3=a; pin 4=b; pinnode 41=q;\nq.d=!a#!b;"
+    },
+    {
+      "device": "v750cppklcc",
+      "label": "v750cppklcc single alias -jaxm1kd",
+      "flags": "-jaxm1kd",
+      "source": "pin 3=a; pin 4=b; pinnode 41=q;\nq.d=!(a&b);",
+      "reference": "pin 3=a; pin 4=b; pinnode 41=q;\nq.d=!a#!b;"
+    },
+    {
+      "device": "v750",
+      "label": "v750 separate macrocell",
+      "source": "pin 1=clk; pin 2=a; pin 3=b; pin 22=f; pinnode 37=q; q.d=!(a&b); q.ck=clk; f=b;",
+      "vectors": "order: clk,a,b,f;\nvectors:\n0 0 0 L\nC 1 0 L\nC 0 1 H\n0 1 1 H\n"
+    },
+    {
+      "device": "v750lcc",
+      "label": "v750lcc separate macrocell",
+      "source": "pin 2=clk; pin 3=a; pin 4=b; pin 26=f; pinnode 41=q; q.d=!(a&b); q.ck=clk; f=b;",
+      "vectors": "order: clk,a,b,f;\nvectors:\n0 0 0 L\nC 1 0 L\nC 0 1 H\n0 1 1 H\n"
+    },
+    {
+      "device": "v750b",
+      "label": "v750b separate macrocell",
+      "source": "pin 1=clk; pin 2=a; pin 3=b; pin 22=f; pinnode 37=q; q.d=!(a&b); q.ck=clk; f=b;",
+      "vectors": "order: clk,a,b,f;\nvectors:\n0 0 0 L\nC 1 0 L\nC 0 1 H\n0 1 1 H\n"
+    },
+    {
+      "device": "v750blcc",
+      "label": "v750blcc separate macrocell",
+      "source": "pin 2=clk; pin 3=a; pin 4=b; pin 26=f; pinnode 41=q; q.d=!(a&b); q.ck=clk; f=b;",
+      "vectors": "order: clk,a,b,f;\nvectors:\n0 0 0 L\nC 1 0 L\nC 0 1 H\n0 1 1 H\n"
+    },
+    {
+      "device": "v750c",
+      "label": "v750c separate macrocell",
+      "source": "pin 1=clk; pin 2=a; pin 3=b; pin 22=f; pinnode 37=q; q.d=!(a&b); q.ck=clk; f=b;",
+      "vectors": "order: clk,a,b,f;\nvectors:\n0 0 0 L\nC 1 0 L\nC 0 1 H\n0 1 1 H\n"
+    },
+    {
+      "device": "v750cext",
+      "label": "v750cext separate macrocell",
+      "source": "pin 1=clk; pin 2=a; pin 3=b; pin 22=f; pinnode 37=q; q.d=!(a&b); q.ck=clk; f=b;",
+      "vectors": "order: clk,a,b,f;\nvectors:\n0 0 0 L\nC 1 0 L\nC 0 1 H\n0 1 1 H\n"
+    },
+    {
+      "device": "v750cextppk",
+      "label": "v750cextppk separate macrocell",
+      "source": "pin 1=clk; pin 2=a; pin 3=b; pin 22=f; pinnode 37=q; q.d=!(a&b); q.ck=clk; f=b;",
+      "vectors": "order: clk,a,b,f;\nvectors:\n0 0 0 L\nC 1 0 L\nC 0 1 H\n0 1 1 H\n"
+    },
+    {
+      "device": "v750cppk",
+      "label": "v750cppk separate macrocell",
+      "source": "pin 1=clk; pin 2=a; pin 3=b; pin 22=f; pinnode 37=q; q.d=!(a&b); q.ck=clk; f=b;",
+      "vectors": "order: clk,a,b,f;\nvectors:\n0 0 0 L\nC 1 0 L\nC 0 1 H\n0 1 1 H\n"
+    },
+    {
+      "device": "v750clcc",
+      "label": "v750clcc separate macrocell",
+      "source": "pin 2=clk; pin 3=a; pin 4=b; pin 26=f; pinnode 41=q; q.d=!(a&b); q.ck=clk; f=b;",
+      "vectors": "order: clk,a,b,f;\nvectors:\n0 0 0 L\nC 1 0 L\nC 0 1 H\n0 1 1 H\n"
+    },
+    {
+      "device": "v750cextlcc",
+      "label": "v750cextlcc separate macrocell",
+      "source": "pin 2=clk; pin 3=a; pin 4=b; pin 26=f; pinnode 41=q; q.d=!(a&b); q.ck=clk; f=b;",
+      "vectors": "order: clk,a,b,f;\nvectors:\n0 0 0 L\nC 1 0 L\nC 0 1 H\n0 1 1 H\n"
+    },
+    {
+      "device": "v750cextppklcc",
+      "label": "v750cextppklcc separate macrocell",
+      "source": "pin 2=clk; pin 3=a; pin 4=b; pin 26=f; pinnode 41=q; q.d=!(a&b); q.ck=clk; f=b;",
+      "vectors": "order: clk,a,b,f;\nvectors:\n0 0 0 L\nC 1 0 L\nC 0 1 H\n0 1 1 H\n"
+    },
+    {
+      "device": "v750cppklcc",
+      "label": "v750cppklcc separate macrocell",
+      "source": "pin 2=clk; pin 3=a; pin 4=b; pin 26=f; pinnode 41=q; q.d=!(a&b); q.ck=clk; f=b;",
+      "vectors": "order: clk,a,b,f;\nvectors:\n0 0 0 L\nC 1 0 L\nC 0 1 H\n0 1 1 H\n"
+    }
+  ]
+}
