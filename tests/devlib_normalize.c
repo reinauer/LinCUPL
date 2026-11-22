@@ -153,6 +153,22 @@ int main(void)
     CHECK(memcmp(original, again, 100) == 0);
     for (size_t i = 100; i < sizeof(again); i++) CHECK(again[i] == 0xa5);
 
+    /* Registered and combinational arrays share a pin, not a capacity. */
+    memset(original, 0, sizeof(original));
+    section(original, 7, 4, 39, 260);
+    for (unsigned i = 0; i < 4; i++) {
+        uint8_t *n = original + 260 + 39 * i;
+        wr16(n, i < 2 ? 20 : 21);
+        wr16(n + 2, 19);
+        n[4] = i % 2 == 0 ? 14 : i == 1 ? 0 : 1;
+        if (i % 2 == 0) wr16(n + 31, 8);
+    }
+    CHECK(read_image(original, sizeof(original), "g24v10ms", 0, fixed) == 0);
+    CHECK(rd16(fixed + 260 + 31) == 7);
+    CHECK(rd16(fixed + 260 + 2 * 39 + 31) == 8);
+    CHECK(read_image(fixed, sizeof(fixed), "g24v10ms", 0, again) == 0);
+    CHECK(memcmp(fixed, again, sizeof(fixed)) == 0);
+
     puts("device normalization: passed");
     return 0;
 }
