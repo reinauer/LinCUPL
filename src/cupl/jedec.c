@@ -624,19 +624,24 @@ int input_inverted(int symbol, int pin_index)
     if (node >= 0 && node8(node, NODE_INVERT) != 0) {
         inv = !inv;
     }
+    /* Feedback inherits the selected output node. Do not apply that
+     * register's inversion a second time through its explicit extension. */
     switch (pin8(pin_index, PIN_EXT)) {
     case 0x22:
-        if (node >= 0 && node8(find_node_by_ext(symbol, 1), NODE_INVERT) != 0) {
+        if (node >= 0 && node8(node, NODE_EXT) != 1 &&
+            node8(find_node_by_ext(symbol, 1), NODE_INVERT) != 0) {
             inv = !inv;
         }
         break;
     case 0x23:
-        if (node >= 0 && node8(find_node_by_ext(symbol, 0x1c), NODE_INVERT) != 0) {
+        if (node >= 0 && node8(node, NODE_EXT) != 0x1c &&
+            node8(find_node_by_ext(symbol, 0x1c), NODE_INVERT) != 0) {
             inv = !inv;
         }
         break;
     case 0x24:
-        if (node >= 0 && node8(find_node_by_ext(symbol, 0x1b), NODE_INVERT) != 0) {
+        if (node >= 0 && node8(node, NODE_EXT) != 0x1b &&
+            node8(find_node_by_ext(symbol, 0x1b), NODE_INVERT) != 0) {
             inv = !inv;
         }
         break;
@@ -669,10 +674,9 @@ static int term_is_constant(const uint16_t *care)
 
 static void put_row(uint8_t *row, unsigned col, unsigned value)
 {
+    row[col] = (uint8_t)value;
     if (row_state.text_mode) {
         text_set_fuse(col + row_state.fuse, value);
-    } else {
-        row[col] = (uint8_t)value;
     }
 }
 
@@ -692,6 +696,7 @@ static void blow_term(const uint16_t *care, uint16_t *val, int alt, int owner_in
         return;
     }
     int untouched = read_fuse_row(old, row_state.fuse, stride);
+    int contradictory = 0;
     if (term_is_false(care, val)) {
         uint32_t f = row_state.fuse;
         for (int i = 0; i < stride; i++, f++) {
@@ -742,13 +747,22 @@ static void blow_term(const uint16_t *care, uint16_t *val, int alt, int owner_in
         if (s->node_index >= 0 && node8(s->node_index, NODE_EXT) == 0x0d) {
             put_row(row, p[PIN_TRUE_COL], 0);
         } else if (term_bit(val, i) == inv) {
-            put_row(row, p[PIN_TRUE_COL], 1);
             put_row(row, p[PIN_COMP_COL], 0);
             term_clear_bit(val, i);
         } else {
             put_row(row, p[PIN_TRUE_COL], 0);
-            put_row(row, p[PIN_COMP_COL], 1);
             term_set_bit(val, i);
+        }
+        /* Multiple names can select one input pair. Connecting the second
+         * literal must not disconnect the first; x & !x is a false row. */
+        if (p[PIN_TRUE_COL] != p[PIN_COMP_COL] &&
+            !row[p[PIN_TRUE_COL]] && !row[p[PIN_COMP_COL]]) {
+            contradictory = 1;
+        }
+    }
+    if (contradictory) {
+        for (int i = 0; i < stride; i++) {
+            put_row(row, (unsigned)i, 0);
         }
     }
     if (g.args[7][0] != '1' && device_type() != DEVT_IFL && !untouched && row_was_written(row_state.fuse)

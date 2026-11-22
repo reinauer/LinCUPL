@@ -1,0 +1,2405 @@
+{
+  "device": "v750",
+  "variants": [
+    {
+      "device": "v750",
+      "label": "v750 declaration False equation False r & !r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=a;r.ck=clk;\ny=r & !r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750",
+      "label": "v750 declaration False equation False !r & r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=a;r.ck=clk;\ny=!r & r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750",
+      "label": "v750 declaration False equation False r & r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=a;r.ck=clk;\ny=r & r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750",
+      "label": "v750 declaration False equation False !r & !r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=a;r.ck=clk;\ny=!r & !r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750",
+      "label": "v750 declaration False equation True r & !r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=!a;r.ck=clk;\ny=r & !r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750",
+      "label": "v750 declaration False equation True !r & r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=!a;r.ck=clk;\ny=!r & r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750",
+      "label": "v750 declaration False equation True r & r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=!a;r.ck=clk;\ny=r & r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=!a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750",
+      "label": "v750 declaration False equation True !r & !r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=!a;r.ck=clk;\ny=!r & !r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=!a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750",
+      "label": "v750 declaration True equation False r & !r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=a;r.ck=clk;\ny=r & !r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750",
+      "label": "v750 declaration True equation False !r & r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=a;r.ck=clk;\ny=!r & r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750",
+      "label": "v750 declaration True equation False r & r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=a;r.ck=clk;\ny=r & r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750",
+      "label": "v750 declaration True equation False !r & !r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=a;r.ck=clk;\ny=!r & !r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750",
+      "label": "v750 declaration True equation True r & !r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=!a;r.ck=clk;\ny=r & !r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750",
+      "label": "v750 declaration True equation True !r & r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=!a;r.ck=clk;\ny=!r & r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750",
+      "label": "v750 declaration True equation True r & r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=!a;r.ck=clk;\ny=r & r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=!a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750",
+      "label": "v750 declaration True equation True !r & !r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=!a;r.ck=clk;\ny=!r & !r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=!a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750lcc",
+      "label": "v750lcc declaration False equation False r & !r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=a;r.ck=clk;\ny=r & !r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750lcc",
+      "label": "v750lcc declaration False equation False !r & r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=a;r.ck=clk;\ny=!r & r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750lcc",
+      "label": "v750lcc declaration False equation False r & r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=a;r.ck=clk;\ny=r & r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750lcc",
+      "label": "v750lcc declaration False equation False !r & !r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=a;r.ck=clk;\ny=!r & !r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750lcc",
+      "label": "v750lcc declaration False equation True r & !r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=!a;r.ck=clk;\ny=r & !r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750lcc",
+      "label": "v750lcc declaration False equation True !r & r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=!a;r.ck=clk;\ny=!r & r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750lcc",
+      "label": "v750lcc declaration False equation True r & r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=!a;r.ck=clk;\ny=r & r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=!a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750lcc",
+      "label": "v750lcc declaration False equation True !r & !r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=!a;r.ck=clk;\ny=!r & !r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=!a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750lcc",
+      "label": "v750lcc declaration True equation False r & !r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=a;r.ck=clk;\ny=r & !r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750lcc",
+      "label": "v750lcc declaration True equation False !r & r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=a;r.ck=clk;\ny=!r & r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750lcc",
+      "label": "v750lcc declaration True equation False r & r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=a;r.ck=clk;\ny=r & r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750lcc",
+      "label": "v750lcc declaration True equation False !r & !r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=a;r.ck=clk;\ny=!r & !r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750lcc",
+      "label": "v750lcc declaration True equation True r & !r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=!a;r.ck=clk;\ny=r & !r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750lcc",
+      "label": "v750lcc declaration True equation True !r & r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=!a;r.ck=clk;\ny=!r & r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750lcc",
+      "label": "v750lcc declaration True equation True r & r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=!a;r.ck=clk;\ny=r & r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=!a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750lcc",
+      "label": "v750lcc declaration True equation True !r & !r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=!a;r.ck=clk;\ny=!r & !r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=!a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750b",
+      "label": "v750b declaration False equation False r & !r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=a;r.ck=clk;\ny=r & !r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750b",
+      "label": "v750b declaration False equation False !r & r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=a;r.ck=clk;\ny=!r & r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750b",
+      "label": "v750b declaration False equation False r & r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=a;r.ck=clk;\ny=r & r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750b",
+      "label": "v750b declaration False equation False !r & !r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=a;r.ck=clk;\ny=!r & !r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750b",
+      "label": "v750b declaration False equation True r & !r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=!a;r.ck=clk;\ny=r & !r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750b",
+      "label": "v750b declaration False equation True !r & r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=!a;r.ck=clk;\ny=!r & r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750b",
+      "label": "v750b declaration False equation True r & r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=!a;r.ck=clk;\ny=r & r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=!a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750b",
+      "label": "v750b declaration False equation True !r & !r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=!a;r.ck=clk;\ny=!r & !r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=!a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750b",
+      "label": "v750b declaration True equation False r & !r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=a;r.ck=clk;\ny=r & !r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750b",
+      "label": "v750b declaration True equation False !r & r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=a;r.ck=clk;\ny=!r & r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750b",
+      "label": "v750b declaration True equation False r & r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=a;r.ck=clk;\ny=r & r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750b",
+      "label": "v750b declaration True equation False !r & !r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=a;r.ck=clk;\ny=!r & !r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750b",
+      "label": "v750b declaration True equation True r & !r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=!a;r.ck=clk;\ny=r & !r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750b",
+      "label": "v750b declaration True equation True !r & r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=!a;r.ck=clk;\ny=!r & r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750b",
+      "label": "v750b declaration True equation True r & r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=!a;r.ck=clk;\ny=r & r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=!a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750b",
+      "label": "v750b declaration True equation True !r & !r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=!a;r.ck=clk;\ny=!r & !r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=!a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750blcc",
+      "label": "v750blcc declaration False equation False r & !r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=a;r.ck=clk;\ny=r & !r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750blcc",
+      "label": "v750blcc declaration False equation False !r & r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=a;r.ck=clk;\ny=!r & r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750blcc",
+      "label": "v750blcc declaration False equation False r & r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=a;r.ck=clk;\ny=r & r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750blcc",
+      "label": "v750blcc declaration False equation False !r & !r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=a;r.ck=clk;\ny=!r & !r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750blcc",
+      "label": "v750blcc declaration False equation True r & !r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=!a;r.ck=clk;\ny=r & !r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750blcc",
+      "label": "v750blcc declaration False equation True !r & r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=!a;r.ck=clk;\ny=!r & r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750blcc",
+      "label": "v750blcc declaration False equation True r & r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=!a;r.ck=clk;\ny=r & r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=!a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750blcc",
+      "label": "v750blcc declaration False equation True !r & !r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=!a;r.ck=clk;\ny=!r & !r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=!a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750blcc",
+      "label": "v750blcc declaration True equation False r & !r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=a;r.ck=clk;\ny=r & !r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750blcc",
+      "label": "v750blcc declaration True equation False !r & r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=a;r.ck=clk;\ny=!r & r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750blcc",
+      "label": "v750blcc declaration True equation False r & r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=a;r.ck=clk;\ny=r & r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750blcc",
+      "label": "v750blcc declaration True equation False !r & !r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=a;r.ck=clk;\ny=!r & !r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750blcc",
+      "label": "v750blcc declaration True equation True r & !r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=!a;r.ck=clk;\ny=r & !r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750blcc",
+      "label": "v750blcc declaration True equation True !r & r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=!a;r.ck=clk;\ny=!r & r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750blcc",
+      "label": "v750blcc declaration True equation True r & r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=!a;r.ck=clk;\ny=r & r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=!a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750blcc",
+      "label": "v750blcc declaration True equation True !r & !r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=!a;r.ck=clk;\ny=!r & !r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=!a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750c",
+      "label": "v750c declaration False equation False r & !r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=a;r.ck=clk;\ny=r & !r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750c",
+      "label": "v750c declaration False equation False !r & r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=a;r.ck=clk;\ny=!r & r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750c",
+      "label": "v750c declaration False equation False r & r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=a;r.ck=clk;\ny=r & r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750c",
+      "label": "v750c declaration False equation False !r & !r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=a;r.ck=clk;\ny=!r & !r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750c",
+      "label": "v750c declaration False equation True r & !r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=!a;r.ck=clk;\ny=r & !r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750c",
+      "label": "v750c declaration False equation True !r & r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=!a;r.ck=clk;\ny=!r & r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750c",
+      "label": "v750c declaration False equation True r & r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=!a;r.ck=clk;\ny=r & r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=!a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750c",
+      "label": "v750c declaration False equation True !r & !r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=!a;r.ck=clk;\ny=!r & !r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=!a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750c",
+      "label": "v750c declaration True equation False r & !r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=a;r.ck=clk;\ny=r & !r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750c",
+      "label": "v750c declaration True equation False !r & r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=a;r.ck=clk;\ny=!r & r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750c",
+      "label": "v750c declaration True equation False r & r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=a;r.ck=clk;\ny=r & r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750c",
+      "label": "v750c declaration True equation False !r & !r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=a;r.ck=clk;\ny=!r & !r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750c",
+      "label": "v750c declaration True equation True r & !r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=!a;r.ck=clk;\ny=r & !r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750c",
+      "label": "v750c declaration True equation True !r & r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=!a;r.ck=clk;\ny=!r & r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750c",
+      "label": "v750c declaration True equation True r & r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=!a;r.ck=clk;\ny=r & r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=!a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750c",
+      "label": "v750c declaration True equation True !r & !r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=!a;r.ck=clk;\ny=!r & !r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=!a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750cext",
+      "label": "v750cext declaration False equation False r & !r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=a;r.ck=clk;\ny=r & !r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cext",
+      "label": "v750cext declaration False equation False !r & r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=a;r.ck=clk;\ny=!r & r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cext",
+      "label": "v750cext declaration False equation False r & r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=a;r.ck=clk;\ny=r & r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750cext",
+      "label": "v750cext declaration False equation False !r & !r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=a;r.ck=clk;\ny=!r & !r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750cext",
+      "label": "v750cext declaration False equation True r & !r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=!a;r.ck=clk;\ny=r & !r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cext",
+      "label": "v750cext declaration False equation True !r & r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=!a;r.ck=clk;\ny=!r & r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cext",
+      "label": "v750cext declaration False equation True r & r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=!a;r.ck=clk;\ny=r & r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=!a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750cext",
+      "label": "v750cext declaration False equation True !r & !r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=!a;r.ck=clk;\ny=!r & !r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=!a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750cext",
+      "label": "v750cext declaration True equation False r & !r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=a;r.ck=clk;\ny=r & !r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cext",
+      "label": "v750cext declaration True equation False !r & r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=a;r.ck=clk;\ny=!r & r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cext",
+      "label": "v750cext declaration True equation False r & r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=a;r.ck=clk;\ny=r & r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750cext",
+      "label": "v750cext declaration True equation False !r & !r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=a;r.ck=clk;\ny=!r & !r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750cext",
+      "label": "v750cext declaration True equation True r & !r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=!a;r.ck=clk;\ny=r & !r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cext",
+      "label": "v750cext declaration True equation True !r & r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=!a;r.ck=clk;\ny=!r & r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cext",
+      "label": "v750cext declaration True equation True r & r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=!a;r.ck=clk;\ny=r & r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=!a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750cext",
+      "label": "v750cext declaration True equation True !r & !r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=!a;r.ck=clk;\ny=!r & !r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=!a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750cextppk",
+      "label": "v750cextppk declaration False equation False r & !r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=a;r.ck=clk;\ny=r & !r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cextppk",
+      "label": "v750cextppk declaration False equation False !r & r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=a;r.ck=clk;\ny=!r & r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cextppk",
+      "label": "v750cextppk declaration False equation False r & r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=a;r.ck=clk;\ny=r & r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750cextppk",
+      "label": "v750cextppk declaration False equation False !r & !r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=a;r.ck=clk;\ny=!r & !r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750cextppk",
+      "label": "v750cextppk declaration False equation True r & !r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=!a;r.ck=clk;\ny=r & !r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cextppk",
+      "label": "v750cextppk declaration False equation True !r & r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=!a;r.ck=clk;\ny=!r & r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cextppk",
+      "label": "v750cextppk declaration False equation True r & r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=!a;r.ck=clk;\ny=r & r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=!a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750cextppk",
+      "label": "v750cextppk declaration False equation True !r & !r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=!a;r.ck=clk;\ny=!r & !r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=!a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750cextppk",
+      "label": "v750cextppk declaration True equation False r & !r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=a;r.ck=clk;\ny=r & !r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cextppk",
+      "label": "v750cextppk declaration True equation False !r & r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=a;r.ck=clk;\ny=!r & r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cextppk",
+      "label": "v750cextppk declaration True equation False r & r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=a;r.ck=clk;\ny=r & r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750cextppk",
+      "label": "v750cextppk declaration True equation False !r & !r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=a;r.ck=clk;\ny=!r & !r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750cextppk",
+      "label": "v750cextppk declaration True equation True r & !r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=!a;r.ck=clk;\ny=r & !r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cextppk",
+      "label": "v750cextppk declaration True equation True !r & r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=!a;r.ck=clk;\ny=!r & r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cextppk",
+      "label": "v750cextppk declaration True equation True r & r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=!a;r.ck=clk;\ny=r & r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=!a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750cextppk",
+      "label": "v750cextppk declaration True equation True !r & !r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=!a;r.ck=clk;\ny=!r & !r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=!a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750cppk",
+      "label": "v750cppk declaration False equation False r & !r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=a;r.ck=clk;\ny=r & !r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cppk",
+      "label": "v750cppk declaration False equation False !r & r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=a;r.ck=clk;\ny=!r & r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cppk",
+      "label": "v750cppk declaration False equation False r & r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=a;r.ck=clk;\ny=r & r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750cppk",
+      "label": "v750cppk declaration False equation False !r & !r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=a;r.ck=clk;\ny=!r & !r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750cppk",
+      "label": "v750cppk declaration False equation True r & !r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=!a;r.ck=clk;\ny=r & !r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cppk",
+      "label": "v750cppk declaration False equation True !r & r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=!a;r.ck=clk;\ny=!r & r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cppk",
+      "label": "v750cppk declaration False equation True r & r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=!a;r.ck=clk;\ny=r & r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=!a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750cppk",
+      "label": "v750cppk declaration False equation True !r & !r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=!a;r.ck=clk;\ny=!r & !r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.d=!a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750cppk",
+      "label": "v750cppk declaration True equation False r & !r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=a;r.ck=clk;\ny=r & !r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cppk",
+      "label": "v750cppk declaration True equation False !r & r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=a;r.ck=clk;\ny=!r & r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cppk",
+      "label": "v750cppk declaration True equation False r & r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=a;r.ck=clk;\ny=r & r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750cppk",
+      "label": "v750cppk declaration True equation False !r & !r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=a;r.ck=clk;\ny=!r & !r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750cppk",
+      "label": "v750cppk declaration True equation True r & !r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=!a;r.ck=clk;\ny=r & !r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cppk",
+      "label": "v750cppk declaration True equation True !r & r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=!a;r.ck=clk;\ny=!r & r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cppk",
+      "label": "v750cppk declaration True equation True r & r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=!a;r.ck=clk;\ny=r & r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=!a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750cppk",
+      "label": "v750cppk declaration True equation True !r & !r.dfb",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=!a;r.ck=clk;\ny=!r & !r.dfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.d=!a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750clcc",
+      "label": "v750clcc declaration False equation False r & !r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=a;r.ck=clk;\ny=r & !r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750clcc",
+      "label": "v750clcc declaration False equation False !r & r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=a;r.ck=clk;\ny=!r & r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750clcc",
+      "label": "v750clcc declaration False equation False r & r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=a;r.ck=clk;\ny=r & r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750clcc",
+      "label": "v750clcc declaration False equation False !r & !r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=a;r.ck=clk;\ny=!r & !r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750clcc",
+      "label": "v750clcc declaration False equation True r & !r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=!a;r.ck=clk;\ny=r & !r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750clcc",
+      "label": "v750clcc declaration False equation True !r & r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=!a;r.ck=clk;\ny=!r & r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750clcc",
+      "label": "v750clcc declaration False equation True r & r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=!a;r.ck=clk;\ny=r & r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=!a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750clcc",
+      "label": "v750clcc declaration False equation True !r & !r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=!a;r.ck=clk;\ny=!r & !r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=!a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750clcc",
+      "label": "v750clcc declaration True equation False r & !r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=a;r.ck=clk;\ny=r & !r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750clcc",
+      "label": "v750clcc declaration True equation False !r & r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=a;r.ck=clk;\ny=!r & r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750clcc",
+      "label": "v750clcc declaration True equation False r & r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=a;r.ck=clk;\ny=r & r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750clcc",
+      "label": "v750clcc declaration True equation False !r & !r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=a;r.ck=clk;\ny=!r & !r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750clcc",
+      "label": "v750clcc declaration True equation True r & !r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=!a;r.ck=clk;\ny=r & !r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750clcc",
+      "label": "v750clcc declaration True equation True !r & r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=!a;r.ck=clk;\ny=!r & r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750clcc",
+      "label": "v750clcc declaration True equation True r & r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=!a;r.ck=clk;\ny=r & r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=!a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750clcc",
+      "label": "v750clcc declaration True equation True !r & !r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=!a;r.ck=clk;\ny=!r & !r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=!a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750cextlcc",
+      "label": "v750cextlcc declaration False equation False r & !r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=a;r.ck=clk;\ny=r & !r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cextlcc",
+      "label": "v750cextlcc declaration False equation False !r & r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=a;r.ck=clk;\ny=!r & r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cextlcc",
+      "label": "v750cextlcc declaration False equation False r & r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=a;r.ck=clk;\ny=r & r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750cextlcc",
+      "label": "v750cextlcc declaration False equation False !r & !r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=a;r.ck=clk;\ny=!r & !r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750cextlcc",
+      "label": "v750cextlcc declaration False equation True r & !r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=!a;r.ck=clk;\ny=r & !r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cextlcc",
+      "label": "v750cextlcc declaration False equation True !r & r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=!a;r.ck=clk;\ny=!r & r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cextlcc",
+      "label": "v750cextlcc declaration False equation True r & r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=!a;r.ck=clk;\ny=r & r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=!a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750cextlcc",
+      "label": "v750cextlcc declaration False equation True !r & !r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=!a;r.ck=clk;\ny=!r & !r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=!a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750cextlcc",
+      "label": "v750cextlcc declaration True equation False r & !r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=a;r.ck=clk;\ny=r & !r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cextlcc",
+      "label": "v750cextlcc declaration True equation False !r & r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=a;r.ck=clk;\ny=!r & r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cextlcc",
+      "label": "v750cextlcc declaration True equation False r & r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=a;r.ck=clk;\ny=r & r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750cextlcc",
+      "label": "v750cextlcc declaration True equation False !r & !r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=a;r.ck=clk;\ny=!r & !r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750cextlcc",
+      "label": "v750cextlcc declaration True equation True r & !r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=!a;r.ck=clk;\ny=r & !r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cextlcc",
+      "label": "v750cextlcc declaration True equation True !r & r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=!a;r.ck=clk;\ny=!r & r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cextlcc",
+      "label": "v750cextlcc declaration True equation True r & r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=!a;r.ck=clk;\ny=r & r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=!a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750cextlcc",
+      "label": "v750cextlcc declaration True equation True !r & !r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=!a;r.ck=clk;\ny=!r & !r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=!a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750cextppklcc",
+      "label": "v750cextppklcc declaration False equation False r & !r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=a;r.ck=clk;\ny=r & !r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cextppklcc",
+      "label": "v750cextppklcc declaration False equation False !r & r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=a;r.ck=clk;\ny=!r & r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cextppklcc",
+      "label": "v750cextppklcc declaration False equation False r & r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=a;r.ck=clk;\ny=r & r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750cextppklcc",
+      "label": "v750cextppklcc declaration False equation False !r & !r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=a;r.ck=clk;\ny=!r & !r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750cextppklcc",
+      "label": "v750cextppklcc declaration False equation True r & !r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=!a;r.ck=clk;\ny=r & !r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cextppklcc",
+      "label": "v750cextppklcc declaration False equation True !r & r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=!a;r.ck=clk;\ny=!r & r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cextppklcc",
+      "label": "v750cextppklcc declaration False equation True r & r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=!a;r.ck=clk;\ny=r & r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=!a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750cextppklcc",
+      "label": "v750cextppklcc declaration False equation True !r & !r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=!a;r.ck=clk;\ny=!r & !r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=!a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750cextppklcc",
+      "label": "v750cextppklcc declaration True equation False r & !r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=a;r.ck=clk;\ny=r & !r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cextppklcc",
+      "label": "v750cextppklcc declaration True equation False !r & r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=a;r.ck=clk;\ny=!r & r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cextppklcc",
+      "label": "v750cextppklcc declaration True equation False r & r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=a;r.ck=clk;\ny=r & r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750cextppklcc",
+      "label": "v750cextppklcc declaration True equation False !r & !r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=a;r.ck=clk;\ny=!r & !r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750cextppklcc",
+      "label": "v750cextppklcc declaration True equation True r & !r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=!a;r.ck=clk;\ny=r & !r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cextppklcc",
+      "label": "v750cextppklcc declaration True equation True !r & r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=!a;r.ck=clk;\ny=!r & r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cextppklcc",
+      "label": "v750cextppklcc declaration True equation True r & r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=!a;r.ck=clk;\ny=r & r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=!a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750cextppklcc",
+      "label": "v750cextppklcc declaration True equation True !r & !r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=!a;r.ck=clk;\ny=!r & !r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=!a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750cppklcc",
+      "label": "v750cppklcc declaration False equation False r & !r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=a;r.ck=clk;\ny=r & !r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cppklcc",
+      "label": "v750cppklcc declaration False equation False !r & r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=a;r.ck=clk;\ny=!r & r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cppklcc",
+      "label": "v750cppklcc declaration False equation False r & r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=a;r.ck=clk;\ny=r & r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750cppklcc",
+      "label": "v750cppklcc declaration False equation False !r & !r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=a;r.ck=clk;\ny=!r & !r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750cppklcc",
+      "label": "v750cppklcc declaration False equation True r & !r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=!a;r.ck=clk;\ny=r & !r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cppklcc",
+      "label": "v750cppklcc declaration False equation True !r & r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=!a;r.ck=clk;\ny=!r & r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cppklcc",
+      "label": "v750cppklcc declaration False equation True r & r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=!a;r.ck=clk;\ny=r & r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=!a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750cppklcc",
+      "label": "v750cppklcc declaration False equation True !r & !r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=!a;r.ck=clk;\ny=!r & !r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.d=!a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750cppklcc",
+      "label": "v750cppklcc declaration True equation False r & !r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=a;r.ck=clk;\ny=r & !r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cppklcc",
+      "label": "v750cppklcc declaration True equation False !r & r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=a;r.ck=clk;\ny=!r & r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cppklcc",
+      "label": "v750cppklcc declaration True equation False r & r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=a;r.ck=clk;\ny=r & r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750cppklcc",
+      "label": "v750cppklcc declaration True equation False !r & !r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=a;r.ck=clk;\ny=!r & !r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750cppklcc",
+      "label": "v750cppklcc declaration True equation True r & !r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=!a;r.ck=clk;\ny=r & !r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cppklcc",
+      "label": "v750cppklcc declaration True equation True !r & r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=!a;r.ck=clk;\ny=!r & r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cppklcc",
+      "label": "v750cppklcc declaration True equation True r & r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=!a;r.ck=clk;\ny=r & r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=!a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750cppklcc",
+      "label": "v750cppklcc declaration True equation True !r & !r.dfb",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=!a;r.ck=clk;\ny=!r & !r.dfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.d=!a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750b",
+      "label": "v750b declaration False equation False r & !r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=a;r.ck=clk;\ny=r & !r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750b",
+      "label": "v750b declaration False equation False !r & r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=a;r.ck=clk;\ny=!r & r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750b",
+      "label": "v750b declaration False equation False r & r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=a;r.ck=clk;\ny=r & r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750b",
+      "label": "v750b declaration False equation False !r & !r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=a;r.ck=clk;\ny=!r & !r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750b",
+      "label": "v750b declaration False equation True r & !r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=!a;r.ck=clk;\ny=r & !r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750b",
+      "label": "v750b declaration False equation True !r & r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=!a;r.ck=clk;\ny=!r & r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750b",
+      "label": "v750b declaration False equation True r & r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=!a;r.ck=clk;\ny=r & r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=!a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750b",
+      "label": "v750b declaration False equation True !r & !r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=!a;r.ck=clk;\ny=!r & !r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=!a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750b",
+      "label": "v750b declaration True equation False r & !r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=a;r.ck=clk;\ny=r & !r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750b",
+      "label": "v750b declaration True equation False !r & r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=a;r.ck=clk;\ny=!r & r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750b",
+      "label": "v750b declaration True equation False r & r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=a;r.ck=clk;\ny=r & r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750b",
+      "label": "v750b declaration True equation False !r & !r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=a;r.ck=clk;\ny=!r & !r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750b",
+      "label": "v750b declaration True equation True r & !r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=!a;r.ck=clk;\ny=r & !r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750b",
+      "label": "v750b declaration True equation True !r & r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=!a;r.ck=clk;\ny=!r & r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750b",
+      "label": "v750b declaration True equation True r & r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=!a;r.ck=clk;\ny=r & r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=!a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750b",
+      "label": "v750b declaration True equation True !r & !r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=!a;r.ck=clk;\ny=!r & !r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=!a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750blcc",
+      "label": "v750blcc declaration False equation False r & !r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=a;r.ck=clk;\ny=r & !r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750blcc",
+      "label": "v750blcc declaration False equation False !r & r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=a;r.ck=clk;\ny=!r & r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750blcc",
+      "label": "v750blcc declaration False equation False r & r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=a;r.ck=clk;\ny=r & r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750blcc",
+      "label": "v750blcc declaration False equation False !r & !r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=a;r.ck=clk;\ny=!r & !r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750blcc",
+      "label": "v750blcc declaration False equation True r & !r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=!a;r.ck=clk;\ny=r & !r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750blcc",
+      "label": "v750blcc declaration False equation True !r & r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=!a;r.ck=clk;\ny=!r & r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750blcc",
+      "label": "v750blcc declaration False equation True r & r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=!a;r.ck=clk;\ny=r & r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=!a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750blcc",
+      "label": "v750blcc declaration False equation True !r & !r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=!a;r.ck=clk;\ny=!r & !r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=!a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750blcc",
+      "label": "v750blcc declaration True equation False r & !r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=a;r.ck=clk;\ny=r & !r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750blcc",
+      "label": "v750blcc declaration True equation False !r & r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=a;r.ck=clk;\ny=!r & r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750blcc",
+      "label": "v750blcc declaration True equation False r & r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=a;r.ck=clk;\ny=r & r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750blcc",
+      "label": "v750blcc declaration True equation False !r & !r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=a;r.ck=clk;\ny=!r & !r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750blcc",
+      "label": "v750blcc declaration True equation True r & !r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=!a;r.ck=clk;\ny=r & !r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750blcc",
+      "label": "v750blcc declaration True equation True !r & r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=!a;r.ck=clk;\ny=!r & r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750blcc",
+      "label": "v750blcc declaration True equation True r & r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=!a;r.ck=clk;\ny=r & r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=!a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750blcc",
+      "label": "v750blcc declaration True equation True !r & !r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=!a;r.ck=clk;\ny=!r & !r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=!a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750c",
+      "label": "v750c declaration False equation False r & !r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=a;r.ck=clk;\ny=r & !r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750c",
+      "label": "v750c declaration False equation False !r & r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=a;r.ck=clk;\ny=!r & r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750c",
+      "label": "v750c declaration False equation False r & r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=a;r.ck=clk;\ny=r & r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750c",
+      "label": "v750c declaration False equation False !r & !r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=a;r.ck=clk;\ny=!r & !r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750c",
+      "label": "v750c declaration False equation True r & !r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=!a;r.ck=clk;\ny=r & !r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750c",
+      "label": "v750c declaration False equation True !r & r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=!a;r.ck=clk;\ny=!r & r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750c",
+      "label": "v750c declaration False equation True r & r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=!a;r.ck=clk;\ny=r & r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=!a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750c",
+      "label": "v750c declaration False equation True !r & !r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=!a;r.ck=clk;\ny=!r & !r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=!a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750c",
+      "label": "v750c declaration True equation False r & !r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=a;r.ck=clk;\ny=r & !r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750c",
+      "label": "v750c declaration True equation False !r & r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=a;r.ck=clk;\ny=!r & r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750c",
+      "label": "v750c declaration True equation False r & r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=a;r.ck=clk;\ny=r & r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750c",
+      "label": "v750c declaration True equation False !r & !r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=a;r.ck=clk;\ny=!r & !r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750c",
+      "label": "v750c declaration True equation True r & !r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=!a;r.ck=clk;\ny=r & !r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750c",
+      "label": "v750c declaration True equation True !r & r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=!a;r.ck=clk;\ny=!r & r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750c",
+      "label": "v750c declaration True equation True r & r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=!a;r.ck=clk;\ny=r & r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=!a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750c",
+      "label": "v750c declaration True equation True !r & !r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=!a;r.ck=clk;\ny=!r & !r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=!a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750cext",
+      "label": "v750cext declaration False equation False r & !r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=a;r.ck=clk;\ny=r & !r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cext",
+      "label": "v750cext declaration False equation False !r & r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=a;r.ck=clk;\ny=!r & r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cext",
+      "label": "v750cext declaration False equation False r & r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=a;r.ck=clk;\ny=r & r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750cext",
+      "label": "v750cext declaration False equation False !r & !r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=a;r.ck=clk;\ny=!r & !r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750cext",
+      "label": "v750cext declaration False equation True r & !r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=!a;r.ck=clk;\ny=r & !r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cext",
+      "label": "v750cext declaration False equation True !r & r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=!a;r.ck=clk;\ny=!r & r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cext",
+      "label": "v750cext declaration False equation True r & r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=!a;r.ck=clk;\ny=r & r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=!a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750cext",
+      "label": "v750cext declaration False equation True !r & !r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=!a;r.ck=clk;\ny=!r & !r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=!a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750cext",
+      "label": "v750cext declaration True equation False r & !r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=a;r.ck=clk;\ny=r & !r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cext",
+      "label": "v750cext declaration True equation False !r & r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=a;r.ck=clk;\ny=!r & r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cext",
+      "label": "v750cext declaration True equation False r & r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=a;r.ck=clk;\ny=r & r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750cext",
+      "label": "v750cext declaration True equation False !r & !r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=a;r.ck=clk;\ny=!r & !r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750cext",
+      "label": "v750cext declaration True equation True r & !r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=!a;r.ck=clk;\ny=r & !r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cext",
+      "label": "v750cext declaration True equation True !r & r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=!a;r.ck=clk;\ny=!r & r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cext",
+      "label": "v750cext declaration True equation True r & r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=!a;r.ck=clk;\ny=r & r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=!a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750cext",
+      "label": "v750cext declaration True equation True !r & !r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=!a;r.ck=clk;\ny=!r & !r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=!a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750cextppk",
+      "label": "v750cextppk declaration False equation False r & !r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=a;r.ck=clk;\ny=r & !r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cextppk",
+      "label": "v750cextppk declaration False equation False !r & r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=a;r.ck=clk;\ny=!r & r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cextppk",
+      "label": "v750cextppk declaration False equation False r & r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=a;r.ck=clk;\ny=r & r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750cextppk",
+      "label": "v750cextppk declaration False equation False !r & !r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=a;r.ck=clk;\ny=!r & !r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750cextppk",
+      "label": "v750cextppk declaration False equation True r & !r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=!a;r.ck=clk;\ny=r & !r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cextppk",
+      "label": "v750cextppk declaration False equation True !r & r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=!a;r.ck=clk;\ny=!r & r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cextppk",
+      "label": "v750cextppk declaration False equation True r & r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=!a;r.ck=clk;\ny=r & r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=!a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750cextppk",
+      "label": "v750cextppk declaration False equation True !r & !r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=!a;r.ck=clk;\ny=!r & !r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=!a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750cextppk",
+      "label": "v750cextppk declaration True equation False r & !r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=a;r.ck=clk;\ny=r & !r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cextppk",
+      "label": "v750cextppk declaration True equation False !r & r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=a;r.ck=clk;\ny=!r & r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cextppk",
+      "label": "v750cextppk declaration True equation False r & r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=a;r.ck=clk;\ny=r & r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750cextppk",
+      "label": "v750cextppk declaration True equation False !r & !r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=a;r.ck=clk;\ny=!r & !r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750cextppk",
+      "label": "v750cextppk declaration True equation True r & !r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=!a;r.ck=clk;\ny=r & !r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cextppk",
+      "label": "v750cextppk declaration True equation True !r & r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=!a;r.ck=clk;\ny=!r & r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cextppk",
+      "label": "v750cextppk declaration True equation True r & r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=!a;r.ck=clk;\ny=r & r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=!a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750cextppk",
+      "label": "v750cextppk declaration True equation True !r & !r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=!a;r.ck=clk;\ny=!r & !r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=!a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750cppk",
+      "label": "v750cppk declaration False equation False r & !r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=a;r.ck=clk;\ny=r & !r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cppk",
+      "label": "v750cppk declaration False equation False !r & r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=a;r.ck=clk;\ny=!r & r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cppk",
+      "label": "v750cppk declaration False equation False r & r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=a;r.ck=clk;\ny=r & r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750cppk",
+      "label": "v750cppk declaration False equation False !r & !r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=a;r.ck=clk;\ny=!r & !r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750cppk",
+      "label": "v750cppk declaration False equation True r & !r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=!a;r.ck=clk;\ny=r & !r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cppk",
+      "label": "v750cppk declaration False equation True !r & r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=!a;r.ck=clk;\ny=!r & r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cppk",
+      "label": "v750cppk declaration False equation True r & r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=!a;r.ck=clk;\ny=r & r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=!a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750cppk",
+      "label": "v750cppk declaration False equation True !r & !r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=!a;r.ck=clk;\ny=!r & !r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=r;pin 15=y;\nr.t=!a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750cppk",
+      "label": "v750cppk declaration True equation False r & !r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=a;r.ck=clk;\ny=r & !r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cppk",
+      "label": "v750cppk declaration True equation False !r & r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=a;r.ck=clk;\ny=!r & r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cppk",
+      "label": "v750cppk declaration True equation False r & r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=a;r.ck=clk;\ny=r & r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750cppk",
+      "label": "v750cppk declaration True equation False !r & !r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=a;r.ck=clk;\ny=!r & !r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750cppk",
+      "label": "v750cppk declaration True equation True r & !r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=!a;r.ck=clk;\ny=r & !r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cppk",
+      "label": "v750cppk declaration True equation True !r & r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=!a;r.ck=clk;\ny=!r & r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cppk",
+      "label": "v750cppk declaration True equation True r & r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=!a;r.ck=clk;\ny=r & r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=!a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750cppk",
+      "label": "v750cppk declaration True equation True !r & !r.tfb T mode",
+      "source": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=!a;r.ck=clk;\ny=!r & !r.tfb;",
+      "reference": "pin 1=clk;pin 2=a;pin 14=!r;pin 15=y;\nr.t=!a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750clcc",
+      "label": "v750clcc declaration False equation False r & !r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=a;r.ck=clk;\ny=r & !r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750clcc",
+      "label": "v750clcc declaration False equation False !r & r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=a;r.ck=clk;\ny=!r & r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750clcc",
+      "label": "v750clcc declaration False equation False r & r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=a;r.ck=clk;\ny=r & r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750clcc",
+      "label": "v750clcc declaration False equation False !r & !r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=a;r.ck=clk;\ny=!r & !r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750clcc",
+      "label": "v750clcc declaration False equation True r & !r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=!a;r.ck=clk;\ny=r & !r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750clcc",
+      "label": "v750clcc declaration False equation True !r & r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=!a;r.ck=clk;\ny=!r & r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750clcc",
+      "label": "v750clcc declaration False equation True r & r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=!a;r.ck=clk;\ny=r & r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=!a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750clcc",
+      "label": "v750clcc declaration False equation True !r & !r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=!a;r.ck=clk;\ny=!r & !r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=!a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750clcc",
+      "label": "v750clcc declaration True equation False r & !r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=a;r.ck=clk;\ny=r & !r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750clcc",
+      "label": "v750clcc declaration True equation False !r & r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=a;r.ck=clk;\ny=!r & r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750clcc",
+      "label": "v750clcc declaration True equation False r & r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=a;r.ck=clk;\ny=r & r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750clcc",
+      "label": "v750clcc declaration True equation False !r & !r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=a;r.ck=clk;\ny=!r & !r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750clcc",
+      "label": "v750clcc declaration True equation True r & !r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=!a;r.ck=clk;\ny=r & !r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750clcc",
+      "label": "v750clcc declaration True equation True !r & r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=!a;r.ck=clk;\ny=!r & r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750clcc",
+      "label": "v750clcc declaration True equation True r & r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=!a;r.ck=clk;\ny=r & r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=!a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750clcc",
+      "label": "v750clcc declaration True equation True !r & !r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=!a;r.ck=clk;\ny=!r & !r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=!a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750cextlcc",
+      "label": "v750cextlcc declaration False equation False r & !r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=a;r.ck=clk;\ny=r & !r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cextlcc",
+      "label": "v750cextlcc declaration False equation False !r & r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=a;r.ck=clk;\ny=!r & r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cextlcc",
+      "label": "v750cextlcc declaration False equation False r & r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=a;r.ck=clk;\ny=r & r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750cextlcc",
+      "label": "v750cextlcc declaration False equation False !r & !r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=a;r.ck=clk;\ny=!r & !r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750cextlcc",
+      "label": "v750cextlcc declaration False equation True r & !r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=!a;r.ck=clk;\ny=r & !r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cextlcc",
+      "label": "v750cextlcc declaration False equation True !r & r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=!a;r.ck=clk;\ny=!r & r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cextlcc",
+      "label": "v750cextlcc declaration False equation True r & r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=!a;r.ck=clk;\ny=r & r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=!a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750cextlcc",
+      "label": "v750cextlcc declaration False equation True !r & !r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=!a;r.ck=clk;\ny=!r & !r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=!a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750cextlcc",
+      "label": "v750cextlcc declaration True equation False r & !r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=a;r.ck=clk;\ny=r & !r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cextlcc",
+      "label": "v750cextlcc declaration True equation False !r & r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=a;r.ck=clk;\ny=!r & r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cextlcc",
+      "label": "v750cextlcc declaration True equation False r & r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=a;r.ck=clk;\ny=r & r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750cextlcc",
+      "label": "v750cextlcc declaration True equation False !r & !r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=a;r.ck=clk;\ny=!r & !r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750cextlcc",
+      "label": "v750cextlcc declaration True equation True r & !r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=!a;r.ck=clk;\ny=r & !r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cextlcc",
+      "label": "v750cextlcc declaration True equation True !r & r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=!a;r.ck=clk;\ny=!r & r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cextlcc",
+      "label": "v750cextlcc declaration True equation True r & r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=!a;r.ck=clk;\ny=r & r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=!a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750cextlcc",
+      "label": "v750cextlcc declaration True equation True !r & !r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=!a;r.ck=clk;\ny=!r & !r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=!a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750cextppklcc",
+      "label": "v750cextppklcc declaration False equation False r & !r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=a;r.ck=clk;\ny=r & !r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cextppklcc",
+      "label": "v750cextppklcc declaration False equation False !r & r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=a;r.ck=clk;\ny=!r & r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cextppklcc",
+      "label": "v750cextppklcc declaration False equation False r & r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=a;r.ck=clk;\ny=r & r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750cextppklcc",
+      "label": "v750cextppklcc declaration False equation False !r & !r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=a;r.ck=clk;\ny=!r & !r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750cextppklcc",
+      "label": "v750cextppklcc declaration False equation True r & !r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=!a;r.ck=clk;\ny=r & !r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cextppklcc",
+      "label": "v750cextppklcc declaration False equation True !r & r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=!a;r.ck=clk;\ny=!r & r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cextppklcc",
+      "label": "v750cextppklcc declaration False equation True r & r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=!a;r.ck=clk;\ny=r & r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=!a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750cextppklcc",
+      "label": "v750cextppklcc declaration False equation True !r & !r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=!a;r.ck=clk;\ny=!r & !r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=!a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750cextppklcc",
+      "label": "v750cextppklcc declaration True equation False r & !r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=a;r.ck=clk;\ny=r & !r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cextppklcc",
+      "label": "v750cextppklcc declaration True equation False !r & r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=a;r.ck=clk;\ny=!r & r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cextppklcc",
+      "label": "v750cextppklcc declaration True equation False r & r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=a;r.ck=clk;\ny=r & r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750cextppklcc",
+      "label": "v750cextppklcc declaration True equation False !r & !r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=a;r.ck=clk;\ny=!r & !r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750cextppklcc",
+      "label": "v750cextppklcc declaration True equation True r & !r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=!a;r.ck=clk;\ny=r & !r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cextppklcc",
+      "label": "v750cextppklcc declaration True equation True !r & r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=!a;r.ck=clk;\ny=!r & r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cextppklcc",
+      "label": "v750cextppklcc declaration True equation True r & r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=!a;r.ck=clk;\ny=r & r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=!a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750cextppklcc",
+      "label": "v750cextppklcc declaration True equation True !r & !r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=!a;r.ck=clk;\ny=!r & !r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=!a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750cppklcc",
+      "label": "v750cppklcc declaration False equation False r & !r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=a;r.ck=clk;\ny=r & !r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cppklcc",
+      "label": "v750cppklcc declaration False equation False !r & r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=a;r.ck=clk;\ny=!r & r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cppklcc",
+      "label": "v750cppklcc declaration False equation False r & r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=a;r.ck=clk;\ny=r & r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750cppklcc",
+      "label": "v750cppklcc declaration False equation False !r & !r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=a;r.ck=clk;\ny=!r & !r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750cppklcc",
+      "label": "v750cppklcc declaration False equation True r & !r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=!a;r.ck=clk;\ny=r & !r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cppklcc",
+      "label": "v750cppklcc declaration False equation True !r & r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=!a;r.ck=clk;\ny=!r & r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cppklcc",
+      "label": "v750cppklcc declaration False equation True r & r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=!a;r.ck=clk;\ny=r & r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=!a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750cppklcc",
+      "label": "v750cppklcc declaration False equation True !r & !r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=!a;r.ck=clk;\ny=!r & !r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=r;pin 18=y;\nr.t=!a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750cppklcc",
+      "label": "v750cppklcc declaration True equation False r & !r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=a;r.ck=clk;\ny=r & !r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cppklcc",
+      "label": "v750cppklcc declaration True equation False !r & r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=a;r.ck=clk;\ny=!r & r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cppklcc",
+      "label": "v750cppklcc declaration True equation False r & r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=a;r.ck=clk;\ny=r & r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750cppklcc",
+      "label": "v750cppklcc declaration True equation False !r & !r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=a;r.ck=clk;\ny=!r & !r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "v750cppklcc",
+      "label": "v750cppklcc declaration True equation True r & !r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=!a;r.ck=clk;\ny=r & !r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cppklcc",
+      "label": "v750cppklcc declaration True equation True !r & r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=!a;r.ck=clk;\ny=!r & r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=!a;r.ck=clk;\ny='b'0;"
+    },
+    {
+      "device": "v750cppklcc",
+      "label": "v750cppklcc declaration True equation True r & r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=!a;r.ck=clk;\ny=r & r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=!a;r.ck=clk;\ny=r;"
+    },
+    {
+      "device": "v750cppklcc",
+      "label": "v750cppklcc declaration True equation True !r & !r.tfb T mode",
+      "source": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=!a;r.ck=clk;\ny=!r & !r.tfb;",
+      "reference": "pin 2=clk;pin 3=a;pin 17=!r;pin 18=y;\nr.t=!a;r.ck=clk;\ny=!r;"
+    },
+    {
+      "device": "g16v8h",
+      "label": "g16v8h lq low False a & !a.lq",
+      "source": "pin 2=a;pin 23=q;pin 22=y;\nq=a.lq;\ny=a & !a.lq;",
+      "reference": "pin 2=a;pin 23=q;pin 22=y;\nq=a.lq;\ny='b'0;"
+    },
+    {
+      "device": "g16v8h",
+      "label": "g16v8h lq low False !a & a.lq",
+      "source": "pin 2=a;pin 23=q;pin 22=y;\nq=a.lq;\ny=!a & a.lq;",
+      "reference": "pin 2=a;pin 23=q;pin 22=y;\nq=a.lq;\ny='b'0;"
+    },
+    {
+      "device": "g16v8h",
+      "label": "g16v8h lq low False a & a.lq",
+      "source": "pin 2=a;pin 23=q;pin 22=y;\nq=a.lq;\ny=a & a.lq;",
+      "reference": "pin 2=a;pin 23=q;pin 22=y;\nq=a.lq;\ny=a;"
+    },
+    {
+      "device": "g16v8h",
+      "label": "g16v8h lq low False !a & !a.lq",
+      "source": "pin 2=a;pin 23=q;pin 22=y;\nq=a.lq;\ny=!a & !a.lq;",
+      "reference": "pin 2=a;pin 23=q;pin 22=y;\nq=a.lq;\ny=!a;"
+    },
+    {
+      "device": "g16v8h",
+      "label": "g16v8h lq low True a & !a.lq",
+      "source": "pin 2=!a;pin 23=q;pin 22=y;\nq=a.lq;\ny=a & !a.lq;",
+      "reference": "pin 2=!a;pin 23=q;pin 22=y;\nq=a.lq;\ny='b'0;"
+    },
+    {
+      "device": "g16v8h",
+      "label": "g16v8h lq low True !a & a.lq",
+      "source": "pin 2=!a;pin 23=q;pin 22=y;\nq=a.lq;\ny=!a & a.lq;",
+      "reference": "pin 2=!a;pin 23=q;pin 22=y;\nq=a.lq;\ny='b'0;"
+    },
+    {
+      "device": "g16v8h",
+      "label": "g16v8h lq low True a & a.lq",
+      "source": "pin 2=!a;pin 23=q;pin 22=y;\nq=a.lq;\ny=a & a.lq;",
+      "reference": "pin 2=!a;pin 23=q;pin 22=y;\nq=a.lq;\ny=a;"
+    },
+    {
+      "device": "g16v8h",
+      "label": "g16v8h lq low True !a & !a.lq",
+      "source": "pin 2=!a;pin 23=q;pin 22=y;\nq=a.lq;\ny=!a & !a.lq;",
+      "reference": "pin 2=!a;pin 23=q;pin 22=y;\nq=a.lq;\ny=!a;"
+    },
+    {
+      "device": "g16v8h",
+      "label": "g16v8h iol low False a & !a.iol",
+      "source": "pin 23=a;pin 22=q;pin 20=y;\nq=a.iol;\ny=a & !a.iol;",
+      "reference": "pin 23=a;pin 22=q;pin 20=y;\nq=a.iol;\ny='b'0;"
+    },
+    {
+      "device": "g16v8h",
+      "label": "g16v8h iol low False !a & a.iol",
+      "source": "pin 23=a;pin 22=q;pin 20=y;\nq=a.iol;\ny=!a & a.iol;",
+      "reference": "pin 23=a;pin 22=q;pin 20=y;\nq=a.iol;\ny='b'0;"
+    },
+    {
+      "device": "g16v8h",
+      "label": "g16v8h iol low False a & a.iol",
+      "source": "pin 23=a;pin 22=q;pin 20=y;\nq=a.iol;\ny=a & a.iol;",
+      "reference": "pin 23=a;pin 22=q;pin 20=y;\nq=a.iol;\ny=a;"
+    },
+    {
+      "device": "g16v8h",
+      "label": "g16v8h iol low False !a & !a.iol",
+      "source": "pin 23=a;pin 22=q;pin 20=y;\nq=a.iol;\ny=!a & !a.iol;",
+      "reference": "pin 23=a;pin 22=q;pin 20=y;\nq=a.iol;\ny=!a;"
+    },
+    {
+      "device": "g16v8h",
+      "label": "g16v8h iol low True a & !a.iol",
+      "source": "pin 23=!a;pin 22=q;pin 20=y;\nq=a.iol;\ny=a & !a.iol;",
+      "reference": "pin 23=!a;pin 22=q;pin 20=y;\nq=a.iol;\ny='b'0;"
+    },
+    {
+      "device": "g16v8h",
+      "label": "g16v8h iol low True !a & a.iol",
+      "source": "pin 23=!a;pin 22=q;pin 20=y;\nq=a.iol;\ny=!a & a.iol;",
+      "reference": "pin 23=!a;pin 22=q;pin 20=y;\nq=a.iol;\ny='b'0;"
+    },
+    {
+      "device": "g16v8h",
+      "label": "g16v8h iol low True a & a.iol",
+      "source": "pin 23=!a;pin 22=q;pin 20=y;\nq=a.iol;\ny=a & a.iol;",
+      "reference": "pin 23=!a;pin 22=q;pin 20=y;\nq=a.iol;\ny=a;"
+    },
+    {
+      "device": "g16v8h",
+      "label": "g16v8h iol low True !a & !a.iol",
+      "source": "pin 23=!a;pin 22=q;pin 20=y;\nq=a.iol;\ny=!a & !a.iol;",
+      "reference": "pin 23=!a;pin 22=q;pin 20=y;\nq=a.iol;\ny=!a;"
+    },
+    {
+      "device": "p19l8t",
+      "label": "p19l8t lq low False a & !a.lq",
+      "source": "pin 2=a;pin 22=!q;pin 21=!y;\nq=a.lq;\ny=a & !a.lq;",
+      "reference": "pin 2=a;pin 22=!q;pin 21=!y;\nq=a.lq;\ny='b'0;"
+    },
+    {
+      "device": "p19l8t",
+      "label": "p19l8t lq low False !a & a.lq",
+      "source": "pin 2=a;pin 22=!q;pin 21=!y;\nq=a.lq;\ny=!a & a.lq;",
+      "reference": "pin 2=a;pin 22=!q;pin 21=!y;\nq=a.lq;\ny='b'0;"
+    },
+    {
+      "device": "p19l8t",
+      "label": "p19l8t lq low False a & a.lq",
+      "source": "pin 2=a;pin 22=!q;pin 21=!y;\nq=a.lq;\ny=a & a.lq;",
+      "reference": "pin 2=a;pin 22=!q;pin 21=!y;\nq=a.lq;\ny=a;"
+    },
+    {
+      "device": "p19l8t",
+      "label": "p19l8t lq low False !a & !a.lq",
+      "source": "pin 2=a;pin 22=!q;pin 21=!y;\nq=a.lq;\ny=!a & !a.lq;",
+      "reference": "pin 2=a;pin 22=!q;pin 21=!y;\nq=a.lq;\ny=!a;"
+    },
+    {
+      "device": "p19l8t",
+      "label": "p19l8t lq low True a & !a.lq",
+      "source": "pin 2=!a;pin 22=!q;pin 21=!y;\nq=a.lq;\ny=a & !a.lq;",
+      "reference": "pin 2=!a;pin 22=!q;pin 21=!y;\nq=a.lq;\ny='b'0;"
+    },
+    {
+      "device": "p19l8t",
+      "label": "p19l8t lq low True !a & a.lq",
+      "source": "pin 2=!a;pin 22=!q;pin 21=!y;\nq=a.lq;\ny=!a & a.lq;",
+      "reference": "pin 2=!a;pin 22=!q;pin 21=!y;\nq=a.lq;\ny='b'0;"
+    },
+    {
+      "device": "p19l8t",
+      "label": "p19l8t lq low True a & a.lq",
+      "source": "pin 2=!a;pin 22=!q;pin 21=!y;\nq=a.lq;\ny=a & a.lq;",
+      "reference": "pin 2=!a;pin 22=!q;pin 21=!y;\nq=a.lq;\ny=a;"
+    },
+    {
+      "device": "p19l8t",
+      "label": "p19l8t lq low True !a & !a.lq",
+      "source": "pin 2=!a;pin 22=!q;pin 21=!y;\nq=a.lq;\ny=!a & !a.lq;",
+      "reference": "pin 2=!a;pin 22=!q;pin 21=!y;\nq=a.lq;\ny=!a;"
+    },
+    {
+      "device": "p19r4t",
+      "label": "p19r4t lq low False a & !a.lq",
+      "source": "pin 2=a;pin 22=!q;pin 21=!y;\nq=a.lq;\ny=a & !a.lq;",
+      "reference": "pin 2=a;pin 22=!q;pin 21=!y;\nq=a.lq;\ny='b'0;"
+    },
+    {
+      "device": "p19r4t",
+      "label": "p19r4t lq low False !a & a.lq",
+      "source": "pin 2=a;pin 22=!q;pin 21=!y;\nq=a.lq;\ny=!a & a.lq;",
+      "reference": "pin 2=a;pin 22=!q;pin 21=!y;\nq=a.lq;\ny='b'0;"
+    },
+    {
+      "device": "p19r4t",
+      "label": "p19r4t lq low False a & a.lq",
+      "source": "pin 2=a;pin 22=!q;pin 21=!y;\nq=a.lq;\ny=a & a.lq;",
+      "reference": "pin 2=a;pin 22=!q;pin 21=!y;\nq=a.lq;\ny=a;"
+    },
+    {
+      "device": "p19r4t",
+      "label": "p19r4t lq low False !a & !a.lq",
+      "source": "pin 2=a;pin 22=!q;pin 21=!y;\nq=a.lq;\ny=!a & !a.lq;",
+      "reference": "pin 2=a;pin 22=!q;pin 21=!y;\nq=a.lq;\ny=!a;"
+    },
+    {
+      "device": "p19r4t",
+      "label": "p19r4t lq low True a & !a.lq",
+      "source": "pin 2=!a;pin 22=!q;pin 21=!y;\nq=a.lq;\ny=a & !a.lq;",
+      "reference": "pin 2=!a;pin 22=!q;pin 21=!y;\nq=a.lq;\ny='b'0;"
+    },
+    {
+      "device": "p19r4t",
+      "label": "p19r4t lq low True !a & a.lq",
+      "source": "pin 2=!a;pin 22=!q;pin 21=!y;\nq=a.lq;\ny=!a & a.lq;",
+      "reference": "pin 2=!a;pin 22=!q;pin 21=!y;\nq=a.lq;\ny='b'0;"
+    },
+    {
+      "device": "p19r4t",
+      "label": "p19r4t lq low True a & a.lq",
+      "source": "pin 2=!a;pin 22=!q;pin 21=!y;\nq=a.lq;\ny=a & a.lq;",
+      "reference": "pin 2=!a;pin 22=!q;pin 21=!y;\nq=a.lq;\ny=a;"
+    },
+    {
+      "device": "p19r4t",
+      "label": "p19r4t lq low True !a & !a.lq",
+      "source": "pin 2=!a;pin 22=!q;pin 21=!y;\nq=a.lq;\ny=!a & !a.lq;",
+      "reference": "pin 2=!a;pin 22=!q;pin 21=!y;\nq=a.lq;\ny=!a;"
+    },
+    {
+      "device": "p19r6t",
+      "label": "p19r6t lq low False a & !a.lq",
+      "source": "pin 2=a;pin 22=!q;pin 21=!y;\nq=a.lq;\ny.d=a & !a.lq;",
+      "reference": "pin 2=a;pin 22=!q;pin 21=!y;\nq=a.lq;\ny.d='b'0;"
+    },
+    {
+      "device": "p19r6t",
+      "label": "p19r6t lq low False !a & a.lq",
+      "source": "pin 2=a;pin 22=!q;pin 21=!y;\nq=a.lq;\ny.d=!a & a.lq;",
+      "reference": "pin 2=a;pin 22=!q;pin 21=!y;\nq=a.lq;\ny.d='b'0;"
+    },
+    {
+      "device": "p19r6t",
+      "label": "p19r6t lq low False a & a.lq",
+      "source": "pin 2=a;pin 22=!q;pin 21=!y;\nq=a.lq;\ny.d=a & a.lq;",
+      "reference": "pin 2=a;pin 22=!q;pin 21=!y;\nq=a.lq;\ny.d=a;"
+    },
+    {
+      "device": "p19r6t",
+      "label": "p19r6t lq low False !a & !a.lq",
+      "source": "pin 2=a;pin 22=!q;pin 21=!y;\nq=a.lq;\ny.d=!a & !a.lq;",
+      "reference": "pin 2=a;pin 22=!q;pin 21=!y;\nq=a.lq;\ny.d=!a;"
+    },
+    {
+      "device": "p19r6t",
+      "label": "p19r6t lq low True a & !a.lq",
+      "source": "pin 2=!a;pin 22=!q;pin 21=!y;\nq=a.lq;\ny.d=a & !a.lq;",
+      "reference": "pin 2=!a;pin 22=!q;pin 21=!y;\nq=a.lq;\ny.d='b'0;"
+    },
+    {
+      "device": "p19r6t",
+      "label": "p19r6t lq low True !a & a.lq",
+      "source": "pin 2=!a;pin 22=!q;pin 21=!y;\nq=a.lq;\ny.d=!a & a.lq;",
+      "reference": "pin 2=!a;pin 22=!q;pin 21=!y;\nq=a.lq;\ny.d='b'0;"
+    },
+    {
+      "device": "p19r6t",
+      "label": "p19r6t lq low True a & a.lq",
+      "source": "pin 2=!a;pin 22=!q;pin 21=!y;\nq=a.lq;\ny.d=a & a.lq;",
+      "reference": "pin 2=!a;pin 22=!q;pin 21=!y;\nq=a.lq;\ny.d=a;"
+    },
+    {
+      "device": "p19r6t",
+      "label": "p19r6t lq low True !a & !a.lq",
+      "source": "pin 2=!a;pin 22=!q;pin 21=!y;\nq=a.lq;\ny.d=!a & !a.lq;",
+      "reference": "pin 2=!a;pin 22=!q;pin 21=!y;\nq=a.lq;\ny.d=!a;"
+    },
+    {
+      "device": "p19r8t",
+      "label": "p19r8t lq low False a & !a.lq",
+      "source": "pin 2=a;pin 22=!q;pin 21=!y;\nq.d=a.lq;\ny.d=a & !a.lq;",
+      "reference": "pin 2=a;pin 22=!q;pin 21=!y;\nq.d=a.lq;\ny.d='b'0;"
+    },
+    {
+      "device": "p19r8t",
+      "label": "p19r8t lq low False !a & a.lq",
+      "source": "pin 2=a;pin 22=!q;pin 21=!y;\nq.d=a.lq;\ny.d=!a & a.lq;",
+      "reference": "pin 2=a;pin 22=!q;pin 21=!y;\nq.d=a.lq;\ny.d='b'0;"
+    },
+    {
+      "device": "p19r8t",
+      "label": "p19r8t lq low False a & a.lq",
+      "source": "pin 2=a;pin 22=!q;pin 21=!y;\nq.d=a.lq;\ny.d=a & a.lq;",
+      "reference": "pin 2=a;pin 22=!q;pin 21=!y;\nq.d=a.lq;\ny.d=a;"
+    },
+    {
+      "device": "p19r8t",
+      "label": "p19r8t lq low False !a & !a.lq",
+      "source": "pin 2=a;pin 22=!q;pin 21=!y;\nq.d=a.lq;\ny.d=!a & !a.lq;",
+      "reference": "pin 2=a;pin 22=!q;pin 21=!y;\nq.d=a.lq;\ny.d=!a;"
+    },
+    {
+      "device": "p19r8t",
+      "label": "p19r8t lq low True a & !a.lq",
+      "source": "pin 2=!a;pin 22=!q;pin 21=!y;\nq.d=a.lq;\ny.d=a & !a.lq;",
+      "reference": "pin 2=!a;pin 22=!q;pin 21=!y;\nq.d=a.lq;\ny.d='b'0;"
+    },
+    {
+      "device": "p19r8t",
+      "label": "p19r8t lq low True !a & a.lq",
+      "source": "pin 2=!a;pin 22=!q;pin 21=!y;\nq.d=a.lq;\ny.d=!a & a.lq;",
+      "reference": "pin 2=!a;pin 22=!q;pin 21=!y;\nq.d=a.lq;\ny.d='b'0;"
+    },
+    {
+      "device": "p19r8t",
+      "label": "p19r8t lq low True a & a.lq",
+      "source": "pin 2=!a;pin 22=!q;pin 21=!y;\nq.d=a.lq;\ny.d=a & a.lq;",
+      "reference": "pin 2=!a;pin 22=!q;pin 21=!y;\nq.d=a.lq;\ny.d=a;"
+    },
+    {
+      "device": "p19r8t",
+      "label": "p19r8t lq low True !a & !a.lq",
+      "source": "pin 2=!a;pin 22=!q;pin 21=!y;\nq.d=a.lq;\ny.d=!a & !a.lq;",
+      "reference": "pin 2=!a;pin 22=!q;pin 21=!y;\nq.d=a.lq;\ny.d=!a;"
+    }
+  ]
+}
