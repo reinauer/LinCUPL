@@ -335,6 +335,9 @@ static const struct { int32_t pin; char quadrant; } k_ep1800_pins[0x50] = {
 #define V5000_CELLS ((int)(sizeof(k_v5000_cells) / sizeof(k_v5000_cells[0])))
 #define LOCAL_WIDTH 0x50        /* fuses of a local (quadrant) product term */
 #define GLOBAL_WIDTH 0xb8       /* fuses of a global product term */
+#define IO_MODE_BASE 0x27b40
+#define IO_MODE_STRIDE 9
+#define IO_CELL_COUNT 52
 
 enum { VC_PIN, VC_QUADRANT, VC_LOCAL, VC_GLOBAL, VC_LAYOUT, VC_FUSE, VC_MODE };
 
@@ -637,6 +640,24 @@ static void blow_v5000_term(const uint16_t *care, const uint16_t *val, int owner
     write_fuse_row(row, fuse, width);
 }
 
+/* Secondary register numbering reverses in the first and third quadrants.
+ * Its D-mode selector identifies the physical I/O cell without relying on
+ * the order of the node records or the placement table. */
+static int secondary_parent(unsigned pin)
+{
+    for (int i = 0; i < nnodes(); i++) {
+        if (node16(i, NODE_NUMBER) != pin || node8(i, NODE_EXT) != 1) {
+            continue;
+        }
+        uint32_t fuse = node32(i, NODE_ROW_FUSE);
+        if (fuse >= IO_MODE_BASE && fuse < IO_MODE_BASE + IO_CELL_COUNT * IO_MODE_STRIDE) {
+            return cell_index(4) + (int)((fuse - IO_MODE_BASE) / IO_MODE_STRIDE);
+        }
+    }
+    fatal_error(1026, "secondary register cell");
+    return -1;
+}
+
 /* Place the product terms of an array in its macrocell */
 static void place_array(or_array_t *oa)
 {
@@ -664,7 +685,7 @@ static void place_array(or_array_t *oa)
             *cell_mode(idx - 180) = 1;
         }
         if (number < 0x91 && number > 0x5c) {
-            *cell_mode(idx - 76) &= ~2;
+            *cell_mode(secondary_parent(number)) &= ~2;
         }
         if (number < 0xc5 && number > 0x90) {
             *cell_mode(idx - 128) |= 1;
@@ -711,12 +732,12 @@ static void place_array(or_array_t *oa)
 /* Mode fuses of the cells of pins 4 to 65 */
 static void write_cell_modes(void)
 {
-    uint32_t fuse = 0x27b40;
+    uint32_t fuse = IO_MODE_BASE;
     int idx = cell_index(4);
     if (idx < 0) {
         return;
     }
-    for (; ((unsigned)s_cells[idx][VC_PIN] & 0xffff) < 0x42; idx++, fuse += 9) {
+    for (; ((unsigned)s_cells[idx][VC_PIN] & 0xffff) < 0x42; idx++, fuse += IO_MODE_STRIDE) {
         unsigned mode = (unsigned)s_cells[idx][VC_MODE] & 0xff;
         set_fuse(fuse, mode & 1);
         set_fuse(fuse + 3, (mode >> 1) & 1);

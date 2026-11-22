@@ -1,0 +1,417 @@
+{
+  "device": "v5000",
+  "variants": [
+    {
+      "label": "quadrant 1, pin 4, node 105",
+      "source": "pin 1 = input; pin 2 = clk; pin 4 = output; pinnode 105 = second;\noutput = input; second.d = !input; second.ck = clk;",
+      "fuses": {
+        "162627": 0,
+        "162735": 1
+      }
+    },
+    {
+      "label": "quadrant 1, pin 5, node 104",
+      "source": "pin 1 = input; pin 2 = clk; pin 5 = output; pinnode 104 = second;\noutput = input; second.d = !input; second.ck = clk;",
+      "fuses": {
+        "162636": 0,
+        "162726": 1
+      }
+    },
+    {
+      "label": "quadrant 1, pin 6, node 103",
+      "source": "pin 1 = input; pin 2 = clk; pin 6 = output; pinnode 103 = second;\noutput = input; second.d = !input; second.ck = clk;",
+      "fuses": {
+        "162645": 0,
+        "162717": 1
+      }
+    },
+    {
+      "label": "quadrant 1, pin 7, node 102",
+      "source": "pin 1 = input; pin 2 = clk; pin 7 = output; pinnode 102 = second;\noutput = input; second.d = !input; second.ck = clk;",
+      "fuses": {
+        "162654": 0,
+        "162708": 1
+      }
+    },
+    {
+      "label": "quadrant 1, pin 8, node 101",
+      "source": "pin 1 = input; pin 2 = clk; pin 8 = output; pinnode 101 = second;\noutput = input; second.d = !input; second.ck = clk;",
+      "fuses": {
+        "162663": 0,
+        "162699": 1
+      }
+    },
+    {
+      "label": "quadrant 1, pin 9, node 100",
+      "source": "pin 1 = input; pin 2 = clk; pin 9 = output; pinnode 100 = second;\noutput = input; second.d = !input; second.ck = clk;",
+      "fuses": {
+        "162672": 0,
+        "162690": 1
+      }
+    },
+    {
+      "label": "quadrant 1, pin 10, node 99",
+      "source": "pin 1 = input; pin 2 = clk; pin 10 = output; pinnode 99 = second;\noutput = input; second.d = !input; second.ck = clk;",
+      "fuses": {
+        "162681": 0
+      }
+    },
+    {
+      "label": "quadrant 1, pin 11, node 98",
+      "source": "pin 1 = input; pin 2 = clk; pin 11 = output; pinnode 98 = second;\noutput = input; second.d = !input; second.ck = clk;",
+      "fuses": {
+        "162690": 0,
+        "162672": 1
+      }
+    },
+    {
+      "label": "quadrant 1, pin 12, node 97",
+      "source": "pin 1 = input; pin 2 = clk; pin 12 = output; pinnode 97 = second;\noutput = input; second.d = !input; second.ck = clk;",
+      "fuses": {
+        "162699": 0,
+        "162663": 1
+      }
+    },
+    {
+      "label": "quadrant 1, pin 13, node 96",
+      "source": "pin 1 = input; pin 2 = clk; pin 13 = output; pinnode 96 = second;\noutput = input; second.d = !input; second.ck = clk;",
+      "fuses": {
+        "162708": 0,
+        "162654": 1
+      }
+    },
+    {
+      "label": "quadrant 1, pin 14, node 95",
+      "source": "pin 1 = input; pin 2 = clk; pin 14 = output; pinnode 95 = second;\noutput = input; second.d = !input; second.ck = clk;",
+      "fuses": {
+        "162717": 0,
+        "162645": 1
+      }
+    },
+    {
+      "label": "quadrant 1, pin 15, node 94",
+      "source": "pin 1 = input; pin 2 = clk; pin 15 = output; pinnode 94 = second;\noutput = input; second.d = !input; second.ck = clk;",
+      "fuses": {
+        "162726": 0,
+        "162636": 1
+      }
+    },
+    {
+      "label": "quadrant 1, pin 17, node 93",
+      "source": "pin 1 = input; pin 2 = clk; pin 17 = output; pinnode 93 = second;\noutput = input; second.d = !input; second.ck = clk;",
+      "fuses": {
+        "162735": 0,
+        "162627": 1
+      }
+    },
+    {
+      "label": "quadrant 2, pin 18, node 106",
+      "source": "pin 1 = input; pin 2 = clk; pin 18 = output; pinnode 106 = second;\noutput = input; second.d = !input; second.ck = clk;",
+      "fuses": {
+        "162744": 0,
+        "162852": 1
+      }
+    },
+    {
+      "label": "quadrant 2, pin 19, node 107",
+      "source": "pin 1 = input; pin 2 = clk; pin 19 = output; pinnode 107 = second;\noutput = input; second.d = !input; second.ck = clk;",
+      "fuses": {
+        "162753": 0,
+        "162843": 1
+      }
+    },
+    {
+      "label": "quadrant 2, pin 21, node 108",
+      "source": "pin 1 = input; pin 2 = clk; pin 21 = output; pinnode 108 = second;\noutput = input; second.d = !input; second.ck = clk;",
+      "fuses": {
+        "162762": 0,
+        "162834": 1
+      }
+    },
+    {
+      "label": "quadrant 2, pin 22, node 109",
+      "source": "pin 1 = input; pin 2 = clk; pin 22 = output; pinnode 109 = second;\noutput = input; second.d = !input; second.ck = clk;",
+      "fuses": {
+        "162771": 0,
+        "162825": 1
+      }
+    },
+    {
+      "label": "quadrant 2, pin 23, node 110",
+      "source": "pin 1 = input; pin 2 = clk; pin 23 = output; pinnode 110 = second;\noutput = input; second.d = !input; second.ck = clk;",
+      "fuses": {
+        "162780": 0,
+        "162816": 1
+      }
+    },
+    {
+      "label": "quadrant 2, pin 24, node 111",
+      "source": "pin 1 = input; pin 2 = clk; pin 24 = output; pinnode 111 = second;\noutput = input; second.d = !input; second.ck = clk;",
+      "fuses": {
+        "162789": 0,
+        "162807": 1
+      }
+    },
+    {
+      "label": "quadrant 2, pin 25, node 112",
+      "source": "pin 1 = input; pin 2 = clk; pin 25 = output; pinnode 112 = second;\noutput = input; second.d = !input; second.ck = clk;",
+      "fuses": {
+        "162798": 0
+      }
+    },
+    {
+      "label": "quadrant 2, pin 26, node 113",
+      "source": "pin 1 = input; pin 2 = clk; pin 26 = output; pinnode 113 = second;\noutput = input; second.d = !input; second.ck = clk;",
+      "fuses": {
+        "162807": 0,
+        "162789": 1
+      }
+    },
+    {
+      "label": "quadrant 2, pin 27, node 114",
+      "source": "pin 1 = input; pin 2 = clk; pin 27 = output; pinnode 114 = second;\noutput = input; second.d = !input; second.ck = clk;",
+      "fuses": {
+        "162816": 0,
+        "162780": 1
+      }
+    },
+    {
+      "label": "quadrant 2, pin 28, node 115",
+      "source": "pin 1 = input; pin 2 = clk; pin 28 = output; pinnode 115 = second;\noutput = input; second.d = !input; second.ck = clk;",
+      "fuses": {
+        "162825": 0,
+        "162771": 1
+      }
+    },
+    {
+      "label": "quadrant 2, pin 29, node 116",
+      "source": "pin 1 = input; pin 2 = clk; pin 29 = output; pinnode 116 = second;\noutput = input; second.d = !input; second.ck = clk;",
+      "fuses": {
+        "162834": 0,
+        "162762": 1
+      }
+    },
+    {
+      "label": "quadrant 2, pin 30, node 117",
+      "source": "pin 1 = input; pin 2 = clk; pin 30 = output; pinnode 117 = second;\noutput = input; second.d = !input; second.ck = clk;",
+      "fuses": {
+        "162843": 0,
+        "162753": 1
+      }
+    },
+    {
+      "label": "quadrant 2, pin 31, node 118",
+      "source": "pin 1 = input; pin 2 = clk; pin 31 = output; pinnode 118 = second;\noutput = input; second.d = !input; second.ck = clk;",
+      "fuses": {
+        "162852": 0,
+        "162744": 1
+      }
+    },
+    {
+      "label": "quadrant 3, pin 38, node 131",
+      "source": "pin 1 = input; pin 2 = clk; pin 38 = output; pinnode 131 = second;\noutput = input; second.d = !input; second.ck = clk;",
+      "fuses": {
+        "162861": 0,
+        "162969": 1
+      }
+    },
+    {
+      "label": "quadrant 3, pin 39, node 130",
+      "source": "pin 1 = input; pin 2 = clk; pin 39 = output; pinnode 130 = second;\noutput = input; second.d = !input; second.ck = clk;",
+      "fuses": {
+        "162870": 0,
+        "162960": 1
+      }
+    },
+    {
+      "label": "quadrant 3, pin 40, node 129",
+      "source": "pin 1 = input; pin 2 = clk; pin 40 = output; pinnode 129 = second;\noutput = input; second.d = !input; second.ck = clk;",
+      "fuses": {
+        "162879": 0,
+        "162951": 1
+      }
+    },
+    {
+      "label": "quadrant 3, pin 41, node 128",
+      "source": "pin 1 = input; pin 2 = clk; pin 41 = output; pinnode 128 = second;\noutput = input; second.d = !input; second.ck = clk;",
+      "fuses": {
+        "162888": 0,
+        "162942": 1
+      }
+    },
+    {
+      "label": "quadrant 3, pin 42, node 127",
+      "source": "pin 1 = input; pin 2 = clk; pin 42 = output; pinnode 127 = second;\noutput = input; second.d = !input; second.ck = clk;",
+      "fuses": {
+        "162897": 0,
+        "162933": 1
+      }
+    },
+    {
+      "label": "quadrant 3, pin 43, node 126",
+      "source": "pin 1 = input; pin 2 = clk; pin 43 = output; pinnode 126 = second;\noutput = input; second.d = !input; second.ck = clk;",
+      "fuses": {
+        "162906": 0,
+        "162924": 1
+      }
+    },
+    {
+      "label": "quadrant 3, pin 44, node 125",
+      "source": "pin 1 = input; pin 2 = clk; pin 44 = output; pinnode 125 = second;\noutput = input; second.d = !input; second.ck = clk;",
+      "fuses": {
+        "162915": 0
+      }
+    },
+    {
+      "label": "quadrant 3, pin 45, node 124",
+      "source": "pin 1 = input; pin 2 = clk; pin 45 = output; pinnode 124 = second;\noutput = input; second.d = !input; second.ck = clk;",
+      "fuses": {
+        "162924": 0,
+        "162906": 1
+      }
+    },
+    {
+      "label": "quadrant 3, pin 46, node 123",
+      "source": "pin 1 = input; pin 2 = clk; pin 46 = output; pinnode 123 = second;\noutput = input; second.d = !input; second.ck = clk;",
+      "fuses": {
+        "162933": 0,
+        "162897": 1
+      }
+    },
+    {
+      "label": "quadrant 3, pin 47, node 122",
+      "source": "pin 1 = input; pin 2 = clk; pin 47 = output; pinnode 122 = second;\noutput = input; second.d = !input; second.ck = clk;",
+      "fuses": {
+        "162942": 0,
+        "162888": 1
+      }
+    },
+    {
+      "label": "quadrant 3, pin 48, node 121",
+      "source": "pin 1 = input; pin 2 = clk; pin 48 = output; pinnode 121 = second;\noutput = input; second.d = !input; second.ck = clk;",
+      "fuses": {
+        "162951": 0,
+        "162879": 1
+      }
+    },
+    {
+      "label": "quadrant 3, pin 49, node 120",
+      "source": "pin 1 = input; pin 2 = clk; pin 49 = output; pinnode 120 = second;\noutput = input; second.d = !input; second.ck = clk;",
+      "fuses": {
+        "162960": 0,
+        "162870": 1
+      }
+    },
+    {
+      "label": "quadrant 3, pin 51, node 119",
+      "source": "pin 1 = input; pin 2 = clk; pin 51 = output; pinnode 119 = second;\noutput = input; second.d = !input; second.ck = clk;",
+      "fuses": {
+        "162969": 0,
+        "162861": 1
+      }
+    },
+    {
+      "label": "quadrant 4, pin 52, node 132",
+      "source": "pin 1 = input; pin 2 = clk; pin 52 = output; pinnode 132 = second;\noutput = input; second.d = !input; second.ck = clk;",
+      "fuses": {
+        "162978": 0,
+        "163086": 1
+      }
+    },
+    {
+      "label": "quadrant 4, pin 53, node 133",
+      "source": "pin 1 = input; pin 2 = clk; pin 53 = output; pinnode 133 = second;\noutput = input; second.d = !input; second.ck = clk;",
+      "fuses": {
+        "162987": 0,
+        "163077": 1
+      }
+    },
+    {
+      "label": "quadrant 4, pin 55, node 134",
+      "source": "pin 1 = input; pin 2 = clk; pin 55 = output; pinnode 134 = second;\noutput = input; second.d = !input; second.ck = clk;",
+      "fuses": {
+        "162996": 0,
+        "163068": 1
+      }
+    },
+    {
+      "label": "quadrant 4, pin 56, node 135",
+      "source": "pin 1 = input; pin 2 = clk; pin 56 = output; pinnode 135 = second;\noutput = input; second.d = !input; second.ck = clk;",
+      "fuses": {
+        "163005": 0,
+        "163059": 1
+      }
+    },
+    {
+      "label": "quadrant 4, pin 57, node 136",
+      "source": "pin 1 = input; pin 2 = clk; pin 57 = output; pinnode 136 = second;\noutput = input; second.d = !input; second.ck = clk;",
+      "fuses": {
+        "163014": 0,
+        "163050": 1
+      }
+    },
+    {
+      "label": "quadrant 4, pin 58, node 137",
+      "source": "pin 1 = input; pin 2 = clk; pin 58 = output; pinnode 137 = second;\noutput = input; second.d = !input; second.ck = clk;",
+      "fuses": {
+        "163023": 0,
+        "163041": 1
+      }
+    },
+    {
+      "label": "quadrant 4, pin 59, node 138",
+      "source": "pin 1 = input; pin 2 = clk; pin 59 = output; pinnode 138 = second;\noutput = input; second.d = !input; second.ck = clk;",
+      "fuses": {
+        "163032": 0
+      }
+    },
+    {
+      "label": "quadrant 4, pin 60, node 139",
+      "source": "pin 1 = input; pin 2 = clk; pin 60 = output; pinnode 139 = second;\noutput = input; second.d = !input; second.ck = clk;",
+      "fuses": {
+        "163041": 0,
+        "163023": 1
+      }
+    },
+    {
+      "label": "quadrant 4, pin 61, node 140",
+      "source": "pin 1 = input; pin 2 = clk; pin 61 = output; pinnode 140 = second;\noutput = input; second.d = !input; second.ck = clk;",
+      "fuses": {
+        "163050": 0,
+        "163014": 1
+      }
+    },
+    {
+      "label": "quadrant 4, pin 62, node 141",
+      "source": "pin 1 = input; pin 2 = clk; pin 62 = output; pinnode 141 = second;\noutput = input; second.d = !input; second.ck = clk;",
+      "fuses": {
+        "163059": 0,
+        "163005": 1
+      }
+    },
+    {
+      "label": "quadrant 4, pin 63, node 142",
+      "source": "pin 1 = input; pin 2 = clk; pin 63 = output; pinnode 142 = second;\noutput = input; second.d = !input; second.ck = clk;",
+      "fuses": {
+        "163068": 0,
+        "162996": 1
+      }
+    },
+    {
+      "label": "quadrant 4, pin 64, node 143",
+      "source": "pin 1 = input; pin 2 = clk; pin 64 = output; pinnode 143 = second;\noutput = input; second.d = !input; second.ck = clk;",
+      "fuses": {
+        "163077": 0,
+        "162987": 1
+      }
+    },
+    {
+      "label": "quadrant 4, pin 65, node 144",
+      "source": "pin 1 = input; pin 2 = clk; pin 65 = output; pinnode 144 = second;\noutput = input; second.d = !input; second.ck = clk;",
+      "fuses": {
+        "163086": 0,
+        "162978": 1
+      }
+    }
+  ]
+}
