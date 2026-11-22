@@ -123,11 +123,6 @@ void parse_actions_begin(void)
 int act_header_keyword(token_t *tok)
 {
     g_header_keyword = tok->type;
-    if (tok->type == TOK_NAME && parse_list_find_type(&g_parse_table->header, TOK_NAME) != NULL) {
-        /* a second NAME starts a new design */
-        g_parse_table = parse_new_table("no_name");
-        parse_select_device_from_args();
-    }
     parse_push_mode();
     parse_lex_header_text_mode();
     parse_token_free(tok);
@@ -151,6 +146,9 @@ int act_header_text(token_t *tok)
 /* the text of NAME: names the current table; it must be new */
 int act_header_name(token_t *tok)
 {
+    if (parse_list_find_type(&g_parse_table->header, TOK_NAME) != NULL) {
+        return act_header_text(tok);
+    }
     if (tok->u.any == NULL) {
         parse_error_at(ERR_HEADER_NAME, "");
         parse_fatal_error(-1, "");
