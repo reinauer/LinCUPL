@@ -1,0 +1,73 @@
+{
+  "device": "p32r16",
+  "variants": [
+    {
+      "label": "p32r16 a register first",
+      "device": "p32r16",
+      "source": "pin 11 = a; pin 12 = b; pin 23 = y;\ny.d = a;\ny = b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "label": "p32r16 a combinational first",
+      "device": "p32r16",
+      "source": "pin 11 = a; pin 12 = b; pin 23 = y;\ny = b;\ny.d = a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "label": "p32r16 !(a & b) register first",
+      "device": "p32r16",
+      "source": "pin 11 = a; pin 12 = b; pin 23 = y;\ny.d = !(a & b);\ny = b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "label": "p32r16 !(a & b) combinational first",
+      "device": "p32r16",
+      "source": "pin 11 = a; pin 12 = b; pin 23 = y;\ny = b;\ny.d = !(a & b);",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "label": "p32r16 separate combinational outputs",
+      "device": "p32r16",
+      "source": "pin 11 = a; pin 12 = b; pin 23 = y;\npin 24 = z; y = a; z = b;"
+    },
+    {
+      "label": "p32r16 separate registered outputs",
+      "device": "p32r16",
+      "source": "pin 11 = a; pin 12 = b; pin 23 = y;\npin 24 = z; y.d = a; z.d = b;"
+    },
+    {
+      "label": "p64r32 a register first",
+      "device": "p64r32",
+      "source": "pin 1 = a; pin 2 = b; pin 70 = y;\ny.d = a;\ny = b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "label": "p64r32 a combinational first",
+      "device": "p64r32",
+      "source": "pin 1 = a; pin 2 = b; pin 70 = y;\ny = b;\ny.d = a;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "label": "p64r32 !(a & b) register first",
+      "device": "p64r32",
+      "source": "pin 1 = a; pin 2 = b; pin 70 = y;\ny.d = !(a & b);\ny = b;",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "label": "p64r32 !(a & b) combinational first",
+      "device": "p64r32",
+      "source": "pin 1 = a; pin 2 = b; pin 70 = y;\ny = b;\ny.d = !(a & b);",
+      "diagnostic": "\\[0025cb\\]"
+    },
+    {
+      "label": "p64r32 separate combinational outputs",
+      "device": "p64r32",
+      "source": "pin 1 = a; pin 2 = b; pin 70 = y;\npin 71 = z; y = a; z = b;"
+    },
+    {
+      "label": "p64r32 separate registered outputs",
+      "device": "p64r32",
+      "source": "pin 1 = a; pin 2 = b; pin 70 = y;\npin 71 = z; y.d = a; z.d = b;"
+    }
+  ]
+}
