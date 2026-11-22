@@ -690,6 +690,12 @@ static int check_shared_terms(const symbol_t *sym)
     }
     switch (dev_u8(dev_nodefn(sym->node_fn, NODEFN_SHARING))) {
     case 1: {
+        /* Complementary C1 outputs may both describe the shared sum.
+         * Compare their normalized equations in the fusemap phase. */
+        if (strcmp(expand_device_name, "p16c1") == 0 ||
+            strncmp(expand_device_name, "p20c1", 5) == 0) {
+            return 0;
+        }
         int other = expand_find_line_sharer(sym);
         /* Inverting the register equation does not free the sum used by
          * another function of this pin.  POL_FIXED is an alternative

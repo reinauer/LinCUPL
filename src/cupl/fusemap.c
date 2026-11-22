@@ -941,6 +941,110 @@ static void merge_two_lists(equation_t *a, equation_t *b, or_array_t *oa)
     }
 }
 
+typedef struct {
+    uint32_t care;
+    uint32_t value;
+} c1_product_t;
+
+/* Express a C1 equation in physical input columns. These devices have at
+ * most twenty input pairs, so an exact comparison needs at most 2^20
+ * assignments and does not depend on the minimizer's choice of cover. */
+static int c1_products(const equation_t *eq, c1_product_t *products,
+                       uint32_t *inputs)
+{
+    int count = 0;
+    for (int t = 0; t < eq->nterms; t++) {
+        const uint16_t *care = TERM_CARE(eq, t);
+        const uint16_t *value = TERM_VAL(eq, t);
+        if ((care[0] & TERM_DELETED) ||
+            (term_bit(care, 0) && term_bit(value, 0)) ||
+            (term_bit(care, 1) && !term_bit(value, 1))) {
+            continue;
+        }
+        c1_product_t product = { 0, 0 };
+        int contradictory = 0;
+        for (int i = 2; i < g.nsyms; i++) {
+            if (!term_bit(care, i)) {
+                continue;
+            }
+            int pin = g.syms[i].pin_index;
+            if (pin < 0) {
+                fatal_error(ERR_PIN_NOT_INPUT, g.syms[i].name);
+            }
+            int positive = term_bit(value, i) != input_inverted(i, pin);
+            unsigned column = pin8(pin, positive ? PIN_TRUE_COL : PIN_COMP_COL);
+            if (column >= 40) {
+                fatal_error(ERR_BAD_LIBRARY, g.device_name);
+            }
+            uint32_t bit = UINT32_C(1) << (column / 2);
+            uint32_t level = (column & 1) ? 0 : bit;
+            if ((product.care & bit) && (product.value & bit) != level) {
+                contradictory = 1;
+                break;
+            }
+            product.care |= bit;
+            product.value |= level;
+        }
+        if (!contradictory) {
+            products[count++] = product;
+            *inputs |= product.care;
+        }
+    }
+    return count;
+}
+
+static int c1_sum(const c1_product_t *products, int count, uint32_t value)
+{
+    for (int i = 0; i < count; i++) {
+        if ((value & products[i].care) == products[i].value) {
+            return 1;
+        }
+    }
+    return 0;
+}
+
+static void check_complementary_outputs(void)
+{
+    if (strcmp(g.device_name, "p16c1") != 0 &&
+        strncmp(g.device_name, "p20c1", 5) != 0) {
+        return;
+    }
+    for (int i = 0; i < g.nor_arrays; i++) {
+        or_array_t *oa = &g.or_arrays[i];
+        equation_t *a = oa->eq;
+        if (a == NULL) {
+            continue;
+        }
+        for (equation_t *b = a->next; b != NULL; b = b->next) {
+            c1_product_t *pa = alloc_zeroed(a->nterms + 1, sizeof(*pa), "shared sum");
+            c1_product_t *pb = alloc_zeroed(b->nterms + 1, sizeof(*pb), "shared sum");
+            uint32_t inputs = 0;
+            int na = c1_products(a, pa, &inputs);
+            int nb = c1_products(b, pb, &inputs);
+            uint32_t value = 0;
+            do {
+                if (c1_sum(pa, na, value) != c1_sum(pb, nb, value)) {
+                    report_symbol_error(ERR_PINNODE_CONFLICT, &g.syms[b->symbol]);
+                    abort_phase();
+                }
+                value = (value - inputs) & inputs;
+            } while (value != 0);
+            free_tracked(pa);
+            free_tracked(pb);
+            /* One cover drives both outputs, including when two equivalent
+             * covers have different terms or term merging is disabled. */
+            equation_t *keep = a->nterms <= b->nterms ? a : b;
+            equation_t *drop = keep == a ? b : a;
+            for (int t = 0; t < keep->nterms; t++) {
+                term_set_bit(TERM_OUT(keep, t), drop->symbol);
+            }
+            oa->nterms -= drop->nterms;
+            drop->nterms = 0;
+            a = keep;
+        }
+    }
+}
+
 /* Merge identical product terms of lists that share an OR array */
 static void merge_shared_terms(void)
 {
@@ -1410,6 +1514,7 @@ static int process_device(void)
     choose_demorgan_forms();
     rebuild_output_table();
     assign_or_arrays();
+    check_complementary_outputs();
     if (g.dev_ep312) {
         ep312_assign_terms();
     }
