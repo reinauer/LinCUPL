@@ -506,6 +506,7 @@ const char *header_string(int index);
 #define modules_reset       cuplc_modules_reset
 #define select_cell_table   cuplc_select_cell_table
 #define ep312_assign_terms  cuplc_ep312_assign_terms
+#define v2500b_assign_alias_rows cuplc_v2500b_assign_alias_rows
 #define max5_set_needed     cuplc_max5_set_needed
 #define build_fuse_map      cuplc_build_fuse_map
 #define write_jedec         cuplc_write_jedec
@@ -566,6 +567,7 @@ enum { CELLS_EP312, CELLS_EP324, CELLS_V2500B };
 void jed_reset(void);
 void select_cell_table(int which, int lcc);
 void ep312_assign_terms(void);
+void v2500b_assign_alias_rows(void);
 void max5_set_needed(int pin, int nterms);
 void build_fuse_map(void);
 void write_jedec(void);

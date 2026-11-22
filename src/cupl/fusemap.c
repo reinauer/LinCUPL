@@ -1518,6 +1518,9 @@ static int process_device(void)
     if (g.dev_ep312) {
         ep312_assign_terms();
     }
+    if (g.dev_v2500b) {
+        v2500b_assign_alias_rows();
+    }
     if (g.options & OPT_DOC) {
         doc_write_symbols();
     }
