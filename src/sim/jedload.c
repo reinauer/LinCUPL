@@ -104,6 +104,7 @@ typedef struct {
     int16_t reg_rec;            /* pin record of the register feedback, -1 none */
     int16_t column;             /* its column pair, -1 none */
     int16_t node;               /* node record of the macrocell as programmed, -1: no output */
+    int16_t off_enable;         /* output enable term of a macrocell that is turned off, -1 none */
     int16_t enable;             /* node records of the output enable, */
     int16_t reset;              /* reset */
     int16_t preset;             /* and preset term, -1 none */
@@ -466,7 +467,7 @@ static void collect_pins(void)
     for (int p = 0; p <= MAX_PINS; p++) {
         jpin_t *pin = &g_jed.pins[p];
         memset(pin, 0, sizeof(*pin));
-        pin->in_rec = pin->reg_rec = pin->column = pin->node = -1;
+        pin->in_rec = pin->reg_rec = pin->column = pin->node = pin->off_enable = -1;
         pin->enable = pin->reset = pin->preset = -1;
         pin->sym = pin->out_sym = pin->enable_sym = pin->reset_sym = pin->preset_sym = -1;
         snprintf(pin->name, sizeof(pin->name), "P%d", p);
@@ -579,6 +580,7 @@ static void configure_macrocells(void)
         if (array_rows((int)rd16(n + NODE_ARRAY)) == 0 && pin->enable >= 0 &&
             array_rows((int)rd16(dev_node(pin->enable) + NODE_ARRAY)) == 0 &&
             !(registered && pin->column >= 0 && g_jed.columns[pin->column].used)) {
+            pin->off_enable = pin->enable;
             pin->node = pin->enable = -1;
             continue;
         }
@@ -600,6 +602,8 @@ static void configure_macrocells(void)
 /* -------------------------------------------------------------------------
  * Symbols and product terms
  * ------------------------------------------------------------------------- */
+static int compare_names(const char *a, const char *b);
+
 static int add_symbol(const char *name, const char *type, int pin, int kind, int flags, int pin_rec, int node_rec)
 {
     sym_t *s = &g_syms[g_nsyms];
@@ -617,25 +621,42 @@ static int add_symbol(const char *name, const char *type, int pin, int kind, int
 
 /* The symbol table as cupl writes it for such a design: the two constants,
  * then for every pin
- *   - an input: the pin;
+ *   - an input: the pin; on a pin with a macrocell that the .pld file
+ *     declares, also the output enable term of the macrocell, which is
+ *     always false (cupl writes it for a declared pin: $TRACE lists it);
  *   - a combinatorial output: the pin, bound to its node record as well,
  *     and its output enable term (extension oe);
  *   - a registered output: the pin with the pin record of the register
  *     feedback, the register (extension d) and its reset (ar), output
  *     enable (oe) and preset (sp) terms.
- * A pin is flagged as an input if a product term uses it. */
+ * A pin is flagged as an input if a product term uses it.  The pins come
+ * in the order of their names, as cupl sorts its symbols: $TRACE lists
+ * the outputs of a term (the registers of a common reset) in this order. */
 static void build_symbols(void)
 {
+    int order[MAX_PINS + 1];
     g_syms = alloc_tracked(((size_t)g_jed.npins * 5 + 3) * sizeof(sym_t), "symbol table");
     g_nsyms = 0;
     add_symbol("", "", 0, KIND_CONST0, 0, -1, -1);
     add_symbol("", "", 0, KIND_CONST1, 0, -1, -1);
-    for (int p = 1; p <= g_jed.npins; p++) {
+    for (int i = 0; i < g_jed.npins; i++) {
+        int k = i;
+        for (; k > 0 && compare_names(g_jed.pins[order[k - 1]].name, g_jed.pins[i + 1].name) > 0; k--) {
+            order[k] = order[k - 1];
+        }
+        order[k] = i + 1;
+    }
+    for (int i = 0; i < g_jed.npins; i++) {
+        int p = order[i];
         jpin_t *pin = &g_jed.pins[p];
         int low = pin->low ? SYMF_LOW : 0;
         int used = (pin->column >= 0 && g_jed.columns[pin->column].used) ? SYMF_INPUT : 0;
         if (pin->node < 0) {
             pin->sym = (int16_t)add_symbol(pin->name, "", p, KIND_PIN, used | low, pin->in_rec, -1);
+            if (pin->named && pin->off_enable >= 0) {
+                pin->enable = pin->off_enable;
+                pin->enable_sym = (int16_t)add_symbol(pin->name, "oe", p, KIND_PIN_EXT, SYMF_OUTPUT, -1, pin->enable);
+            }
             continue;
         }
         if (dev_node(pin->node)[NODE_TYPE] == NT_REGISTER) {
