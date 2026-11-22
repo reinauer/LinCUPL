@@ -338,6 +338,94 @@ void ep312_assign_terms(void)
     }
 }
 
+static int equation_is_false(const equation_t *eq)
+{
+    for (int t = 0; t < eq->nterms; t++) {
+        const uint16_t *care = TERM_CARE(eq, t);
+        const uint16_t *value = TERM_VAL(eq, t);
+        if (!(care[0] & TERM_DELETED) &&
+            !(term_bit(care, 0) && term_bit(value, 0)) &&
+            !(term_bit(care, 1) && !term_bit(value, 1))) {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+/* An unused physical output can lend its eight registered rows to R1.
+ * Preserve the alias identity and control connections for ABS simulation;
+ * only its product-term placement and macrocell selector change. */
+void v2500b_assign_alias_rows(void)
+{
+    for (int c = 0; c < s_ncells; c++) {
+        cell_template_t *cell = &s_cells[c];
+        int occupied = 0;
+        for (int i = 0; i < g.nsyms; i++) {
+            const symbol_t *s = &g.syms[i];
+            if (s->pin == cell->pin && s->eq != NULL) {
+                /* An input-only pin has a generated, false OE equation. */
+                if (s->ext_code == 2 && equation_is_false(s->eq)) {
+                    continue;
+                }
+                occupied = 1;
+                break;
+            }
+        }
+        if (occupied) {
+            continue;
+        }
+        for (int i = 0; i < g.nor_arrays; i++) {
+            or_array_t *oa = &g.or_arrays[i];
+            symbol_t *s = oa->sym;
+            if (s == NULL || s->pin != cell->neighbor[0] || oa->nterms <= 4 ||
+                (s->ext_code != 1 && s->ext_code != 0x1b)) {
+                continue;
+            }
+            int parent = -1, rows = -1;
+            for (int n = 0; n < nnodes(); n++) {
+                if (node16(n, NODE_NUMBER) == cell->pin &&
+                    node8(n, NODE_EXT) == (unsigned)s->ext_code &&
+                    node8(n, NODE_KIND) == 7) {
+                    parent = n;
+                    break;
+                }
+            }
+            if (parent < 0) {
+                continue;
+            }
+            for (int n = 0; n < nnodes(); n++) {
+                if (node16(n, NODE_ARRAY) == node16(parent, NODE_ARRAY) &&
+                    node8(n, NODE_EXT) == 0x0e) {
+                    rows = n;
+                    break;
+                }
+            }
+            if (rows < 0 || s->or_index < 0 || s->node_index < 0) {
+                continue;
+            }
+            uint8_t *placement = node_rec(s->or_index);
+            unsigned array = rd16(placement + NODE_ARRAY);
+            memcpy(placement, node_rec(rows), NODE_REC_SIZE);
+            wr16(placement + NODE_ARRAY, (uint16_t)array);
+            wr16(placement + NODE_MAX_TERMS, 8);
+            s->eq->max_terms = 8;
+            uint8_t *mode = node_rec(s->node_index);
+            wr32(mode + NODE_ROW_FUSE, node32(parent, NODE_ROW_FUSE));
+            wr16(mode + NODE_SEL_VALUE, (uint16_t)node16(parent, NODE_SEL_VALUE));
+            mode[NODE_ROW_WIDTH] = (uint8_t)node8(parent, NODE_ROW_WIDTH);
+            /* Reading the unused pin must not restore combinational mode
+             * after the alias has selected the registered row layout. */
+            for (int p = 0; p < npins(); p++) {
+                if (pin16(p, PIN_NUMBER) == cell->pin && pin8(p, PIN_EXT) == 0 &&
+                    pin32(p, PIN_CFG_FUSE) == node32(parent, NODE_ROW_FUSE)) {
+                    pin_rec(p)[PIN_CFG_BITS] = 0;
+                }
+            }
+            cell->neighbor[1] = 1;
+        }
+    }
+}
+
 /* v2500b row sharing between the two flip-flops of a macrocell */
 static void v2500b_fix_cells(void)
 {
