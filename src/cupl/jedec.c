@@ -545,6 +545,25 @@ static int pin_has_registered_output(unsigned pin)
 /* Configuration fuses of input pins */
 static void set_input_pin_fuses(void)
 {
+    if (strcmp(g.device_name, "p18v8") == 0) {
+        /* An unused output register must be bypassed when its pin is an
+         * input. Keep its OE row false and select the combinational mux. */
+        for (int i = 0; i < g.nsyms; i++) {
+            const symbol_t *s = &g.syms[i];
+            if (s->pin_index < 0 || !(s->flags & SYMF_INPUT) || s->ext_code != 0 ||
+                g.output_sym_by_pin[s->pin] != NULL) {
+                continue;
+            }
+            for (int n = 0; n < nnodes(); n++) {
+                if (node16(n, NODE_NUMBER) == s->pin && node8(n, NODE_EXT) == 0 &&
+                    node8(n, NODE_KIND) == 6) {
+                    set_fuse_bits(node32(n, NODE_ROW_FUSE), node16(n, NODE_SEL_VALUE),
+                                  (int)node8(n, NODE_ROW_WIDTH));
+                    break;
+                }
+            }
+        }
+    }
     if (device_type() == DEVT_1) {
         return;
     }
