@@ -183,6 +183,40 @@ static void initializer(uint8_t *record, unsigned first, unsigned last,
     record[8] = (uint8_t)value;
 }
 
+static int check_atf750_alias_columns(void)
+{
+    uint8_t input[640] = { 0 }, fixed[640], again[640];
+    section(input, 3, 1, 152, 260);
+    input[268] = 24;
+    section(input, 7, 2, 39, 412);
+    wr16(input + 412, 1);
+    wr16(input + 414, 44);
+    input[416] = 1;
+    input[417] = 2;
+    wr16(input + 451, 1);
+    wr16(input + 453, 23);
+    input[455] = 1;
+    input[456] = 7;
+    input[457] = 1;
+    section(input, 6, 2, 16, 490);
+    wr16(input + 492, 23);
+    input[495] = 0x17;
+    input[496] = 1;
+    input[497] = 78;
+    input[498] = 79;
+    memcpy(input + 506, input + 490, 16);
+    wr16(input + 508, 44);
+    input[512] = 0;
+    CHECK(read_image(input, sizeof(input), "v750cext", 0, fixed) == 0);
+    CHECK(fixed[513] == 79 && fixed[514] == 78);
+    CHECK(memcmp(fixed + 490, input + 490, 16) == 0);
+    CHECK(read_image(fixed, sizeof(fixed), "v750cext", 0, again) == 0);
+    CHECK(memcmp(fixed, again, sizeof(fixed)) == 0);
+    CHECK(read_image(input, sizeof(input), "v750", 0, fixed) == 0);
+    CHECK(memcmp(input, fixed, sizeof(input)) == 0);
+    return 0;
+}
+
 static int check_atf750_feedback(void)
 {
     uint8_t input[IMAGE_SIZE] = { 0 }, fixed[IMAGE_SIZE], again[IMAGE_SIZE];
@@ -235,6 +269,7 @@ int main(void)
     CHECK(check_vp8_enable_pin() == 0);
     CHECK(check_pal26_feedback() == 0);
     CHECK(check_atf750_feedback() == 0);
+    CHECK(check_atf750_alias_columns() == 0);
     uint8_t original[IMAGE_SIZE] = { 0 }, fixed[IMAGE_SIZE], again[IMAGE_SIZE];
     section(original, 7, 1, 39, 260);
     section(original, 9, 3, 9, 299);

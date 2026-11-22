@@ -1,0 +1,2021 @@
+{
+  "device": "v750c",
+  "variants": [
+    {
+      "label": "v750c alias 44 pin 23 d positive",
+      "device": "v750c",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 23 = r; pin 22 = y; pinnode 44 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 23 = r; pin 22 = y; pinnode 44 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750c alias 44 pin 23 d !",
+      "device": "v750c",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 23 = r; pin 22 = y; pinnode 44 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 23 = r; pin 22 = y; pinnode 44 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750c alias 44 pin 23 t positive",
+      "device": "v750c",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 23 = r; pin 22 = y; pinnode 44 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 23 = r; pin 22 = y; pinnode 44 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750c alias 44 pin 23 t !",
+      "device": "v750c",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 23 = r; pin 22 = y; pinnode 44 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 23 = r; pin 22 = y; pinnode 44 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750c alias 43 pin 22 d positive",
+      "device": "v750c",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 22 = r; pin 23 = y; pinnode 43 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 22 = r; pin 23 = y; pinnode 43 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750c alias 43 pin 22 d !",
+      "device": "v750c",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 22 = r; pin 23 = y; pinnode 43 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 22 = r; pin 23 = y; pinnode 43 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750c alias 43 pin 22 t positive",
+      "device": "v750c",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 22 = r; pin 23 = y; pinnode 43 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 22 = r; pin 23 = y; pinnode 43 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750c alias 43 pin 22 t !",
+      "device": "v750c",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 22 = r; pin 23 = y; pinnode 43 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 22 = r; pin 23 = y; pinnode 43 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750c alias 42 pin 21 d positive",
+      "device": "v750c",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 21 = r; pin 23 = y; pinnode 42 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 21 = r; pin 23 = y; pinnode 42 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750c alias 42 pin 21 d !",
+      "device": "v750c",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 21 = r; pin 23 = y; pinnode 42 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 21 = r; pin 23 = y; pinnode 42 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750c alias 42 pin 21 t positive",
+      "device": "v750c",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 21 = r; pin 23 = y; pinnode 42 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 21 = r; pin 23 = y; pinnode 42 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750c alias 42 pin 21 t !",
+      "device": "v750c",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 21 = r; pin 23 = y; pinnode 42 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 21 = r; pin 23 = y; pinnode 42 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750c alias 41 pin 20 d positive",
+      "device": "v750c",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 20 = r; pin 23 = y; pinnode 41 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 20 = r; pin 23 = y; pinnode 41 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750c alias 41 pin 20 d !",
+      "device": "v750c",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 20 = r; pin 23 = y; pinnode 41 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 20 = r; pin 23 = y; pinnode 41 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750c alias 41 pin 20 t positive",
+      "device": "v750c",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 20 = r; pin 23 = y; pinnode 41 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 20 = r; pin 23 = y; pinnode 41 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750c alias 41 pin 20 t !",
+      "device": "v750c",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 20 = r; pin 23 = y; pinnode 41 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 20 = r; pin 23 = y; pinnode 41 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750c alias 40 pin 19 d positive",
+      "device": "v750c",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 19 = r; pin 23 = y; pinnode 40 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 19 = r; pin 23 = y; pinnode 40 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750c alias 40 pin 19 d !",
+      "device": "v750c",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 19 = r; pin 23 = y; pinnode 40 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 19 = r; pin 23 = y; pinnode 40 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750c alias 40 pin 19 t positive",
+      "device": "v750c",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 19 = r; pin 23 = y; pinnode 40 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 19 = r; pin 23 = y; pinnode 40 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750c alias 40 pin 19 t !",
+      "device": "v750c",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 19 = r; pin 23 = y; pinnode 40 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 19 = r; pin 23 = y; pinnode 40 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750c alias 39 pin 18 d positive",
+      "device": "v750c",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 18 = r; pin 23 = y; pinnode 39 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 18 = r; pin 23 = y; pinnode 39 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750c alias 39 pin 18 d !",
+      "device": "v750c",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 18 = r; pin 23 = y; pinnode 39 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 18 = r; pin 23 = y; pinnode 39 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750c alias 39 pin 18 t positive",
+      "device": "v750c",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 18 = r; pin 23 = y; pinnode 39 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 18 = r; pin 23 = y; pinnode 39 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750c alias 39 pin 18 t !",
+      "device": "v750c",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 18 = r; pin 23 = y; pinnode 39 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 18 = r; pin 23 = y; pinnode 39 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750c alias 38 pin 17 d positive",
+      "device": "v750c",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 17 = r; pin 23 = y; pinnode 38 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 17 = r; pin 23 = y; pinnode 38 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750c alias 38 pin 17 d !",
+      "device": "v750c",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 17 = r; pin 23 = y; pinnode 38 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 17 = r; pin 23 = y; pinnode 38 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750c alias 38 pin 17 t positive",
+      "device": "v750c",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 17 = r; pin 23 = y; pinnode 38 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 17 = r; pin 23 = y; pinnode 38 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750c alias 38 pin 17 t !",
+      "device": "v750c",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 17 = r; pin 23 = y; pinnode 38 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 17 = r; pin 23 = y; pinnode 38 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750c alias 37 pin 16 d positive",
+      "device": "v750c",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 16 = r; pin 23 = y; pinnode 37 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 16 = r; pin 23 = y; pinnode 37 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750c alias 37 pin 16 d !",
+      "device": "v750c",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 16 = r; pin 23 = y; pinnode 37 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 16 = r; pin 23 = y; pinnode 37 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750c alias 37 pin 16 t positive",
+      "device": "v750c",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 16 = r; pin 23 = y; pinnode 37 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 16 = r; pin 23 = y; pinnode 37 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750c alias 37 pin 16 t !",
+      "device": "v750c",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 16 = r; pin 23 = y; pinnode 37 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 16 = r; pin 23 = y; pinnode 37 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750c alias 36 pin 15 d positive",
+      "device": "v750c",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 15 = r; pin 23 = y; pinnode 36 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 15 = r; pin 23 = y; pinnode 36 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750c alias 36 pin 15 d !",
+      "device": "v750c",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 15 = r; pin 23 = y; pinnode 36 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 15 = r; pin 23 = y; pinnode 36 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750c alias 36 pin 15 t positive",
+      "device": "v750c",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 15 = r; pin 23 = y; pinnode 36 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 15 = r; pin 23 = y; pinnode 36 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750c alias 36 pin 15 t !",
+      "device": "v750c",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 15 = r; pin 23 = y; pinnode 36 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 15 = r; pin 23 = y; pinnode 36 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750c alias 35 pin 14 d positive",
+      "device": "v750c",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 14 = r; pin 23 = y; pinnode 35 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 14 = r; pin 23 = y; pinnode 35 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750c alias 35 pin 14 d !",
+      "device": "v750c",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 14 = r; pin 23 = y; pinnode 35 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 14 = r; pin 23 = y; pinnode 35 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750c alias 35 pin 14 t positive",
+      "device": "v750c",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 14 = r; pin 23 = y; pinnode 35 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 14 = r; pin 23 = y; pinnode 35 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750c alias 35 pin 14 t !",
+      "device": "v750c",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 14 = r; pin 23 = y; pinnode 35 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 14 = r; pin 23 = y; pinnode 35 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cext alias 44 pin 23 d positive",
+      "device": "v750cext",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 23 = r; pin 22 = y; pinnode 44 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 23 = r; pin 22 = y; pinnode 44 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cext alias 44 pin 23 d !",
+      "device": "v750cext",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 23 = r; pin 22 = y; pinnode 44 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 23 = r; pin 22 = y; pinnode 44 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cext alias 44 pin 23 t positive",
+      "device": "v750cext",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 23 = r; pin 22 = y; pinnode 44 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 23 = r; pin 22 = y; pinnode 44 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cext alias 44 pin 23 t !",
+      "device": "v750cext",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 23 = r; pin 22 = y; pinnode 44 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 23 = r; pin 22 = y; pinnode 44 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cext alias 43 pin 22 d positive",
+      "device": "v750cext",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 22 = r; pin 23 = y; pinnode 43 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 22 = r; pin 23 = y; pinnode 43 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cext alias 43 pin 22 d !",
+      "device": "v750cext",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 22 = r; pin 23 = y; pinnode 43 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 22 = r; pin 23 = y; pinnode 43 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cext alias 43 pin 22 t positive",
+      "device": "v750cext",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 22 = r; pin 23 = y; pinnode 43 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 22 = r; pin 23 = y; pinnode 43 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cext alias 43 pin 22 t !",
+      "device": "v750cext",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 22 = r; pin 23 = y; pinnode 43 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 22 = r; pin 23 = y; pinnode 43 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cext alias 42 pin 21 d positive",
+      "device": "v750cext",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 21 = r; pin 23 = y; pinnode 42 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 21 = r; pin 23 = y; pinnode 42 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cext alias 42 pin 21 d !",
+      "device": "v750cext",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 21 = r; pin 23 = y; pinnode 42 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 21 = r; pin 23 = y; pinnode 42 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cext alias 42 pin 21 t positive",
+      "device": "v750cext",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 21 = r; pin 23 = y; pinnode 42 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 21 = r; pin 23 = y; pinnode 42 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cext alias 42 pin 21 t !",
+      "device": "v750cext",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 21 = r; pin 23 = y; pinnode 42 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 21 = r; pin 23 = y; pinnode 42 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cext alias 41 pin 20 d positive",
+      "device": "v750cext",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 20 = r; pin 23 = y; pinnode 41 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 20 = r; pin 23 = y; pinnode 41 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cext alias 41 pin 20 d !",
+      "device": "v750cext",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 20 = r; pin 23 = y; pinnode 41 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 20 = r; pin 23 = y; pinnode 41 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cext alias 41 pin 20 t positive",
+      "device": "v750cext",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 20 = r; pin 23 = y; pinnode 41 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 20 = r; pin 23 = y; pinnode 41 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cext alias 41 pin 20 t !",
+      "device": "v750cext",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 20 = r; pin 23 = y; pinnode 41 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 20 = r; pin 23 = y; pinnode 41 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cext alias 40 pin 19 d positive",
+      "device": "v750cext",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 19 = r; pin 23 = y; pinnode 40 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 19 = r; pin 23 = y; pinnode 40 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cext alias 40 pin 19 d !",
+      "device": "v750cext",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 19 = r; pin 23 = y; pinnode 40 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 19 = r; pin 23 = y; pinnode 40 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cext alias 40 pin 19 t positive",
+      "device": "v750cext",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 19 = r; pin 23 = y; pinnode 40 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 19 = r; pin 23 = y; pinnode 40 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cext alias 40 pin 19 t !",
+      "device": "v750cext",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 19 = r; pin 23 = y; pinnode 40 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 19 = r; pin 23 = y; pinnode 40 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cext alias 39 pin 18 d positive",
+      "device": "v750cext",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 18 = r; pin 23 = y; pinnode 39 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 18 = r; pin 23 = y; pinnode 39 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cext alias 39 pin 18 d !",
+      "device": "v750cext",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 18 = r; pin 23 = y; pinnode 39 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 18 = r; pin 23 = y; pinnode 39 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cext alias 39 pin 18 t positive",
+      "device": "v750cext",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 18 = r; pin 23 = y; pinnode 39 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 18 = r; pin 23 = y; pinnode 39 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cext alias 39 pin 18 t !",
+      "device": "v750cext",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 18 = r; pin 23 = y; pinnode 39 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 18 = r; pin 23 = y; pinnode 39 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cext alias 38 pin 17 d positive",
+      "device": "v750cext",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 17 = r; pin 23 = y; pinnode 38 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 17 = r; pin 23 = y; pinnode 38 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cext alias 38 pin 17 d !",
+      "device": "v750cext",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 17 = r; pin 23 = y; pinnode 38 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 17 = r; pin 23 = y; pinnode 38 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cext alias 38 pin 17 t positive",
+      "device": "v750cext",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 17 = r; pin 23 = y; pinnode 38 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 17 = r; pin 23 = y; pinnode 38 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cext alias 38 pin 17 t !",
+      "device": "v750cext",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 17 = r; pin 23 = y; pinnode 38 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 17 = r; pin 23 = y; pinnode 38 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cext alias 37 pin 16 d positive",
+      "device": "v750cext",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 16 = r; pin 23 = y; pinnode 37 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 16 = r; pin 23 = y; pinnode 37 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cext alias 37 pin 16 d !",
+      "device": "v750cext",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 16 = r; pin 23 = y; pinnode 37 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 16 = r; pin 23 = y; pinnode 37 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cext alias 37 pin 16 t positive",
+      "device": "v750cext",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 16 = r; pin 23 = y; pinnode 37 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 16 = r; pin 23 = y; pinnode 37 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cext alias 37 pin 16 t !",
+      "device": "v750cext",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 16 = r; pin 23 = y; pinnode 37 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 16 = r; pin 23 = y; pinnode 37 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cext alias 36 pin 15 d positive",
+      "device": "v750cext",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 15 = r; pin 23 = y; pinnode 36 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 15 = r; pin 23 = y; pinnode 36 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cext alias 36 pin 15 d !",
+      "device": "v750cext",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 15 = r; pin 23 = y; pinnode 36 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 15 = r; pin 23 = y; pinnode 36 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cext alias 36 pin 15 t positive",
+      "device": "v750cext",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 15 = r; pin 23 = y; pinnode 36 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 15 = r; pin 23 = y; pinnode 36 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cext alias 36 pin 15 t !",
+      "device": "v750cext",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 15 = r; pin 23 = y; pinnode 36 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 15 = r; pin 23 = y; pinnode 36 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cext alias 35 pin 14 d positive",
+      "device": "v750cext",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 14 = r; pin 23 = y; pinnode 35 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 14 = r; pin 23 = y; pinnode 35 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cext alias 35 pin 14 d !",
+      "device": "v750cext",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 14 = r; pin 23 = y; pinnode 35 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 14 = r; pin 23 = y; pinnode 35 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cext alias 35 pin 14 t positive",
+      "device": "v750cext",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 14 = r; pin 23 = y; pinnode 35 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 14 = r; pin 23 = y; pinnode 35 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cext alias 35 pin 14 t !",
+      "device": "v750cext",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 14 = r; pin 23 = y; pinnode 35 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 14 = r; pin 23 = y; pinnode 35 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cextppk alias 44 pin 23 d positive",
+      "device": "v750cextppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 23 = r; pin 22 = y; pinnode 44 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 23 = r; pin 22 = y; pinnode 44 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cextppk alias 44 pin 23 d !",
+      "device": "v750cextppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 23 = r; pin 22 = y; pinnode 44 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 23 = r; pin 22 = y; pinnode 44 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cextppk alias 44 pin 23 t positive",
+      "device": "v750cextppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 23 = r; pin 22 = y; pinnode 44 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 23 = r; pin 22 = y; pinnode 44 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cextppk alias 44 pin 23 t !",
+      "device": "v750cextppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 23 = r; pin 22 = y; pinnode 44 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 23 = r; pin 22 = y; pinnode 44 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cextppk alias 43 pin 22 d positive",
+      "device": "v750cextppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 22 = r; pin 23 = y; pinnode 43 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 22 = r; pin 23 = y; pinnode 43 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cextppk alias 43 pin 22 d !",
+      "device": "v750cextppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 22 = r; pin 23 = y; pinnode 43 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 22 = r; pin 23 = y; pinnode 43 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cextppk alias 43 pin 22 t positive",
+      "device": "v750cextppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 22 = r; pin 23 = y; pinnode 43 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 22 = r; pin 23 = y; pinnode 43 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cextppk alias 43 pin 22 t !",
+      "device": "v750cextppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 22 = r; pin 23 = y; pinnode 43 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 22 = r; pin 23 = y; pinnode 43 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cextppk alias 42 pin 21 d positive",
+      "device": "v750cextppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 21 = r; pin 23 = y; pinnode 42 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 21 = r; pin 23 = y; pinnode 42 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cextppk alias 42 pin 21 d !",
+      "device": "v750cextppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 21 = r; pin 23 = y; pinnode 42 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 21 = r; pin 23 = y; pinnode 42 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cextppk alias 42 pin 21 t positive",
+      "device": "v750cextppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 21 = r; pin 23 = y; pinnode 42 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 21 = r; pin 23 = y; pinnode 42 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cextppk alias 42 pin 21 t !",
+      "device": "v750cextppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 21 = r; pin 23 = y; pinnode 42 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 21 = r; pin 23 = y; pinnode 42 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cextppk alias 41 pin 20 d positive",
+      "device": "v750cextppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 20 = r; pin 23 = y; pinnode 41 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 20 = r; pin 23 = y; pinnode 41 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cextppk alias 41 pin 20 d !",
+      "device": "v750cextppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 20 = r; pin 23 = y; pinnode 41 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 20 = r; pin 23 = y; pinnode 41 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cextppk alias 41 pin 20 t positive",
+      "device": "v750cextppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 20 = r; pin 23 = y; pinnode 41 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 20 = r; pin 23 = y; pinnode 41 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cextppk alias 41 pin 20 t !",
+      "device": "v750cextppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 20 = r; pin 23 = y; pinnode 41 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 20 = r; pin 23 = y; pinnode 41 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cextppk alias 40 pin 19 d positive",
+      "device": "v750cextppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 19 = r; pin 23 = y; pinnode 40 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 19 = r; pin 23 = y; pinnode 40 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cextppk alias 40 pin 19 d !",
+      "device": "v750cextppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 19 = r; pin 23 = y; pinnode 40 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 19 = r; pin 23 = y; pinnode 40 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cextppk alias 40 pin 19 t positive",
+      "device": "v750cextppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 19 = r; pin 23 = y; pinnode 40 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 19 = r; pin 23 = y; pinnode 40 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cextppk alias 40 pin 19 t !",
+      "device": "v750cextppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 19 = r; pin 23 = y; pinnode 40 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 19 = r; pin 23 = y; pinnode 40 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cextppk alias 39 pin 18 d positive",
+      "device": "v750cextppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 18 = r; pin 23 = y; pinnode 39 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 18 = r; pin 23 = y; pinnode 39 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cextppk alias 39 pin 18 d !",
+      "device": "v750cextppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 18 = r; pin 23 = y; pinnode 39 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 18 = r; pin 23 = y; pinnode 39 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cextppk alias 39 pin 18 t positive",
+      "device": "v750cextppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 18 = r; pin 23 = y; pinnode 39 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 18 = r; pin 23 = y; pinnode 39 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cextppk alias 39 pin 18 t !",
+      "device": "v750cextppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 18 = r; pin 23 = y; pinnode 39 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 18 = r; pin 23 = y; pinnode 39 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cextppk alias 38 pin 17 d positive",
+      "device": "v750cextppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 17 = r; pin 23 = y; pinnode 38 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 17 = r; pin 23 = y; pinnode 38 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cextppk alias 38 pin 17 d !",
+      "device": "v750cextppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 17 = r; pin 23 = y; pinnode 38 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 17 = r; pin 23 = y; pinnode 38 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cextppk alias 38 pin 17 t positive",
+      "device": "v750cextppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 17 = r; pin 23 = y; pinnode 38 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 17 = r; pin 23 = y; pinnode 38 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cextppk alias 38 pin 17 t !",
+      "device": "v750cextppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 17 = r; pin 23 = y; pinnode 38 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 17 = r; pin 23 = y; pinnode 38 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cextppk alias 37 pin 16 d positive",
+      "device": "v750cextppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 16 = r; pin 23 = y; pinnode 37 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 16 = r; pin 23 = y; pinnode 37 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cextppk alias 37 pin 16 d !",
+      "device": "v750cextppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 16 = r; pin 23 = y; pinnode 37 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 16 = r; pin 23 = y; pinnode 37 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cextppk alias 37 pin 16 t positive",
+      "device": "v750cextppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 16 = r; pin 23 = y; pinnode 37 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 16 = r; pin 23 = y; pinnode 37 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cextppk alias 37 pin 16 t !",
+      "device": "v750cextppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 16 = r; pin 23 = y; pinnode 37 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 16 = r; pin 23 = y; pinnode 37 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cextppk alias 36 pin 15 d positive",
+      "device": "v750cextppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 15 = r; pin 23 = y; pinnode 36 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 15 = r; pin 23 = y; pinnode 36 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cextppk alias 36 pin 15 d !",
+      "device": "v750cextppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 15 = r; pin 23 = y; pinnode 36 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 15 = r; pin 23 = y; pinnode 36 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cextppk alias 36 pin 15 t positive",
+      "device": "v750cextppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 15 = r; pin 23 = y; pinnode 36 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 15 = r; pin 23 = y; pinnode 36 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cextppk alias 36 pin 15 t !",
+      "device": "v750cextppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 15 = r; pin 23 = y; pinnode 36 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 15 = r; pin 23 = y; pinnode 36 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cextppk alias 35 pin 14 d positive",
+      "device": "v750cextppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 14 = r; pin 23 = y; pinnode 35 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 14 = r; pin 23 = y; pinnode 35 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cextppk alias 35 pin 14 d !",
+      "device": "v750cextppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 14 = r; pin 23 = y; pinnode 35 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 14 = r; pin 23 = y; pinnode 35 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cextppk alias 35 pin 14 t positive",
+      "device": "v750cextppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 14 = r; pin 23 = y; pinnode 35 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 14 = r; pin 23 = y; pinnode 35 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cextppk alias 35 pin 14 t !",
+      "device": "v750cextppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 14 = r; pin 23 = y; pinnode 35 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 14 = r; pin 23 = y; pinnode 35 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cppk alias 44 pin 23 d positive",
+      "device": "v750cppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 23 = r; pin 22 = y; pinnode 44 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 23 = r; pin 22 = y; pinnode 44 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cppk alias 44 pin 23 d !",
+      "device": "v750cppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 23 = r; pin 22 = y; pinnode 44 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 23 = r; pin 22 = y; pinnode 44 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cppk alias 44 pin 23 t positive",
+      "device": "v750cppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 23 = r; pin 22 = y; pinnode 44 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 23 = r; pin 22 = y; pinnode 44 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cppk alias 44 pin 23 t !",
+      "device": "v750cppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 23 = r; pin 22 = y; pinnode 44 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 23 = r; pin 22 = y; pinnode 44 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cppk alias 43 pin 22 d positive",
+      "device": "v750cppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 22 = r; pin 23 = y; pinnode 43 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 22 = r; pin 23 = y; pinnode 43 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cppk alias 43 pin 22 d !",
+      "device": "v750cppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 22 = r; pin 23 = y; pinnode 43 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 22 = r; pin 23 = y; pinnode 43 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cppk alias 43 pin 22 t positive",
+      "device": "v750cppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 22 = r; pin 23 = y; pinnode 43 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 22 = r; pin 23 = y; pinnode 43 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cppk alias 43 pin 22 t !",
+      "device": "v750cppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 22 = r; pin 23 = y; pinnode 43 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 22 = r; pin 23 = y; pinnode 43 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cppk alias 42 pin 21 d positive",
+      "device": "v750cppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 21 = r; pin 23 = y; pinnode 42 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 21 = r; pin 23 = y; pinnode 42 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cppk alias 42 pin 21 d !",
+      "device": "v750cppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 21 = r; pin 23 = y; pinnode 42 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 21 = r; pin 23 = y; pinnode 42 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cppk alias 42 pin 21 t positive",
+      "device": "v750cppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 21 = r; pin 23 = y; pinnode 42 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 21 = r; pin 23 = y; pinnode 42 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cppk alias 42 pin 21 t !",
+      "device": "v750cppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 21 = r; pin 23 = y; pinnode 42 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 21 = r; pin 23 = y; pinnode 42 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cppk alias 41 pin 20 d positive",
+      "device": "v750cppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 20 = r; pin 23 = y; pinnode 41 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 20 = r; pin 23 = y; pinnode 41 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cppk alias 41 pin 20 d !",
+      "device": "v750cppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 20 = r; pin 23 = y; pinnode 41 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 20 = r; pin 23 = y; pinnode 41 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cppk alias 41 pin 20 t positive",
+      "device": "v750cppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 20 = r; pin 23 = y; pinnode 41 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 20 = r; pin 23 = y; pinnode 41 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cppk alias 41 pin 20 t !",
+      "device": "v750cppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 20 = r; pin 23 = y; pinnode 41 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 20 = r; pin 23 = y; pinnode 41 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cppk alias 40 pin 19 d positive",
+      "device": "v750cppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 19 = r; pin 23 = y; pinnode 40 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 19 = r; pin 23 = y; pinnode 40 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cppk alias 40 pin 19 d !",
+      "device": "v750cppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 19 = r; pin 23 = y; pinnode 40 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 19 = r; pin 23 = y; pinnode 40 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cppk alias 40 pin 19 t positive",
+      "device": "v750cppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 19 = r; pin 23 = y; pinnode 40 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 19 = r; pin 23 = y; pinnode 40 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cppk alias 40 pin 19 t !",
+      "device": "v750cppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 19 = r; pin 23 = y; pinnode 40 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 19 = r; pin 23 = y; pinnode 40 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cppk alias 39 pin 18 d positive",
+      "device": "v750cppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 18 = r; pin 23 = y; pinnode 39 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 18 = r; pin 23 = y; pinnode 39 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cppk alias 39 pin 18 d !",
+      "device": "v750cppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 18 = r; pin 23 = y; pinnode 39 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 18 = r; pin 23 = y; pinnode 39 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cppk alias 39 pin 18 t positive",
+      "device": "v750cppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 18 = r; pin 23 = y; pinnode 39 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 18 = r; pin 23 = y; pinnode 39 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cppk alias 39 pin 18 t !",
+      "device": "v750cppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 18 = r; pin 23 = y; pinnode 39 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 18 = r; pin 23 = y; pinnode 39 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cppk alias 38 pin 17 d positive",
+      "device": "v750cppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 17 = r; pin 23 = y; pinnode 38 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 17 = r; pin 23 = y; pinnode 38 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cppk alias 38 pin 17 d !",
+      "device": "v750cppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 17 = r; pin 23 = y; pinnode 38 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 17 = r; pin 23 = y; pinnode 38 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cppk alias 38 pin 17 t positive",
+      "device": "v750cppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 17 = r; pin 23 = y; pinnode 38 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 17 = r; pin 23 = y; pinnode 38 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cppk alias 38 pin 17 t !",
+      "device": "v750cppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 17 = r; pin 23 = y; pinnode 38 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 17 = r; pin 23 = y; pinnode 38 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cppk alias 37 pin 16 d positive",
+      "device": "v750cppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 16 = r; pin 23 = y; pinnode 37 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 16 = r; pin 23 = y; pinnode 37 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cppk alias 37 pin 16 d !",
+      "device": "v750cppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 16 = r; pin 23 = y; pinnode 37 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 16 = r; pin 23 = y; pinnode 37 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cppk alias 37 pin 16 t positive",
+      "device": "v750cppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 16 = r; pin 23 = y; pinnode 37 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 16 = r; pin 23 = y; pinnode 37 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cppk alias 37 pin 16 t !",
+      "device": "v750cppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 16 = r; pin 23 = y; pinnode 37 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 16 = r; pin 23 = y; pinnode 37 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cppk alias 36 pin 15 d positive",
+      "device": "v750cppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 15 = r; pin 23 = y; pinnode 36 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 15 = r; pin 23 = y; pinnode 36 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cppk alias 36 pin 15 d !",
+      "device": "v750cppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 15 = r; pin 23 = y; pinnode 36 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 15 = r; pin 23 = y; pinnode 36 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cppk alias 36 pin 15 t positive",
+      "device": "v750cppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 15 = r; pin 23 = y; pinnode 36 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 15 = r; pin 23 = y; pinnode 36 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cppk alias 36 pin 15 t !",
+      "device": "v750cppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 15 = r; pin 23 = y; pinnode 36 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 15 = r; pin 23 = y; pinnode 36 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cppk alias 35 pin 14 d positive",
+      "device": "v750cppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 14 = r; pin 23 = y; pinnode 35 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 14 = r; pin 23 = y; pinnode 35 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cppk alias 35 pin 14 d !",
+      "device": "v750cppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 14 = r; pin 23 = y; pinnode 35 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 14 = r; pin 23 = y; pinnode 35 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cppk alias 35 pin 14 t positive",
+      "device": "v750cppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 14 = r; pin 23 = y; pinnode 35 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 14 = r; pin 23 = y; pinnode 35 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cppk alias 35 pin 14 t !",
+      "device": "v750cppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 14 = r; pin 23 = y; pinnode 35 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 14 = r; pin 23 = y; pinnode 35 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750clcc alias 48 pin 27 d positive",
+      "device": "v750clcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = r; pin 26 = y; pinnode 48 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = r; pin 26 = y; pinnode 48 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750clcc alias 48 pin 27 d !",
+      "device": "v750clcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = r; pin 26 = y; pinnode 48 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = r; pin 26 = y; pinnode 48 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750clcc alias 48 pin 27 t positive",
+      "device": "v750clcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = r; pin 26 = y; pinnode 48 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = r; pin 26 = y; pinnode 48 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750clcc alias 48 pin 27 t !",
+      "device": "v750clcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = r; pin 26 = y; pinnode 48 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = r; pin 26 = y; pinnode 48 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750clcc alias 47 pin 26 d positive",
+      "device": "v750clcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 26 = r; pin 27 = y; pinnode 47 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 26 = r; pin 27 = y; pinnode 47 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750clcc alias 47 pin 26 d !",
+      "device": "v750clcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 26 = r; pin 27 = y; pinnode 47 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 26 = r; pin 27 = y; pinnode 47 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750clcc alias 47 pin 26 t positive",
+      "device": "v750clcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 26 = r; pin 27 = y; pinnode 47 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 26 = r; pin 27 = y; pinnode 47 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750clcc alias 47 pin 26 t !",
+      "device": "v750clcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 26 = r; pin 27 = y; pinnode 47 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 26 = r; pin 27 = y; pinnode 47 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750clcc alias 46 pin 25 d positive",
+      "device": "v750clcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 25 = r; pin 27 = y; pinnode 46 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 25 = r; pin 27 = y; pinnode 46 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750clcc alias 46 pin 25 d !",
+      "device": "v750clcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 25 = r; pin 27 = y; pinnode 46 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 25 = r; pin 27 = y; pinnode 46 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750clcc alias 46 pin 25 t positive",
+      "device": "v750clcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 25 = r; pin 27 = y; pinnode 46 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 25 = r; pin 27 = y; pinnode 46 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750clcc alias 46 pin 25 t !",
+      "device": "v750clcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 25 = r; pin 27 = y; pinnode 46 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 25 = r; pin 27 = y; pinnode 46 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750clcc alias 45 pin 24 d positive",
+      "device": "v750clcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 24 = r; pin 27 = y; pinnode 45 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 24 = r; pin 27 = y; pinnode 45 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750clcc alias 45 pin 24 d !",
+      "device": "v750clcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 24 = r; pin 27 = y; pinnode 45 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 24 = r; pin 27 = y; pinnode 45 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750clcc alias 45 pin 24 t positive",
+      "device": "v750clcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 24 = r; pin 27 = y; pinnode 45 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 24 = r; pin 27 = y; pinnode 45 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750clcc alias 45 pin 24 t !",
+      "device": "v750clcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 24 = r; pin 27 = y; pinnode 45 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 24 = r; pin 27 = y; pinnode 45 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750clcc alias 44 pin 23 d positive",
+      "device": "v750clcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 23 = r; pin 27 = y; pinnode 44 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 23 = r; pin 27 = y; pinnode 44 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750clcc alias 44 pin 23 d !",
+      "device": "v750clcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 23 = r; pin 27 = y; pinnode 44 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 23 = r; pin 27 = y; pinnode 44 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750clcc alias 44 pin 23 t positive",
+      "device": "v750clcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 23 = r; pin 27 = y; pinnode 44 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 23 = r; pin 27 = y; pinnode 44 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750clcc alias 44 pin 23 t !",
+      "device": "v750clcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 23 = r; pin 27 = y; pinnode 44 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 23 = r; pin 27 = y; pinnode 44 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750clcc alias 43 pin 21 d positive",
+      "device": "v750clcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 21 = r; pin 27 = y; pinnode 43 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 21 = r; pin 27 = y; pinnode 43 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750clcc alias 43 pin 21 d !",
+      "device": "v750clcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 21 = r; pin 27 = y; pinnode 43 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 21 = r; pin 27 = y; pinnode 43 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750clcc alias 43 pin 21 t positive",
+      "device": "v750clcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 21 = r; pin 27 = y; pinnode 43 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 21 = r; pin 27 = y; pinnode 43 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750clcc alias 43 pin 21 t !",
+      "device": "v750clcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 21 = r; pin 27 = y; pinnode 43 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 21 = r; pin 27 = y; pinnode 43 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750clcc alias 42 pin 20 d positive",
+      "device": "v750clcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 20 = r; pin 27 = y; pinnode 42 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 20 = r; pin 27 = y; pinnode 42 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750clcc alias 42 pin 20 d !",
+      "device": "v750clcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 20 = r; pin 27 = y; pinnode 42 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 20 = r; pin 27 = y; pinnode 42 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750clcc alias 42 pin 20 t positive",
+      "device": "v750clcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 20 = r; pin 27 = y; pinnode 42 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 20 = r; pin 27 = y; pinnode 42 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750clcc alias 42 pin 20 t !",
+      "device": "v750clcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 20 = r; pin 27 = y; pinnode 42 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 20 = r; pin 27 = y; pinnode 42 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750clcc alias 41 pin 19 d positive",
+      "device": "v750clcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 19 = r; pin 27 = y; pinnode 41 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 19 = r; pin 27 = y; pinnode 41 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750clcc alias 41 pin 19 d !",
+      "device": "v750clcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 19 = r; pin 27 = y; pinnode 41 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 19 = r; pin 27 = y; pinnode 41 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750clcc alias 41 pin 19 t positive",
+      "device": "v750clcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 19 = r; pin 27 = y; pinnode 41 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 19 = r; pin 27 = y; pinnode 41 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750clcc alias 41 pin 19 t !",
+      "device": "v750clcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 19 = r; pin 27 = y; pinnode 41 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 19 = r; pin 27 = y; pinnode 41 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750clcc alias 40 pin 18 d positive",
+      "device": "v750clcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 18 = r; pin 27 = y; pinnode 40 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 18 = r; pin 27 = y; pinnode 40 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750clcc alias 40 pin 18 d !",
+      "device": "v750clcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 18 = r; pin 27 = y; pinnode 40 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 18 = r; pin 27 = y; pinnode 40 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750clcc alias 40 pin 18 t positive",
+      "device": "v750clcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 18 = r; pin 27 = y; pinnode 40 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 18 = r; pin 27 = y; pinnode 40 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750clcc alias 40 pin 18 t !",
+      "device": "v750clcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 18 = r; pin 27 = y; pinnode 40 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 18 = r; pin 27 = y; pinnode 40 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750clcc alias 39 pin 17 d positive",
+      "device": "v750clcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 17 = r; pin 27 = y; pinnode 39 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 17 = r; pin 27 = y; pinnode 39 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750clcc alias 39 pin 17 d !",
+      "device": "v750clcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 17 = r; pin 27 = y; pinnode 39 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 17 = r; pin 27 = y; pinnode 39 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750clcc alias 39 pin 17 t positive",
+      "device": "v750clcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 17 = r; pin 27 = y; pinnode 39 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 17 = r; pin 27 = y; pinnode 39 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750clcc alias 39 pin 17 t !",
+      "device": "v750clcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 17 = r; pin 27 = y; pinnode 39 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 17 = r; pin 27 = y; pinnode 39 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cextlcc alias 48 pin 27 d positive",
+      "device": "v750cextlcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = r; pin 26 = y; pinnode 48 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = r; pin 26 = y; pinnode 48 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cextlcc alias 48 pin 27 d !",
+      "device": "v750cextlcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = r; pin 26 = y; pinnode 48 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = r; pin 26 = y; pinnode 48 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cextlcc alias 48 pin 27 t positive",
+      "device": "v750cextlcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = r; pin 26 = y; pinnode 48 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = r; pin 26 = y; pinnode 48 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cextlcc alias 48 pin 27 t !",
+      "device": "v750cextlcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = r; pin 26 = y; pinnode 48 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = r; pin 26 = y; pinnode 48 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cextlcc alias 47 pin 26 d positive",
+      "device": "v750cextlcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 26 = r; pin 27 = y; pinnode 47 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 26 = r; pin 27 = y; pinnode 47 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cextlcc alias 47 pin 26 d !",
+      "device": "v750cextlcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 26 = r; pin 27 = y; pinnode 47 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 26 = r; pin 27 = y; pinnode 47 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cextlcc alias 47 pin 26 t positive",
+      "device": "v750cextlcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 26 = r; pin 27 = y; pinnode 47 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 26 = r; pin 27 = y; pinnode 47 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cextlcc alias 47 pin 26 t !",
+      "device": "v750cextlcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 26 = r; pin 27 = y; pinnode 47 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 26 = r; pin 27 = y; pinnode 47 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cextlcc alias 46 pin 25 d positive",
+      "device": "v750cextlcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 25 = r; pin 27 = y; pinnode 46 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 25 = r; pin 27 = y; pinnode 46 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cextlcc alias 46 pin 25 d !",
+      "device": "v750cextlcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 25 = r; pin 27 = y; pinnode 46 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 25 = r; pin 27 = y; pinnode 46 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cextlcc alias 46 pin 25 t positive",
+      "device": "v750cextlcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 25 = r; pin 27 = y; pinnode 46 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 25 = r; pin 27 = y; pinnode 46 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cextlcc alias 46 pin 25 t !",
+      "device": "v750cextlcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 25 = r; pin 27 = y; pinnode 46 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 25 = r; pin 27 = y; pinnode 46 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cextlcc alias 45 pin 24 d positive",
+      "device": "v750cextlcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 24 = r; pin 27 = y; pinnode 45 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 24 = r; pin 27 = y; pinnode 45 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cextlcc alias 45 pin 24 d !",
+      "device": "v750cextlcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 24 = r; pin 27 = y; pinnode 45 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 24 = r; pin 27 = y; pinnode 45 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cextlcc alias 45 pin 24 t positive",
+      "device": "v750cextlcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 24 = r; pin 27 = y; pinnode 45 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 24 = r; pin 27 = y; pinnode 45 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cextlcc alias 45 pin 24 t !",
+      "device": "v750cextlcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 24 = r; pin 27 = y; pinnode 45 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 24 = r; pin 27 = y; pinnode 45 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cextlcc alias 44 pin 23 d positive",
+      "device": "v750cextlcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 23 = r; pin 27 = y; pinnode 44 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 23 = r; pin 27 = y; pinnode 44 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cextlcc alias 44 pin 23 d !",
+      "device": "v750cextlcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 23 = r; pin 27 = y; pinnode 44 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 23 = r; pin 27 = y; pinnode 44 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cextlcc alias 44 pin 23 t positive",
+      "device": "v750cextlcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 23 = r; pin 27 = y; pinnode 44 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 23 = r; pin 27 = y; pinnode 44 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cextlcc alias 44 pin 23 t !",
+      "device": "v750cextlcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 23 = r; pin 27 = y; pinnode 44 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 23 = r; pin 27 = y; pinnode 44 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cextlcc alias 43 pin 21 d positive",
+      "device": "v750cextlcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 21 = r; pin 27 = y; pinnode 43 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 21 = r; pin 27 = y; pinnode 43 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cextlcc alias 43 pin 21 d !",
+      "device": "v750cextlcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 21 = r; pin 27 = y; pinnode 43 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 21 = r; pin 27 = y; pinnode 43 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cextlcc alias 43 pin 21 t positive",
+      "device": "v750cextlcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 21 = r; pin 27 = y; pinnode 43 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 21 = r; pin 27 = y; pinnode 43 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cextlcc alias 43 pin 21 t !",
+      "device": "v750cextlcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 21 = r; pin 27 = y; pinnode 43 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 21 = r; pin 27 = y; pinnode 43 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cextlcc alias 42 pin 20 d positive",
+      "device": "v750cextlcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 20 = r; pin 27 = y; pinnode 42 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 20 = r; pin 27 = y; pinnode 42 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cextlcc alias 42 pin 20 d !",
+      "device": "v750cextlcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 20 = r; pin 27 = y; pinnode 42 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 20 = r; pin 27 = y; pinnode 42 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cextlcc alias 42 pin 20 t positive",
+      "device": "v750cextlcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 20 = r; pin 27 = y; pinnode 42 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 20 = r; pin 27 = y; pinnode 42 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cextlcc alias 42 pin 20 t !",
+      "device": "v750cextlcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 20 = r; pin 27 = y; pinnode 42 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 20 = r; pin 27 = y; pinnode 42 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cextlcc alias 41 pin 19 d positive",
+      "device": "v750cextlcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 19 = r; pin 27 = y; pinnode 41 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 19 = r; pin 27 = y; pinnode 41 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cextlcc alias 41 pin 19 d !",
+      "device": "v750cextlcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 19 = r; pin 27 = y; pinnode 41 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 19 = r; pin 27 = y; pinnode 41 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cextlcc alias 41 pin 19 t positive",
+      "device": "v750cextlcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 19 = r; pin 27 = y; pinnode 41 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 19 = r; pin 27 = y; pinnode 41 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cextlcc alias 41 pin 19 t !",
+      "device": "v750cextlcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 19 = r; pin 27 = y; pinnode 41 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 19 = r; pin 27 = y; pinnode 41 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cextlcc alias 40 pin 18 d positive",
+      "device": "v750cextlcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 18 = r; pin 27 = y; pinnode 40 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 18 = r; pin 27 = y; pinnode 40 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cextlcc alias 40 pin 18 d !",
+      "device": "v750cextlcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 18 = r; pin 27 = y; pinnode 40 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 18 = r; pin 27 = y; pinnode 40 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cextlcc alias 40 pin 18 t positive",
+      "device": "v750cextlcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 18 = r; pin 27 = y; pinnode 40 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 18 = r; pin 27 = y; pinnode 40 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cextlcc alias 40 pin 18 t !",
+      "device": "v750cextlcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 18 = r; pin 27 = y; pinnode 40 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 18 = r; pin 27 = y; pinnode 40 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cextlcc alias 39 pin 17 d positive",
+      "device": "v750cextlcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 17 = r; pin 27 = y; pinnode 39 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 17 = r; pin 27 = y; pinnode 39 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cextlcc alias 39 pin 17 d !",
+      "device": "v750cextlcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 17 = r; pin 27 = y; pinnode 39 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 17 = r; pin 27 = y; pinnode 39 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cextlcc alias 39 pin 17 t positive",
+      "device": "v750cextlcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 17 = r; pin 27 = y; pinnode 39 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 17 = r; pin 27 = y; pinnode 39 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cextlcc alias 39 pin 17 t !",
+      "device": "v750cextlcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 17 = r; pin 27 = y; pinnode 39 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 17 = r; pin 27 = y; pinnode 39 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cextppklcc alias 48 pin 27 d positive",
+      "device": "v750cextppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = r; pin 26 = y; pinnode 48 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = r; pin 26 = y; pinnode 48 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cextppklcc alias 48 pin 27 d !",
+      "device": "v750cextppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = r; pin 26 = y; pinnode 48 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = r; pin 26 = y; pinnode 48 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cextppklcc alias 48 pin 27 t positive",
+      "device": "v750cextppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = r; pin 26 = y; pinnode 48 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = r; pin 26 = y; pinnode 48 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cextppklcc alias 48 pin 27 t !",
+      "device": "v750cextppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = r; pin 26 = y; pinnode 48 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = r; pin 26 = y; pinnode 48 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cextppklcc alias 47 pin 26 d positive",
+      "device": "v750cextppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 26 = r; pin 27 = y; pinnode 47 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 26 = r; pin 27 = y; pinnode 47 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cextppklcc alias 47 pin 26 d !",
+      "device": "v750cextppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 26 = r; pin 27 = y; pinnode 47 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 26 = r; pin 27 = y; pinnode 47 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cextppklcc alias 47 pin 26 t positive",
+      "device": "v750cextppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 26 = r; pin 27 = y; pinnode 47 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 26 = r; pin 27 = y; pinnode 47 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cextppklcc alias 47 pin 26 t !",
+      "device": "v750cextppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 26 = r; pin 27 = y; pinnode 47 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 26 = r; pin 27 = y; pinnode 47 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cextppklcc alias 46 pin 25 d positive",
+      "device": "v750cextppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 25 = r; pin 27 = y; pinnode 46 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 25 = r; pin 27 = y; pinnode 46 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cextppklcc alias 46 pin 25 d !",
+      "device": "v750cextppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 25 = r; pin 27 = y; pinnode 46 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 25 = r; pin 27 = y; pinnode 46 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cextppklcc alias 46 pin 25 t positive",
+      "device": "v750cextppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 25 = r; pin 27 = y; pinnode 46 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 25 = r; pin 27 = y; pinnode 46 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cextppklcc alias 46 pin 25 t !",
+      "device": "v750cextppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 25 = r; pin 27 = y; pinnode 46 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 25 = r; pin 27 = y; pinnode 46 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cextppklcc alias 45 pin 24 d positive",
+      "device": "v750cextppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 24 = r; pin 27 = y; pinnode 45 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 24 = r; pin 27 = y; pinnode 45 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cextppklcc alias 45 pin 24 d !",
+      "device": "v750cextppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 24 = r; pin 27 = y; pinnode 45 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 24 = r; pin 27 = y; pinnode 45 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cextppklcc alias 45 pin 24 t positive",
+      "device": "v750cextppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 24 = r; pin 27 = y; pinnode 45 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 24 = r; pin 27 = y; pinnode 45 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cextppklcc alias 45 pin 24 t !",
+      "device": "v750cextppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 24 = r; pin 27 = y; pinnode 45 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 24 = r; pin 27 = y; pinnode 45 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cextppklcc alias 44 pin 23 d positive",
+      "device": "v750cextppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 23 = r; pin 27 = y; pinnode 44 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 23 = r; pin 27 = y; pinnode 44 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cextppklcc alias 44 pin 23 d !",
+      "device": "v750cextppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 23 = r; pin 27 = y; pinnode 44 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 23 = r; pin 27 = y; pinnode 44 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cextppklcc alias 44 pin 23 t positive",
+      "device": "v750cextppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 23 = r; pin 27 = y; pinnode 44 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 23 = r; pin 27 = y; pinnode 44 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cextppklcc alias 44 pin 23 t !",
+      "device": "v750cextppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 23 = r; pin 27 = y; pinnode 44 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 23 = r; pin 27 = y; pinnode 44 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cextppklcc alias 43 pin 21 d positive",
+      "device": "v750cextppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 21 = r; pin 27 = y; pinnode 43 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 21 = r; pin 27 = y; pinnode 43 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cextppklcc alias 43 pin 21 d !",
+      "device": "v750cextppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 21 = r; pin 27 = y; pinnode 43 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 21 = r; pin 27 = y; pinnode 43 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cextppklcc alias 43 pin 21 t positive",
+      "device": "v750cextppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 21 = r; pin 27 = y; pinnode 43 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 21 = r; pin 27 = y; pinnode 43 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cextppklcc alias 43 pin 21 t !",
+      "device": "v750cextppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 21 = r; pin 27 = y; pinnode 43 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 21 = r; pin 27 = y; pinnode 43 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cextppklcc alias 42 pin 20 d positive",
+      "device": "v750cextppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 20 = r; pin 27 = y; pinnode 42 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 20 = r; pin 27 = y; pinnode 42 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cextppklcc alias 42 pin 20 d !",
+      "device": "v750cextppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 20 = r; pin 27 = y; pinnode 42 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 20 = r; pin 27 = y; pinnode 42 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cextppklcc alias 42 pin 20 t positive",
+      "device": "v750cextppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 20 = r; pin 27 = y; pinnode 42 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 20 = r; pin 27 = y; pinnode 42 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cextppklcc alias 42 pin 20 t !",
+      "device": "v750cextppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 20 = r; pin 27 = y; pinnode 42 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 20 = r; pin 27 = y; pinnode 42 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cextppklcc alias 41 pin 19 d positive",
+      "device": "v750cextppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 19 = r; pin 27 = y; pinnode 41 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 19 = r; pin 27 = y; pinnode 41 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cextppklcc alias 41 pin 19 d !",
+      "device": "v750cextppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 19 = r; pin 27 = y; pinnode 41 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 19 = r; pin 27 = y; pinnode 41 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cextppklcc alias 41 pin 19 t positive",
+      "device": "v750cextppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 19 = r; pin 27 = y; pinnode 41 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 19 = r; pin 27 = y; pinnode 41 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cextppklcc alias 41 pin 19 t !",
+      "device": "v750cextppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 19 = r; pin 27 = y; pinnode 41 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 19 = r; pin 27 = y; pinnode 41 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cextppklcc alias 40 pin 18 d positive",
+      "device": "v750cextppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 18 = r; pin 27 = y; pinnode 40 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 18 = r; pin 27 = y; pinnode 40 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cextppklcc alias 40 pin 18 d !",
+      "device": "v750cextppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 18 = r; pin 27 = y; pinnode 40 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 18 = r; pin 27 = y; pinnode 40 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cextppklcc alias 40 pin 18 t positive",
+      "device": "v750cextppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 18 = r; pin 27 = y; pinnode 40 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 18 = r; pin 27 = y; pinnode 40 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cextppklcc alias 40 pin 18 t !",
+      "device": "v750cextppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 18 = r; pin 27 = y; pinnode 40 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 18 = r; pin 27 = y; pinnode 40 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cextppklcc alias 39 pin 17 d positive",
+      "device": "v750cextppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 17 = r; pin 27 = y; pinnode 39 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 17 = r; pin 27 = y; pinnode 39 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cextppklcc alias 39 pin 17 d !",
+      "device": "v750cextppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 17 = r; pin 27 = y; pinnode 39 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 17 = r; pin 27 = y; pinnode 39 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cextppklcc alias 39 pin 17 t positive",
+      "device": "v750cextppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 17 = r; pin 27 = y; pinnode 39 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 17 = r; pin 27 = y; pinnode 39 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cextppklcc alias 39 pin 17 t !",
+      "device": "v750cextppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 17 = r; pin 27 = y; pinnode 39 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 17 = r; pin 27 = y; pinnode 39 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cppklcc alias 48 pin 27 d positive",
+      "device": "v750cppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = r; pin 26 = y; pinnode 48 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = r; pin 26 = y; pinnode 48 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cppklcc alias 48 pin 27 d !",
+      "device": "v750cppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = r; pin 26 = y; pinnode 48 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = r; pin 26 = y; pinnode 48 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cppklcc alias 48 pin 27 t positive",
+      "device": "v750cppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = r; pin 26 = y; pinnode 48 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = r; pin 26 = y; pinnode 48 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cppklcc alias 48 pin 27 t !",
+      "device": "v750cppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = r; pin 26 = y; pinnode 48 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = r; pin 26 = y; pinnode 48 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cppklcc alias 47 pin 26 d positive",
+      "device": "v750cppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 26 = r; pin 27 = y; pinnode 47 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 26 = r; pin 27 = y; pinnode 47 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cppklcc alias 47 pin 26 d !",
+      "device": "v750cppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 26 = r; pin 27 = y; pinnode 47 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 26 = r; pin 27 = y; pinnode 47 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cppklcc alias 47 pin 26 t positive",
+      "device": "v750cppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 26 = r; pin 27 = y; pinnode 47 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 26 = r; pin 27 = y; pinnode 47 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cppklcc alias 47 pin 26 t !",
+      "device": "v750cppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 26 = r; pin 27 = y; pinnode 47 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 26 = r; pin 27 = y; pinnode 47 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cppklcc alias 46 pin 25 d positive",
+      "device": "v750cppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 25 = r; pin 27 = y; pinnode 46 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 25 = r; pin 27 = y; pinnode 46 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cppklcc alias 46 pin 25 d !",
+      "device": "v750cppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 25 = r; pin 27 = y; pinnode 46 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 25 = r; pin 27 = y; pinnode 46 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cppklcc alias 46 pin 25 t positive",
+      "device": "v750cppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 25 = r; pin 27 = y; pinnode 46 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 25 = r; pin 27 = y; pinnode 46 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cppklcc alias 46 pin 25 t !",
+      "device": "v750cppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 25 = r; pin 27 = y; pinnode 46 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 25 = r; pin 27 = y; pinnode 46 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cppklcc alias 45 pin 24 d positive",
+      "device": "v750cppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 24 = r; pin 27 = y; pinnode 45 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 24 = r; pin 27 = y; pinnode 45 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cppklcc alias 45 pin 24 d !",
+      "device": "v750cppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 24 = r; pin 27 = y; pinnode 45 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 24 = r; pin 27 = y; pinnode 45 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cppklcc alias 45 pin 24 t positive",
+      "device": "v750cppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 24 = r; pin 27 = y; pinnode 45 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 24 = r; pin 27 = y; pinnode 45 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cppklcc alias 45 pin 24 t !",
+      "device": "v750cppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 24 = r; pin 27 = y; pinnode 45 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 24 = r; pin 27 = y; pinnode 45 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cppklcc alias 44 pin 23 d positive",
+      "device": "v750cppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 23 = r; pin 27 = y; pinnode 44 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 23 = r; pin 27 = y; pinnode 44 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cppklcc alias 44 pin 23 d !",
+      "device": "v750cppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 23 = r; pin 27 = y; pinnode 44 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 23 = r; pin 27 = y; pinnode 44 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cppklcc alias 44 pin 23 t positive",
+      "device": "v750cppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 23 = r; pin 27 = y; pinnode 44 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 23 = r; pin 27 = y; pinnode 44 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cppklcc alias 44 pin 23 t !",
+      "device": "v750cppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 23 = r; pin 27 = y; pinnode 44 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 23 = r; pin 27 = y; pinnode 44 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cppklcc alias 43 pin 21 d positive",
+      "device": "v750cppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 21 = r; pin 27 = y; pinnode 43 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 21 = r; pin 27 = y; pinnode 43 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cppklcc alias 43 pin 21 d !",
+      "device": "v750cppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 21 = r; pin 27 = y; pinnode 43 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 21 = r; pin 27 = y; pinnode 43 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cppklcc alias 43 pin 21 t positive",
+      "device": "v750cppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 21 = r; pin 27 = y; pinnode 43 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 21 = r; pin 27 = y; pinnode 43 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cppklcc alias 43 pin 21 t !",
+      "device": "v750cppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 21 = r; pin 27 = y; pinnode 43 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 21 = r; pin 27 = y; pinnode 43 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cppklcc alias 42 pin 20 d positive",
+      "device": "v750cppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 20 = r; pin 27 = y; pinnode 42 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 20 = r; pin 27 = y; pinnode 42 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cppklcc alias 42 pin 20 d !",
+      "device": "v750cppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 20 = r; pin 27 = y; pinnode 42 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 20 = r; pin 27 = y; pinnode 42 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cppklcc alias 42 pin 20 t positive",
+      "device": "v750cppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 20 = r; pin 27 = y; pinnode 42 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 20 = r; pin 27 = y; pinnode 42 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cppklcc alias 42 pin 20 t !",
+      "device": "v750cppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 20 = r; pin 27 = y; pinnode 42 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 20 = r; pin 27 = y; pinnode 42 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cppklcc alias 41 pin 19 d positive",
+      "device": "v750cppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 19 = r; pin 27 = y; pinnode 41 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 19 = r; pin 27 = y; pinnode 41 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cppklcc alias 41 pin 19 d !",
+      "device": "v750cppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 19 = r; pin 27 = y; pinnode 41 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 19 = r; pin 27 = y; pinnode 41 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cppklcc alias 41 pin 19 t positive",
+      "device": "v750cppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 19 = r; pin 27 = y; pinnode 41 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 19 = r; pin 27 = y; pinnode 41 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cppklcc alias 41 pin 19 t !",
+      "device": "v750cppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 19 = r; pin 27 = y; pinnode 41 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 19 = r; pin 27 = y; pinnode 41 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cppklcc alias 40 pin 18 d positive",
+      "device": "v750cppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 18 = r; pin 27 = y; pinnode 40 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 18 = r; pin 27 = y; pinnode 40 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cppklcc alias 40 pin 18 d !",
+      "device": "v750cppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 18 = r; pin 27 = y; pinnode 40 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 18 = r; pin 27 = y; pinnode 40 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cppklcc alias 40 pin 18 t positive",
+      "device": "v750cppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 18 = r; pin 27 = y; pinnode 40 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 18 = r; pin 27 = y; pinnode 40 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cppklcc alias 40 pin 18 t !",
+      "device": "v750cppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 18 = r; pin 27 = y; pinnode 40 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 18 = r; pin 27 = y; pinnode 40 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cppklcc alias 39 pin 17 d positive",
+      "device": "v750cppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 17 = r; pin 27 = y; pinnode 39 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 17 = r; pin 27 = y; pinnode 39 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cppklcc alias 39 pin 17 d !",
+      "device": "v750cppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 17 = r; pin 27 = y; pinnode 39 = !q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 17 = r; pin 27 = y; pinnode 39 = !q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cppklcc alias 39 pin 17 t positive",
+      "device": "v750cppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 17 = r; pin 27 = y; pinnode 39 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 17 = r; pin 27 = y; pinnode 39 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cppklcc alias 39 pin 17 t !",
+      "device": "v750cppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 17 = r; pin 27 = y; pinnode 39 = !q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 17 = r; pin 27 = y; pinnode 39 = !q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750c alias 44 pin 23 d positive with active-low output and fixed register polarity",
+      "device": "v750c",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 23 = !r; pin 22 = y; pinnode 44 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 23 = !r; pin 22 = y; pinnode 44 = q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750c alias 44 pin 23 t positive with active-low output and fixed register polarity",
+      "device": "v750c",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 23 = !r; pin 22 = y; pinnode 44 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 23 = !r; pin 22 = y; pinnode 44 = q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cext alias 44 pin 23 d positive with active-low output",
+      "device": "v750cext",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 23 = !r; pin 22 = y; pinnode 44 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 23 = !r; pin 22 = y; pinnode 44 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cext alias 44 pin 23 t positive with active-low output",
+      "device": "v750cext",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 23 = !r; pin 22 = y; pinnode 44 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 23 = !r; pin 22 = y; pinnode 44 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cextlcc alias 48 pin 27 d positive with active-low output",
+      "device": "v750cextlcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = !r; pin 26 = y; pinnode 48 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = !r; pin 26 = y; pinnode 48 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cextlcc alias 48 pin 27 t positive with active-low output",
+      "device": "v750cextlcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = !r; pin 26 = y; pinnode 48 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = !r; pin 26 = y; pinnode 48 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cextppk alias 44 pin 23 d positive with active-low output and fixed register polarity",
+      "device": "v750cextppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 23 = !r; pin 22 = y; pinnode 44 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 23 = !r; pin 22 = y; pinnode 44 = q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cextppk alias 44 pin 23 t positive with active-low output and fixed register polarity",
+      "device": "v750cextppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 23 = !r; pin 22 = y; pinnode 44 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 23 = !r; pin 22 = y; pinnode 44 = q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cextppklcc alias 48 pin 27 d positive with active-low output",
+      "device": "v750cextppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = !r; pin 26 = y; pinnode 48 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = !r; pin 26 = y; pinnode 48 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cextppklcc alias 48 pin 27 t positive with active-low output",
+      "device": "v750cextppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = !r; pin 26 = y; pinnode 48 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = !r; pin 26 = y; pinnode 48 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750clcc alias 48 pin 27 d positive with active-low output",
+      "device": "v750clcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = !r; pin 26 = y; pinnode 48 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = !r; pin 26 = y; pinnode 48 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750clcc alias 48 pin 27 t positive with active-low output",
+      "device": "v750clcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = !r; pin 26 = y; pinnode 48 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = !r; pin 26 = y; pinnode 48 = q; r.t = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cppk alias 44 pin 23 d positive with active-low output and fixed register polarity",
+      "device": "v750cppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 23 = !r; pin 22 = y; pinnode 44 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 23 = !r; pin 22 = y; pinnode 44 = q; r.d = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cppk alias 44 pin 23 t positive with active-low output and fixed register polarity",
+      "device": "v750cppk",
+      "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 23 = !r; pin 22 = y; pinnode 44 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 23 = !r; pin 22 = y; pinnode 44 = q; r.t = b; r.ck = clk; y = !r & a;"
+    },
+    {
+      "label": "v750cppklcc alias 48 pin 27 d positive with active-low output",
+      "device": "v750cppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = !r; pin 26 = y; pinnode 48 = q; r.d = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = !r; pin 26 = y; pinnode 48 = q; r.d = b; r.ck = clk; y = r & a;"
+    },
+    {
+      "label": "v750cppklcc alias 48 pin 27 t positive with active-low output",
+      "device": "v750cppklcc",
+      "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = !r; pin 26 = y; pinnode 48 = q; r.t = b; r.ck = clk; y = q & a;",
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = !r; pin 26 = y; pinnode 48 = q; r.t = b; r.ck = clk; y = r & a;"
+    }
+  ]
+}
