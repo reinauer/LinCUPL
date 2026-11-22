@@ -434,6 +434,9 @@ int act_number(token_t *tok)
 int act_number_var(token_t *tok)
 {
     number_token(tok);
+    if (take_negation()) {
+        tok->flags ^= TF_NEGATED;
+    }
     parse_list_append(tok, g_parse_work);
     return 0;
 }
@@ -926,7 +929,7 @@ static void assign_number(const token_t *tok)
     for (int i = g_lhs_count - 1; i >= 0; i--) {
         if (!g_lhs_skip[i]) {
             token_t *copy = parse_token_copy(tok);
-            copy->flags &= TF_NUMBER;
+            copy->flags &= TF_NUMBER | TF_NEGATED;
             int index = parse_name_index(g_parse_lhs_syms[i]->name);
             if (g_lhs_count == 1 || index < 0 || index > 31) {
                 bit = num->value & 1;
