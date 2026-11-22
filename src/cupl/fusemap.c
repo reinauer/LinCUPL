@@ -1364,10 +1364,10 @@ static void select_device_quirks(void)
         g.expander_free = (int)attr16(ATTR_W19) * 2;
     } else if (strcmp(name, "v5000") == 0) {
         g.dev_v5000 = 1;
-    } else if (strcmp(name, "v2500b") == 0) {
+    } else if (strcmp(name, "v2500b") == 0 || strcmp(name, "v2500c") == 0) {
         g.dev_v2500b = 1;
         select_cell_table(CELLS_V2500B, 0);
-    } else if (strcmp(name, "v2500blcc") == 0) {
+    } else if (strcmp(name, "v2500blcc") == 0 || strcmp(name, "v2500clcc") == 0) {
         g.dev_v2500b = 1;
         select_cell_table(CELLS_V2500B, 1);
     } else if (strncmp(name, "p22v10s", 7) == 0) {

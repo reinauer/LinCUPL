@@ -1,0 +1,197 @@
+{
+  "device": "v2500c",
+  "variants": [
+    {
+      "label": "v2500c 8 terms combinational",
+      "device": "v2500c",
+      "source": "pin 1 = a;\npin 2 = b;\npin 3 = c;\npin 17 = d;\npin 18 = e;\npin 4 = y;\ny = a & !b & !c & !d & !e\n # !a & b & !c & !d & !e\n # !a & !b & c & !d & !e\n # a & b & c & !d & !e\n # !a & !b & !c & d & !e\n # a & b & !c & d & !e\n # a & !b & c & d & !e\n # !a & b & c & d & !e;",
+      "fuses": {
+        "71645": 0
+      }
+    },
+    {
+      "label": "v2500c 8 terms .d",
+      "device": "v2500c",
+      "source": "pin 1 = a;\npin 2 = b;\npin 3 = c;\npin 17 = d;\npin 18 = e;\npin 4 = y;\ny.d = a & !b & !c & !d & !e\n # !a & b & !c & !d & !e\n # !a & !b & c & !d & !e\n # a & b & c & !d & !e\n # !a & !b & !c & d & !e\n # a & b & !c & d & !e\n # a & !b & c & d & !e\n # !a & b & c & d & !e;",
+      "fuses": {
+        "71645": 0
+      }
+    },
+    {
+      "label": "v2500c 9 terms combinational",
+      "device": "v2500c",
+      "source": "pin 1 = a;\npin 2 = b;\npin 3 = c;\npin 17 = d;\npin 18 = e;\npin 4 = y;\ny = a & !b & !c & !d & !e\n # !a & b & !c & !d & !e\n # !a & !b & c & !d & !e\n # a & b & c & !d & !e\n # !a & !b & !c & d & !e\n # a & b & !c & d & !e\n # a & !b & c & d & !e\n # !a & b & c & d & !e\n # !a & !b & !c & !d & e;",
+      "fuses": {
+        "71645": 1
+      }
+    },
+    {
+      "label": "v2500c 9 terms .d",
+      "device": "v2500c",
+      "source": "pin 1 = a;\npin 2 = b;\npin 3 = c;\npin 17 = d;\npin 18 = e;\npin 4 = y;\ny.d = a & !b & !c & !d & !e\n # !a & b & !c & !d & !e\n # !a & !b & c & !d & !e\n # a & b & c & !d & !e\n # !a & !b & !c & d & !e\n # a & b & !c & d & !e\n # a & !b & c & d & !e\n # !a & b & c & d & !e\n # !a & !b & !c & !d & e;",
+      "fuses": {
+        "71645": 1
+      }
+    },
+    {
+      "label": "v2500c 12 terms combinational",
+      "device": "v2500c",
+      "source": "pin 1 = a;\npin 2 = b;\npin 3 = c;\npin 17 = d;\npin 18 = e;\npin 4 = y;\ny = a & !b & !c & !d & !e\n # !a & b & !c & !d & !e\n # !a & !b & c & !d & !e\n # a & b & c & !d & !e\n # !a & !b & !c & d & !e\n # a & b & !c & d & !e\n # a & !b & c & d & !e\n # !a & b & c & d & !e\n # !a & !b & !c & !d & e\n # a & b & !c & !d & e\n # a & !b & c & !d & e\n # !a & b & c & !d & e;",
+      "fuses": {
+        "71645": 1
+      }
+    },
+    {
+      "label": "v2500c 12 terms .d",
+      "device": "v2500c",
+      "source": "pin 1 = a;\npin 2 = b;\npin 3 = c;\npin 17 = d;\npin 18 = e;\npin 4 = y;\ny.d = a & !b & !c & !d & !e\n # !a & b & !c & !d & !e\n # !a & !b & c & !d & !e\n # a & b & c & !d & !e\n # !a & !b & !c & d & !e\n # a & b & !c & d & !e\n # a & !b & c & d & !e\n # !a & b & c & d & !e\n # !a & !b & !c & !d & e\n # a & b & !c & !d & e\n # a & !b & c & !d & e\n # !a & b & c & !d & e;",
+      "fuses": {
+        "71645": 1
+      }
+    },
+    {
+      "label": "v2500clcc 8 terms combinational",
+      "device": "v2500clcc",
+      "source": "pin 1 = a;\npin 2 = b;\npin 3 = c;\npin 19 = d;\npin 20 = e;\npin 5 = y;\ny = a & !b & !c & !d & !e\n # !a & b & !c & !d & !e\n # !a & !b & c & !d & !e\n # a & b & c & !d & !e\n # !a & !b & !c & d & !e\n # a & b & !c & d & !e\n # a & !b & c & d & !e\n # !a & b & c & d & !e;",
+      "fuses": {
+        "71645": 0
+      }
+    },
+    {
+      "label": "v2500clcc 8 terms .d",
+      "device": "v2500clcc",
+      "source": "pin 1 = a;\npin 2 = b;\npin 3 = c;\npin 19 = d;\npin 20 = e;\npin 5 = y;\ny.d = a & !b & !c & !d & !e\n # !a & b & !c & !d & !e\n # !a & !b & c & !d & !e\n # a & b & c & !d & !e\n # !a & !b & !c & d & !e\n # a & b & !c & d & !e\n # a & !b & c & d & !e\n # !a & b & c & d & !e;",
+      "fuses": {
+        "71645": 0
+      }
+    },
+    {
+      "label": "v2500clcc 9 terms combinational",
+      "device": "v2500clcc",
+      "source": "pin 1 = a;\npin 2 = b;\npin 3 = c;\npin 19 = d;\npin 20 = e;\npin 5 = y;\ny = a & !b & !c & !d & !e\n # !a & b & !c & !d & !e\n # !a & !b & c & !d & !e\n # a & b & c & !d & !e\n # !a & !b & !c & d & !e\n # a & b & !c & d & !e\n # a & !b & c & d & !e\n # !a & b & c & d & !e\n # !a & !b & !c & !d & e;",
+      "fuses": {
+        "71645": 1
+      }
+    },
+    {
+      "label": "v2500clcc 9 terms .d",
+      "device": "v2500clcc",
+      "source": "pin 1 = a;\npin 2 = b;\npin 3 = c;\npin 19 = d;\npin 20 = e;\npin 5 = y;\ny.d = a & !b & !c & !d & !e\n # !a & b & !c & !d & !e\n # !a & !b & c & !d & !e\n # a & b & c & !d & !e\n # !a & !b & !c & d & !e\n # a & b & !c & d & !e\n # a & !b & c & d & !e\n # !a & b & c & d & !e\n # !a & !b & !c & !d & e;",
+      "fuses": {
+        "71645": 1
+      }
+    },
+    {
+      "label": "v2500clcc 12 terms combinational",
+      "device": "v2500clcc",
+      "source": "pin 1 = a;\npin 2 = b;\npin 3 = c;\npin 19 = d;\npin 20 = e;\npin 5 = y;\ny = a & !b & !c & !d & !e\n # !a & b & !c & !d & !e\n # !a & !b & c & !d & !e\n # a & b & c & !d & !e\n # !a & !b & !c & d & !e\n # a & b & !c & d & !e\n # a & !b & c & d & !e\n # !a & b & c & d & !e\n # !a & !b & !c & !d & e\n # a & b & !c & !d & e\n # a & !b & c & !d & e\n # !a & b & c & !d & e;",
+      "fuses": {
+        "71645": 1
+      }
+    },
+    {
+      "label": "v2500clcc 12 terms .d",
+      "device": "v2500clcc",
+      "source": "pin 1 = a;\npin 2 = b;\npin 3 = c;\npin 19 = d;\npin 20 = e;\npin 5 = y;\ny.d = a & !b & !c & !d & !e\n # !a & b & !c & !d & !e\n # !a & !b & c & !d & !e\n # a & b & c & !d & !e\n # !a & !b & !c & d & !e\n # a & b & !c & d & !e\n # a & !b & c & d & !e\n # !a & b & c & d & !e\n # !a & !b & !c & !d & e\n # a & b & !c & !d & e\n # a & !b & c & !d & e\n # !a & b & c & !d & e;",
+      "fuses": {
+        "71645": 1
+      }
+    },
+    {
+      "label": "v2500b 8 terms combinational",
+      "device": "v2500b",
+      "source": "pin 1 = a;\npin 2 = b;\npin 3 = c;\npin 17 = d;\npin 18 = e;\npin 4 = y;\ny = a & !b & !c & !d & !e\n # !a & b & !c & !d & !e\n # !a & !b & c & !d & !e\n # a & b & c & !d & !e\n # !a & !b & !c & d & !e\n # a & b & !c & d & !e\n # a & !b & c & d & !e\n # !a & b & c & d & !e;",
+      "fuses": {
+        "71645": 0
+      }
+    },
+    {
+      "label": "v2500b 8 terms .d",
+      "device": "v2500b",
+      "source": "pin 1 = a;\npin 2 = b;\npin 3 = c;\npin 17 = d;\npin 18 = e;\npin 4 = y;\ny.d = a & !b & !c & !d & !e\n # !a & b & !c & !d & !e\n # !a & !b & c & !d & !e\n # a & b & c & !d & !e\n # !a & !b & !c & d & !e\n # a & b & !c & d & !e\n # a & !b & c & d & !e\n # !a & b & c & d & !e;",
+      "fuses": {
+        "71645": 0
+      }
+    },
+    {
+      "label": "v2500b 9 terms combinational",
+      "device": "v2500b",
+      "source": "pin 1 = a;\npin 2 = b;\npin 3 = c;\npin 17 = d;\npin 18 = e;\npin 4 = y;\ny = a & !b & !c & !d & !e\n # !a & b & !c & !d & !e\n # !a & !b & c & !d & !e\n # a & b & c & !d & !e\n # !a & !b & !c & d & !e\n # a & b & !c & d & !e\n # a & !b & c & d & !e\n # !a & b & c & d & !e\n # !a & !b & !c & !d & e;",
+      "fuses": {
+        "71645": 1
+      }
+    },
+    {
+      "label": "v2500b 9 terms .d",
+      "device": "v2500b",
+      "source": "pin 1 = a;\npin 2 = b;\npin 3 = c;\npin 17 = d;\npin 18 = e;\npin 4 = y;\ny.d = a & !b & !c & !d & !e\n # !a & b & !c & !d & !e\n # !a & !b & c & !d & !e\n # a & b & c & !d & !e\n # !a & !b & !c & d & !e\n # a & b & !c & d & !e\n # a & !b & c & d & !e\n # !a & b & c & d & !e\n # !a & !b & !c & !d & e;",
+      "fuses": {
+        "71645": 1
+      }
+    },
+    {
+      "label": "v2500b 12 terms combinational",
+      "device": "v2500b",
+      "source": "pin 1 = a;\npin 2 = b;\npin 3 = c;\npin 17 = d;\npin 18 = e;\npin 4 = y;\ny = a & !b & !c & !d & !e\n # !a & b & !c & !d & !e\n # !a & !b & c & !d & !e\n # a & b & c & !d & !e\n # !a & !b & !c & d & !e\n # a & b & !c & d & !e\n # a & !b & c & d & !e\n # !a & b & c & d & !e\n # !a & !b & !c & !d & e\n # a & b & !c & !d & e\n # a & !b & c & !d & e\n # !a & b & c & !d & e;",
+      "fuses": {
+        "71645": 1
+      }
+    },
+    {
+      "label": "v2500b 12 terms .d",
+      "device": "v2500b",
+      "source": "pin 1 = a;\npin 2 = b;\npin 3 = c;\npin 17 = d;\npin 18 = e;\npin 4 = y;\ny.d = a & !b & !c & !d & !e\n # !a & b & !c & !d & !e\n # !a & !b & c & !d & !e\n # a & b & c & !d & !e\n # !a & !b & !c & d & !e\n # a & b & !c & d & !e\n # a & !b & c & d & !e\n # !a & b & c & d & !e\n # !a & !b & !c & !d & e\n # a & b & !c & !d & e\n # a & !b & c & !d & e\n # !a & b & c & !d & e;",
+      "fuses": {
+        "71645": 1
+      }
+    },
+    {
+      "label": "v2500blcc 8 terms combinational",
+      "device": "v2500blcc",
+      "source": "pin 1 = a;\npin 2 = b;\npin 3 = c;\npin 19 = d;\npin 20 = e;\npin 5 = y;\ny = a & !b & !c & !d & !e\n # !a & b & !c & !d & !e\n # !a & !b & c & !d & !e\n # a & b & c & !d & !e\n # !a & !b & !c & d & !e\n # a & b & !c & d & !e\n # a & !b & c & d & !e\n # !a & b & c & d & !e;",
+      "fuses": {
+        "71645": 0
+      }
+    },
+    {
+      "label": "v2500blcc 8 terms .d",
+      "device": "v2500blcc",
+      "source": "pin 1 = a;\npin 2 = b;\npin 3 = c;\npin 19 = d;\npin 20 = e;\npin 5 = y;\ny.d = a & !b & !c & !d & !e\n # !a & b & !c & !d & !e\n # !a & !b & c & !d & !e\n # a & b & c & !d & !e\n # !a & !b & !c & d & !e\n # a & b & !c & d & !e\n # a & !b & c & d & !e\n # !a & b & c & d & !e;",
+      "fuses": {
+        "71645": 0
+      }
+    },
+    {
+      "label": "v2500blcc 9 terms combinational",
+      "device": "v2500blcc",
+      "source": "pin 1 = a;\npin 2 = b;\npin 3 = c;\npin 19 = d;\npin 20 = e;\npin 5 = y;\ny = a & !b & !c & !d & !e\n # !a & b & !c & !d & !e\n # !a & !b & c & !d & !e\n # a & b & c & !d & !e\n # !a & !b & !c & d & !e\n # a & b & !c & d & !e\n # a & !b & c & d & !e\n # !a & b & c & d & !e\n # !a & !b & !c & !d & e;",
+      "fuses": {
+        "71645": 1
+      }
+    },
+    {
+      "label": "v2500blcc 9 terms .d",
+      "device": "v2500blcc",
+      "source": "pin 1 = a;\npin 2 = b;\npin 3 = c;\npin 19 = d;\npin 20 = e;\npin 5 = y;\ny.d = a & !b & !c & !d & !e\n # !a & b & !c & !d & !e\n # !a & !b & c & !d & !e\n # a & b & c & !d & !e\n # !a & !b & !c & d & !e\n # a & b & !c & d & !e\n # a & !b & c & d & !e\n # !a & b & c & d & !e\n # !a & !b & !c & !d & e;",
+      "fuses": {
+        "71645": 1
+      }
+    },
+    {
+      "label": "v2500blcc 12 terms combinational",
+      "device": "v2500blcc",
+      "source": "pin 1 = a;\npin 2 = b;\npin 3 = c;\npin 19 = d;\npin 20 = e;\npin 5 = y;\ny = a & !b & !c & !d & !e\n # !a & b & !c & !d & !e\n # !a & !b & c & !d & !e\n # a & b & c & !d & !e\n # !a & !b & !c & d & !e\n # a & b & !c & d & !e\n # a & !b & c & d & !e\n # !a & b & c & d & !e\n # !a & !b & !c & !d & e\n # a & b & !c & !d & e\n # a & !b & c & !d & e\n # !a & b & c & !d & e;",
+      "fuses": {
+        "71645": 1
+      }
+    },
+    {
+      "label": "v2500blcc 12 terms .d",
+      "device": "v2500blcc",
+      "source": "pin 1 = a;\npin 2 = b;\npin 3 = c;\npin 19 = d;\npin 20 = e;\npin 5 = y;\ny.d = a & !b & !c & !d & !e\n # !a & b & !c & !d & !e\n # !a & !b & c & !d & !e\n # a & b & c & !d & !e\n # !a & !b & !c & d & !e\n # a & b & !c & d & !e\n # a & !b & c & d & !e\n # !a & b & c & d & !e\n # !a & !b & !c & !d & e\n # a & b & !c & !d & e\n # a & !b & c & !d & e\n # !a & b & c & !d & e;",
+      "fuses": {
+        "71645": 1
+      }
+    }
+  ]
+}
