@@ -1264,6 +1264,71 @@ static void blow_array(or_array_t *oa)
  * Fuse map
  * ------------------------------------------------------------------------- */
 
+/* ABS simulation uses the ATF2500B/C global clock when a register has no
+ * explicit clock equation. Arrays default to false, so leaving its clock row
+ * untouched would instead program a register that never clocks. Route
+ * the global pin through that row, just as an explicit .ck equation does.
+ * Compare physical row addresses because FF1 has both a pin and an alias. */
+static void atf2500_default_clocks(void)
+{
+    if (strncmp(g.device_name, "v2500b", 6) != 0 &&
+        strncmp(g.device_name, "v2500c", 6) != 0)
+        return;
+    int clock_pin = -1;
+    for (int p = 0; p < npins(); p++) {
+        unsigned kind = pin8(p, PIN_KIND);
+        if (kind == 5 || kind == 12) {
+            clock_pin = p;
+            break;
+        }
+    }
+    if (clock_pin < 0)
+        return;
+    for (int i = 0; i < g.nsyms; i++) {
+        const symbol_t *s = &g.syms[i];
+        unsigned type = s->node_index >= 0 ? node8(s->node_index, NODE_EXT) : 0;
+        unsigned feedback = s->pin_index >= 0 ? pin8(s->pin_index, PIN_EXT) : 0;
+        int clock = -1, rows = -1, explicit_clock = 0;
+        if (!((s->eq != NULL && (type == 1 || type == 0x1b)) ||
+              feedback == 0x22 || feedback == 0x24))
+            continue;
+        for (int n = 0; n < nnodes(); n++) {
+            if (node16(n, NODE_NUMBER) == s->pin && node8(n, NODE_EXT) == 0x0f) {
+                clock = n;
+                break;
+            }
+        }
+        if (clock < 0)
+            continue;
+        for (int n = 0; n < nnodes(); n++) {
+            if (node16(n, NODE_ARRAY) == node16(clock, NODE_ARRAY) &&
+                node8(n, NODE_EXT) == 0x0e) {
+                rows = n;
+                break;
+            }
+        }
+        if (rows < 0)
+            continue;
+        uint32_t first = node32(rows, NODE_ROW_FUSE);
+        for (int j = 0; j < g.nsyms; j++) {
+            const symbol_t *c = &g.syms[j];
+            if (c->eq == NULL || c->node_index < 0)
+                continue;
+            unsigned control = node8(c->node_index, NODE_EXT);
+            if ((control == 0x2a && c->pin == s->pin) ||
+                ((control == 0x0f || control == 0x1f) && c->or_index >= 0 &&
+                 node32(c->or_index, NODE_ROW_FUSE) == first)) {
+                explicit_clock = 1;
+                break;
+            }
+        }
+        if (!explicit_clock) {
+            for (unsigned col = 0; col < node8(rows, NODE_ROW_WIDTH); col++)
+                set_fuse(first + col, col != pin8(clock_pin, PIN_TRUE_COL));
+        }
+    }
+}
+
 /* Allocate the map and set the default and initial fuse values */
 static void init_fuse_map(void)
 {
@@ -1443,6 +1508,7 @@ void build_fuse_map(void)
         }
     }
     set_input_pin_fuses();
+    atf2500_default_clocks();
     if (g.dev_v2500b) {
         v2500b_fix_cells();
     }
