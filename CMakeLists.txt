@@ -392,8 +392,12 @@ if(Python3_EXECUTABLE)
         COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/csim_jed.py" --bin-dir "$<TARGET_FILE_DIR:csim>"
         WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
     )
+    add_test(NAME csim_atf_jed
+        COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/csim_atf_jed.py"
+            "$<TARGET_FILE_DIR:csim>")
+    set_tests_properties(csim_atf_jed PROPERTIES TIMEOUT 600)
     if(NOT LINCUPL_REQUIRE_TEST_DATA)
-        set_tests_properties(csim_jed PROPERTIES SKIP_RETURN_CODE 77)
+        set_tests_properties(csim_jed csim_atf_jed PROPERTIES SKIP_RETURN_CODE 77)
     endif()
     file(GLOB _defect_cases CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/tests/defects/*.json")
     foreach(_case IN LISTS _defect_cases)

@@ -108,9 +108,9 @@ for the list of flags. The most common ones:
 | `csim -f` | simulate the fuse map of the `.jed` file instead of the compiled design |
 
 **Simulating a JEDEC file.** `csim -f` takes the design from the fuse map
-in `name.jed` and needs no `.abs` file. This is for a GAL16V8, GAL20V8 or
-GAL22V10 whose source is not at hand: a file read back from a part, or one
-written by another compiler.
+in `name.jed` and needs no `.abs` file. It supports GAL16V8, GAL20V8,
+GAL22V10, ATF750 and ATF2500 maps, including files read back from a part
+or written by another compiler.
 
 ```sh
 csim -lf u12              # reads u12.jed and u12.si, writes u12.so and u12.wo
@@ -127,6 +127,14 @@ csim -lf g20v8lcc u12     # the same as this device (for a file that does not sa
   numbers of a PLCC part. The mode of a GAL16V8 or GAL20V8 (simple,
   complex, registered) is read from its SYN and AC0 fuses; a mode can also
   be named (`g16v8ms`, `g16v8ma`, `g16v8s`).
+- ATF750 maps have 14394, 14435 or 14504 fuses; ATF2500 maps have
+  71648, 71745 or 71816. Their QP28 or QP44 field selects the PLCC
+  package. C-revision feedback and pin-keeper option bits select the
+  corresponding library variant. The decoder handles both registers
+  per macrocell, D/T selection, shared product terms, output polarity
+  and enable, product and global clocks, asynchronous reset and shared
+  synchronous preset. Pin keepers are identified, but their electrical
+  behavior is not simulated.
 - A fuse map has no names. The pins are `P1`, `P2`, … in the `ORDER`
   statement, and their test values are levels at the pins. If `u12.pld` is
   there, the pins also have the names of its `PIN` declarations (and its
@@ -135,6 +143,11 @@ csim -lf g20v8lcc u12     # the same as this device (for a file that does not sa
   the text as `cupl`'s preprocessor leaves it: with `$INCLUDE` files, the
   names that `$DEFINE` replaces, and what `$IFDEF` selects. Declarations
   made by `$REPEAT` or `$MACRO` are not found.
+- ATF buried nodes and register aliases use their library numbers, such
+  as `P34` on `v750c` or `P41` on `v2500c`. An adjacent source file can
+  name these with `PINNODE`. Register feedback is independent of the
+  physical I/O level, including when a disabled output is driven externally.
+  A map using an input column absent from its library entry is rejected.
 - csim prints the device and which pins the fuses make inputs,
   combinatorial outputs and registered outputs. A macrocell without
   product terms whose output is never enabled is an input. Product terms

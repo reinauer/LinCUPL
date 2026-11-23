@@ -989,8 +989,8 @@ def refusal_cases(suite, base_dir, base):
     qf = parse_jed(good)[0]
     other = 'g22v10' if qf != 5892 else 'g16v8'
     run('refused: device with another number of fuses', good, ['-lf', other], ['invalid JEDEC file', 'fuses, device'])
-    run('refused: device that is not supported', good, ['-lf', 'v750'],
-        ['device cannot be simulated from a JEDEC file', 'v750'])
+    run('refused: device that is not supported', good, ['-lf', 'v5000'],
+        ['device cannot be simulated from a JEDEC file', 'v5000'])
     run('refused: device not in the library', good, ['-lf', 'nosuchdev'], ['device not in library', 'nosuchdev'])
 
 
