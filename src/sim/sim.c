@@ -985,3 +985,34 @@ int sim_run(int vsima, int argc, char **argv)
     phase_end(&g_rt);
     return result;
 }
+
+/* Run the ordinary JEDEC decoder, binder and evaluator without source
+ * names, a vector file, or output files. Keep the phase's cleanup and
+ * fatal-error recovery identical to the interactive simulator. */
+int sim_jed_truth(const char *path, const char *library, const char *device,
+                  unsigned max_inputs, sim_truth_t *table, char *error, size_t error_size)
+{
+    volatile int result = 0;
+    memset(table, 0, sizeof(*table));
+    snprintf(error, error_size, "could not decode or simulate the JEDEC file");
+    if (max_inputs > SIM_TRUTH_MAX_INPUTS) {
+        snprintf(error, error_size, "input limit exceeds %u", SIM_TRUTH_MAX_INPUTS);
+        return 0;
+    }
+    g_vsima = 0;
+    reset_globals();
+    for (int i = 0; i < 9; i++)
+        g_args[i] = "";
+    g_args[2] = library;
+    g_args[4] = device;
+    g_args[5] = path;
+    g_options = OPT_FUSEMAP;
+    if (setjmp(g_abort_jmp) == 0) {
+        g_dir_prefix = dup_string("", "initialization");
+        load_jedec_file(path, 0);
+        sim_allocate();
+        result = build_truth_table(max_inputs, table, error, error_size);
+    }
+    phase_end(&g_rt);
+    return result;
+}

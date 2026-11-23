@@ -67,7 +67,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          for tool in cupl csim cbld backpin cfitr fit1502 fit1504 fit1508 lincupl linsim; do
+          for tool in cupl csim cbld backpin cfitr jedinspect jedcompare fit1502 fit1504 fit1508 lincupl linsim; do
             test -x "build/bin/$tool"
           done
 

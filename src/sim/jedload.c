@@ -408,7 +408,7 @@ static int try_device(const char *device, const char *jed_name, char *entry, int
  * file are for the pin numbers of its device (a PLCC package counts them
  * differently), so they are used only with a device that has as many
  * pins. */
-static void choose_device(const char *jed_name)
+static void choose_device(const char *jed_name, int strict)
 {
     char entry[DL_ENTRY_NAME_SIZE + 1] = "";
     char text[200] = "";
@@ -451,7 +451,15 @@ static void choose_device(const char *jed_name)
         g_pld.use_names = g_pld.device[0] == '\0';
     }
     if (!mode_fuses_match()) {
+        if (strict) {
+            fatal_error(ERR_JEDEC_MODE, entry);
+        }
         print_warning_now(ERR_JEDEC_MODE, entry);
+    }
+    if (strict && g_jed.qp && g_jed.qp != dev_header()[HDR_PINS]) {
+        snprintf(text, sizeof(text), "%s has QP%u, device %s has %u pins",
+                 jed_name, g_jed.qp, entry, dev_header()[HDR_PINS]);
+        fatal_error(ERR_JEDEC_FILE, text);
     }
     snprintf(g_device_name, sizeof(g_device_name), "%s", entry);
 }
@@ -1640,10 +1648,10 @@ sym_t *jedec_pin_symbol(const char *name, int *inverted)
     return find_symbol(g_jed.pins[number].name);
 }
 
-/* Build the design from <design>.jed: the counterpart of load_design(). */
-void load_design_jedec(void)
+/* Only the interactive simulator uses adjacent source files for names
+ * and prints the pin summary. */
+void load_jedec_file(const char *jed_name, int source_names)
 {
-    char *jed_name = make_file_name(g_dir_prefix, g_base_name, ".jed");
     char reason[200];
     char text[400];
     jed_map_t map;
@@ -1670,8 +1678,11 @@ void load_design_jedec(void)
     jed_free(&map);
 
     read_header_device(design);
-    read_pld();
-    choose_device(jed_name);
+    memset(&g_pld, 0, sizeof(g_pld));
+    if (source_names) {
+        read_pld();
+    }
+    choose_device(jed_name, !source_names);
     /* option j adds the vectors to the file that was read */
     lincupl_strcpy_trunc(g_abs_jedec_name, sizeof(g_abs_jedec_name), g_base_name);
     g_options |= OPT_N;
@@ -1684,5 +1695,37 @@ void load_design_jedec(void)
     build_symbols();
     build_frames();
     define_pld_fields();
-    print_summary(jed_name);
+    if (source_names) {
+        print_summary(jed_name);
+    }
+}
+
+/* Build the design from <design>.jed: the counterpart of load_design(). */
+void load_design_jedec(void)
+{
+    load_jedec_file(make_file_name(g_dir_prefix, g_base_name, ".jed"), 1);
+}
+
+/* Describe the physical pins of the map already decoded above. */
+void jedec_truth_pins(sim_truth_t *table)
+{
+    table->npins = (unsigned)g_jed.npins;
+    snprintf(table->device, sizeof(table->device), "%s", g_device_name);
+    for (int p = 1; p <= g_jed.npins; p++) {
+        const jpin_t *pin = &g_jed.pins[p];
+        if (pin->node >= 0) {
+            table->role[p] = dev_node(pin->node)[NODE_TYPE] == NT_REGISTER ?
+                             SIM_PIN_REGISTER : SIM_PIN_OUTPUT;
+            table->outputs[table->noutputs++] = (unsigned)p;
+        } else if (pin->in_rec >= 0) {
+            int kind = dev_pin(pin->in_rec)[PIN_KIND];
+            if (kind == 2 || kind == 3 || (pin->column < 0 && kind == 0)) {
+                continue;
+            }
+            table->role[p] = SIM_PIN_INPUT;
+            if ((pin->column >= 0 && g_jed.columns[pin->column].used) || kind == PIN_KIND_ENABLE) {
+                table->inputs[table->ninputs++] = (unsigned)p;
+            }
+        }
+    }
 }

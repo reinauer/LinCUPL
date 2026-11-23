@@ -23,6 +23,8 @@ Amiga 3000/4000, built for a GAL22V10):
 |---|---|
 | `cupl` | The compiler: `.pld` → `.jed` (and `.abs`, `.doc`, `.lst`, `.pla`, …) |
 | `csim` | The simulator: runs the vectors of a `.si` file against the compiled design, or against the fuse map of a `.jed` file |
+| `jedinspect` | Inspects JEDEC fuse maps, prints fuse ranges and compares fuse states; supports JSON output |
+| `jedcompare` | Checks combinational JEDEC pin equivalence exhaustively and reports a counterexample when outputs differ |
 | `fit1502`, `fit1504`, `fit1508` | Fitters for the ATF150x CPLDs; `cupl` starts them itself |
 | `cbld` | Lists the devices of a device library (`.dl`) and builds libraries |
 | `backpin` | Writes the pins a fitter chose back into the `.pld` file |
@@ -78,6 +80,10 @@ build also makes `lincupl.dl`, a library with the devices of both
 under `<prefix>/share/lincupl`.
 
 ## Usage
+
+For fuse-map inspection and equivalence checking, see
+[JEDEC tools](doc/jed-tools.md). `jedcompare` currently supports combinational
+GAL16V8, GAL20V8 and GAL22V10 designs without output feedback.
 
 Compile a design to a JEDEC file (`-j`), an absolute file for the simulator
 (`-a`), a documentation file (`-x`) and a listing (`-l`), then simulate it:

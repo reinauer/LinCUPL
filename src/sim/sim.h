@@ -28,6 +28,7 @@
 #include "cfile.h"
 #include "devlib.h"
 #include "phase.h"
+#include "sim_truth.h"
 
 #ifdef SIM_DEFINE_GLOBALS
 #define SIM_EXTERN
@@ -573,6 +574,9 @@ int device_in_library(const char *name);  /* does the library have the entry? */
 /* Option f (jedload.c): build the design from <design>.jed and the library
  * entry of its device, in place of load_design(). */
 void load_design_jedec(void);
+void load_jedec_file(const char *path, int source_names);
+void jedec_truth_pins(sim_truth_t *table);
+int build_truth_table(unsigned max_inputs, sim_truth_t *table, char *error, size_t error_size);
 /* After sim_allocate(): an output enable pin that no vector drives enables. */
 void jedec_design_bound(void);
 /* The symbol an ORDER name "P<n>" stands for when the pin has another name
