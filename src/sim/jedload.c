@@ -992,6 +992,12 @@ static void build_symbols(void)
                     (p > g_jed.npins || registered_node(pin->node))) {
                     col->sym = pin->sym;
                     col->inverted = dev_pin(pin->reg_rec)[PIN_TRUE_COL] != col->true_col;
+                    /* ATF750 feedback taps Q before the output inverter.
+                     * The shared register model publishes feedback with
+                     * output polarity applied; undo it for the array. */
+                    if (g_jed.atf == 750 && p <= g_jed.npins &&
+                        dev_node(pin->node)[5] == 6)
+                        col->inverted = !col->inverted;
                 }
             } else if (col->pin == p) {
                 col->sym = pin->sym;

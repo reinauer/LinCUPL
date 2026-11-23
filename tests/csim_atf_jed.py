@@ -149,6 +149,45 @@ def main():
                      for a, b in itertools.product(range(2), repeat=2)]
             simulate(directory, 'ORDER: P2,P3,P23,P34,P44;\nVECTORS:\n' + '\n'.join(lines) + '\n')
 
+        # Q0 feeds the array before output polarity and OE. Observe both
+        # register columns and the pin column with separate output cells.
+        cells = [(23, 0, 8), (22, 13, 10), (21, 28, 12), (20, 45, 14),
+                 (19, 64, 16), (18, 85, 16), (17, 106, 14), (16, 125, 12),
+                 (15, 142, 10), (14, 157, 8)]
+        for i, (pin, first, terms) in enumerate(cells):
+            observers = [c for c in cells if c[0] != pin][:3]
+            for toggle, low in itertools.product(range(2), repeat=2):
+                directory = root / f'750-feedback-{pin}-{toggle}-{low}'
+                directory.mkdir()
+                bits = [0] * 14504
+                row(bits, first * 84, 84, 75)  # D/T from P2
+                row(bits, (first + terms + 4) * 84, 84, 67)  # OE from P3
+                cfg, reg = 14364 + 3 * i, 14395 + 4 * i
+                bits[cfg:cfg + 3] = [0, 1, 1 - low]
+                bits[reg] = 1  # global clock P1
+                bits[reg + 2] = toggle
+                columns = [78 - 8 * i, 79 - 8 * i, 81 - 8 * i]
+                for (out, start, count), column in zip(observers, columns):
+                    row(bits, start * 84, 84, column)
+                    row(bits, (start + count + 4) * 84, 84)
+                    cfg = 14364 + 3 * (23 - out)
+                    bits[cfg:cfg + 3] = [1, 0, 1]
+                write_map(directory, bits, 'v750c', 24)
+                state, lines = 0, []
+                for clock, data, enable, external in [
+                        ('0', 0, 1, 0), ('C', 1, 1, 0), ('C', 1, 1, 0),
+                        ('C', 0, 1, 0), ('0', 0, 0, 0), ('0', 0, 0, 1),
+                        ('C', 1, 0, 0), ('0', 0, 1, 0)]:
+                    if clock == 'C':
+                        state = state ^ data if toggle else data
+                    physical = state ^ low if enable else external
+                    pin_level = 'LH'[physical] if enable else str(external)
+                    observed = ''.join('LH'[v] for v in [state, 1 - state, physical])
+                    lines.append(f'{clock}{data}{enable}{pin_level}{observed}')
+                order = [1, 2, 3, pin, *[p for p, _, _ in observers]]
+                simulate(directory, 'ORDER: ' + ','.join(f'P{p}' for p in order) +
+                         ';\nVECTORS:\n' + '\n'.join(lines) + '\n')
+
         for extended, keeper in itertools.product(range(2), repeat=2):
             directory = root / f'750-options-{extended}-{keeper}'
             directory.mkdir()
