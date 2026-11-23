@@ -89,8 +89,10 @@ Current proof scope:
   impedance. Timing, hazards, programming/security settings and analog
   behavior are outside the comparison.
 - Registers and output feedback are rejected, including acyclic output
-  feedback. Sequential equivalence needs a separate proof method. ATF750,
-  ATF2500 and ATF150x decoding are not added by these tools.
+  feedback. Sequential equivalence needs a separate proof method. csim
+  can simulate ATF750 and ATF2500 maps, but their buried registers remain
+  outside this proof scope even when the pin outputs are combinational.
+  ATF150x maps are not decoded.
 
 Exit status is 0 only for proven equivalence within this scope, 1 for a
 pin-interface difference or a counterexample, and 2 for an error,

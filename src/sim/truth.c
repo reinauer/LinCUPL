@@ -53,6 +53,11 @@ int build_truth_table(unsigned max_inputs, sim_truth_t *table, char *error, size
         if (g_syms[sym].flags & 0x80)
             return fail(error, size, "P%u feeds the array; output feedback is not supported", pin);
     }
+    for (int i = 0; i < g_nsyms; i++) {
+        if (g_syms[i].pin > table->npins && g_cells[i].is_node &&
+            (g_cells[i].node_type == 1 || g_cells[i].node_type == 0x1b))
+            return fail(error, size, "buried registers are present; sequential equivalence is not supported");
+    }
     if (table->ninputs > max_inputs)
         return fail(error, size, "%u used inputs exceed the limit of %u", table->ninputs, max_inputs);
     table->nrows = UINT32_C(1) << table->ninputs;

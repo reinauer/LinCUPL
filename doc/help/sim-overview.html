@@ -68,7 +68,7 @@ csim ends with exit status 1 when a vector fails.</p>
 <h2 id="jedec">Simulating a JEDEC file</h2>
 <p><tt>csim -f</tt> takes the design from the fuse map in
 <i>name</i><tt>.jed</tt> instead of the absolute file.  It is meant for a
-GAL16V8, GAL20V8 or GAL22V10 whose source is not at hand: a file read
+GAL16V8, GAL20V8, GAL22V10, ATF750 or ATF2500 whose source is not at hand: a file read
 back from a part, or one written by another compiler.  The vectors come
 from <i>name</i><tt>.si</tt> as usual.</p>
 <pre class="shell">csim -lf u12              # u12.jed and u12.si: listing u12.so, waveforms u12.wo
@@ -93,6 +93,18 @@ fuses.  A mode can be named as well (<tt>g16v8ms</tt>, <tt>g16v8ma</tt>,
 <tt>[0038sa]</tt> says so.  Other devices are refused with
 <tt>[0037sa]</tt>, a number of fuses that none of these devices has with
 <tt>[0036sa]</tt>.</li>
+<li><b>ATF devices.</b> ATF750 maps have 14394, 14435 or 14504 fuses;
+ATF2500 maps have 71648, 71745 or 71816. <tt>QP28</tt> and <tt>QP44</tt>
+select their PLCC packages. C-revision feedback and pin-keeper option bits
+select the library variant. Both registers per macrocell, D/T selection,
+shared sum terms, output polarity and enable, product clocks, global
+clock selection/gating, asynchronous reset and synchronous preset are
+decoded. Pin-keeper electrical behavior is not simulated. Buried nodes
+and register aliases use their library numbers (<tt>P34</tt> on
+<tt>v750c</tt>, <tt>P41</tt> on <tt>v2500c</tt>), or names from adjacent
+<tt>PINNODE</tt> declarations. Register and physical-pin feedback are
+independent. A map using an input column missing from its library entry
+is rejected.</li>
 <li><b>Names.</b> A fuse map has none.  The pins are <tt>P1</tt>, <tt>P2</tt>, … in the
 <tt>ORDER</tt> statement, and the values of such a column are levels at
 the pin.  If <i>name</i><tt>.pld</tt> is there, the pins also have the
@@ -125,8 +137,8 @@ listed: in the fuse map it is a term that is not there.</li>
 <li><b>The output enable pin</b> of the registered modes (pin 11 of the
 GAL16V8, pin 13 of the GAL20V8) enables the outputs unless the vectors
 drive it, as in a design that does not declare the pin.</li>
-<li><b>Clock, reset and preset</b> are those of the device: the
-registers are clocked by the clock pin only, and the reset and preset
+<li><b>Clock, reset and preset</b> are those of the device: GAL
+registers are clocked by the clock pin, and the reset and preset
 terms of a GAL22V10 act on all its registers.  (For a compiled design
 csim knows only what the design declares: a reset term written for some
 registers of a GAL22V10 does not reset the others there.)</li>

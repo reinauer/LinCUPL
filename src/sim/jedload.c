@@ -6,8 +6,8 @@
  * on it unchanged.
  *
  * Supported are the GAL16V8 and GAL20V8 in their three modes and the
- * GAL22V10 (devices whose node records are OR arrays, combinatorial and D
- * register outputs, output enable terms and reset / preset terms).
+ * GAL22V10, ATF750 and ATF2500. ATF row sharing and clock routing are
+ * decoded here into the existing combinational, D and T cell models.
  *
  * How the library describes the fuses (see also src/cupl/fusemap.h and
  * build_fuse_map() in src/cupl/jedec.c, which this reverses):
@@ -46,6 +46,7 @@ enum {
     NODE_CFG_VALUE = 0x09,      /* u8 */
     NODE_ROW_FUSE = 0x0a,       /* u32: first fuse of an array; of the select fuses otherwise */
     NODE_CFG_FUSE = 0x12,       /* u32 */
+    NODE_PAIR_FUSE = 0x16,      /* u32: control-input selection */
     NODE_ROW_WIDTH = 0x1b,      /* u8: fuses per row; number of select fuses otherwise */
     NODE_CFG_BITS = 0x1d,       /* u8 */
     NODE_MAX_TERMS = 0x1f,      /* u16 */
@@ -62,7 +63,11 @@ enum {
     NT_ENABLE = 0x02,           /* output enable term */
     NT_PRESET = 0x03,           /* synchronous preset term */
     NT_RESET = 0x07,            /* asynchronous reset term */
-    NT_ARRAY = 0x0e
+    NT_ARRAY = 0x0e,
+    NT_CLOCK = 0x0f,
+    NT_TOGGLE = 0x1b,
+    NT_CLOCK_ENABLE = 0x1f,
+    NT_CLOCK_SELECT = 0x2a
 };
 
 enum { PIN_KIND_REGISTER_FEEDBACK = 11, PIN_KIND_ENABLE = 9 };
@@ -70,6 +75,7 @@ enum { PIN_KIND_REGISTER_FEEDBACK = 11, PIN_KIND_ENABLE = 9 };
 /* Symbol kinds and flags as cupl writes them (src/shared/absdump.c) */
 enum {
     KIND_PIN = 2, KIND_PIN_EXT = 5, KIND_CONST0 = 6, KIND_CONST1 = 7,
+    KIND_NODE = 9, KIND_NODE_EXT = 10,
     SYMF_INPUT = 0x80, SYMF_OUTPUT = 0x40, SYMF_LOW = 0x10
 };
 
@@ -97,7 +103,27 @@ static const struct {
     { 2706, 0, "g20v8", 2640 },
     { 2706, 0, "g20v8a", 2640 },    /* Atmel.dl has the simple mode only as g20v8as */
     { 5892, 0, "g22v10", 0 },
-    { 5828, 0, "g22v10", 0 }        /* 22V10 without the 64 signature fuses */
+    { 5828, 0, "g22v10", 0 },       /* 22V10 without the 64 signature fuses */
+    { 14394, 28, "v750lcc", 0 },
+    { 14435, 28, "v750blcc", 0 },
+    { 14504, 28, "v750clcc", 0 },
+    { 14504, 28, "v750cextlcc", 0 },
+    { 14504, 28, "v750cppklcc", 0 },
+    { 14504, 28, "v750cextppklcc", 0 },
+    { 71648, 44, "v2500lcc", 0 },
+    { 71745, 44, "v2500blcc", 0 },
+    { 71816, 44, "v2500clcc", 0 },
+    { 71816, 44, "v2500cppklcc", 0 },
+    { 14394, 0, "v750", 0 },
+    { 14435, 0, "v750b", 0 },
+    { 14504, 0, "v750c", 0 },
+    { 14504, 0, "v750cext", 0 },
+    { 14504, 0, "v750cppk", 0 },
+    { 14504, 0, "v750cextppk", 0 },
+    { 71648, 0, "v2500", 0 },
+    { 71745, 0, "v2500b", 0 },
+    { 71816, 0, "v2500c", 0 },
+    { 71816, 0, "v2500cppk", 0 }
 };
 
 typedef struct {
@@ -115,6 +141,9 @@ typedef struct {
     int16_t enable_sym;
     int16_t reset_sym;
     int16_t preset_sym;
+    int16_t clock, clock_sym, clock_select, clock_select_sym;
+    int16_t io_rec, io_sym;     /* separate physical input of an ATF output */
+    int16_t alias;              /* same flip-flop as this pin, or -1 */
     uint8_t named;              /* the name is from the .pld file */
     uint8_t low;                /* and declared active low (!name) */
     char name[NAME_SIZE];       /* P<number> unless named */
@@ -125,6 +154,8 @@ typedef struct {
     uint8_t comp_col;
     uint16_t pin;
     uint8_t used;               /* some product term has the input */
+    int16_t sym;
+    uint8_t inverted;
 } column_t;
 
 static struct {
@@ -134,6 +165,10 @@ static struct {
     char device[DL_ENTRY_NAME_SIZE + 1]; /* the device the file names, in lower case, "" if none */
     uint32_t ptd_fuse;          /* 0: the device has no product term disable fuses */
     int npins;
+    int nsignals;              /* includes the numbered buried registers */
+    int atf;                   /* 750 or 2500, zero for GAL devices */
+    uint16_t row_mask[512];    /* selected sum-term rows, indexed by array */
+    uint8_t gated_clock[512];  /* AND the product clock with the global pin */
     jpin_t pins[MAX_PINS + 1];  /* by pin number */
     column_t columns[MAX_COLUMNS];
     int ncolumns;
@@ -214,6 +249,28 @@ static unsigned fuse_bits(uint32_t first, int count)
     return value;
 }
 
+static int atf_family(void)
+{
+    uint32_t count = rd32(dev_header() + HDR_FUSES);
+    if (count == 14394 || count == 14435 || count == 14504)
+        return 750;
+    if (count == 71648 || count == 71745 || count == 71816)
+        return 2500;
+    return 0;
+}
+
+static int registered_node(int node)
+{
+    return node >= 0 && (dev_node(node)[NODE_TYPE] == NT_REGISTER ||
+                         dev_node(node)[NODE_TYPE] == NT_TOGGLE);
+}
+
+static int row_selected(int array, int row)
+{
+    return !g_jed.atf || (array < 512 && row < 16 &&
+                          (g_jed.row_mask[array] & (1u << row)));
+}
+
 static int node_count(void)
 {
     return dev_section_count(DEV_SEC_NODES);
@@ -236,6 +293,12 @@ static const uint8_t *array_record(int array)
  * input and its complement are both in the product). */
 static int row_is_false(uint32_t first, int width)
 {
+    if (g_jed.atf) {
+        for (int c = 0; c + 1 < width; c += 2) {
+            if (!fuse(first + c) && !fuse(first + c + 1))
+                return 1;
+        }
+    }
     if (g_jed.ptd_fuse != 0 && width > 0 && fuse(g_jed.ptd_fuse + first / (uint32_t)width) == 0) {
         return 1;
     }
@@ -259,7 +322,7 @@ static int array_rows(int array)
         int width = a[NODE_ROW_WIDTH];
         int terms = (int)rd16(a + NODE_MAX_TERMS);
         for (int r = 0; r < terms; r++) {
-            if (!row_is_false(first + (uint32_t)(r * width), width)) {
+            if (row_selected(array, r) && !row_is_false(first + (uint32_t)(r * width), width)) {
                 rows = r + 1;
             }
         }
@@ -308,8 +371,15 @@ static int mode_fuses_match(void)
 {
     const uint8_t *init = dev_section(SEC_INIT);
     int count = dev_section_count(SEC_INIT);
+    int atf = atf_family();
     for (int i = 0; i < count; i++, init += INIT_SIZE) {
         uint32_t first = rd32(init);
+        /* ATF2500 initializers also contain writable macrocell defaults.
+         * Only the C revisions' feedback and pin-keeper options select
+         * library variants. Signature and reserved bits do not. */
+        if (atf && !((atf == 750 && (first == 14499 || first == 14500)) ||
+                     (atf == 2500 && first == 71745)))
+            continue;
         if (first == rd32(init + 4) && first < g_jed.nfuses && fuse(first) != init[8]) {
             return 0;
         }
@@ -336,6 +406,9 @@ static int check_device(const char *device, const char *jed_name, int *code, cha
     for (int i = 0; ok && i < node_count(); i++) {
         switch (dev_node(i)[NODE_TYPE]) {
         case NT_COMBINATORIAL: case NT_REGISTER: case NT_ENABLE: case NT_PRESET: case NT_RESET: case NT_ARRAY:
+            break;
+        case NT_CLOCK: case NT_TOGGLE: case NT_CLOCK_ENABLE: case NT_CLOCK_SELECT:
+            ok = atf_family() != 0;
             break;
         default:
             ok = 0;
@@ -434,14 +507,15 @@ static void choose_device(const char *jed_name, int strict)
             if (k_families[i].fuses != g_jed.nfuses || (k_families[i].pins != 0 && k_families[i].pins != g_jed.qp)) {
                 continue;
             }
-            found = try_device(k_families[i].device, jed_name, entry, &code, text, sizeof(text));
+            found = try_device(k_families[i].device, jed_name, entry, &code, text, sizeof(text)) &&
+                    mode_fuses_match();
             if (!found && first_code < 0) {
                 first_code = code;
                 snprintf(first_text, sizeof(first_text), "%s", text);
             }
         }
         if (!found && first_code < 0) {
-            snprintf(text, sizeof(text), "%s has %lu fuses (GAL16V8: 2194, GAL20V8: 2706, GAL22V10: 5892 or 5828)",
+            snprintf(text, sizeof(text), "%s has %lu fuses (supported families: GAL16V8, GAL20V8, GAL22V10, ATF750, ATF2500)",
                      jed_name, (unsigned long)g_jed.nfuses);
             fatal_error(ERR_JEDEC_NO_DEVICE, text);
         }
@@ -473,6 +547,9 @@ static void collect_pins(void)
 {
     int count = dev_section_count(DEV_SEC_PINS);
     g_jed.npins = dev_header()[HDR_PINS];
+    g_jed.nsignals = g_jed.npins;
+    g_jed.atf = atf_family();
+    memset(g_jed.row_mask, 0xff, sizeof(g_jed.row_mask));
     g_jed.ncolumns = 0;
     for (int p = 0; p <= MAX_PINS; p++) {
         jpin_t *pin = &g_jed.pins[p];
@@ -480,25 +557,47 @@ static void collect_pins(void)
         pin->in_rec = pin->reg_rec = pin->column = pin->node = pin->array = pin->off_enable = -1;
         pin->enable = pin->reset = pin->preset = -1;
         pin->sym = pin->out_sym = pin->enable_sym = pin->reset_sym = pin->preset_sym = -1;
+        pin->clock = pin->clock_sym = pin->clock_select = pin->clock_select_sym = -1;
+        pin->io_rec = pin->io_sym = pin->alias = -1;
         snprintf(pin->name, sizeof(pin->name), "P%d", p);
     }
     for (int i = 0; i < count; i++) {
         const uint8_t *rec = dev_pin(i);
         int number = (int)rd16(rec + PIN_NUMBER);
         jpin_t *pin;
-        if (number < 1 || number > g_jed.npins) {
+        if (number < 1 || number > (g_jed.atf ? MAX_PINS : g_jed.npins)) {
             continue;
         }
+        if (number > g_jed.nsignals)
+            g_jed.nsignals = number;
         pin = &g_jed.pins[number];
-        if (rec[PIN_KIND] == PIN_KIND_REGISTER_FEEDBACK) {
+        if (g_jed.atf && rec[4] == 37)
+            pin->io_rec = (int16_t)i;
+        if (g_jed.atf && rec[4] != 0)
+            continue;
+        if (rec[PIN_KIND] == PIN_KIND_REGISTER_FEEDBACK || (g_jed.atf && rec[PIN_KIND] == 23)) {
             if (pin->reg_rec < 0) {
                 pin->reg_rec = (int16_t)i;
             }
         } else if (pin->in_rec < 0) {
             pin->in_rec = (int16_t)i;
         }
-        if (rec[PIN_TRUE_COL] != rec[PIN_COMP_COL] && pin->column < 0) {
+        if (rec[PIN_TRUE_COL] != rec[PIN_COMP_COL] && (g_jed.atf || pin->column < 0)) {
             column_t *c;
+            int found = -1;
+            for (int k = 0; k < g_jed.ncolumns; k++) {
+                if ((g_jed.columns[k].true_col == rec[PIN_TRUE_COL] &&
+                     g_jed.columns[k].comp_col == rec[PIN_COMP_COL]) ||
+                    (g_jed.columns[k].true_col == rec[PIN_COMP_COL] &&
+                     g_jed.columns[k].comp_col == rec[PIN_TRUE_COL])) {
+                    found = k;
+                    break;
+                }
+            }
+            if (g_jed.atf && found >= 0) {
+                pin->column = (int16_t)found;
+                continue;
+            }
             if (g_jed.ncolumns >= MAX_COLUMNS) {
                 fatal_error(ERR_JEDEC_DEVICE, g_device_name);
             }
@@ -507,6 +606,7 @@ static void collect_pins(void)
             c->comp_col = rec[PIN_COMP_COL];
             c->pin = (uint16_t)number;
             c->used = 0;
+            c->sym = -1;
             pin->column = (int16_t)g_jed.ncolumns++;
         }
     }
@@ -516,6 +616,11 @@ static void collect_pins(void)
  * some product term uses. */
 static void scan_arrays(void)
 {
+    uint8_t covered[256] = { 0 };
+    for (int c = 0; c < g_jed.ncolumns; c++) {
+        covered[g_jed.columns[c].true_col] = 1;
+        covered[g_jed.columns[c].comp_col] = 1;
+    }
     for (int i = 0; i < node_count(); i++) {
         const uint8_t *a = dev_node(i);
         uint32_t first;
@@ -526,7 +631,11 @@ static void scan_arrays(void)
         first = rd32(a + NODE_ROW_FUSE);
         width = a[NODE_ROW_WIDTH];
         terms = (int)rd16(a + NODE_MAX_TERMS);
-        if (width != 2 * g_jed.ncolumns) {
+        if (g_jed.atf && (rd16(a + NODE_ARRAY) >= 512 || terms > 16))
+            fatal_error(ERR_JEDEC_DEVICE, "invalid ATF array geometry");
+        if (g_jed.atf && width == 1)  /* a clock-selection descriptor */
+            continue;
+        if (!g_jed.atf && width != 2 * g_jed.ncolumns) {
             fatal_error(ERR_JEDEC_DEVICE, g_device_name);
         }
         for (int c = 0; c < g_jed.ncolumns; c++) {
@@ -538,6 +647,10 @@ static void scan_arrays(void)
             uint32_t row = first + (uint32_t)(r * width);
             if (row_is_false(row, width)) {
                 continue;
+            }
+            for (int c = 0; g_jed.atf && c < width; c++) {
+                if (!covered[c] && !fuse(row + (uint32_t)c))
+                    fatal_error(ERR_JEDEC_DEVICE, "device library lacks a used array input");
             }
             for (int c = 0; c < g_jed.ncolumns; c++) {
                 if (fuse(row + g_jed.columns[c].true_col) == 0 || fuse(row + g_jed.columns[c].comp_col) == 0) {
@@ -612,6 +725,153 @@ static void configure_macrocells(void)
     }
 }
 
+/* ATF macrocells have a pin input, two register feedback inputs and two
+ * overlapping sums. The numbered alias of the first register must share
+ * its state with the registered pin. Keep the library's cell models and
+ * connection records, and select the physical rows feeding each sum.
+ * Routing follows the Logic Options in Microchip DS20006641 (ATF750C)
+ * and the output logic diagrams in Atmel 0777 (ATF2500C). */
+static int atf_node(int number, int type)
+{
+    for (int i = 0; i < node_count(); i++) {
+        const uint8_t *n = dev_node(i);
+        if ((int)rd16(n + NODE_NUMBER) == number && n[NODE_TYPE] == type)
+            return i;
+    }
+    return -1;
+}
+
+static int node_config_matches(const uint8_t *n)
+{
+    return !n[NODE_CFG_BITS] ||
+           fuse_bits(rd32(n + NODE_CFG_FUSE), n[NODE_CFG_BITS]) == n[NODE_CFG_VALUE];
+}
+
+static void configure_atf(void)
+{
+    /* Register records contain routing selectors as well as D/T bits.
+     * Routing a sum away from the pin never removes the flip-flop. */
+    for (int p = 1; p <= g_jed.nsignals; p++) {
+        jpin_t *pin = &g_jed.pins[p];
+        for (int i = 0; i < node_count(); i++) {
+            const uint8_t *n = dev_node(i);
+            int type = n[NODE_TYPE];
+            unsigned value, wanted, mask;
+            if ((int)rd16(n + NODE_NUMBER) != p ||
+                (type != NT_COMBINATORIAL && type != NT_REGISTER && type != NT_TOGGLE))
+                continue;
+            if (p > g_jed.npins && type == NT_COMBINATORIAL)
+                continue;
+            if (!node_config_matches(n))
+                continue;
+            value = fuse_bits(rd32(n + NODE_ROW_FUSE), n[NODE_ROW_WIDTH]);
+            wanted = rd16(n + NODE_SEL_VALUE);
+            mask = (1u << n[NODE_ROW_WIDTH]) - 1;
+            if (p <= g_jed.npins) {
+                if (g_jed.atf == 750)
+                    mask &= ~2u;  /* independent or combined sums */
+                else if (n[NODE_ROW_WIDTH] == 4)
+                    mask &= ~3u;  /* ATF2500's shared rows */
+            } else if (g_jed.atf == 2500 || rd32(n + NODE_ROW_FUSE) < 14394) {
+                mask = 0;
+            }
+            if ((value & mask) != (wanted & mask))
+                continue;
+            /* D records of the physical pin do not constrain its T bit. */
+            if (pin->node < 0 || type == NT_TOGGLE) {
+                pin->node = (int16_t)i;
+                pin->array = (int16_t)rd16(n + NODE_ARRAY);
+            }
+        }
+    }
+    for (int p = 1; p <= g_jed.npins; p++) {
+        jpin_t *pin = &g_jed.pins[p];
+        const uint8_t *n, *a;
+        unsigned mode, mask;
+        int alias = -1, buried = -1;
+        uint32_t config;
+        if (pin->node < 0)
+            continue;
+        n = dev_node(pin->node);
+        a = array_record(pin->array);
+        config = rd32(n + NODE_ROW_FUSE);
+        if (g_jed.atf == 2500 && n[NODE_ROW_WIDTH] == 2)
+            config -= 2;
+        mode = fuse_bits(config, g_jed.atf == 750 ? 3 : 4);
+        for (int q = g_jed.npins + 1; q <= g_jed.nsignals; q++) {
+            jpin_t *other = &g_jed.pins[q];
+            const uint8_t *b = array_record(other->array);
+            if (other->node < 0 || !b)
+                continue;
+            if (pin->reg_rec >= 0 && other->column >= 0 &&
+                (g_jed.columns[other->column].true_col == dev_pin(pin->reg_rec)[PIN_TRUE_COL] ||
+                 g_jed.columns[other->column].comp_col == dev_pin(pin->reg_rec)[PIN_TRUE_COL]))
+                alias = q;
+            else if (rd32(b + NODE_ROW_FUSE) == rd32(a + NODE_ROW_FUSE) +
+                     (uint32_t)(a[NODE_ROW_WIDTH] * (g_jed.atf == 750 ? rd16(a + NODE_MAX_TERMS) / 2 : 8)))
+                buried = q;
+        }
+        if (g_jed.atf == 750) {
+            int count = rd16(a + NODE_MAX_TERMS);
+            mask = (1u << ((mode & 2) ? count / 2 : count)) - 1;
+        } else {
+            unsigned routing = mode & 3;
+            mask = routing == 2 ? 0xfff : routing == 1 ? 0x00f : 0x0ff;
+            if (routing == 3) {
+                /* S0=S1=1 feeds D/T2 back to the array. S5 also selects
+                 * whether a combinational pin includes its four rows. */
+                int t = buried < 0 ? -1 : atf_node(buried, NT_TOGGLE);
+                int s5 = t >= 0 && fuse(rd32(dev_node(t) + NODE_CFG_FUSE));
+                mask = (mode & 4) ? (s5 ? 0xf0f : 0x00f) : 0x0ff;
+                if (buried >= 0) {
+                    /* This is a private, normalized device image. The
+                     * compiler entry only offers registered equations
+                     * for this node, but the hardware has a bypass. */
+                    uint8_t *b = g_dev_rec + (dev_node(g_jed.pins[buried].node) - g_dev_rec);
+                    b[NODE_TYPE] = NT_COMBINATORIAL;
+                }
+            }
+        }
+        g_jed.row_mask[pin->array] = (uint16_t)mask;
+        pin->enable = (int16_t)related_node(pin->node, NT_ENABLE);
+        if (alias >= 0 && registered_node(pin->node)) {
+            jpin_t *other = &g_jed.pins[alias];
+            if (pin->enable >= 0 && array_rows(rd16(dev_node(pin->enable))) == 0) {
+                /* A buried use of FF1 can use the pin's larger sum. */
+                other->array = pin->array;
+                pin->node = -1;
+                pin->enable = -1;
+            } else {
+                other->alias = (int16_t)p;
+                other->node = -1;
+            }
+        }
+    }
+    for (int p = 1; p <= g_jed.nsignals; p++) {
+        jpin_t *pin = &g_jed.pins[p];
+        if (pin->node < 0)
+            continue;
+        if (registered_node(pin->node)) {
+            pin->reset = (int16_t)related_node(pin->node, NT_RESET);
+            pin->preset = (int16_t)related_node(pin->node, NT_PRESET);
+            pin->clock = (int16_t)atf_node(p, NT_CLOCK);
+            if (g_jed.atf == 2500) {
+                int ce = atf_node(p, NT_CLOCK_ENABLE);
+                if (ce >= 0 && fuse_bits(rd32(dev_node(ce) + NODE_ROW_FUSE), 1))
+                    g_jed.gated_clock[rd16(dev_node(ce) + NODE_ARRAY)] = 1;
+            } else {
+                int ck = atf_node(p, NT_CLOCK_SELECT);
+                if (ck >= 0 && fuse(rd32(dev_node(ck) + NODE_PAIR_FUSE)))
+                    pin->clock_select = (int16_t)ck;
+            }
+        }
+        if (p <= g_jed.npins && pin->enable >= 0 &&
+            !array_rows(rd16(dev_node(pin->enable))) && !registered_node(pin->node)) {
+            pin->node = pin->enable = -1;
+        }
+    }
+}
+
 /* -------------------------------------------------------------------------
  * Symbols and product terms
  * ------------------------------------------------------------------------- */
@@ -648,47 +908,94 @@ static int add_symbol(const char *name, const char *type, int pin, int kind, int
 static void build_symbols(void)
 {
     int order[MAX_PINS + 1];
-    g_syms = alloc_tracked(((size_t)g_jed.npins * 5 + 3) * sizeof(sym_t), "symbol table");
+    g_syms = alloc_tracked(((size_t)g_jed.nsignals * 9 + 3) * sizeof(sym_t), "symbol table");
     g_nsyms = 0;
     add_symbol("", "", 0, KIND_CONST0, 0, -1, -1);
     add_symbol("", "", 0, KIND_CONST1, 0, -1, -1);
-    for (int i = 0; i < g_jed.npins; i++) {
+    for (int i = 0; i < g_jed.nsignals; i++) {
         int k = i;
         for (; k > 0 && compare_names(g_jed.pins[order[k - 1]].name, g_jed.pins[i + 1].name) > 0; k--) {
             order[k] = order[k - 1];
         }
         order[k] = i + 1;
     }
-    for (int i = 0; i < g_jed.npins; i++) {
+    for (int i = 0; i < g_jed.nsignals; i++) {
         int p = order[i];
         jpin_t *pin = &g_jed.pins[p];
         int low = pin->low ? SYMF_LOW : 0;
+        int kind = p > g_jed.npins ? KIND_NODE : KIND_PIN;
+        int ext_kind = p > g_jed.npins ? KIND_NODE_EXT : KIND_PIN_EXT;
         int used = (pin->column >= 0 && g_jed.columns[pin->column].used) ? SYMF_INPUT : 0;
+        if (pin->alias >= 0)
+            continue;
+        if (g_jed.atf && registered_node(pin->node))
+            used = SYMF_INPUT;
         if (pin->node < 0) {
-            pin->sym = (int16_t)add_symbol(pin->name, "", p, KIND_PIN, used | low, pin->in_rec, -1);
+            pin->sym = (int16_t)add_symbol(pin->name, "", p, kind, used | low, pin->in_rec, -1);
             if (pin->named && pin->off_enable >= 0) {
                 pin->enable = pin->off_enable;
-                pin->enable_sym = (int16_t)add_symbol(pin->name, "oe", p, KIND_PIN_EXT, SYMF_OUTPUT, -1, pin->enable);
+                pin->enable_sym = (int16_t)add_symbol(pin->name, "oe", p, ext_kind, SYMF_OUTPUT, -1, pin->enable);
             }
             continue;
         }
-        if (dev_node(pin->node)[NODE_TYPE] == NT_REGISTER) {
-            pin->sym = (int16_t)add_symbol(pin->name, "", p, KIND_PIN, used | low,
+        if (registered_node(pin->node)) {
+            pin->sym = (int16_t)add_symbol(pin->name, "", p, kind, used | low,
                                            pin->reg_rec >= 0 ? pin->reg_rec : pin->in_rec, pin->node);
-            pin->out_sym = (int16_t)add_symbol(pin->name, "d", p, KIND_PIN_EXT, SYMF_OUTPUT | low, -1, pin->node);
+            pin->out_sym = (int16_t)add_symbol(pin->name,
+                dev_node(pin->node)[NODE_TYPE] == NT_TOGGLE ? "t" : "d",
+                p, ext_kind, SYMF_OUTPUT | low, -1, pin->node);
+            if (g_jed.atf && p <= g_jed.npins && pin->io_rec >= 0)
+                pin->io_sym = (int16_t)add_symbol(pin->name, "io", p, ext_kind,
+                    SYMF_INPUT, pin->io_rec, pin->node);
         } else {
-            pin->sym = (int16_t)add_symbol(pin->name, "", p, KIND_PIN, SYMF_OUTPUT | used | low, pin->in_rec,
+            pin->sym = (int16_t)add_symbol(pin->name, "", p, kind, SYMF_OUTPUT | used | low, pin->in_rec,
                                            pin->node);
             pin->out_sym = pin->sym;
         }
         if (pin->reset >= 0) {
-            pin->reset_sym = (int16_t)add_symbol(pin->name, "ar", p, KIND_PIN_EXT, SYMF_OUTPUT, -1, pin->reset);
+            pin->reset_sym = (int16_t)add_symbol(pin->name, "ar", p, ext_kind, SYMF_OUTPUT, -1, pin->reset);
         }
         if (pin->enable >= 0) {
-            pin->enable_sym = (int16_t)add_symbol(pin->name, "oe", p, KIND_PIN_EXT, SYMF_OUTPUT, -1, pin->enable);
+            pin->enable_sym = (int16_t)add_symbol(pin->name, "oe", p, ext_kind, SYMF_OUTPUT, -1, pin->enable);
         }
         if (pin->preset >= 0) {
-            pin->preset_sym = (int16_t)add_symbol(pin->name, "sp", p, KIND_PIN_EXT, SYMF_OUTPUT, -1, pin->preset);
+            pin->preset_sym = (int16_t)add_symbol(pin->name, "sp", p, ext_kind, SYMF_OUTPUT, -1, pin->preset);
+        }
+        if (pin->clock >= 0) {
+            pin->clock_sym = (int16_t)add_symbol(pin->name,
+                dev_node(pin->clock)[NODE_TYPE] == NT_CLOCK_ENABLE ? "ce" : "ck",
+                p, ext_kind, SYMF_OUTPUT, -1, pin->clock);
+        }
+        if (pin->clock_select >= 0) {
+            pin->clock_select_sym = (int16_t)add_symbol(pin->name, "ckmux", p,
+                ext_kind, SYMF_OUTPUT, -1, pin->clock_select);
+        }
+    }
+    for (int p = 1; p <= g_jed.nsignals; p++) {
+        jpin_t *pin = &g_jed.pins[p];
+        if (pin->alias >= 0)
+            pin->sym = g_jed.pins[pin->alias].sym;
+        for (int c = 0; c < g_jed.ncolumns; c++) {
+            column_t *col = &g_jed.columns[c];
+            if (g_jed.atf) {
+                if (pin->in_rec >= 0 &&
+                    (dev_pin(pin->in_rec)[PIN_TRUE_COL] == col->true_col ||
+                     dev_pin(pin->in_rec)[PIN_TRUE_COL] == col->comp_col)) {
+                    col->sym = pin->io_sym >= 0 ? pin->io_sym : pin->sym;
+                    col->inverted = dev_pin(pin->in_rec)[PIN_TRUE_COL] != col->true_col;
+                }
+                if (pin->alias >= 0)
+                    continue;
+                if (pin->reg_rec >= 0 &&
+                    (dev_pin(pin->reg_rec)[PIN_TRUE_COL] == col->true_col ||
+                     dev_pin(pin->reg_rec)[PIN_TRUE_COL] == col->comp_col) &&
+                    (p > g_jed.npins || registered_node(pin->node))) {
+                    col->sym = pin->sym;
+                    col->inverted = dev_pin(pin->reg_rec)[PIN_TRUE_COL] != col->true_col;
+                }
+            } else if (col->pin == p) {
+                col->sym = pin->sym;
+            }
         }
     }
     g_nsyms_file = g_nsyms;
@@ -701,12 +1008,14 @@ static void build_symbols(void)
 static int array_outputs(int array, uint16_t *outputs)
 {
     int n = 0;
-    for (int p = 1; p <= g_jed.npins; p++) {
+    for (int p = 1; p <= g_jed.nsignals; p++) {
         const jpin_t *pin = &g_jed.pins[p];
-        const int16_t node[4] = { pin->node, pin->enable, pin->reset, pin->preset };
-        const int16_t sym[4] = { pin->out_sym, pin->enable_sym, pin->reset_sym, pin->preset_sym };
-        for (int k = 0; k < 4; k++) {
-            if (node[k] >= 0 && sym[k] >= 0 && (int)rd16(dev_node(node[k]) + NODE_ARRAY) == array) {
+        const int16_t node[6] = { pin->node, pin->enable, pin->reset, pin->preset, pin->clock, pin->clock_select };
+        const int16_t sym[6] = { pin->out_sym, pin->enable_sym, pin->reset_sym, pin->preset_sym,
+                                 pin->clock_sym, pin->clock_select_sym };
+        for (int k = 0; k < 6; k++) {
+            int target = k == 0 && g_jed.atf ? pin->array : (int)rd16(dev_node(node[k]) + NODE_ARRAY);
+            if (node[k] >= 0 && sym[k] >= 0 && target == array) {
                 if (outputs != NULL) {
                     bit_set(outputs + 1, sym[k]);
                 }
@@ -715,6 +1024,16 @@ static int array_outputs(int array, uint16_t *outputs)
         }
     }
     return n;
+}
+
+static int global_clock_symbol(void)
+{
+    for (int p = 1; p <= g_jed.npins; p++) {
+        int rec = g_jed.pins[p].in_rec;
+        if (rec >= 0 && (dev_pin(rec)[PIN_KIND] == 5 || dev_pin(rec)[PIN_KIND] == 12))
+            return g_jed.pins[p].sym;
+    }
+    fatal_error(ERR_JEDEC_DEVICE, "device library lacks a global clock pin");
 }
 
 /* The rows of one array as a frame.  Rows are kept in their place up to the
@@ -730,7 +1049,8 @@ static frame_t *build_frame(int array)
     frame_t *f = alloc_tracked(sizeof(*f), "initialization");
     uint32_t first = rd32(a + NODE_ROW_FUSE);
     int width = a[NODE_ROW_WIDTH];
-    int rows = array_rows(array);
+    int clock_select = g_jed.atf && width == 1;
+    int rows = clock_select ? 1 : array_rows(array);
     f->index = (uint16_t)array;
     f->nsyms = g_nsyms;
     f->nrows = (uint16_t)(rows > 0 ? rows : 1);
@@ -749,10 +1069,16 @@ static frame_t *build_frame(int array)
         uint32_t row = first + (uint32_t)(r * width);
         int inputs;
         array_outputs(array, out);
+        if (clock_select) {
+            int clock = global_clock_symbol();
+            bit_set(used + 1, clock);
+            bit_set(high + 1, clock);
+            continue;
+        }
         if (r + 1 < f->nrows) {
             used[0] |= 1;           /* another term follows */
         }
-        if (rows == 0 || row_is_false(row, width)) {
+        if (rows == 0 || !row_selected(array, r) || row_is_false(row, width)) {
             bit_set(used + 1, 0);
             bit_set(high + 1, 0);
             continue;
@@ -760,19 +1086,35 @@ static frame_t *build_frame(int array)
         inputs = 0;
         for (int c = 0; c < g_jed.ncolumns; c++) {
             const column_t *col = &g_jed.columns[c];
-            int sym = g_jed.pins[col->pin].sym;
+            int sym = col->sym;
+            if (sym < 0)
+                fatal_error(ERR_JEDEC_DEVICE, "unbound array input");
             if (fuse(row + col->true_col) == 0) {
                 bit_set(used + 1, sym);
-                bit_set(high + 1, sym);
+                if (!col->inverted)
+                    bit_set(high + 1, sym);
                 inputs++;
             } else if (fuse(row + col->comp_col) == 0) {
                 bit_set(used + 1, sym);
+                if (col->inverted)
+                    bit_set(high + 1, sym);
                 inputs++;
             }
         }
         if (inputs == 0) {
             bit_set(used + 1, 1);
             bit_set(high + 1, 1);
+        }
+        if (g_jed.atf && g_jed.gated_clock[array]) {
+            int clock = global_clock_symbol();
+            if (bit_test(used + 1, clock) && !bit_test(high + 1, clock)) {
+                /* The row contains !CLK as well as the clock gate. */
+                bit_set(used + 1, 0);
+                bit_set(high + 1, 0);
+            } else {
+                bit_set(used + 1, clock);
+                bit_set(high + 1, clock);
+            }
         }
     }
     return f;
@@ -1086,7 +1428,7 @@ static void read_pld_statement(const char *s)
     if (!read_word(&s, word)) {
         return;
     }
-    if (strcasecmp(word, "pin") == 0) {
+    if (strcasecmp(word, "pin") == 0 || strcasecmp(word, "pinnode") == 0) {
         npins = read_pin_list(&s, pins);
         if (npins < 1 || !take(&s, '=')) {
             return;
@@ -1129,9 +1471,9 @@ static void read_pld_statement(const char *s)
 /* Does a PIN, FIELD or DEVICE statement start at s (the start of a line)? */
 static int is_declaration(const char *s)
 {
-    static const char *const k_words[4] = { "pin", "field", "fld", "device" };
+    static const char *const k_words[5] = { "pin", "pinnode", "field", "fld", "device" };
     skip_blanks(&s);
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < 5; i++) {
         size_t len = strlen(k_words[i]);
         if (strncasecmp(s, k_words[i], len) == 0 && !is_alnum(s[len]) && s[len] != '_') {
             return 1;
@@ -1474,7 +1816,7 @@ static void read_pld(void)
 
 static int pin_by_name(const char *name)
 {
-    for (int p = 1; p <= g_jed.npins; p++) {
+    for (int p = 1; p <= g_jed.nsignals; p++) {
         if (strcmp(g_jed.pins[p].name, name) == 0) {
             return p;
         }
@@ -1498,10 +1840,10 @@ static void name_pins(void)
         const pld_pin_t *decl = &g_pld.pins[i];
         int taken = 0;
         jpin_t *pin;
-        if (decl->number < 1 || decl->number > g_jed.npins || g_jed.pins[decl->number].named) {
+        if (decl->number < 1 || decl->number > g_jed.nsignals || g_jed.pins[decl->number].named) {
             continue;
         }
-        for (int p = 1; p <= g_jed.npins; p++) {
+        for (int p = 1; p <= g_jed.nsignals; p++) {
             taken |= g_jed.pins[p].named && strcmp(g_jed.pins[p].name, decl->name.name) == 0;
         }
         if (taken) {
@@ -1513,9 +1855,9 @@ static void name_pins(void)
         pin->named = 1;
         g_jed.pld_name = g_pld.file;
     }
-    for (int p = 1; p <= g_jed.npins; p++) {
+    for (int p = 1; p <= g_jed.nsignals; p++) {
         jpin_t *pin = &g_jed.pins[p];
-        for (int q = 1; q <= g_jed.npins && !pin->named; q++) {
+        for (int q = 1; q <= g_jed.nsignals && !pin->named; q++) {
             if (g_jed.pins[q].named && strcmp(g_jed.pins[q].name, pin->name) == 0) {
                 snprintf(pin->name, sizeof(pin->name), "PIN%d", p);
                 break;
@@ -1589,7 +1931,7 @@ static void print_summary(const char *jed_name)
         int any = 0;
         for (int p = 1; p <= g_jed.npins; p++) {
             const jpin_t *pin = &g_jed.pins[p];
-            int is = pin->node < 0 ? 0 : (dev_node(pin->node)[NODE_TYPE] == NT_REGISTER ? 2 : 1);
+            int is = pin->node < 0 ? 0 : (registered_node(pin->node) ? 2 : 1);
             if (is != what) {
                 continue;
             }
@@ -1632,18 +1974,28 @@ void jedec_design_bound(void)
 sym_t *jedec_pin_symbol(const char *name, int *inverted)
 {
     int number = 0;
-    if (name[0] != 'P' || name[1] < '1' || name[1] > '9') {
-        return NULL;
-    }
-    for (const char *p = name + 1; *p != '\0'; p++) {
-        if (*p < '0' || *p > '9' || number > MAX_PINS) {
-            return NULL;
+    int numbered = name[0] == 'P' && name[1] >= '1' && name[1] <= '9';
+    if (numbered) {
+        for (const char *p = name + 1; *p != '\0'; p++) {
+            if (*p < '0' || *p > '9' || number > MAX_PINS)
+                return NULL;
+            number = number * 10 + (*p - '0');
         }
-        number = number * 10 + (*p - '0');
+    } else {
+        number = pin_by_name(name);
     }
-    if (number > g_jed.npins || !g_jed.pins[number].named) {
+    if (number < 1 || number > g_jed.nsignals)
         return NULL;
+    if (g_jed.pins[number].alias >= 0) {
+        const jpin_t *pin = &g_jed.pins[g_jed.pins[number].alias];
+        /* An ORDER alias observes the same FF before the pin's polarity
+         * buffer. Translate the expectation; do not create another FF. */
+        *inverted = pin->low ^ (!numbered && g_jed.pins[number].low) ^
+                    (dev_node(pin->node)[5] == 6);
+        return &g_syms[pin->out_sym];
     }
+    if (!numbered || !g_jed.pins[number].named)
+        return NULL;
     *inverted = g_jed.pins[number].low;
     return find_symbol(g_jed.pins[number].name);
 }
@@ -1689,9 +2041,13 @@ void load_jedec_file(const char *jed_name, int source_names)
     read_header_items(design);
     collect_pins();
     scan_arrays();
-    configure_macrocells();
+    if (g_jed.atf)
+        configure_atf();
+    else
+        configure_macrocells();
     name_pins();
-    warn_dead_terms();
+    if (!g_jed.atf)
+        warn_dead_terms();
     build_symbols();
     build_frames();
     define_pld_fields();
@@ -1714,7 +2070,7 @@ void jedec_truth_pins(sim_truth_t *table)
     for (int p = 1; p <= g_jed.npins; p++) {
         const jpin_t *pin = &g_jed.pins[p];
         if (pin->node >= 0) {
-            table->role[p] = dev_node(pin->node)[NODE_TYPE] == NT_REGISTER ?
+            table->role[p] = registered_node(pin->node) ?
                              SIM_PIN_REGISTER : SIM_PIN_OUTPUT;
             table->outputs[table->noutputs++] = (unsigned)p;
         } else if (pin->in_rec >= 0) {
