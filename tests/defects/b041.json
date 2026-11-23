@@ -1,0 +1,265 @@
+{
+  "device": "v2500c",
+  "variants": [
+    {
+      "label": "v2500b pin 4 d implicit clock",
+      "device": "v2500b",
+      "source": "pin 1=clk; pin 2=a; pin 4=q; q.d=a;",
+      "reference": "pin 1=clk; pin 2=a; pin 4=q; q.d=a; q.ck=clk;"
+    },
+    {
+      "label": "v2500b pin 4 t implicit clock",
+      "device": "v2500b",
+      "source": "pin 1=clk; pin 2=a; pin 4=q; q.t=a;",
+      "reference": "pin 1=clk; pin 2=a; pin 4=q; q.t=a; q.ck=clk;"
+    },
+    {
+      "label": "v2500b pinnode 41 d implicit clock",
+      "device": "v2500b",
+      "source": "pin 1=clk; pin 2=a; pinnode 41=q; q.d=a;",
+      "reference": "pin 1=clk; pin 2=a; pinnode 41=q; q.d=a; q.ck=clk;"
+    },
+    {
+      "label": "v2500b pinnode 41 t implicit clock",
+      "device": "v2500b",
+      "source": "pin 1=clk; pin 2=a; pinnode 41=q; q.t=a;",
+      "reference": "pin 1=clk; pin 2=a; pinnode 41=q; q.t=a; q.ck=clk;"
+    },
+    {
+      "label": "v2500b pinnode 65 d implicit clock",
+      "device": "v2500b",
+      "source": "pin 1=clk; pin 2=a; pinnode 65=q; q.d=a;",
+      "reference": "pin 1=clk; pin 2=a; pinnode 65=q; q.d=a; q.ck=clk;"
+    },
+    {
+      "label": "v2500b pinnode 65 t implicit clock",
+      "device": "v2500b",
+      "source": "pin 1=clk; pin 2=a; pinnode 65=q; q.t=a;",
+      "reference": "pin 1=clk; pin 2=a; pinnode 65=q; q.t=a; q.ck=clk;"
+    },
+    {
+      "label": "v2500blcc pin 5 d implicit clock",
+      "device": "v2500blcc",
+      "source": "pin 1=clk; pin 2=a; pin 5=q; q.d=a;",
+      "reference": "pin 1=clk; pin 2=a; pin 5=q; q.d=a; q.ck=clk;"
+    },
+    {
+      "label": "v2500blcc pin 5 t implicit clock",
+      "device": "v2500blcc",
+      "source": "pin 1=clk; pin 2=a; pin 5=q; q.t=a;",
+      "reference": "pin 1=clk; pin 2=a; pin 5=q; q.t=a; q.ck=clk;"
+    },
+    {
+      "label": "v2500blcc pinnode 45 d implicit clock",
+      "device": "v2500blcc",
+      "source": "pin 1=clk; pin 2=a; pinnode 45=q; q.d=a;",
+      "reference": "pin 1=clk; pin 2=a; pinnode 45=q; q.d=a; q.ck=clk;"
+    },
+    {
+      "label": "v2500blcc pinnode 45 t implicit clock",
+      "device": "v2500blcc",
+      "source": "pin 1=clk; pin 2=a; pinnode 45=q; q.t=a;",
+      "reference": "pin 1=clk; pin 2=a; pinnode 45=q; q.t=a; q.ck=clk;"
+    },
+    {
+      "label": "v2500blcc pinnode 69 d implicit clock",
+      "device": "v2500blcc",
+      "source": "pin 1=clk; pin 2=a; pinnode 69=q; q.d=a;",
+      "reference": "pin 1=clk; pin 2=a; pinnode 69=q; q.d=a; q.ck=clk;"
+    },
+    {
+      "label": "v2500blcc pinnode 69 t implicit clock",
+      "device": "v2500blcc",
+      "source": "pin 1=clk; pin 2=a; pinnode 69=q; q.t=a;",
+      "reference": "pin 1=clk; pin 2=a; pinnode 69=q; q.t=a; q.ck=clk;"
+    },
+    {
+      "label": "v2500c pin 4 d implicit clock",
+      "device": "v2500c",
+      "source": "pin 1=clk; pin 2=a; pin 4=q; q.d=a;",
+      "reference": "pin 1=clk; pin 2=a; pin 4=q; q.d=a; q.ck=clk;"
+    },
+    {
+      "label": "v2500c pin 4 t implicit clock",
+      "device": "v2500c",
+      "source": "pin 1=clk; pin 2=a; pin 4=q; q.t=a;",
+      "reference": "pin 1=clk; pin 2=a; pin 4=q; q.t=a; q.ck=clk;"
+    },
+    {
+      "label": "v2500c pinnode 41 d implicit clock",
+      "device": "v2500c",
+      "source": "pin 1=clk; pin 2=a; pinnode 41=q; q.d=a;",
+      "reference": "pin 1=clk; pin 2=a; pinnode 41=q; q.d=a; q.ck=clk;"
+    },
+    {
+      "label": "v2500c pinnode 41 t implicit clock",
+      "device": "v2500c",
+      "source": "pin 1=clk; pin 2=a; pinnode 41=q; q.t=a;",
+      "reference": "pin 1=clk; pin 2=a; pinnode 41=q; q.t=a; q.ck=clk;"
+    },
+    {
+      "label": "v2500c pinnode 65 d implicit clock",
+      "device": "v2500c",
+      "source": "pin 1=clk; pin 2=a; pinnode 65=q; q.d=a;",
+      "reference": "pin 1=clk; pin 2=a; pinnode 65=q; q.d=a; q.ck=clk;"
+    },
+    {
+      "label": "v2500c pinnode 65 t implicit clock",
+      "device": "v2500c",
+      "source": "pin 1=clk; pin 2=a; pinnode 65=q; q.t=a;",
+      "reference": "pin 1=clk; pin 2=a; pinnode 65=q; q.t=a; q.ck=clk;"
+    },
+    {
+      "label": "v2500clcc pin 5 d implicit clock",
+      "device": "v2500clcc",
+      "source": "pin 1=clk; pin 2=a; pin 5=q; q.d=a;",
+      "reference": "pin 1=clk; pin 2=a; pin 5=q; q.d=a; q.ck=clk;"
+    },
+    {
+      "label": "v2500clcc pin 5 t implicit clock",
+      "device": "v2500clcc",
+      "source": "pin 1=clk; pin 2=a; pin 5=q; q.t=a;",
+      "reference": "pin 1=clk; pin 2=a; pin 5=q; q.t=a; q.ck=clk;"
+    },
+    {
+      "label": "v2500clcc pinnode 45 d implicit clock",
+      "device": "v2500clcc",
+      "source": "pin 1=clk; pin 2=a; pinnode 45=q; q.d=a;",
+      "reference": "pin 1=clk; pin 2=a; pinnode 45=q; q.d=a; q.ck=clk;"
+    },
+    {
+      "label": "v2500clcc pinnode 45 t implicit clock",
+      "device": "v2500clcc",
+      "source": "pin 1=clk; pin 2=a; pinnode 45=q; q.t=a;",
+      "reference": "pin 1=clk; pin 2=a; pinnode 45=q; q.t=a; q.ck=clk;"
+    },
+    {
+      "label": "v2500clcc pinnode 69 d implicit clock",
+      "device": "v2500clcc",
+      "source": "pin 1=clk; pin 2=a; pinnode 69=q; q.d=a;",
+      "reference": "pin 1=clk; pin 2=a; pinnode 69=q; q.d=a; q.ck=clk;"
+    },
+    {
+      "label": "v2500clcc pinnode 69 t implicit clock",
+      "device": "v2500clcc",
+      "source": "pin 1=clk; pin 2=a; pinnode 69=q; q.t=a;",
+      "reference": "pin 1=clk; pin 2=a; pinnode 69=q; q.t=a; q.ck=clk;"
+    },
+    {
+      "label": "v2500cppk pin 4 d implicit clock",
+      "device": "v2500cppk",
+      "source": "pin 1=clk; pin 2=a; pin 4=q; q.d=a;",
+      "reference": "pin 1=clk; pin 2=a; pin 4=q; q.d=a; q.ck=clk;"
+    },
+    {
+      "label": "v2500cppk pin 4 t implicit clock",
+      "device": "v2500cppk",
+      "source": "pin 1=clk; pin 2=a; pin 4=q; q.t=a;",
+      "reference": "pin 1=clk; pin 2=a; pin 4=q; q.t=a; q.ck=clk;"
+    },
+    {
+      "label": "v2500cppk pinnode 41 d implicit clock",
+      "device": "v2500cppk",
+      "source": "pin 1=clk; pin 2=a; pinnode 41=q; q.d=a;",
+      "reference": "pin 1=clk; pin 2=a; pinnode 41=q; q.d=a; q.ck=clk;"
+    },
+    {
+      "label": "v2500cppk pinnode 41 t implicit clock",
+      "device": "v2500cppk",
+      "source": "pin 1=clk; pin 2=a; pinnode 41=q; q.t=a;",
+      "reference": "pin 1=clk; pin 2=a; pinnode 41=q; q.t=a; q.ck=clk;"
+    },
+    {
+      "label": "v2500cppk pinnode 65 d implicit clock",
+      "device": "v2500cppk",
+      "source": "pin 1=clk; pin 2=a; pinnode 65=q; q.d=a;",
+      "reference": "pin 1=clk; pin 2=a; pinnode 65=q; q.d=a; q.ck=clk;"
+    },
+    {
+      "label": "v2500cppk pinnode 65 t implicit clock",
+      "device": "v2500cppk",
+      "source": "pin 1=clk; pin 2=a; pinnode 65=q; q.t=a;",
+      "reference": "pin 1=clk; pin 2=a; pinnode 65=q; q.t=a; q.ck=clk;"
+    },
+    {
+      "label": "v2500cppklcc pin 5 d implicit clock",
+      "device": "v2500cppklcc",
+      "source": "pin 1=clk; pin 2=a; pin 5=q; q.d=a;",
+      "reference": "pin 1=clk; pin 2=a; pin 5=q; q.d=a; q.ck=clk;"
+    },
+    {
+      "label": "v2500cppklcc pin 5 t implicit clock",
+      "device": "v2500cppklcc",
+      "source": "pin 1=clk; pin 2=a; pin 5=q; q.t=a;",
+      "reference": "pin 1=clk; pin 2=a; pin 5=q; q.t=a; q.ck=clk;"
+    },
+    {
+      "label": "v2500cppklcc pinnode 45 d implicit clock",
+      "device": "v2500cppklcc",
+      "source": "pin 1=clk; pin 2=a; pinnode 45=q; q.d=a;",
+      "reference": "pin 1=clk; pin 2=a; pinnode 45=q; q.d=a; q.ck=clk;"
+    },
+    {
+      "label": "v2500cppklcc pinnode 45 t implicit clock",
+      "device": "v2500cppklcc",
+      "source": "pin 1=clk; pin 2=a; pinnode 45=q; q.t=a;",
+      "reference": "pin 1=clk; pin 2=a; pinnode 45=q; q.t=a; q.ck=clk;"
+    },
+    {
+      "label": "v2500cppklcc pinnode 69 d implicit clock",
+      "device": "v2500cppklcc",
+      "source": "pin 1=clk; pin 2=a; pinnode 69=q; q.d=a;",
+      "reference": "pin 1=clk; pin 2=a; pinnode 69=q; q.d=a; q.ck=clk;"
+    },
+    {
+      "label": "v2500cppklcc pinnode 69 t implicit clock",
+      "device": "v2500cppklcc",
+      "source": "pin 1=clk; pin 2=a; pinnode 69=q; q.t=a;",
+      "reference": "pin 1=clk; pin 2=a; pinnode 69=q; q.t=a; q.ck=clk;"
+    },
+    {
+      "label": "v2500c explicit ck 0",
+      "device": "v2500c",
+      "source": "pin 1=clk; pin 2=a; pin 4=q; q.d=a; q.ck='b'0;",
+      "fuses": {
+        "70692": 0,
+        "70700": 0,
+        "70863": 0,
+        "71743": 0
+      }
+    },
+    {
+      "label": "v2500c explicit ck 1",
+      "device": "v2500c",
+      "source": "pin 1=clk; pin 2=a; pin 4=q; q.d=a; q.ck='b'1;",
+      "fuses": {
+        "70692": 1,
+        "70700": 1,
+        "70863": 1,
+        "71743": 0
+      }
+    },
+    {
+      "label": "v2500c explicit ce 0",
+      "device": "v2500c",
+      "source": "pin 1=clk; pin 2=a; pin 4=q; q.d=a; q.ce='b'0;",
+      "fuses": {
+        "70692": 0,
+        "70700": 0,
+        "70863": 0,
+        "71743": 1
+      }
+    },
+    {
+      "label": "v2500c explicit ce 1",
+      "device": "v2500c",
+      "source": "pin 1=clk; pin 2=a; pin 4=q; q.d=a; q.ce='b'1;",
+      "fuses": {
+        "70692": 1,
+        "70700": 1,
+        "70863": 1,
+        "71743": 1
+      }
+    }
+  ]
+}
