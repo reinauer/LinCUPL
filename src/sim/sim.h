@@ -479,6 +479,7 @@ typedef struct order {
     int16_t sym_index;
     sym_t *sym;
     uint8_t positive;       /* listed with the polarity it was declared with */
+    uint8_t node_level;     /* observe a register alias before the pin buffer */
     int16_t result;         /* value token computed by the simulation */
     int16_t value;          /* value token given in the test vector */
     int16_t width;          /* columns of the field starting here (1 for a single name) */
@@ -579,10 +580,10 @@ void jedec_truth_pins(sim_truth_t *table);
 int build_truth_table(unsigned max_inputs, sim_truth_t *table, char *error, size_t error_size);
 /* After sim_allocate(): an output enable pin that no vector drives enables. */
 void jedec_design_bound(void);
-/* The symbol an ORDER name "P<n>" stands for when the pin has another name
- * (from the .pld file), NULL if it is no such name; *inverted is set if
- * that name is declared active low, so that P<n> is the level of the pin. */
-sym_t *jedec_pin_symbol(const char *name, int *inverted);
+/* Resolve numbered pins and register aliases in ORDER. Set *inverted for
+ * declared polarity and *node_level when observing a shared register before
+ * its output buffer. Return NULL if the name cannot be resolved. */
+sym_t *jedec_pin_symbol(const char *name, int *inverted, int *node_level);
 void close_abs_file(void);
 void build_fields(void);            /* define the FIELDs of the .abs file */
 void sim_reset(void);               /* initial state of the simulation core */

@@ -1971,7 +1971,7 @@ void jedec_design_bound(void)
     }
 }
 
-sym_t *jedec_pin_symbol(const char *name, int *inverted)
+sym_t *jedec_pin_symbol(const char *name, int *inverted, int *node_level)
 {
     int number = 0;
     int numbered = name[0] == 'P' && name[1] >= '1' && name[1] <= '9';
@@ -1988,10 +1988,10 @@ sym_t *jedec_pin_symbol(const char *name, int *inverted)
         return NULL;
     if (g_jed.pins[number].alias >= 0) {
         const jpin_t *pin = &g_jed.pins[g_jed.pins[number].alias];
-        /* An ORDER alias observes the same FF before the pin's polarity
-         * buffer. Translate the expectation; do not create another FF. */
-        *inverted = pin->low ^ (!numbered && g_jed.pins[number].low) ^
-                    (dev_node(pin->node)[5] == 6);
+        /* Read the shared FF before polarity and OE. Inverting the pin's
+         * result is insufficient: a disabled pin reports Z, not Q. */
+        *node_level = 1;
+        *inverted = pin->low ^ (!numbered && g_jed.pins[number].low);
         return &g_syms[pin->out_sym];
     }
     if (!numbered || !g_jed.pins[number].named)
