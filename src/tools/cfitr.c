@@ -10,13 +10,13 @@
  * did not exit normally.  The exit status of cfitr is the same value.
  */
 
+#include "platform.h"
 #include "runfit.h"
 
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <strings.h>
 
 /* Runs prog with params and waits for it.  The name is tried as given
  * (a name without a directory first in the current directory, then in
@@ -53,6 +53,7 @@ static int32_t run_child(const char *prog, char **params) {
 }
 
 int main(int argc, char **argv) {
+    lincupl_init_file_mode();
     if (argc < 3) {
         return 1;
     }

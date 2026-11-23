@@ -3,6 +3,7 @@
  *
  * Read-only inspection of JEDEC fuse maps using the shared reader.
  */
+#include "platform.h"
 #include "jedread.h"
 #include "locate.h"
 
@@ -83,6 +84,7 @@ static void design_text(const char *text)
 
 int main(int argc, char **argv)
 {
+    lincupl_init_file_mode();
     const char *path = NULL, *other = NULL;
     unsigned long first = 0, count = 0, limit = 64, ones = 0, differences = 0;
     int json = 0, range = 0, options = 1, result = 2;

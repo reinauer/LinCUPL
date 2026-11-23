@@ -25,6 +25,7 @@
 #ifndef _DARWIN_C_SOURCE
 #define _DARWIN_C_SOURCE
 #endif
+#include "platform.h"
 #include <limits.h>
 #include <setjmp.h>
 #include <stdarg.h>
@@ -32,8 +33,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <strings.h>
-#include <unistd.h>
 #include "locate.h"
 #include "ascii.h"
 #include "strutil.h"

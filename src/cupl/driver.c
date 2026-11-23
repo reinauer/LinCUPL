@@ -7,6 +7,7 @@
  * fitter, simulate) and removes their temporary files.
  */
 
+#include "platform.h"
 #include "banner.h"
 #include "locate.h"
 #include "runfit.h"
@@ -21,9 +22,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <strings.h>
 #include <time.h>
-#include <unistd.h>
 
 /* Phase table entry: active (0 off, 1 on, 2 end of table), initial value of
  * active, phase name, extra flags passed to the phase, phase id */

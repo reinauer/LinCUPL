@@ -11,6 +11,7 @@
  * backpin cannot handle leaves the design unchanged.
  */
 
+#include "platform.h"
 #include "banner.h"
 #include "devlib.h"
 #include "locate.h"
@@ -22,10 +23,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <strings.h>
 #include <sys/stat.h>
 
 #if defined(_WIN32)
+#include <windows.h>
 #include <io.h>
 #define access_check _access
 #ifndef R_OK
@@ -35,7 +36,6 @@
 #define W_OK 2
 #endif
 #else
-#include <unistd.h>
 #define access_check access
 #endif
 
@@ -602,15 +602,28 @@ static char *resolve_existing_filepath(const char *dir, const char *src, const c
 /* Is path the file open as fp?  (A -b name that is the source itself would
  * empty it when the backup is created.) */
 static int same_file(FILE *fp, const char *path) {
-    struct stat a, b;
     char resolved[PATH_MAX];
     if (lincupl_resolve_ci_path(path, resolved, sizeof(resolved)) == 0) {
         path = resolved;
     }
+#ifdef _WIN32
+    BY_HANDLE_FILE_INFORMATION a, b;
+    HANDLE other = CreateFileA(path, FILE_READ_ATTRIBUTES,
+                              FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
+                              NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+    if (other == INVALID_HANDLE_VALUE) return 0;
+    int ok = GetFileInformationByHandle((HANDLE)_get_osfhandle(fileno(fp)), &a) &&
+             GetFileInformationByHandle(other, &b);
+    CloseHandle(other);
+    return ok && a.dwVolumeSerialNumber == b.dwVolumeSerialNumber &&
+           a.nFileIndexHigh == b.nFileIndexHigh && a.nFileIndexLow == b.nFileIndexLow;
+#else
+    struct stat a, b;
     if (fstat(fileno(fp), &a) != 0 || stat(path, &b) != 0) {
         return 0;
     }
     return a.st_dev == b.st_dev && a.st_ino == b.st_ino;
+#endif
 }
 
 /* The backup is the file named with -b, or else <source>.bak. */
@@ -1089,6 +1102,7 @@ static void process_file(void) {
 }
 
 int main(int argc, char **argv) {
+    lincupl_init_file_mode();
     g_had_error = 0;
     if (parse_args(argv, argc) == 0) {
         print_usage();

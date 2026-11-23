@@ -16,15 +16,18 @@
 #endif
 #endif
 
+#include "platform.h"
 #include "locate.h"
 
+#ifdef _WIN32
+#include <windows.h>
+#else
 #include <dirent.h>
+#endif
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
-#include <strings.h>
 #include <sys/stat.h>
-#include <unistd.h>
 
 #ifdef __APPLE__
 #include <mach-o/dyld.h>
@@ -67,8 +70,10 @@ int lincupl_is_dir(const char *path) {
  */
 int lincupl_resolve_ci_path(const char *raw_path, char *resolved, size_t resolved_sz) {
     char norm[PATH_MAX];
+#ifndef _WIN32
     char cur[PATH_MAX];
     const char *p;
+#endif
 
     if (!resolved || resolved_sz == 0) return -1;
     if (!raw_path || !raw_path[0]) {
@@ -82,6 +87,7 @@ int lincupl_resolve_ci_path(const char *raw_path, char *resolved, size_t resolve
         return 0;
     }
 
+#ifndef _WIN32
     p = norm;
     if (*p == '/') {
         strcpy(cur, "/");
@@ -152,6 +158,7 @@ int lincupl_resolve_ci_path(const char *raw_path, char *resolved, size_t resolve
         snprintf(resolved, resolved_sz, "%s", cur);
         return 0;
     }
+#endif
     snprintf(resolved, resolved_sz, "%s", norm);
     return -1;
 }
@@ -210,7 +217,7 @@ FILE *lincupl_fopen_ci(const char *raw_path, const char *raw_mode) {
     return fp;
 }
 
-/* Determine directory containing the running executable on macOS and Linux. */
+/* Determine directory containing the running executable on the host system. */
 int lincupl_get_exe_dir(char *dir_out, size_t dir_sz) {
     char raw_exe[PATH_MAX];
     char real_exe[PATH_MAX];
@@ -220,7 +227,15 @@ int lincupl_get_exe_dir(char *dir_out, size_t dir_sz) {
     if (!dir_out || dir_sz == 0) return 0;
     dir_out[0] = '\0';
 
-#if defined(__APPLE__)
+#if defined(_WIN32)
+    {
+        DWORD n = GetModuleFileNameA(NULL, raw_exe, sizeof(raw_exe));
+        if (n > 0 && n < sizeof(raw_exe)) {
+            lincupl_normalize_slashes(raw_exe, real_exe, sizeof(real_exe));
+            use_path = real_exe;
+        }
+    }
+#elif defined(__APPLE__)
     {
         uint32_t sz = (uint32_t)sizeof(raw_exe);
         if (_NSGetExecutablePath(raw_exe, &sz) == 0) {
@@ -313,7 +328,7 @@ int lincupl_resolve_explicit_dl(const char *raw_lib, char *out, size_t out_sz) {
 }
 
 /*
- * Locate the default CUPL device library (.dl) portably across macOS & Linux:
+ * Locate the default CUPL device library (.dl) on the host system:
  *   1. LIBCUPL environment variable (file path or directory)
  *   2. LINCUPL_SHARE environment variable (directory or file path)
  *   3. Relative to executable path (../share/lincupl, share/lincupl,
@@ -451,6 +466,7 @@ int lincupl_enter_long_source_dir(
     if (!slash || slash[1] == '\0' || strlen(norm_src) < 80) return 0;
 
     if (!getcwd(saved_cwd, saved_cwd_sz)) return 0;
+    lincupl_normalize_slashes(saved_cwd, saved_cwd, saved_cwd_sz);
 
     dlen = (size_t)(slash - norm_src);
     if (dlen == 0) {
@@ -469,8 +485,12 @@ int lincupl_enter_long_source_dir(
         char res_lib[PATH_MAX];
         char real_lib[PATH_MAX];
         lincupl_resolve_ci_path(*lib_io, res_lib, sizeof(res_lib));
+#ifdef _WIN32
+        if (_fullpath(real_lib, res_lib, sizeof(real_lib)) != NULL) {
+#else
         if (realpath(res_lib, real_lib) != NULL) {
-            snprintf(abs_lib_buf, abs_lib_sz, "%s", real_lib);
+#endif
+            lincupl_normalize_slashes(real_lib, abs_lib_buf, abs_lib_sz);
         } else if (res_lib[0] == '/') {
             snprintf(abs_lib_buf, abs_lib_sz, "%s", res_lib);
         } else {
@@ -482,7 +502,11 @@ int lincupl_enter_long_source_dir(
     if (work_io && *work_io && strcmp(*work_io, "&") != 0 && abs_work_buf && abs_work_sz > 0) {
         char norm_w[PATH_MAX];
         lincupl_normalize_slashes(*work_io, norm_w, sizeof(norm_w));
-        if (norm_w[0] == '/') {
+        if (norm_w[0] == '/'
+#ifdef _WIN32
+            || (norm_w[0] && norm_w[1] == ':' && norm_w[2] == '/')
+#endif
+        ) {
             snprintf(abs_work_buf, abs_work_sz, "%s", norm_w);
         } else {
             lincupl_join_cwd_path(saved_cwd, norm_w, 1, abs_work_buf, abs_work_sz);

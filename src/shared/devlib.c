@@ -1,8 +1,8 @@
 /*
  * devlib.c - reading the device libraries (.dl), see devlib.h.
  */
+#include "platform.h"
 #include <string.h>
-#include <strings.h>
 #include "devlib.h"
 
 int dl_read_header(FILE *fp, uint8_t *header)

@@ -133,10 +133,70 @@ jobs:
       - name: Run full regressions
         run: ctest --test-dir build --output-on-failure --no-tests=error
 
+  windows:
+    name: windows-x86_64 (MSVC)
+    runs-on: windows-2022
+    timeout-minutes: 30
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v7
+
+      - name: Install Qt for MSVC
+        run: |
+          $PSNativeCommandUseErrorActionPreference = $true
+          python -m pip install aqtinstall==3.3.0
+          python -m aqt install-qt windows desktop 6.8.3 win64_msvc2022_64 --outputdir "$env:RUNNER_TEMP/Qt" --archives qtbase qttools qtsvg
+          $qt = "$env:RUNNER_TEMP/Qt/6.8.3/msvc2022_64"
+          "QT_ROOT=$qt" >> $env:GITHUB_ENV
+          "$qt/bin" >> $env:GITHUB_PATH
+
+      - name: Configure native Windows build
+        run: >-
+          cmake -S . -B build -G "Visual Studio 17 2022" -A x64
+          -DCMAKE_PREFIX_PATH="$env:QT_ROOT"
+          -DLINCUPL_BUILD_GUI=ON
+
+      - name: Build
+        run: cmake --build build --config Release --parallel 3
+
+      - name: Stage installation before downloading device data
+        run: cmake --install build --config Release --prefix "$PWD/package/stage"
+
+      - name: Download and verify device data
+        run: python wincupl-extract-data
+
+      - name: Enable full regressions
+        run: |
+          $PSNativeCommandUseErrorActionPreference = $true
+          cmake -S . -B build -DLINCUPL_REQUIRE_TEST_DATA=ON
+          cmake --build build --config Release --parallel 3
+
+      - name: Run full regressions
+        run: ctest --test-dir build -C Release --output-on-failure --no-tests=error
+
+      - name: Package executables and runtime libraries
+        run: |
+          $PSNativeCommandUseErrorActionPreference = $true
+          python -m aqt install-src windows 6.8.3 --archives qtbase qttools qtsvg --outputdir "$env:RUNNER_TEMP/QtSources"
+          ./cmake/package-windows.ps1
+
+      - name: Test the packaged applications
+        run: python tests/windows_package.py "$env:WINDOWS_ARCHIVE" build/share/lincupl
+
+      - name: Upload binary archive
+        uses: actions/upload-artifact@v7
+        with:
+          name: lincupl-windows-x86_64
+          path: dist/*.zip
+          if-no-files-found: error
+
   release:
     name: Publish tagged binaries
     if: startsWith(github.ref, 'refs/tags/v')
-    needs: [build, regression]
+    needs: [build, regression, windows]
     runs-on: ubuntu-24.04
     permissions:
       contents: write
@@ -152,18 +212,20 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          archives=(dist/lincupl-*.tar.gz)
-          if [[ ${#archives[@]} -ne 2 ]]; then
-            echo "Expected Linux and macOS archives" >&2
+          shopt -s nullglob
+          archives=(dist/lincupl-*.tar.gz dist/lincupl-*.zip)
+          if [[ ${#archives[@]} -ne 3 ]]; then
+            echo "Expected Linux, macOS and Windows archives" >&2
             exit 1
           fi
-          (cd dist && sha256sum lincupl-*.tar.gz > SHA256SUMS)
+          (cd dist && sha256sum lincupl-*.tar.gz lincupl-*.zip > SHA256SUMS)
 
       - name: Publish release
         uses: softprops/action-gh-release@v3
         with:
           files: |
             dist/lincupl-*.tar.gz
+            dist/lincupl-*.zip
             dist/SHA256SUMS
           fail_on_unmatched_files: true
           generate_release_notes: true

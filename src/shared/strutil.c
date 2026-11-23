@@ -1,11 +1,11 @@
 /*
  * strutil.c - string and file name helpers (see strutil.h)
  */
+#include "platform.h"
 #include "strutil.h"
 
 #include <stdio.h>
 #include <string.h>
-#include <strings.h>
 
 size_t lincupl_strcpy_trunc(char *dst, size_t size, const char *src)
 {

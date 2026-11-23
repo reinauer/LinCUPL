@@ -7,6 +7,7 @@
  * argument vector it expects.  With -f the design is the fuse map of a
  * JEDEC file, which csima simulates.
  */
+#include "platform.h"
 #include "banner.h"
 #include "locate.h"
 #include "strutil.h"
@@ -21,9 +22,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <strings.h>
 #include <time.h>
-#include <unistd.h>
 
 /* Phase table; active 2 ends the table. */
 struct sim_phase {

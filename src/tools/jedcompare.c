@@ -3,6 +3,7 @@
  *
  * Compare physical pin behavior using exhaustive csim truth tables.
  */
+#include "platform.h"
 #include "sim_truth.h"
 #include "locate.h"
 
@@ -78,6 +79,7 @@ static int compare(const sim_truth_t *a, const sim_truth_t *b, unsigned max_inpu
 
 int main(int argc, char **argv)
 {
+    lincupl_init_file_mode();
     const char *paths[2] = {NULL, NULL}, *device = "", *lib_arg = NULL;
     char library[PATH_MAX], device_name[28], error[256];
     sim_truth_t tables[2] = {0};

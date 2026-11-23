@@ -18,6 +18,7 @@
  * atmel.std is searched for; the temporary log is created in the system's
  * temporary directory.
  */
+#include "platform.h"
 #include "banner.h"
 #include "locate.h"
 
@@ -25,7 +26,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <unistd.h>
 
 #include "base_int.h"
 #include "dev.h"
@@ -123,8 +123,17 @@ static int main_init_paths(void)
     util_str_append(&g_lib_prefix, "/");
     util_str_append(&g_dir_copy_3, "/");
     util_str_append(&g_dir_copy_4, "/");
+#ifdef _WIN32
+    if (tmp == NULL || tmp[0] == '\0')
+        tmp = getenv("TEMP");
+    if (tmp == NULL || tmp[0] == '\0')
+        tmp = getenv("TMP");
+    if (tmp == NULL || tmp[0] == '\0')
+        tmp = ".";
+#else
     if (tmp == NULL || tmp[0] == '\0')
         tmp = "/tmp";
+#endif
     snprintf(prefix, sizeof(prefix), "%s/fit150x.%ld.", tmp, (long)getpid());
     g_tmp_prefix = util_strdup(prefix);
     return 0;
@@ -1949,5 +1958,6 @@ int fit150x_main(int argc, char **argv)
 
 int main(int argc, char **argv)
 {
+    lincupl_init_file_mode();
     return fit150x_main(argc, argv);
 }

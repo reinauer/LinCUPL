@@ -47,7 +47,7 @@ int lincupl_resolve_ci_path(const char *raw_path, char *resolved, size_t resolve
  */
 FILE *lincupl_fopen_ci(const char *raw_path, const char *raw_mode);
 
-/* Directory containing the running executable (macOS and Linux); 0 if it
+/* Directory containing the running executable; 0 if it
  * cannot be determined. */
 int lincupl_get_exe_dir(char *dir_out, size_t dir_sz);
 
@@ -61,7 +61,7 @@ int lincupl_get_exe_dir(char *dir_out, size_t dir_sz);
 int lincupl_resolve_explicit_dl(const char *raw_lib, char *out, size_t out_sz);
 
 /*
- * Locate the default CUPL device library (.dl) portably across macOS & Linux:
+ * Locate the default CUPL device library (.dl) on the host system:
  *   1. LIBCUPL environment variable (file path or directory)
  *   2. LINCUPL_SHARE environment variable (directory or file path)
  *   3. Relative to executable path (../share/lincupl, share/lincupl,

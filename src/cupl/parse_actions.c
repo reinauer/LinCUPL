@@ -15,13 +15,13 @@
 #ifndef _DARWIN_C_SOURCE
 #define _DARWIN_C_SOURCE
 #endif
+#include "platform.h"
 #include <limits.h>
 #include <stdarg.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <strings.h>
 #include "parse_int.h"
 #include "strutil.h"
 
