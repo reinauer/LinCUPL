@@ -1,8 +1,8 @@
 # LinCUPL
 
-LinCUPL is a CUPL toolchain for programmable logic on Linux and macOS. It
-compiles CUPL designs (`.pld`) into JEDEC fuse maps for PAL, GAL and other
-SPLDs, the ATF750 and ATF2500, and the ATF1502/1504/1508 CPLDs. It also
+LinCUPL is a CUPL toolchain for programmable logic on Linux, macOS and
+Windows. It compiles CUPL designs (`.pld`) into JEDEC fuse maps for PAL, GAL
+and other SPLDs, the ATF750 and ATF2500, and the ATF1502/1504/1508 CPLDs. It also
 simulates them against test vectors (`.si`). It comes with an IDE and a
 waveform editor.
 
@@ -33,6 +33,9 @@ Amiga 3000/4000, built for a GAL22V10):
 | `linsim` | Waveform viewer and test-vector editor for `.si`/`.wo` files (Qt 6) |
 
 ## Building
+
+For native Windows binaries and MSVC build instructions, see
+[Windows](doc/windows.md). The commands below are for Linux and macOS.
 
 You need:
 

@@ -6,6 +6,7 @@
  * a build file that copies devices out of existing libraries.
  */
 
+#include "platform.h"
 #include "banner.h"
 #include "devlib.h"
 #include "locate.h"
@@ -16,7 +17,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <unistd.h>
 
 /* -------------------------------------------------------------------------
  * Section headers of a device image (the file layout is in devlib.h)
@@ -1281,6 +1281,7 @@ static void resolve_default_lib(void) {
 }
 
 int main(int argc, char **argv) {
+    lincupl_init_file_mode();
     init_globals();
 
     printf("%s %s cbld: CUPL Device Library Management Program\n%s\n",

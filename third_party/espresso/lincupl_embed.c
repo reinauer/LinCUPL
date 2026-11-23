@@ -38,7 +38,16 @@
 #include "espresso/sminterf.c"
 #include "espresso/solution.c"
 #include "espresso/sparse.c"
+#ifdef _MSC_VER
+/* The CRT uses this old Espresso variable name as a restrict macro. */
+#pragma push_macro("_restrict")
+#undef _restrict
+#define _restrict lincupl_restricted_set
+#endif
 #include "espresso/unate.c"
+#ifdef _MSC_VER
+#pragma pop_macro("_restrict")
+#endif
 
 /* From here on the C library is meant again. */
 #undef malloc
@@ -51,7 +60,12 @@
 typedef struct block_header {
     struct block_header *prev;
     struct block_header *next;
+#ifdef _MSC_VER
+    /* MSVC's C headers omit max_align_t; double has the scalar alignment. */
+    double align;
+#else
     max_align_t align;
+#endif
 } block_header_t;
 
 #define TICK_INTERVAL 256           /* allocations between two tick calls */

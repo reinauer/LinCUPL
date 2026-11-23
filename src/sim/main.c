@@ -5,6 +5,7 @@
  * prints the usage or the "no library" message when it is not usable and
  * otherwise runs the simulator driver (csim_driver_run).
  */
+#include "platform.h"
 #include "cupl_phases.h"
 
 #include <stdio.h>
@@ -23,6 +24,7 @@ static void csim_usage(void) {
 }
 
 int main(int argc, char **argv) {
+    lincupl_init_file_mode();
     static struct csim_options opt;
 
     switch (csim_parse_options(argc, argv, &opt)) {

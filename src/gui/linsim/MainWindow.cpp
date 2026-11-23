@@ -226,7 +226,12 @@ QString MainWindow::documentDisplayName() const {
     return doc_.header.name.isEmpty() ? QStringLiteral("Untitled") : doc_.header.name;
 }
 
-QString MainWindow::findCliBinary(const QString &name) {
+QString MainWindow::findCliBinary(const QString &toolName) {
+#ifdef Q_OS_WIN
+    const QString name = toolName + QStringLiteral(".exe");
+#else
+    const QString name = toolName;
+#endif
     const QString appDir = QCoreApplication::applicationDirPath();
     QStringList candidates = {
         QDir(appDir).filePath(name),

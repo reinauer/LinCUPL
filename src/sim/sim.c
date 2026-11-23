@@ -21,10 +21,10 @@
  * Fixed-size buffers are bounds-checked.  Status messages go to stdout.
  */
 #define SIM_DEFINE_GLOBALS
+#include "platform.h"
 #include "banner.h"
 #include "sim.h"
 #include <time.h>
-#include <unistd.h>
 #include "locate.h"
 #include "strutil.h"
 

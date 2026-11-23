@@ -21,11 +21,11 @@
 #ifndef FIT150X_BASE_H
 #define FIT150X_BASE_H
 
+#include "platform.h"
 #include <setjmp.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <stdio.h>
-#include <strings.h>
 
 #include "fit_types.h"
 #include "strutil.h"

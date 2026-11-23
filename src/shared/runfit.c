@@ -13,6 +13,7 @@
 #endif
 #endif
 
+#include "platform.h"
 #include "runfit.h"
 #include "locate.h"
 
@@ -22,18 +23,30 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/types.h>
+#ifdef _WIN32
+#include <windows.h>
+#else
 #include <sys/wait.h>
-#include <unistd.h>
+#endif
+
+static int executable_file(const char *path)
+{
+#ifdef _WIN32
+    return lincupl_is_reg_file(path);
+#else
+    return access(path, X_OK) == 0 && !lincupl_is_dir(path);
+#endif
+}
 
 int runfit_find_in_path(const char *name, char *out, size_t out_sz)
 {
     const char *path = getenv("PATH");
     while (path != NULL && *path != '\0') {
-        const char *end = strchr(path, ':');
+        const char *end = strchr(path, LINCUPL_PATH_SEPARATOR);
         size_t len = end ? (size_t)(end - path) : strlen(path);
-        if (len > 0 && len + strlen(name) + 2 < out_sz) {
-            snprintf(out, out_sz, "%.*s/%s", (int)len, path, name);
-            if (access(out, X_OK) == 0 && !lincupl_is_dir(out)) {
+        if (len > 0 && len + strlen(name) + sizeof(LINCUPL_EXE_SUFFIX) + 1 < out_sz) {
+            snprintf(out, out_sz, "%.*s/%s%s", (int)len, path, name, LINCUPL_EXE_SUFFIX);
+            if (executable_file(out)) {
                 return 1;
             }
         }
@@ -48,8 +61,8 @@ int runfit_find_fitter(const char *name, const char *lib_path, char *out, size_t
     char cand[PATH_MAX + 512];
 
     if (lincupl_get_exe_dir(dir, sizeof(dir))) {
-        snprintf(cand, sizeof(cand), "%s/%s", dir, name);
-        if (access(cand, X_OK) == 0 && !lincupl_is_dir(cand)) {
+        snprintf(cand, sizeof(cand), "%s/%s%s", dir, name, LINCUPL_EXE_SUFFIX);
+        if (executable_file(cand)) {
             snprintf(out, out_sz, "%s", cand);
             return 1;
         }
@@ -86,13 +99,114 @@ int runfit_find_fitter(const char *name, const char *lib_path, char *out, size_t
                 break;
             }
             if (lincupl_resolve_ci_path(cand, out, out_sz) == 0 && !lincupl_is_dir(out)) {
+#ifdef _WIN32
+                return 1;
+#else
                 return 2;
+#endif
             }
         }
     }
     return 0;
 }
 
+#ifdef _WIN32
+/* Quote each argument using the Windows C runtime's backslash/quote rules. */
+static char *command_line(char *const argv[])
+{
+    size_t capacity = 1;
+    for (size_t i = 0; argv[i]; i++) {
+        size_t n = strlen(argv[i]);
+        if (n > 32767 || capacity + 2 * n + 3 > 32767)
+            return NULL;
+        capacity += 2 * n + 3;
+    }
+    char *line = malloc(capacity);
+    if (!line) return NULL;
+    char *out = line;
+    for (size_t i = 0; argv[i]; i++) {
+        const char *p = argv[i];
+        if (i) *out++ = ' ';
+        *out++ = '"';
+        for (;;) {
+            size_t slashes = 0;
+            while (*p == '\\') { slashes++; p++; }
+            if (*p == '"' || *p == '\0') slashes *= 2;
+            while (slashes--) *out++ = '\\';
+            if (*p == '\0') break;
+            if (*p == '"') *out++ = '\\';
+            *out++ = *p++;
+        }
+        *out++ = '"';
+    }
+    *out = '\0';
+    return line;
+}
+
+/* Copy the inherited environment, inserting FITTERDIR in name order. */
+static char *fitter_environment(const char *directory)
+{
+    char *inherited = GetEnvironmentStringsA();
+    if (!inherited) return NULL;
+    size_t size = strlen(directory) + sizeof("FITTERDIR=") + 1;
+    for (const char *p = inherited; *p; p += strlen(p) + 1)
+        size += strlen(p) + 1;
+    char *env = malloc(size);
+    if (env) {
+        char *out = env;
+        int inserted = 0;
+        for (const char *p = inherited; *p; p += strlen(p) + 1) {
+            if (!inserted && strcasecmp(p, "FITTERDIR=") > 0) {
+                out += sprintf(out, "FITTERDIR=%s", directory) + 1;
+                inserted = 1;
+            }
+            size_t n = strlen(p) + 1;
+            memcpy(out, p, n);
+            out += n;
+        }
+        if (!inserted) out += sprintf(out, "FITTERDIR=%s", directory) + 1;
+        *out = '\0';
+    }
+    FreeEnvironmentStringsA(inherited);
+    return env;
+}
+
+int runfit_spawn(const char *const *progs, char *const argv[], const char *fitter_dir)
+{
+    char *env = NULL;
+    int result = RUNFIT_NOT_STARTED;
+    if (fitter_dir && !getenv("FITTERDIR")) {
+        env = fitter_environment(fitter_dir);
+        if (!env) return result;
+    }
+    for (size_t i = 0; progs[i]; i++) {
+        STARTUPINFOA startup = {0};
+        PROCESS_INFORMATION process;
+        char program[PATH_MAX];
+        DWORD length = SearchPathA(NULL, progs[i], ".exe",
+                                   sizeof(program), program, NULL);
+        if (!length || length >= sizeof(program)) continue;
+        char *line = command_line(argv);
+        if (!line) break;
+        startup.cb = sizeof(startup);
+        BOOL started = CreateProcessA(program, line, NULL, NULL, TRUE,
+                                      0, env, NULL, &startup, &process);
+        free(line);
+        if (!started) continue;
+        DWORD status;
+        if (WaitForSingleObject(process.hProcess, INFINITE) != WAIT_OBJECT_0 ||
+            !GetExitCodeProcess(process.hProcess, &status) || status > INT_MAX)
+            result = RUNFIT_ABNORMAL;
+        else
+            result = (int)status;
+        CloseHandle(process.hThread);
+        CloseHandle(process.hProcess);
+        break;
+    }
+    free(env);
+    return result;
+}
+#else
 int runfit_spawn(const char *const *progs, char *const argv[], const char *fitter_dir)
 {
     /* the child reports a failed exec through this pipe; a successful exec
@@ -141,3 +255,5 @@ int runfit_spawn(const char *const *progs, char *const argv[], const char *fitte
     }
     return WEXITSTATUS(status);
 }
+
+#endif

@@ -10,13 +10,13 @@
  * slashes and existing files are found whatever the case of their name.
  * Bytes >= 0x80 belong to no character class.
  */
+#include "platform.h"
 #include "locate.h"
 
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <strings.h>
 #include <time.h>
 
 #include "ascii.h"

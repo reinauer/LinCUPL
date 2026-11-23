@@ -8,14 +8,13 @@
 #define _POSIX_C_SOURCE 200809L
 #endif
 
+#include "platform.h"
 #include "phase.h"
 #include "locate.h"
 #include "strutil.h"
 
 #include <stdlib.h>
 #include <string.h>
-#include <strings.h>
-#include <unistd.h>
 
 #define PHASE_TEXT_MAX 2048
 

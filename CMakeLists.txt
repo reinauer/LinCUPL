@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.16)
 
 project(lincupl
     VERSION 6.0
-    DESCRIPTION "Native Linux/macOS CUPL compiler, simulator and ATF150x fitters"
+    DESCRIPTION "Native CUPL compiler, simulator and ATF150x fitters"
     LANGUAGES C
 )
 
@@ -21,6 +21,11 @@ option(LINCUPL_REQUIRE_TEST_DATA "Require Python regression tests and fail when 
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_C_EXTENSIONS ON)
+
+if(MSVC)
+    add_compile_definitions(_CRT_SECURE_NO_WARNINGS _CRT_NONSTDC_NO_WARNINGS)
+    add_compile_options(/utf-8)
+endif()
 
 if(UNIX AND NOT APPLE)
     add_compile_definitions(_DEFAULT_SOURCE)
@@ -187,7 +192,10 @@ target_link_libraries(fit150x_objects PRIVATE lincupl_shared)
 set(LINCUPL_FIT150X_PROGRAMS fit1502 fit1504 fit1508)
 foreach(_fit IN LISTS LINCUPL_FIT150X_PROGRAMS)
     add_executable(${_fit} $<TARGET_OBJECTS:fit150x_objects>)
-    target_link_libraries(${_fit} PRIVATE lincupl_shared m)
+    target_link_libraries(${_fit} PRIVATE lincupl_shared)
+    if(NOT WIN32)
+        target_link_libraries(${_fit} PRIVATE m)
+    endif()
 endforeach()
 
 # ------------------------------------------------------------------------------
@@ -261,6 +269,7 @@ if(LINCUPL_BUILD_GUI AND Qt6Widgets_FOUND
     if(TARGET lincupl)
         set_target_properties(lincupl PROPERTIES
             MACOSX_BUNDLE FALSE
+            WIN32_EXECUTABLE "${WIN32}"
             RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
         )
     endif()
@@ -273,6 +282,7 @@ if(LINCUPL_BUILD_GUI AND Qt6Widgets_FOUND
     if(TARGET linsim)
         set_target_properties(linsim PROPERTIES
             MACOSX_BUNDLE FALSE
+            WIN32_EXECUTABLE "${WIN32}"
             RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
         )
     endif()
@@ -379,6 +389,16 @@ else()
     find_package(Python3 COMPONENTS Interpreter QUIET)
 endif()
 if(Python3_EXECUTABLE)
+    add_executable(runfit_test tests/runfit.c)
+    target_link_libraries(runfit_test PRIVATE lincupl_shared)
+    add_test(NAME runfit
+        COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/runfit.py"
+            "$<TARGET_FILE:runfit_test>")
+    set_tests_properties(runfit PROPERTIES TIMEOUT 60)
+    add_test(NAME backpin
+        COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/backpin.py"
+            "$<TARGET_FILE:backpin>")
+    set_tests_properties(backpin PROPERTIES TIMEOUT 60)
     add_test(NAME jedinspect
         COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/jedinspect.py" "$<TARGET_FILE:jedinspect>")
     add_test(NAME jedcompare
@@ -413,6 +433,10 @@ if(Python3_EXECUTABLE)
 endif()
 
 # Install rules
+if(MSVC)
+    set(CMAKE_INSTALL_SYSTEM_RUNTIME_DESTINATION "${CMAKE_INSTALL_BINDIR}")
+    include(InstallRequiredSystemLibraries)
+endif()
 set(_install_targets cupl csim cbld backpin cfitr jedinspect jedcompare ${LINCUPL_FIT150X_PROGRAMS})
 if(TARGET lincupl)
     list(APPEND _install_targets lincupl)

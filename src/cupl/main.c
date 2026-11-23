@@ -6,6 +6,7 @@
  * compiler driver (cupl_driver_run).
  */
 
+#include "platform.h"
 #include "banner.h"
 #include "cupl_phases.h"
 
@@ -48,6 +49,7 @@ static void cupl_usage(void) {
 }
 
 int main(int argc, char **argv) {
+    lincupl_init_file_mode();
     static struct cupl_options opt;
 
     switch (cupl_parse_options(argc, argv, &opt)) {
