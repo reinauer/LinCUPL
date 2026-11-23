@@ -1265,6 +1265,7 @@ static void act_order_name(list_node_t *tok)
         sym_t *sym;
         order_t *o;
         int i;
+        int node_level = 0;
         if ((int)g_nsyms < g_order_count) {
             fatal_error(ERR_TOO_MANY_SYMBOLS, "");
         }
@@ -1273,7 +1274,7 @@ static void act_order_name(list_node_t *tok)
             /* P<n> for a pin that has a name from the .pld file: the level
              * of the pin, whatever polarity the name was declared with */
             int inverted = 0;
-            sym = jedec_pin_symbol(tok_text(tok), &inverted);
+            sym = jedec_pin_symbol(tok_text(tok), &inverted, &node_level);
             if (sym != NULL && inverted) {
                 tok->flags ^= 1;
             }
@@ -1284,6 +1285,7 @@ static void act_order_name(list_node_t *tok)
         i = g_order_count++;
         o = &g_order[i];
         o->positive = ((sym->flags & 0x10) == 0) == ((tok->flags & 1) != 0);
+        o->node_level = (uint8_t)node_level;
         o->pin = sym->pin;
         o->sym = sym;
         o->column = (uint16_t)i;

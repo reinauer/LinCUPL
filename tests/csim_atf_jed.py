@@ -225,6 +225,48 @@ def main():
         simulate(directory, 'ORDER: P1,P2,P23,P44;\nVECTORS:\n'
                  '00 HL\nC1 LH\nC1 HL\nC0 HL\nC1 LH\n')
 
+        # An ORDER alias observes Q even while OE disables the pin. Cover
+        # both architectures sharing this path, D/T mode, output polarity,
+        # named aliases and explicit ORDER inversion. No register feedback
+        # columns are used, so these cases only test the observation path.
+        for small, toggle, low in itertools.product(range(2), repeat=3):
+            directory = root / f'alias-{small}-{toggle}-{low}'
+            directory.mkdir()
+            device, count, pins = ('v750c', 14504, 24) if small else ('v2500c', 71816, 40)
+            pin, alias = (23, 44) if small else (4, 65)
+            bits = [0] * count
+            if small:
+                row(bits, 0, 84, 75)  # data from P2
+                row(bits, 1008, 84, 67)  # OE from P3
+                bits[14364:14367] = [0, 1, 1 - low]
+                bits[14395] = 1  # global clock P1
+                bits[14397] = toggle
+            else:
+                row(bits, 68456, 172, 46)  # data from P2
+                row(bits, 70692, 172, 44)  # product clock from P1
+                row(bits, 71208, 172, 48)  # OE from P3
+                bits[71647] = 1 - low
+                bits[71741] = toggle
+            write_map(directory, bits, device, pins)
+            state, lines = 0, []
+            for clock, data, enable, external in [
+                    ('0', 0, 1, 0), ('C', 1, 1, 0), ('0', 0, 0, 0),
+                    ('0', 0, 0, 1), ('C', 1, 0, 0), ('C', 0, 0, 1),
+                    ('C', 1, 0, 0), ('0', 0, 1, 0)]:
+                for level in ('01' if clock == 'C' else '0'):
+                    if level == '1':
+                        state = state ^ data if toggle else data
+                    physical = state ^ low if enable else external
+                    pin_level = 'LH'[physical] if enable else str(external)
+                    lines.append(f'{level}{data}{enable}{pin_level}{"LH"[state]}')
+            vectors = '\nVECTORS:\n' + '\n'.join(lines) + '\n'
+            simulate(directory, f'ORDER: P1,P2,P3,P{pin},P{alias};' + vectors)
+            for inverted in range(2):
+                sign = '!' if inverted else ''
+                (directory / 'test.pld').write_text(
+                    f'Device {device}; pinnode {alias}={sign}q;\n')
+                simulate(directory, f'ORDER: P1,P2,P3,P{pin},{sign}q;' + vectors)
+
         directory = root / '2500-clock-gate'
         directory.mkdir()
         bits = [0] * 71816

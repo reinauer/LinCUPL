@@ -542,7 +542,7 @@ void compare_results(int check)
 {
     for (int i = 0; i < g_order_count; i++) {
         order_t *o = &g_order[i];
-        int level = (int8_t)g_sig_out[o->sym_index];
+        int level = (int8_t)(o->node_level ? g_node_level[o->sym_index] : g_sig_out[o->sym_index]);
         int token;
         if (level == 0) {
             o->result = o->value;
