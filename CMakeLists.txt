@@ -82,6 +82,7 @@ set(LINCUPL_PHASE_SOURCES
     src/sim/sim.c
     src/sim/load.c
     src/sim/jedload.c
+    src/sim/truth.c
     src/sim/parse.c
     src/sim/core.c
     src/sim/bind.c
@@ -153,6 +154,14 @@ target_compile_options(csim PRIVATE ${_cli_warn_flags})
 add_executable(cbld src/tools/cbld.c)
 target_link_libraries(cbld PRIVATE lincupl_shared)
 target_compile_options(cbld PRIVATE ${_cli_warn_flags})
+
+add_executable(jedinspect src/tools/jedinspect.c)
+target_link_libraries(jedinspect PRIVATE lincupl_shared)
+target_compile_options(jedinspect PRIVATE ${_cli_warn_flags})
+
+add_executable(jedcompare src/tools/jedcompare.c)
+target_link_libraries(jedcompare PRIVATE cupl_phases)
+target_compile_options(jedcompare PRIVATE ${_cli_warn_flags})
 
 add_executable(backpin src/tools/backpin.c)
 target_link_libraries(backpin PRIVATE lincupl_shared)
@@ -300,7 +309,7 @@ add_custom_target(lincupl_data ALL
     VERBATIM
 )
 
-foreach(_tgt IN ITEMS cupl csim cbld backpin cfitr ${LINCUPL_FIT150X_PROGRAMS} lincupl linsim)
+foreach(_tgt IN ITEMS cupl csim cbld backpin cfitr jedcompare ${LINCUPL_FIT150X_PROGRAMS} lincupl linsim)
     if(TARGET ${_tgt})
         add_dependencies(${_tgt} lincupl_data)
     endif()
@@ -370,6 +379,14 @@ else()
     find_package(Python3 COMPONENTS Interpreter QUIET)
 endif()
 if(Python3_EXECUTABLE)
+    add_test(NAME jedinspect
+        COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/jedinspect.py" "$<TARGET_FILE:jedinspect>")
+    add_test(NAME jedcompare
+        COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/jedcompare.py" "$<TARGET_FILE_DIR:jedcompare>")
+    set_tests_properties(jedinspect jedcompare PROPERTIES TIMEOUT 120)
+    if(NOT LINCUPL_REQUIRE_TEST_DATA)
+        set_tests_properties(jedcompare PROPERTIES SKIP_RETURN_CODE 77)
+    endif()
     add_test(
         NAME csim_jed
         COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/csim_jed.py" --bin-dir "$<TARGET_FILE_DIR:csim>"
@@ -392,7 +409,7 @@ if(Python3_EXECUTABLE)
 endif()
 
 # Install rules
-set(_install_targets cupl csim cbld backpin cfitr ${LINCUPL_FIT150X_PROGRAMS})
+set(_install_targets cupl csim cbld backpin cfitr jedinspect jedcompare ${LINCUPL_FIT150X_PROGRAMS})
 if(TARGET lincupl)
     list(APPEND _install_targets lincupl)
 endif()
@@ -403,6 +420,7 @@ endif()
 install(TARGETS ${_install_targets}
     RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
 )
+install(FILES doc/jed-tools.md DESTINATION "${CMAKE_INSTALL_DOCDIR}")
 
 if(EXISTS "${LINCUPL_SOURCE_SHARE_DIR}")
     install(DIRECTORY "${LINCUPL_SOURCE_SHARE_DIR}/"
