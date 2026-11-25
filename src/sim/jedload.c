@@ -1107,10 +1107,6 @@ static frame_t *build_frame(int array)
                 inputs++;
             }
         }
-        if (inputs == 0) {
-            bit_set(used + 1, 1);
-            bit_set(high + 1, 1);
-        }
         if (g_jed.atf && g_jed.gated_clock[array]) {
             int clock = global_clock_symbol();
             if (bit_test(used + 1, clock) && !bit_test(high + 1, clock)) {
@@ -1120,7 +1116,15 @@ static frame_t *build_frame(int array)
             } else {
                 bit_set(used + 1, clock);
                 bit_set(high + 1, clock);
+                inputs++;
             }
+        }
+        /* Include the implicit clock input before choosing the constant
+         * representation: a constant-true product gated by CLK is CLK.
+         * The frame evaluator short-circuits a constant-1 symbol. */
+        if (inputs == 0) {
+            bit_set(used + 1, 1);
+            bit_set(high + 1, 1);
         }
     }
     return f;

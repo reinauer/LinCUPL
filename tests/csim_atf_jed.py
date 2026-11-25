@@ -280,6 +280,18 @@ def main():
         simulate(directory, 'ORDER: P1,P2,P3,P4;\nVECTORS:\n'
                  '000 L\n110 L\n111 H\n101 H\n100 H\n101 L\n')
 
+        # A true product with S6 enabled follows PIN1; it must not become
+        # a constant clock when decoding the row into a simulation frame.
+        row(bits, 70692, 172)
+        write_map(directory, bits, 'v2500c', 40)
+        simulate(directory, 'ORDER: P1,P2,P4;\nVECTORS:\n'
+                 '00 L\n11 H\n00 H\n10 L\nC1 H\nC0 L\n')
+        # A false clock product remains false even with the gate enabled.
+        bits[70692:70692 + 172] = [0] * 172
+        write_map(directory, bits, 'v2500c', 40)
+        simulate(directory, 'ORDER: P1,P2,P4;\nVECTORS:\n'
+                 '00 L\n11 L\nC1 L\nC0 L\n')
+
         # Truth-table comparison must not silently accept buried state
         # merely because the observable pin is combinational.
         directory = root / '750-rows-0-0'
