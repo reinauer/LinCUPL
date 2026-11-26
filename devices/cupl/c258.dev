@@ -1,0 +1,210 @@
+# Device library interface; field values and record order are retained.
+# Compiler modes are ABI settings, not inferred hardware properties.
+format = 1
+
+device c258 {
+    representation = library
+
+    package {
+        pins = 28
+        drawing_style = 0
+        internal_nodes = 8
+    }
+
+    power {
+        ground = 0
+        supply = 0
+    }
+
+    fuses {
+        count = 32768
+        default = 0
+    }
+
+    signature {
+        bits = 0
+        first_fuse = 0
+    }
+
+    compiler {
+        revision = 1
+        family = external_fitter
+        extra_nodes_a = 0
+        extra_nodes_b = 0
+        extra_nodes_c = 0
+        register_resources = 16
+        clocked_resources = 8
+        default_extension = none
+        product_rows = 2048
+        initial_term_capacity = 200
+        array_slots = 1
+        input_line_slots = 37
+        extra_symbols = 0
+        download = jedec
+    }
+
+    simulation {
+        output_enable_mode = 0
+        output_polarity_mode = 0
+        internal_polarity_mode = 0
+        power_up = low
+        preload_polarity = 0
+    }
+
+    prom {
+        address_bits = 0
+        data_width = 8
+    }
+
+    fitter {
+        input_format = 6
+        name = "cupl2cyp"
+        arguments = ""
+        pla_options = [tool_header, jedec_keyword]
+        part = ""
+    }
+
+    extensions {
+        columns = [name, function]
+        rows = [
+            row("d", d),
+            row("dq", dq),
+            row("ap", ap),
+            row("ar", ar),
+            row("ckmux", ckmux),
+            row("oemux", oemux),
+        ]
+    }
+
+    fitter_extensions {
+        columns = [extension, alias]
+        rows = [
+            row("d", "D"),
+            row("t", "T"),
+            row("l", "G"),
+            row("dq", "R"),
+            row("tq", "R"),
+            row("lq", "L"),
+            row("oe", "OE"),
+            row("ar", "AR"),
+            row("ap", "AP"),
+            row("sp", "PR"),
+            row("sr", "RE"),
+            row("ck", "C"),
+            row("le", "LH"),
+            row("io", "PIN"),
+            row("iod", "R"),
+            row("iol", "L"),
+            row("ioar", "AR"),
+            row("ioap", "AP"),
+            row("iosp", "PR"),
+            row("iosr", "RE"),
+            row("iock", "C"),
+            row("int", "X"),
+            row("ckmux", "C"),
+            row("lemux", "LH"),
+            row("oemux", "OE"),
+            row("j", "J"),
+            row("k", "K"),
+            row("ce", "CE"),
+            row("reg", "Q"),
+        ]
+    }
+
+    pin_functions {
+        defaults {
+            function = none
+            variant = default
+            true_column = 0
+            complement_column = 0
+            config_value = 0
+            config_bits = 0
+            config_first_fuse = 0
+        }
+        columns = [line, pin, compiler_type]
+        rows = [
+            row(0, 0, not_connected),
+            row(1, 1, unspecified),
+            row(2, 2, unspecified),
+            row(3, 3, unspecified),
+            row(4, 4, unspecified),
+            row(5, 5, unspecified),
+            row(6, 6, unspecified),
+            row(7, 7, supply),
+            row(8, 8, ground),
+            row(9, 9, unspecified),
+            row(10, 10, unspecified),
+            row(11, 11, unspecified),
+            row(12, 12, unspecified),
+            row(13, 13, unspecified),
+            row(14, 14, unspecified),
+            row(15, 15, register_feedback),
+            row(16, 16, register_feedback),
+            row(17, 17, register_feedback),
+            row(18, 18, register_feedback),
+            row(19, 19, register_feedback),
+            row(20, 20, ground),
+            row(21, 21, supply),
+            row(22, 22, ground),
+            row(23, 23, register_feedback),
+            row(24, 24, register_feedback),
+            row(25, 25, register_feedback),
+            row(26, 26, clock_input),
+            row(27, 27, unspecified),
+            row(28, 28, 13),
+            row(29, 29, register_feedback),
+            row(30, 30, register_feedback),
+            row(31, 31, register_feedback),
+            row(32, 32, register_feedback),
+            row(33, 33, register_feedback),
+            row(34, 34, register_feedback),
+            row(35, 35, register_feedback),
+            row(36, 36, register_feedback),
+        ]
+    }
+
+    node_functions {
+        defaults {
+            array = 0
+            pin = 0
+            function = none
+            polarity = unspecified
+            invert = no
+            select_value = 0
+            config_value = 0
+            first_row_fuse = 0
+            first_or_fuse = 0
+            config_first_fuse = 131072
+            pair_first_fuse = 0
+            row_width = 0
+            or_width = 0
+            config_bits = 0
+            pair_bits = 0
+            max_terms = 0
+            split_terms = 0
+            default_rule = 0
+            has_default = no
+            sharing_mode = 0
+            active = no
+            alternate_step = 0
+        }
+        columns = []
+        rows = [
+            row(),
+        ]
+    }
+
+    fitter_arguments {
+        columns = [kind, text]
+        rows = [
+            row(pla_file, ""),
+            row(literal, "-SILENT"),
+            row(literal, "-JED"),
+            row(jedec_file, ""),
+            row(literal, "-RPT"),
+            row(file_suffix, ".LOG"),
+            row(none, ""),
+        ]
+    }
+
+}

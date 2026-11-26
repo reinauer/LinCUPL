@@ -1,0 +1,331 @@
+# Device library interface; field values and record order are retained.
+# Compiler modes are ABI settings, not inferred hardware properties.
+format = 1
+
+device xc7354pc44 {
+    representation = library
+
+    package {
+        pins = 44
+        drawing_style = 1
+        internal_nodes = 100
+    }
+
+    power {
+        ground = 0
+        supply = 0
+    }
+
+    fuses {
+        count = 99999
+        default = 0
+    }
+
+    signature {
+        bits = 0
+        first_fuse = 0
+    }
+
+    compiler {
+        revision = 3
+        family = external_fitter
+        extra_nodes_a = 0
+        extra_nodes_b = 32
+        extra_nodes_c = 0
+        register_resources = 255
+        clocked_resources = 199
+        default_extension = none
+        product_rows = 5000
+        initial_term_capacity = 200
+        array_slots = 1
+        input_line_slots = 1
+        extra_symbols = 128
+        download = jedec_and_hl
+    }
+
+    simulation {
+        output_enable_mode = 0
+        output_polarity_mode = 0
+        internal_polarity_mode = 1
+        power_up = low
+        preload_polarity = 1
+    }
+
+    prom {
+        address_bits = 0
+        data_width = 199
+    }
+
+    fitter {
+        input_format = 2
+        name = "plaplus"
+        arguments = ""
+        pla_options = [tool_header, output_keyword]
+        part = ""
+    }
+
+    fitter_extensions {
+        columns = [extension, alias]
+        rows = [
+            row("a1", "a1"),
+            row("a2", "a2"),
+            row("add", "add"),
+            row("ap", "ap"),
+            row("ar", "ar"),
+            row("ce", "cce"),
+            row("cemux", "cce"),
+            row("cin", "cin"),
+            row("cout", "cout"),
+            row("ck", "c"),
+            row("ckmux", "cc"),
+            row("d", "d"),
+            row("d1", "d1"),
+            row("d2", "d2"),
+            row("dq", "dq"),
+            row("dx1", "dx1"),
+            row("dx2", "dx2"),
+            row("export", "export"),
+            row("fi", "fi"),
+            row("fbk", "fbk"),
+            row("gnd", "gnd"),
+            row("io", "pin"),
+            row("iocemux", "iocce"),
+            row("iockmux", "iocc"),
+            row("iock", "c"),
+            row("iod", "iod"),
+            row("oe", "oe"),
+            row("oemux", "coe"),
+            row("l", "l"),
+            row("lq", "lq"),
+            row("le", "le"),
+            row("lemux", "cle"),
+            row("t", "t"),
+            row("reg", ""),
+        ]
+    }
+
+    pin_functions {
+        defaults {
+            variant = default
+            true_column = 0
+            complement_column = 0
+            config_value = 0
+            config_bits = 0
+            config_first_fuse = 0
+        }
+        columns = [line, pin, function, compiler_type]
+        rows = [
+            row(0, 0, none, not_connected),
+            row(1, 1, none, unspecified),
+            row(2, 2, none, unspecified),
+            row(3, 3, none, unspecified),
+            row(4, 4, none, unspecified),
+            row(5, 5, none, clock_input),
+            row(5, 5, none, not_connected),
+            row(6, 6, none, clock_input),
+            row(6, 6, none, not_connected),
+            row(7, 7, none, unspecified),
+            row(8, 8, none, unspecified),
+            row(8, 8, none, not_connected),
+            row(9, 9, none, unspecified),
+            row(9, 9, none, not_connected),
+            row(10, 10, none, ground),
+            row(11, 11, none, unspecified),
+            row(11, 11, none, not_connected),
+            row(12, 12, none, unspecified),
+            row(12, 12, none, not_connected),
+            row(13, 13, none, unspecified),
+            row(13, 13, none, not_connected),
+            row(14, 14, none, unspecified),
+            row(14, 14, none, not_connected),
+            row(15, 15, none, unspecified),
+            row(15, 15, none, not_connected),
+            row(16, 16, none, unspecified),
+            row(16, 16, none, not_connected),
+            row(17, 17, none, combinational),
+            row(17, 17, none, registered),
+            row(17, 17, int, registered),
+            row(17, 17, io, combinational),
+            row(18, 18, none, combinational),
+            row(18, 18, none, registered),
+            row(18, 18, int, registered),
+            row(18, 18, io, combinational),
+            row(19, 19, none, combinational),
+            row(19, 19, none, registered),
+            row(19, 19, int, registered),
+            row(19, 19, io, combinational),
+            row(20, 20, none, combinational),
+            row(20, 20, none, registered),
+            row(20, 20, int, registered),
+            row(20, 20, io, combinational),
+            row(21, 21, none, supply),
+            row(22, 22, none, combinational),
+            row(22, 22, none, registered),
+            row(22, 22, int, registered),
+            row(22, 22, io, combinational),
+            row(23, 23, none, ground),
+            row(24, 24, none, combinational),
+            row(24, 24, none, registered),
+            row(24, 24, int, registered),
+            row(24, 24, io, combinational),
+            row(25, 25, none, combinational),
+            row(25, 25, none, registered),
+            row(25, 25, int, registered),
+            row(25, 25, io, combinational),
+            row(26, 26, none, combinational),
+            row(26, 26, none, registered),
+            row(26, 26, int, registered),
+            row(26, 26, io, combinational),
+            row(27, 27, none, combinational),
+            row(27, 27, none, registered),
+            row(27, 27, int, registered),
+            row(27, 27, io, combinational),
+            row(28, 28, none, unspecified),
+            row(29, 29, none, unspecified),
+            row(29, 29, none, not_connected),
+            row(30, 30, none, unspecified),
+            row(30, 30, none, not_connected),
+            row(31, 31, none, ground),
+            row(32, 32, none, supply),
+            row(33, 33, none, unspecified),
+            row(33, 33, none, not_connected),
+            row(34, 34, none, unspecified),
+            row(34, 34, none, not_connected),
+            row(35, 35, none, unspecified),
+            row(35, 35, none, not_connected),
+            row(36, 36, none, unspecified),
+            row(36, 36, none, not_connected),
+            row(37, 37, none, unspecified),
+            row(37, 37, none, not_connected),
+            row(38, 38, none, unspecified),
+            row(38, 38, none, not_connected),
+            row(39, 39, none, unspecified),
+            row(39, 39, none, not_connected),
+            row(40, 40, none, unspecified),
+            row(40, 40, none, not_connected),
+            row(41, 41, none, supply),
+            row(42, 42, none, unspecified),
+            row(43, 43, none, unspecified),
+            row(44, 44, none, unspecified),
+            row(45, 45, none, register_feedback),
+            row(46, 46, none, register_feedback),
+            row(47, 47, none, register_feedback),
+            row(48, 48, none, register_feedback),
+            row(49, 49, none, register_feedback),
+            row(50, 50, none, register_feedback),
+            row(51, 51, none, register_feedback),
+            row(52, 52, none, register_feedback),
+            row(53, 53, none, register_feedback),
+            row(54, 54, none, register_feedback),
+            row(55, 55, none, register_feedback),
+            row(56, 56, none, register_feedback),
+            row(57, 57, none, register_feedback),
+            row(58, 58, none, register_feedback),
+            row(59, 59, none, register_feedback),
+            row(60, 60, none, register_feedback),
+            row(61, 61, none, register_feedback),
+            row(62, 62, none, register_feedback),
+            row(63, 63, none, register_feedback),
+            row(64, 64, none, register_feedback),
+            row(65, 65, none, register_feedback),
+            row(66, 66, none, register_feedback),
+            row(67, 67, none, register_feedback),
+            row(68, 68, none, register_feedback),
+            row(69, 69, none, register_feedback),
+            row(70, 70, none, register_feedback),
+            row(71, 71, none, register_feedback),
+            row(72, 72, none, register_feedback),
+            row(73, 73, none, register_feedback),
+            row(74, 74, none, register_feedback),
+            row(75, 75, none, register_feedback),
+            row(76, 76, none, register_feedback),
+            row(77, 77, none, register_feedback),
+            row(78, 78, none, register_feedback),
+            row(79, 79, none, register_feedback),
+            row(80, 80, none, register_feedback),
+            row(81, 81, none, register_feedback),
+            row(82, 82, none, register_feedback),
+            row(83, 83, none, register_feedback),
+            row(84, 84, none, register_feedback),
+            row(85, 85, none, register_feedback),
+            row(86, 86, none, register_feedback),
+            row(87, 87, none, register_feedback),
+            row(88, 88, none, register_feedback),
+            row(89, 89, none, register_feedback),
+            row(90, 90, none, register_feedback),
+            row(91, 91, none, register_feedback),
+            row(92, 92, none, register_feedback),
+            row(93, 93, none, register_feedback),
+            row(94, 94, none, register_feedback),
+            row(95, 95, none, register_feedback),
+            row(96, 96, none, register_feedback),
+            row(97, 97, none, register_feedback),
+            row(98, 98, none, register_feedback),
+            row(99, 99, none, register_feedback),
+            row(100, 100, none, register_feedback),
+            row(101, 101, none, register_feedback),
+            row(102, 102, none, register_feedback),
+            row(103, 103, none, register_feedback),
+            row(104, 104, none, register_feedback),
+            row(105, 105, none, register_feedback),
+            row(106, 106, none, register_feedback),
+            row(107, 107, none, register_feedback),
+            row(108, 108, none, register_feedback),
+            row(109, 109, none, register_feedback),
+            row(110, 110, none, register_feedback),
+            row(111, 111, none, register_feedback),
+            row(112, 112, none, register_feedback),
+            row(113, 113, none, register_feedback),
+            row(114, 114, none, register_feedback),
+            row(115, 115, none, register_feedback),
+            row(116, 116, none, register_feedback),
+            row(117, 117, none, register_feedback),
+            row(118, 118, none, register_feedback),
+            row(119, 119, none, register_feedback),
+            row(120, 120, none, register_feedback),
+        ]
+    }
+
+    node_functions {
+        defaults {
+            array = 0
+            pin = 0
+            function = none
+            polarity = unspecified
+            invert = no
+            select_value = 0
+            config_value = 0
+            first_row_fuse = 0
+            first_or_fuse = 0
+            config_first_fuse = 131072
+            pair_first_fuse = 0
+            row_width = 0
+            or_width = 0
+            config_bits = 0
+            pair_bits = 0
+            max_terms = 0
+            split_terms = 0
+            default_rule = 0
+            has_default = no
+            sharing_mode = 0
+            active = no
+            alternate_step = 0
+        }
+        columns = []
+        rows = [
+            row(),
+        ]
+    }
+
+    fitter_arguments {
+        defaults {
+            text = ""
+        }
+        columns = [kind]
+        rows = [
+            row(pla_file),
+            row(none),
+        ]
+    }
+
+}

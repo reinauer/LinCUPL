@@ -1,0 +1,223 @@
+# Device library interface; field values and record order are retained.
+# Compiler modes are ABI settings, not inferred hardware properties.
+format = 1
+
+device g20v8lcc {
+    representation = library
+
+    package {
+        pins = 28
+        drawing_style = 4
+        internal_nodes = 0
+    }
+
+    power {
+        ground = 14
+        supply = 28
+    }
+
+    fuses {
+        count = 2706
+        default = 0
+    }
+
+    signature {
+        bits = 64
+        first_fuse = 2568
+    }
+
+    compiler {
+        revision = 3
+        family = pal
+        extra_nodes_a = 0
+        extra_nodes_b = 0
+        extra_nodes_c = 0
+        register_resources = 8
+        clocked_resources = 8
+        default_extension = none
+        product_rows = 64
+        initial_term_capacity = 70
+        array_slots = 25
+        input_line_slots = 29
+        extra_symbols = 8
+        download = jedec
+    }
+
+    simulation {
+        output_enable_mode = 0
+        output_polarity_mode = 0
+        internal_polarity_mode = 0
+        power_up = low
+        preload_polarity = 0
+    }
+
+    prom {
+        address_bits = 0
+        data_width = 8
+    }
+
+    fitter {
+        input_format = 0
+        name = ""
+        arguments = ""
+        pla_options = []
+        part = ""
+    }
+
+    extensions {
+        columns = [name, function]
+        rows = [
+            row("oe", oe),
+            row("d", d),
+        ]
+    }
+
+    pin_functions {
+        defaults {
+            function = none
+            variant = default
+            true_column = 0
+            complement_column = 0
+            config_value = 0
+            config_bits = 0
+            config_first_fuse = 65536
+        }
+        columns = [line, pin, compiler_type]
+        rows = [
+            row(1, 2, unspecified),
+            row(2, 3, unspecified),
+            row(3, 4, unspecified),
+            row(4, 5, unspecified),
+            row(5, 6, unspecified),
+            row(6, 7, unspecified),
+            row(7, 9, unspecified),
+            row(8, 10, unspecified),
+            row(9, 11, unspecified),
+            row(10, 12, unspecified),
+            row(11, 13, unspecified),
+            row(12, 16, unspecified),
+            row(13, 17, unspecified),
+            row(14, 18, unspecified),
+            row(15, 19, unspecified),
+            row(16, 20, unspecified),
+            row(17, 21, unspecified),
+            row(18, 23, unspecified),
+            row(19, 24, unspecified),
+            row(20, 25, unspecified),
+            row(21, 26, unspecified),
+            row(22, 27, unspecified),
+            row(23, 14, ground),
+            row(24, 28, supply),
+            row(25, 1, not_connected),
+            row(25, 8, not_connected),
+            row(25, 15, not_connected),
+            row(25, 22, not_connected),
+        ]
+    }
+
+    node_functions {
+        defaults {
+            invert = no
+            select_value = 0
+            config_value = 0
+            first_row_fuse = 65536
+            first_or_fuse = 0
+            config_first_fuse = 65536
+            pair_first_fuse = 0
+            or_width = 0
+            config_bits = 0
+            pair_bits = 0
+            split_terms = 0
+            alternate_step = 0
+        }
+        columns = [array, pin, function, polarity, row_width, max_terms, default_rule, has_default, sharing_mode, active]
+        rows = [
+            row(1, 26, array, control, 40, 1, 0, no, 0, no),
+            row(1, 26, oe, control, 0, 0, 2, no, 0, no),
+            row(2, 26, array, negative, 40, 7, 0, no, 0, no),
+            row(2, 26, none, programmable_positive, 0, 0, 0, yes, 1, yes),
+            row(2, 26, none, programmable_negative, 0, 0, 0, yes, 1, yes),
+            row(3, 26, array, negative, 40, 8, 0, no, 0, no),
+            row(3, 26, d, programmable_positive, 0, 0, 0, no, 1, yes),
+            row(3, 26, d, programmable_negative, 0, 0, 0, no, 1, yes),
+            row(4, 25, array, control, 40, 1, 0, no, 0, no),
+            row(4, 25, oe, control, 0, 0, 2, no, 0, no),
+            row(5, 25, array, negative, 40, 7, 0, no, 0, no),
+            row(5, 25, none, programmable_positive, 0, 0, 0, yes, 1, yes),
+            row(5, 25, none, programmable_negative, 0, 0, 0, yes, 1, yes),
+            row(6, 25, array, negative, 40, 8, 0, no, 0, no),
+            row(6, 25, d, programmable_positive, 0, 0, 0, no, 1, yes),
+            row(6, 25, d, programmable_negative, 0, 0, 0, no, 1, yes),
+            row(7, 24, array, control, 40, 1, 0, no, 0, no),
+            row(7, 24, oe, control, 0, 0, 2, no, 0, no),
+            row(8, 24, array, negative, 40, 7, 0, no, 0, no),
+            row(8, 24, none, programmable_positive, 0, 0, 0, yes, 1, yes),
+            row(8, 24, none, programmable_negative, 0, 0, 0, yes, 1, yes),
+            row(9, 24, array, negative, 40, 8, 0, no, 0, no),
+            row(9, 24, d, programmable_positive, 0, 0, 0, no, 1, yes),
+            row(9, 24, d, programmable_negative, 0, 0, 0, no, 1, yes),
+            row(10, 23, array, control, 40, 1, 0, no, 0, no),
+            row(10, 23, oe, control, 0, 0, 2, no, 0, no),
+            row(11, 23, array, negative, 40, 7, 0, no, 0, no),
+            row(11, 23, none, programmable_positive, 0, 0, 0, yes, 1, yes),
+            row(11, 23, none, programmable_negative, 0, 0, 0, yes, 1, yes),
+            row(12, 23, array, negative, 40, 8, 0, no, 0, no),
+            row(12, 23, d, programmable_positive, 0, 0, 0, no, 1, yes),
+            row(12, 23, d, programmable_negative, 0, 0, 0, no, 1, yes),
+            row(13, 21, array, control, 40, 1, 0, no, 0, no),
+            row(13, 21, oe, control, 0, 0, 2, no, 0, no),
+            row(14, 21, array, negative, 40, 7, 0, no, 0, no),
+            row(14, 21, none, programmable_positive, 0, 0, 0, yes, 1, yes),
+            row(14, 21, none, programmable_negative, 0, 0, 0, yes, 1, yes),
+            row(15, 21, array, negative, 40, 8, 0, no, 0, no),
+            row(15, 21, d, programmable_positive, 0, 0, 0, no, 1, yes),
+            row(15, 21, d, programmable_negative, 0, 0, 0, no, 1, yes),
+            row(16, 20, array, control, 40, 1, 0, no, 0, no),
+            row(16, 20, oe, control, 0, 0, 2, no, 0, no),
+            row(17, 20, array, negative, 40, 7, 0, no, 0, no),
+            row(17, 20, none, programmable_positive, 0, 0, 0, yes, 1, yes),
+            row(17, 20, none, programmable_negative, 0, 0, 0, yes, 1, yes),
+            row(18, 20, array, negative, 40, 8, 0, no, 0, no),
+            row(18, 20, d, programmable_positive, 0, 0, 0, no, 1, yes),
+            row(18, 20, d, programmable_negative, 0, 0, 0, no, 1, yes),
+            row(19, 19, array, control, 40, 1, 0, no, 0, no),
+            row(19, 19, oe, control, 0, 0, 2, no, 0, no),
+            row(20, 19, array, negative, 40, 7, 0, no, 0, no),
+            row(20, 19, none, programmable_positive, 0, 0, 0, yes, 1, yes),
+            row(20, 19, none, programmable_negative, 0, 0, 0, yes, 1, yes),
+            row(21, 19, array, negative, 40, 8, 0, no, 0, no),
+            row(21, 19, d, programmable_positive, 0, 0, 0, no, 1, yes),
+            row(21, 19, d, programmable_negative, 0, 0, 0, no, 1, yes),
+            row(22, 18, array, control, 40, 1, 0, no, 0, no),
+            row(22, 18, oe, control, 0, 0, 2, no, 0, no),
+            row(23, 18, array, negative, 40, 7, 0, no, 0, no),
+            row(23, 18, none, programmable_positive, 0, 0, 0, yes, 1, yes),
+            row(23, 18, none, programmable_negative, 0, 0, 0, yes, 1, yes),
+            row(24, 18, array, negative, 40, 8, 0, no, 0, no),
+            row(24, 18, d, programmable_positive, 0, 0, 0, no, 1, yes),
+            row(24, 18, d, programmable_negative, 0, 0, 0, no, 1, yes),
+        ]
+    }
+
+    fitter_arguments {
+        defaults {
+            kind = none
+            text = ""
+        }
+        columns = []
+        rows = [
+            row(),
+        ]
+    }
+
+    alternatives {
+        columns = [device, condition, priority]
+        rows = [
+            row("g20v8mslcc", uses_d, 4),
+            row("g20v8malcc", uses_combinational, 3),
+            row("g20v8malcc", uses_oe, 2),
+            row("g20v8slcc", always, 1),
+        ]
+    }
+
+}

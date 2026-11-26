@@ -1,0 +1,377 @@
+# Device library interface; field values and record order are retained.
+# Compiler modes are ABI settings, not inferred hardware properties.
+format = 1
+
+device f507lcc {
+    representation = library
+
+    package {
+        pins = 28
+        drawing_style = 4
+        internal_nodes = 18
+    }
+
+    power {
+        ground = 14
+        supply = 28
+    }
+
+    fuses {
+        count = 7370
+        default = 0
+    }
+
+    signature {
+        bits = 0
+        first_fuse = 0
+    }
+
+    compiler {
+        revision = 5
+        family = ifl
+        extra_nodes_a = 0
+        extra_nodes_b = 2
+        extra_nodes_c = 6
+        register_resources = 18
+        clocked_resources = 18
+        default_extension = none
+        product_rows = 80
+        initial_term_capacity = 100
+        array_slots = 4
+        input_line_slots = 35
+        extra_symbols = 0
+        download = jedec
+    }
+
+    simulation {
+        output_enable_mode = 0
+        output_polarity_mode = 0
+        internal_polarity_mode = 0
+        power_up = low
+        preload_polarity = 0
+    }
+
+    prom {
+        address_bits = 0
+        data_width = 8
+    }
+
+    fitter {
+        input_format = 0
+        name = ""
+        arguments = ""
+        pla_options = []
+        part = ""
+    }
+
+    extensions {
+        columns = [name, function]
+        rows = [
+            row("s", s),
+            row("r", r),
+            row("oe", oe),
+            row("ckmux", ckmux),
+            row("cnt", cnt),
+        ]
+    }
+
+    pin_functions {
+        defaults {
+            variant = default
+            config_value = 0
+            config_bits = 0
+            config_first_fuse = 0
+        }
+        columns = [line, pin, function, compiler_type, true_column, complement_column]
+        rows = [
+            row(1, 3, none, unspecified, 0, 1),
+            row(2, 4, none, unspecified, 2, 3),
+            row(3, 5, none, unspecified, 4, 5),
+            row(4, 6, none, unspecified, 6, 7),
+            row(5, 7, none, unspecified, 8, 9),
+            row(6, 9, none, unspecified, 10, 11),
+            row(7, 27, none, unspecified, 12, 13),
+            row(8, 26, none, unspecified, 14, 15),
+            row(9, 25, none, unspecified, 16, 17),
+            row(10, 24, none, unspecified, 18, 19),
+            row(11, 23, none, unspecified, 20, 21),
+            row(12, 21, none, unspecified, 22, 23),
+            row(13, 20, none, 13, 24, 25),
+            row(14, 29, none, register_feedback, 26, 27),
+            row(15, 30, none, register_feedback, 28, 29),
+            row(16, 31, none, register_feedback, 30, 31),
+            row(17, 32, none, register_feedback, 32, 33),
+            row(18, 33, none, register_feedback, 34, 35),
+            row(19, 34, none, register_feedback, 36, 37),
+            row(20, 35, none, register_feedback, 38, 39),
+            row(21, 36, none, register_feedback, 40, 41),
+            row(22, 37, none, unspecified, 42, 43),
+            row(22, 37, cnt, unspecified, 42, 43),
+            row(23, 38, none, unspecified, 44, 45),
+            row(23, 38, cnt, unspecified, 44, 45),
+            row(24, 39, none, unspecified, 46, 47),
+            row(24, 39, cnt, unspecified, 46, 47),
+            row(25, 40, none, unspecified, 48, 49),
+            row(25, 40, cnt, unspecified, 48, 49),
+            row(26, 41, none, unspecified, 50, 51),
+            row(26, 41, cnt, unspecified, 50, 51),
+            row(27, 42, none, unspecified, 52, 53),
+            row(27, 42, cnt, unspecified, 52, 53),
+            row(28, 14, none, ground, 0, 0),
+            row(29, 28, none, supply, 0, 0),
+            row(30, 2, none, clock, 0, 0),
+            row(31, 1, none, not_connected, 0, 0),
+            row(32, 8, none, not_connected, 0, 0),
+            row(33, 15, none, not_connected, 0, 0),
+            row(34, 22, none, not_connected, 0, 0),
+        ]
+    }
+
+    node_functions {
+        defaults {
+            invert = no
+            config_value = 0
+            config_first_fuse = 0
+            config_bits = 0
+            split_terms = 0
+            default_rule = 0
+            has_default = no
+            alternate_step = 0
+        }
+        columns = [array, pin, function, polarity, select_value, first_row_fuse, first_or_fuse, pair_first_fuse, row_width, or_width, pair_bits, max_terms, sharing_mode, active]
+        rows = [
+            row(1, 10, oe, control, 1, 7361, 0, 0, 1, 0, 0, 0, 3, no),
+            row(1, 11, oe, control, 1, 7361, 0, 0, 1, 0, 0, 0, 3, no),
+            row(1, 12, oe, control, 1, 7361, 0, 0, 1, 0, 0, 0, 3, no),
+            row(1, 13, oe, control, 1, 7361, 0, 0, 1, 0, 0, 0, 3, no),
+            row(1, 16, oe, control, 1, 7361, 0, 0, 1, 0, 0, 0, 3, no),
+            row(1, 17, oe, control, 1, 7361, 0, 0, 1, 0, 0, 0, 3, no),
+            row(1, 18, oe, control, 1, 7361, 0, 0, 1, 0, 0, 0, 3, no),
+            row(1, 19, oe, control, 1, 7361, 0, 0, 1, 0, 0, 0, 3, no),
+            row(1, 0, array, unspecified, 0, 0, 0, 0, 1, 0, 0, 1, 3, no),
+            row(2, 10, ckmux, control, 0, 0, 0, 7360, 0, 0, 1, 0, 3, no),
+            row(2, 11, ckmux, control, 0, 0, 0, 7360, 0, 0, 1, 0, 3, no),
+            row(2, 12, ckmux, control, 0, 0, 0, 7360, 0, 0, 1, 0, 3, no),
+            row(2, 13, ckmux, control, 0, 0, 0, 7360, 0, 0, 1, 0, 3, no),
+            row(2, 16, ckmux, control, 0, 0, 0, 7360, 0, 0, 1, 0, 3, no),
+            row(2, 17, ckmux, control, 0, 0, 0, 7360, 0, 0, 1, 0, 3, no),
+            row(2, 18, ckmux, control, 0, 0, 0, 7360, 0, 0, 1, 0, 3, no),
+            row(2, 19, ckmux, control, 0, 0, 0, 7360, 0, 0, 1, 0, 3, no),
+            row(2, 29, ckmux, control, 0, 0, 0, 7360, 0, 0, 1, 0, 3, no),
+            row(2, 30, ckmux, control, 0, 0, 0, 7360, 0, 0, 1, 0, 3, no),
+            row(2, 31, ckmux, control, 0, 0, 0, 7360, 0, 0, 1, 0, 3, no),
+            row(2, 32, ckmux, control, 0, 0, 0, 7360, 0, 0, 1, 0, 3, no),
+            row(2, 33, ckmux, control, 0, 0, 0, 7360, 0, 0, 1, 0, 3, no),
+            row(2, 34, ckmux, control, 0, 0, 0, 7360, 0, 0, 1, 0, 3, no),
+            row(2, 35, ckmux, control, 0, 0, 0, 7360, 0, 0, 1, 0, 3, no),
+            row(2, 36, ckmux, control, 0, 0, 0, 7360, 0, 0, 1, 0, 3, no),
+            row(2, 37, ckmux, control, 0, 0, 0, 7360, 0, 0, 1, 0, 3, no),
+            row(2, 38, ckmux, control, 0, 0, 0, 7360, 0, 0, 1, 0, 3, no),
+            row(2, 39, ckmux, control, 0, 0, 0, 7360, 0, 0, 1, 0, 3, no),
+            row(2, 40, ckmux, control, 0, 0, 0, 7360, 0, 0, 1, 0, 3, no),
+            row(2, 41, ckmux, control, 0, 0, 0, 7360, 0, 0, 1, 0, 3, no),
+            row(2, 42, ckmux, control, 0, 0, 0, 7360, 0, 0, 1, 0, 3, no),
+            row(2, 44, ckmux, control, 0, 0, 0, 7360, 0, 0, 1, 0, 3, no),
+            row(2, 46, ckmux, control, 0, 0, 0, 7360, 0, 0, 1, 0, 3, no),
+            row(2, 0, array, unspecified, 0, 0, 0, 0, 1, 0, 0, 1, 3, no),
+            row(3, 43, none, positive, 0, 0, 54, 0, 0, 0, 0, 0, 0, yes),
+            row(3, 43, none, unspecified, 0, 0, 0, 0, 0, 0, 0, 0, 2, no),
+            row(3, 44, s, positive, 0, 0, 55, 0, 0, 0, 0, 0, 0, yes),
+            row(3, 44, r, positive, 0, 0, 56, 0, 0, 0, 0, 0, 0, yes),
+            row(3, 44, none, unspecified, 0, 0, 0, 0, 0, 0, 0, 0, 2, no),
+            row(3, 45, none, positive, 0, 0, 57, 0, 0, 0, 0, 0, 0, yes),
+            row(3, 45, none, unspecified, 0, 0, 0, 0, 0, 0, 0, 0, 2, no),
+            row(3, 46, s, positive, 0, 0, 58, 0, 0, 0, 0, 0, 0, yes),
+            row(3, 46, r, positive, 0, 0, 59, 0, 0, 0, 0, 0, 0, yes),
+            row(3, 46, none, unspecified, 0, 0, 0, 0, 0, 0, 0, 0, 2, no),
+            row(3, 29, s, positive, 0, 0, 60, 0, 0, 0, 0, 0, 0, yes),
+            row(3, 29, r, positive, 0, 0, 61, 0, 0, 0, 0, 0, 0, yes),
+            row(3, 29, none, unspecified, 0, 0, 0, 0, 0, 0, 0, 0, 2, no),
+            row(3, 30, s, positive, 0, 0, 62, 0, 0, 0, 0, 0, 0, yes),
+            row(3, 30, r, positive, 0, 0, 63, 0, 0, 0, 0, 0, 0, yes),
+            row(3, 30, none, unspecified, 0, 0, 0, 0, 0, 0, 0, 0, 2, no),
+            row(3, 31, s, positive, 0, 0, 64, 0, 0, 0, 0, 0, 0, yes),
+            row(3, 31, r, positive, 0, 0, 65, 0, 0, 0, 0, 0, 0, yes),
+            row(3, 31, none, unspecified, 0, 0, 0, 0, 0, 0, 0, 0, 2, no),
+            row(3, 32, s, positive, 0, 0, 66, 0, 0, 0, 0, 0, 0, yes),
+            row(3, 32, r, positive, 0, 0, 67, 0, 0, 0, 0, 0, 0, yes),
+            row(3, 32, none, unspecified, 0, 0, 0, 0, 0, 0, 0, 0, 2, no),
+            row(3, 33, s, positive, 0, 0, 68, 0, 0, 0, 0, 0, 0, yes),
+            row(3, 33, r, positive, 0, 0, 69, 0, 0, 0, 0, 0, 0, yes),
+            row(3, 33, none, unspecified, 0, 0, 0, 0, 0, 0, 0, 0, 2, no),
+            row(3, 34, s, positive, 0, 0, 70, 0, 0, 0, 0, 0, 0, yes),
+            row(3, 34, r, positive, 0, 0, 71, 0, 0, 0, 0, 0, 0, yes),
+            row(3, 34, none, unspecified, 0, 0, 0, 0, 0, 0, 0, 0, 2, no),
+            row(3, 35, s, positive, 0, 0, 72, 0, 0, 0, 0, 0, 0, yes),
+            row(3, 35, r, positive, 0, 0, 73, 0, 0, 0, 0, 0, 0, yes),
+            row(3, 35, none, unspecified, 0, 0, 0, 0, 0, 0, 0, 0, 2, no),
+            row(3, 36, s, positive, 0, 0, 74, 0, 0, 0, 0, 0, 0, yes),
+            row(3, 36, r, positive, 0, 0, 75, 0, 0, 0, 0, 0, 0, yes),
+            row(3, 36, none, unspecified, 0, 0, 0, 0, 0, 0, 0, 0, 2, no),
+            row(3, 10, s, positive, 0, 7362, 76, 0, 1, 0, 0, 0, 0, yes),
+            row(3, 10, r, positive, 0, 7362, 77, 0, 1, 0, 0, 0, 1, yes),
+            row(3, 10, none, positive, 1, 7362, 76, 0, 1, 0, 0, 0, 1, yes),
+            row(3, 11, s, positive, 0, 7363, 78, 0, 1, 0, 0, 0, 0, yes),
+            row(3, 11, r, positive, 0, 7363, 79, 0, 1, 0, 0, 0, 1, yes),
+            row(3, 11, none, positive, 1, 7363, 78, 0, 1, 0, 0, 0, 1, yes),
+            row(3, 12, s, positive, 0, 7364, 80, 0, 1, 0, 0, 0, 0, yes),
+            row(3, 12, r, positive, 0, 7364, 81, 0, 1, 0, 0, 0, 1, yes),
+            row(3, 12, none, positive, 1, 7364, 80, 0, 1, 0, 0, 0, 1, yes),
+            row(3, 13, s, positive, 0, 7365, 82, 0, 1, 0, 0, 0, 0, yes),
+            row(3, 13, r, positive, 0, 7365, 83, 0, 1, 0, 0, 0, 1, yes),
+            row(3, 13, none, positive, 1, 7365, 82, 0, 1, 0, 0, 0, 1, yes),
+            row(3, 16, s, positive, 0, 7366, 84, 0, 1, 0, 0, 0, 0, yes),
+            row(3, 16, r, positive, 0, 7366, 85, 0, 1, 0, 0, 0, 1, yes),
+            row(3, 16, none, positive, 1, 7366, 84, 0, 1, 0, 0, 0, 1, yes),
+            row(3, 17, s, positive, 0, 7367, 86, 0, 1, 0, 0, 0, 0, yes),
+            row(3, 17, r, positive, 0, 7367, 87, 0, 1, 0, 0, 0, 1, yes),
+            row(3, 17, none, positive, 1, 7367, 86, 0, 1, 0, 0, 0, 1, yes),
+            row(3, 18, s, positive, 0, 7368, 88, 0, 1, 0, 0, 0, 0, yes),
+            row(3, 18, r, positive, 0, 7368, 89, 0, 1, 0, 0, 0, 1, yes),
+            row(3, 18, none, positive, 1, 7368, 88, 0, 1, 0, 0, 0, 1, yes),
+            row(3, 19, s, positive, 0, 7369, 90, 0, 1, 0, 0, 0, 0, yes),
+            row(3, 19, r, positive, 0, 7369, 91, 0, 1, 0, 0, 0, 1, yes),
+            row(3, 19, none, positive, 1, 7369, 90, 0, 1, 0, 0, 0, 1, yes),
+            row(3, 0, array, positive, 0, 0, 0, 0, 54, 38, 0, 80, 0, no),
+        ]
+    }
+
+    plot {
+        columns = [operation, group, text, a, b, c, d]
+        rows = [
+            row(begin_fuses, 0, "", 0, 0, 0, 0),
+            row(setup_loop, 1, " ", 4, 1, 5, 7360),
+            row(text, 1, "CLOCK", 0, 0, 0, 0),
+            row(text, 1, "POLARITY", 0, 0, 0, 0),
+            row(address, 1, "", 5, 0, 0, 0),
+            row(fuses_forward, 1, "HL", 5, 0, 1, 1),
+            row(add, 1, " ", 5, 1, 0, 0),
+            row(text, 1, " OE", 0, 0, 0, 0),
+            row(address, 1, "", 5, 0, 0, 0),
+            row(fuses_forward, 1, "A.", 5, 0, 1, 1),
+            row(add, 1, " ", 5, 1, 0, 0),
+            row(text, 1, " OUTPUT", 0, 0, 0, 0),
+            row(text, 1, "CONFIG", 0, 0, 0, 0),
+            row(address, 1, "", 5, 0, 0, 0),
+            row(fuses_forward, 1, "A.", 5, 0, 1, 8),
+            row(newline, 1, " ", 1, 0, 0, 0),
+            row(end_row, 1, " ", 0, 0, 0, 0),
+            row(setup_loop, 2, " ", 1, 80, 2, 0),
+            row(address, 2, "", 2, 0, 0, 0),
+            row(fuses_forward, 2, "0HL-", 2, 0, 2, 26),
+            row(fuses_forward, 2, "0HL-", 2, 26, 2, 16),
+            row(fuses_forward, 2, "0HL-", 2, 42, 2, 12),
+            row(fuses_forward, 2, "A.", 2, 54, 1, 1),
+            row(fuses_forward, 2, "0HL-", 2, 55, 2, 2),
+            row(fuses_forward, 2, "A.", 2, 57, 1, 1),
+            row(fuses_forward, 2, "0HL-", 2, 58, 2, 2),
+            row(fuses_forward, 2, "0HL-", 2, 60, 2, 16),
+            row(fuses_forward, 2, "0HL-", 2, 76, 2, 16),
+            row(newline, 2, " ", 1, 0, 0, 0),
+            row(end_row, 2, " ", 0, 0, 2, 92),
+            row(end, 0, "", 0, 0, 0, 0),
+        ]
+    }
+
+    initialization {
+        defaults {
+            first_fuse = 7360
+            last_fuse = 7360
+            value = 0
+        }
+        columns = []
+        rows = [
+            row(),
+        ]
+    }
+
+    connections {
+        defaults {
+            compiler_link = no
+        }
+        columns = [line, pin, function, group, member, source_pin, config_value]
+        rows = [
+            row(34, 2, ck, 1, 1, 1, 0),
+            row(34, 2, inverted_clock, 1, 1, 1, 1),
+            row(3, 29, s, 1, 0, 0, 0),
+            row(3, 29, r, 1, 0, 0, 0),
+            row(3, 30, s, 1, 0, 0, 0),
+            row(3, 30, r, 1, 0, 0, 0),
+            row(3, 31, s, 1, 0, 0, 0),
+            row(3, 31, r, 1, 0, 0, 0),
+            row(3, 32, s, 1, 0, 0, 0),
+            row(3, 32, r, 1, 0, 0, 0),
+            row(3, 33, s, 1, 0, 0, 0),
+            row(3, 33, r, 1, 0, 0, 0),
+            row(3, 34, s, 1, 0, 0, 0),
+            row(3, 34, r, 1, 0, 0, 0),
+            row(3, 35, s, 1, 0, 0, 0),
+            row(3, 35, r, 1, 0, 0, 0),
+            row(3, 36, s, 1, 0, 0, 0),
+            row(3, 36, r, 1, 0, 0, 0),
+            row(3, 44, s, 1, 0, 0, 0),
+            row(3, 44, r, 1, 0, 0, 0),
+            row(3, 46, s, 1, 0, 0, 0),
+            row(3, 46, r, 1, 0, 0, 0),
+            row(3, 10, s, 1, 0, 0, 0),
+            row(3, 10, r, 1, 0, 0, 0),
+            row(3, 11, s, 1, 0, 0, 0),
+            row(3, 11, r, 1, 0, 0, 0),
+            row(3, 12, s, 1, 0, 0, 0),
+            row(3, 12, r, 1, 0, 0, 0),
+            row(3, 13, s, 1, 0, 0, 0),
+            row(3, 13, r, 1, 0, 0, 0),
+            row(3, 16, s, 1, 0, 0, 0),
+            row(3, 16, r, 1, 0, 0, 0),
+            row(3, 17, s, 1, 0, 0, 0),
+            row(3, 17, r, 1, 0, 0, 0),
+            row(3, 18, s, 1, 0, 0, 0),
+            row(3, 18, r, 1, 0, 0, 0),
+            row(3, 19, s, 1, 0, 0, 0),
+            row(3, 19, r, 1, 0, 0, 0),
+            row(22, 37, cnt, 1, 0, 1, 0),
+            row(23, 38, cnt, 1, 0, 1, 0),
+            row(24, 39, cnt, 1, 0, 1, 0),
+            row(25, 40, cnt, 1, 0, 1, 0),
+            row(26, 41, cnt, 1, 0, 1, 0),
+            row(27, 42, cnt, 1, 0, 1, 0),
+            row(13, 20, oe_term, 2, 1, 1, 0),
+            row(3, 10, s, 2, 0, 0, 0),
+            row(3, 10, r, 2, 0, 0, 0),
+            row(3, 10, none, 2, 0, 0, 0),
+            row(3, 11, s, 2, 0, 0, 0),
+            row(3, 11, r, 2, 0, 0, 0),
+            row(3, 11, none, 2, 0, 0, 0),
+            row(3, 12, s, 2, 0, 0, 0),
+            row(3, 12, r, 2, 0, 0, 0),
+            row(3, 12, none, 2, 0, 0, 0),
+            row(3, 13, s, 2, 0, 0, 0),
+            row(3, 13, r, 2, 0, 0, 0),
+            row(3, 13, none, 2, 0, 0, 0),
+            row(3, 16, s, 2, 0, 0, 0),
+            row(3, 16, r, 2, 0, 0, 0),
+            row(3, 16, none, 2, 0, 0, 0),
+            row(3, 17, s, 2, 0, 0, 0),
+            row(3, 17, r, 2, 0, 0, 0),
+            row(3, 17, none, 2, 0, 0, 0),
+            row(3, 18, s, 2, 0, 0, 0),
+            row(3, 18, r, 2, 0, 0, 0),
+            row(3, 18, none, 2, 0, 0, 0),
+            row(3, 19, s, 2, 0, 0, 0),
+            row(3, 19, r, 2, 0, 0, 0),
+            row(3, 19, none, 2, 0, 0, 0),
+        ]
+    }
+
+    fitter_arguments {
+        defaults {
+            kind = none
+            text = ""
+        }
+        columns = []
+        rows = [
+            row(),
+        ]
+    }
+
+}

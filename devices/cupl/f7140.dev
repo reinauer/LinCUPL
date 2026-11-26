@@ -1,0 +1,329 @@
+# Device library interface; field values and record order are retained.
+# Compiler modes are ABI settings, not inferred hardware properties.
+format = 1
+
+device f7140 {
+    representation = library
+
+    package {
+        pins = 40
+        drawing_style = 0
+        internal_nodes = 144
+    }
+
+    power {
+        ground = 0
+        supply = 0
+    }
+
+    fuses {
+        count = 22103
+        default = 0
+    }
+
+    signature {
+        bits = 16
+        first_fuse = 22087
+    }
+
+    compiler {
+        revision = 2
+        family = external_fitter
+        extra_nodes_a = 0
+        extra_nodes_b = 24
+        extra_nodes_c = 0
+        register_resources = 48
+        clocked_resources = 24
+        default_extension = none
+        product_rows = 120
+        initial_term_capacity = 200
+        array_slots = 1
+        input_line_slots = 101
+        extra_symbols = 0
+        download = jedec
+    }
+
+    simulation {
+        output_enable_mode = 0
+        output_polarity_mode = 0
+        internal_polarity_mode = 0
+        power_up = low
+        preload_polarity = 0
+    }
+
+    prom {
+        address_bits = 0
+        data_width = 24
+    }
+
+    fitter {
+        input_format = 8
+        name = "ict7140"
+        arguments = ""
+        pla_options = [tool_header, jedec_keyword, omit_plus, omit_pin_zero]
+        part = ""
+    }
+
+    extensions {
+        columns = [name, function]
+        rows = [
+            row("oe", oe),
+            row("io", io),
+            row("d", d),
+            row("t", t),
+            row("ar", ar),
+            row("ap", ap),
+            row("j", j),
+            row("k", k),
+            row("ck", ck),
+            row("iod", iod),
+            row("iol", iol),
+            row("dq", dq),
+            row("lq", lq),
+            row("ffm", ffm),
+        ]
+    }
+
+    fitter_extensions {
+        columns = [extension, alias]
+        rows = [
+            row("d", "D"),
+            row("t", "T"),
+            row("j", "J"),
+            row("k", "K"),
+            row("l", ""),
+            row("dq", "Q"),
+            row("tq", "Q"),
+            row("lq", "Q"),
+            row("oe", "OE"),
+            row("ar", "AR"),
+            row("ap", "AP"),
+            row("sp", "PR"),
+            row("sr", "RE"),
+            row("ck", "C"),
+            row("le", "LH"),
+            row("io", "PIN"),
+            row("iod", "Q"),
+            row("iol", "Q"),
+            row("ioar", "AR"),
+            row("ioap", "AP"),
+            row("iosp", "PR"),
+            row("iosr", "RE"),
+            row("iock", "C"),
+            row("int", "X"),
+            row("ckmux", "C"),
+            row("lemux", "LH"),
+            row("oemux", "OE"),
+            row("ce", "CE"),
+            row("reg", "Q"),
+            row("ffm", "FC"),
+            row("apmux", "AP"),
+            row("armux", "AR"),
+        ]
+    }
+
+    pin_functions {
+        defaults {
+            variant = default
+            true_column = 0
+            complement_column = 0
+            config_value = 0
+            config_bits = 0
+            config_first_fuse = 0
+        }
+        columns = [line, pin, function, compiler_type]
+        rows = [
+            row(0, 0, none, not_connected),
+            row(1, 1, none, clock_input),
+            row(2, 2, none, unspecified),
+            row(3, 3, none, unspecified),
+            row(4, 4, none, unspecified),
+            row(5, 5, none, registered),
+            row(5, 5, none, combinational),
+            row(5, 5, io, combinational),
+            row(6, 6, none, registered),
+            row(6, 6, none, combinational),
+            row(6, 6, io, combinational),
+            row(7, 7, none, registered),
+            row(7, 7, none, combinational),
+            row(7, 7, io, combinational),
+            row(8, 8, none, registered),
+            row(8, 8, none, combinational),
+            row(8, 8, io, combinational),
+            row(9, 9, none, registered),
+            row(9, 9, none, combinational),
+            row(9, 9, io, combinational),
+            row(10, 10, none, registered),
+            row(10, 10, none, combinational),
+            row(10, 10, io, combinational),
+            row(11, 11, none, registered),
+            row(11, 11, none, combinational),
+            row(11, 11, io, combinational),
+            row(12, 12, none, registered),
+            row(12, 12, none, combinational),
+            row(12, 12, io, combinational),
+            row(13, 13, none, registered),
+            row(13, 13, none, combinational),
+            row(13, 13, io, combinational),
+            row(14, 14, none, registered),
+            row(14, 14, none, combinational),
+            row(14, 14, io, combinational),
+            row(15, 15, none, registered),
+            row(15, 15, none, combinational),
+            row(15, 15, io, combinational),
+            row(16, 16, none, registered),
+            row(16, 16, none, combinational),
+            row(16, 16, io, combinational),
+            row(17, 17, none, unspecified),
+            row(18, 18, none, unspecified),
+            row(19, 19, none, unspecified),
+            row(20, 20, none, ground),
+            row(21, 21, none, clock_input),
+            row(22, 22, none, unspecified),
+            row(23, 23, none, unspecified),
+            row(24, 24, none, unspecified),
+            row(25, 25, none, registered),
+            row(25, 25, none, combinational),
+            row(25, 25, io, combinational),
+            row(26, 26, none, registered),
+            row(26, 26, none, combinational),
+            row(26, 26, io, combinational),
+            row(27, 27, none, registered),
+            row(27, 27, none, combinational),
+            row(27, 27, io, combinational),
+            row(28, 28, none, registered),
+            row(28, 28, none, combinational),
+            row(28, 28, io, combinational),
+            row(29, 29, none, registered),
+            row(29, 29, none, combinational),
+            row(29, 29, io, combinational),
+            row(30, 30, none, registered),
+            row(30, 30, none, combinational),
+            row(30, 30, io, combinational),
+            row(31, 31, none, registered),
+            row(31, 31, none, combinational),
+            row(31, 31, io, combinational),
+            row(32, 32, none, registered),
+            row(32, 32, none, combinational),
+            row(32, 32, io, combinational),
+            row(33, 33, none, registered),
+            row(33, 33, none, combinational),
+            row(33, 33, io, combinational),
+            row(34, 34, none, registered),
+            row(34, 34, none, combinational),
+            row(34, 34, io, combinational),
+            row(35, 35, none, registered),
+            row(35, 35, none, combinational),
+            row(35, 35, io, combinational),
+            row(36, 36, none, registered),
+            row(36, 36, none, combinational),
+            row(36, 36, io, combinational),
+            row(37, 37, none, unspecified),
+            row(38, 38, none, unspecified),
+            row(39, 39, none, unspecified),
+            row(40, 40, none, supply),
+            row(41, 55, none, registered),
+            row(42, 56, none, registered),
+            row(43, 57, none, registered),
+            row(44, 58, none, registered),
+            row(45, 59, none, registered),
+            row(46, 60, none, registered),
+            row(47, 61, none, registered),
+            row(48, 62, none, registered),
+            row(49, 63, none, registered),
+            row(50, 64, none, registered),
+            row(51, 65, none, registered),
+            row(52, 66, none, registered),
+            row(53, 75, none, registered),
+            row(54, 76, none, registered),
+            row(55, 77, none, registered),
+            row(56, 78, none, registered),
+            row(57, 79, none, registered),
+            row(58, 80, none, registered),
+            row(59, 81, none, registered),
+            row(60, 82, none, registered),
+            row(61, 83, none, registered),
+            row(62, 84, none, registered),
+            row(63, 85, none, registered),
+            row(64, 86, none, registered),
+            row(65, 102, none, registered),
+            row(66, 103, none, registered),
+            row(67, 104, none, registered),
+            row(68, 117, none, registered),
+            row(69, 118, none, registered),
+            row(70, 119, none, registered),
+            row(71, 122, none, registered),
+            row(72, 123, none, registered),
+            row(73, 124, none, registered),
+            row(74, 137, none, registered),
+            row(75, 138, none, registered),
+            row(76, 139, none, registered),
+            row(77, 105, none, registered),
+            row(78, 106, none, registered),
+            row(79, 107, none, registered),
+            row(80, 108, none, registered),
+            row(81, 109, none, registered),
+            row(82, 110, none, registered),
+            row(83, 111, none, registered),
+            row(84, 112, none, registered),
+            row(85, 113, none, registered),
+            row(86, 114, none, registered),
+            row(87, 115, none, registered),
+            row(88, 116, none, registered),
+            row(89, 125, none, registered),
+            row(90, 126, none, registered),
+            row(91, 127, none, registered),
+            row(92, 128, none, registered),
+            row(93, 129, none, registered),
+            row(94, 130, none, registered),
+            row(95, 131, none, registered),
+            row(96, 132, none, registered),
+            row(97, 133, none, registered),
+            row(98, 134, none, registered),
+            row(99, 135, none, registered),
+            row(100, 136, none, registered),
+        ]
+    }
+
+    node_functions {
+        defaults {
+            array = 0
+            pin = 0
+            function = none
+            polarity = unspecified
+            invert = no
+            select_value = 0
+            config_value = 0
+            first_row_fuse = 0
+            first_or_fuse = 0
+            config_first_fuse = 0
+            pair_first_fuse = 0
+            row_width = 0
+            or_width = 0
+            config_bits = 0
+            pair_bits = 0
+            max_terms = 0
+            split_terms = 0
+            default_rule = 0
+            has_default = no
+            sharing_mode = 0
+            active = no
+            alternate_step = 0
+        }
+        columns = []
+        rows = [
+            row(),
+        ]
+    }
+
+    fitter_arguments {
+        columns = [kind, text]
+        rows = [
+            row(pla_file, ""),
+            row(literal, "-log"),
+            row(file_suffix, ".log"),
+            row(none, ""),
+        ]
+    }
+
+}

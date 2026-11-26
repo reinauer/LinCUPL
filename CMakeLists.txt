@@ -16,7 +16,8 @@ endif()
 
 option(LINCUPL_BUILD_GUI "Build Qt6 GUI applications" ON)
 option(LINCUPL_USE_QTHELP "Show the GUI help with Qt Help (QtHelp module and qhelpgenerator) when both are found; otherwise a plain page viewer is used" ON)
-option(LINCUPL_REQUIRE_TEST_DATA "Require Python regression tests and fail when device data is missing" OFF)
+option(LINCUPL_REQUIRE_TEST_DATA "Require reference device data for comparison tests" OFF)
+find_package(Python3 REQUIRED COMPONENTS Interpreter)
 
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED ON)
@@ -294,69 +295,45 @@ endif()
 set(LINCUPL_SOURCE_SHARE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/share/lincupl")
 set(LINCUPL_BUILD_SHARE_DIR "${CMAKE_BINARY_DIR}/share/lincupl")
 
-if(NOT EXISTS "${LINCUPL_SOURCE_SHARE_DIR}/Atmel.dl")
-    message(STATUS "WinCUPL device libraries (Atmel.dl) not found in ${LINCUPL_SOURCE_SHARE_DIR} — run ./wincupl-extract-data before using device-dependent tools.")
-endif()
-
-# Stage share/lincupl (including Macro/, Examples/Atmel/, and Fitters/) when extracted
+# Optional examples, macros and reference libraries are staged separately.
+# The default library always comes from the checked-in device descriptions.
 file(MAKE_DIRECTORY "${LINCUPL_BUILD_SHARE_DIR}")
-if(EXISTS "${LINCUPL_SOURCE_SHARE_DIR}" AND NOT LINCUPL_SOURCE_SHARE_DIR STREQUAL LINCUPL_BUILD_SHARE_DIR)
-    file(COPY "${LINCUPL_SOURCE_SHARE_DIR}/" DESTINATION "${LINCUPL_BUILD_SHARE_DIR}")
-endif()
-
-set(_stage_cmds
-    COMMAND "${CMAKE_COMMAND}" -E make_directory "${LINCUPL_BUILD_SHARE_DIR}"
-)
-if(EXISTS "${LINCUPL_SOURCE_SHARE_DIR}" AND NOT LINCUPL_SOURCE_SHARE_DIR STREQUAL LINCUPL_BUILD_SHARE_DIR)
-    list(APPEND _stage_cmds
-        COMMAND "${CMAKE_COMMAND}" -E copy_directory "${LINCUPL_SOURCE_SHARE_DIR}" "${LINCUPL_BUILD_SHARE_DIR}"
-    )
-endif()
-
 add_custom_target(lincupl_data ALL
-    ${_stage_cmds}
-    COMMENT "Staging WinCUPL device libraries and support data into ${LINCUPL_BUILD_SHARE_DIR}"
+    COMMAND "${CMAKE_COMMAND}" "-DSOURCE=${LINCUPL_SOURCE_SHARE_DIR}"
+            "-DDESTINATION=${LINCUPL_BUILD_SHARE_DIR}"
+            -P "${CMAKE_CURRENT_SOURCE_DIR}/cmake/stage_data.cmake"
+    COMMENT "Staging optional support data"
     VERBATIM
 )
 
+set(LINCUPL_MERGED_DL "${LINCUPL_BUILD_SHARE_DIR}/lincupl.dl")
+file(GLOB_RECURSE _device_sources CONFIGURE_DEPENDS
+    "${CMAKE_CURRENT_SOURCE_DIR}/devices/*.dev"
+    "${CMAKE_CURRENT_SOURCE_DIR}/devices/manifest.json"
+    "${CMAKE_CURRENT_SOURCE_DIR}/devices/*/manifest.json")
+file(GLOB _device_compiler CONFIGURE_DEPENDS
+    "${CMAKE_CURRENT_SOURCE_DIR}/tools/devlang/*.py")
+add_custom_command(
+    OUTPUT "${LINCUPL_MERGED_DL}"
+    COMMAND "${CMAKE_COMMAND}" "-DPYTHON=${Python3_EXECUTABLE}"
+            "-DCOMPILER=${CMAKE_CURRENT_SOURCE_DIR}/tools/devcompile.py"
+            "-DSOURCE=${CMAKE_CURRENT_SOURCE_DIR}/devices"
+            "-DOUT=${LINCUPL_MERGED_DL}"
+            -P "${CMAKE_CURRENT_SOURCE_DIR}/cmake/compile_devices.cmake"
+    DEPENDS ${_device_sources} ${_device_compiler}
+            "${CMAKE_CURRENT_SOURCE_DIR}/tools/devcompile.py"
+            "${CMAKE_CURRENT_SOURCE_DIR}/cmake/compile_devices.cmake"
+    COMMENT "Compiling lincupl.dl from device descriptions"
+    VERBATIM
+)
+add_custom_target(lincupl_dl ALL DEPENDS "${LINCUPL_MERGED_DL}")
+add_dependencies(lincupl_data lincupl_dl)
 foreach(_tgt IN ITEMS cupl csim cbld backpin cfitr jedcompare ${LINCUPL_FIT150X_PROGRAMS} lincupl linsim)
     if(TARGET ${_tgt})
         add_dependencies(${_tgt} lincupl_data)
     endif()
 endforeach()
-
-# lincupl.dl, the default library of the tools: the devices of Atmel.dl, then
-# those that only cupl.dl has, copied by our cbld (cmake/make_lincupl_dl.cmake).
-# Atmel.dl and cupl.dl stay as they are, next to it.
-set(LINCUPL_MERGED_DL "${LINCUPL_BUILD_SHARE_DIR}/lincupl.dl")
-if(EXISTS "${LINCUPL_SOURCE_SHARE_DIR}/Atmel.dl" AND EXISTS "${LINCUPL_SOURCE_SHARE_DIR}/cupl.dl")
-    if(CMAKE_CROSSCOMPILING)
-        message(STATUS "Cross-compiling: lincupl.dl is not built (it needs cbld to run on the build machine)")
-    else()
-        add_custom_command(
-            OUTPUT "${LINCUPL_MERGED_DL}"
-            COMMAND "${CMAKE_COMMAND}" -DCBLD=$<TARGET_FILE:cbld>
-                    "-DATMEL=${LINCUPL_SOURCE_SHARE_DIR}/Atmel.dl"
-                    "-DCUPL=${LINCUPL_SOURCE_SHARE_DIR}/cupl.dl"
-                    "-DOUT=${LINCUPL_MERGED_DL}"
-                    -P "${CMAKE_CURRENT_SOURCE_DIR}/cmake/make_lincupl_dl.cmake"
-            DEPENDS cbld
-                    "${LINCUPL_SOURCE_SHARE_DIR}/Atmel.dl"
-                    "${LINCUPL_SOURCE_SHARE_DIR}/cupl.dl"
-                    "${CMAKE_CURRENT_SOURCE_DIR}/cmake/make_lincupl_dl.cmake"
-            COMMENT "Building lincupl.dl from Atmel.dl and cupl.dl"
-            VERBATIM
-        )
-        add_custom_target(lincupl_dl ALL DEPENDS "${LINCUPL_MERGED_DL}")
-        add_dependencies(lincupl_dl lincupl_data)
-        foreach(_tgt IN ITEMS lincupl linsim)
-            if(TARGET ${_tgt})
-                add_dependencies(${_tgt} lincupl_dl)
-            endif()
-        endforeach()
-        install(FILES "${LINCUPL_MERGED_DL}" DESTINATION "${CMAKE_INSTALL_DATADIR}/lincupl")
-    endif()
-endif()
+install(FILES "${LINCUPL_MERGED_DL}" DESTINATION "${CMAKE_INSTALL_DATADIR}/lincupl")
 
 # Help pages of the GUI programs (doc/help): staged into
 # ${LINCUPL_BUILD_SHARE_DIR}/help, with the Qt Help files made from them
@@ -373,22 +350,49 @@ endif()
 # ------------------------------------------------------------------------------
 # Tests
 # ------------------------------------------------------------------------------
-# csim -f (simulate the fuse map of a JEDEC file) against csim on the
-# compiled design, over the designs of tests/csim_jed and doc/help/examples
-# (and the installed examples when the device libraries were extracted).  The
-# test is skipped where no device library is found (build/share/lincupl, else
-# the directory LINCUPL_SHARE names).
+# Native regressions use the generated library. Additional catalog
+# comparisons use optional reference libraries staged with support data.
 enable_testing()
 add_executable(devlib_normalize_test tests/devlib_normalize.c)
 target_link_libraries(devlib_normalize_test PRIVATE lincupl_shared)
 target_compile_options(devlib_normalize_test PRIVATE ${_cli_warn_flags})
 add_test(NAME devlib_normalize COMMAND devlib_normalize_test)
-if(LINCUPL_REQUIRE_TEST_DATA)
-    find_package(Python3 REQUIRED COMPONENTS Interpreter)
-else()
-    find_package(Python3 COMPONENTS Interpreter QUIET)
-endif()
+add_executable(devlib_read_test tests/devlib_read.c)
+target_link_libraries(devlib_read_test PRIVATE lincupl_shared)
+target_compile_options(devlib_read_test PRIVATE ${_cli_warn_flags})
 if(Python3_EXECUTABLE)
+    add_test(NAME devcompile
+        COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/devcompile.py")
+    add_test(NAME devcatalog
+        COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/devcatalog.py")
+    add_test(NAME devcatalog_sources
+        COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/devcatalog_sources.py")
+    add_test(NAME devcatalog_libraries
+        COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/devcatalog_libraries.py"
+            "$<TARGET_FILE_DIR:csim>")
+    add_test(NAME devcompile_libraries
+        COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/devcompile_libraries.py"
+            "$<TARGET_FILE_DIR:csim>")
+    add_test(NAME devpackages
+        COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/devpackages.py"
+            "$<TARGET_FILE_DIR:csim>")
+    add_test(NAME devgal22v10
+        COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/devgal22v10.py"
+            "$<TARGET_FILE_DIR:csim>")
+    add_test(NAME devatf2500
+        COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/devatf2500.py"
+            "$<TARGET_FILE_DIR:csim>")
+    set_tests_properties(devcompile PROPERTIES TIMEOUT 30)
+    set_tests_properties(devcatalog PROPERTIES TIMEOUT 30)
+    set_tests_properties(devcatalog_sources PROPERTIES TIMEOUT 120)
+    set_tests_properties(devcatalog_libraries PROPERTIES TIMEOUT 300)
+    set_tests_properties(devcompile_libraries PROPERTIES TIMEOUT 600)
+    set_tests_properties(devpackages devgal22v10 devatf2500 PROPERTIES TIMEOUT 600)
+    if(NOT LINCUPL_REQUIRE_TEST_DATA)
+        set_tests_properties(devcatalog_libraries PROPERTIES SKIP_RETURN_CODE 77)
+        set_tests_properties(devcompile_libraries PROPERTIES SKIP_RETURN_CODE 77)
+        set_tests_properties(devpackages devgal22v10 devatf2500 PROPERTIES SKIP_RETURN_CODE 77)
+    endif()
     add_executable(runfit_test tests/runfit.c)
     target_link_libraries(runfit_test PRIVATE lincupl_shared)
     add_test(NAME runfit
@@ -416,8 +420,12 @@ if(Python3_EXECUTABLE)
         COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/csim_atf_jed.py"
             "$<TARGET_FILE_DIR:csim>")
     set_tests_properties(csim_atf_jed PROPERTIES TIMEOUT 600)
+    add_test(NAME atf750c_mapping
+        COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/atf750c_mapping.py"
+            "$<TARGET_FILE_DIR:csim>")
+    set_tests_properties(atf750c_mapping PROPERTIES TIMEOUT 600)
     if(NOT LINCUPL_REQUIRE_TEST_DATA)
-        set_tests_properties(csim_jed csim_atf_jed PROPERTIES SKIP_RETURN_CODE 77)
+        set_tests_properties(csim_jed csim_atf_jed atf750c_mapping PROPERTIES SKIP_RETURN_CODE 77)
     endif()
     file(GLOB _defect_cases CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/tests/defects/*.json")
     foreach(_case IN LISTS _defect_cases)
@@ -448,10 +456,12 @@ endif()
 install(TARGETS ${_install_targets}
     RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
 )
-install(FILES doc/jed-tools.md DESTINATION "${CMAKE_INSTALL_DOCDIR}")
+install(FILES doc/jed-tools.md doc/device-language.md doc/device-implementation.md
+    DESTINATION "${CMAKE_INSTALL_DOCDIR}")
 
 if(EXISTS "${LINCUPL_SOURCE_SHARE_DIR}")
     install(DIRECTORY "${LINCUPL_SOURCE_SHARE_DIR}/"
         DESTINATION "${CMAKE_INSTALL_DATADIR}/lincupl"
+        PATTERN "lincupl.dl" EXCLUDE
     )
 endif()

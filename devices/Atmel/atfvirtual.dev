@@ -1,0 +1,189 @@
+# Device library interface; field values and record order are retained.
+# Compiler modes are ABI settings, not inferred hardware properties.
+format = 1
+
+device atfvirtual {
+    representation = library
+
+    package {
+        pins = 44
+        drawing_style = 1
+        internal_nodes = 255
+    }
+
+    power {
+        ground = 0
+        supply = 0
+    }
+
+    fuses {
+        count = 99999
+        default = 0
+    }
+
+    signature {
+        bits = 0
+        first_fuse = 0
+    }
+
+    compiler {
+        revision = 1
+        family = external_fitter
+        extra_nodes_a = 0
+        extra_nodes_b = 0
+        extra_nodes_c = 0
+        register_resources = 255
+        clocked_resources = 199
+        default_extension = none
+        product_rows = 5000
+        initial_term_capacity = 2000
+        array_slots = 1
+        input_line_slots = 109
+        extra_symbols = 0
+        download = jedec
+    }
+
+    simulation {
+        output_enable_mode = 0
+        output_polarity_mode = 0
+        internal_polarity_mode = 0
+        power_up = low
+        preload_polarity = 0
+    }
+
+    prom {
+        address_bits = 0
+        data_width = 32
+    }
+
+    fitter {
+        input_format = 1
+        name = "find1504"
+        arguments = ""
+        pla_options = [tool_header, jedec_keyword, copy_tt2, omit_pin_zero, short_labels]
+        part = ""
+    }
+
+    extensions {
+        columns = [name, function]
+        rows = [
+            row("d", d),
+            row("t", t),
+            row("s", s),
+            row("r", r),
+            row("oe", oe),
+            row("oemux", oemux),
+            row("ck", ck),
+            row("ckmux", ckmux),
+            row("ar", ar),
+            row("dq", dq),
+            row("lq", lq),
+            row("io", io),
+            row("iod", iod),
+            row("iol", iol),
+            row("iock", iock),
+            row("ioar", ioar),
+            row("dfb", dfb),
+            row("lfb", lfb),
+        ]
+    }
+
+    fitter_extensions {
+        columns = [extension, alias]
+        rows = [
+            row("d", "REG"),
+            row("t", "T"),
+            row("l", "L"),
+            row("dq", "R"),
+            row("tq", "R"),
+            row("lq", "L"),
+            row("oe", "OE"),
+            row("ar", "AR"),
+            row("ap", "AP"),
+            row("sp", "P"),
+            row("sr", "SR"),
+            row("ck", "C"),
+            row("le", "LE"),
+            row("io", "PIN"),
+            row("iod", "R"),
+            row("iol", "L"),
+            row("ioar", "AR"),
+            row("ioap", "AP"),
+            row("iosp", "PR"),
+            row("iosr", "RE"),
+            row("iock", "C"),
+            row("int", "X"),
+            row("ckmux", "C"),
+            row("lemux", "LH"),
+            row("oemux", "OE"),
+            row("j", "J"),
+            row("k", "K"),
+            row("ce", "CE"),
+            row("reg", "Q"),
+            row("dfb", "DFB"),
+            row("lfb", "LFB"),
+        ]
+    }
+
+    pin_functions {
+        defaults {
+            line = 0
+            pin = 0
+            function = none
+            compiler_type = not_connected
+            variant = default
+            true_column = 0
+            complement_column = 0
+            config_value = 0
+            config_bits = 0
+            config_first_fuse = 65536
+        }
+        columns = []
+        rows = [
+            row(),
+        ]
+    }
+
+    node_functions {
+        defaults {
+            array = 0
+            pin = 0
+            function = none
+            polarity = unspecified
+            invert = no
+            select_value = 0
+            config_value = 0
+            first_row_fuse = 65536
+            first_or_fuse = 0
+            config_first_fuse = 65536
+            pair_first_fuse = 0
+            row_width = 0
+            or_width = 0
+            config_bits = 0
+            pair_bits = 0
+            max_terms = 0
+            split_terms = 0
+            default_rule = 0
+            has_default = no
+            sharing_mode = 0
+            active = no
+            alternate_step = 0
+        }
+        columns = []
+        rows = [
+            row(),
+        ]
+    }
+
+    fitter_arguments {
+        defaults {
+            kind = none
+            text = ""
+        }
+        columns = []
+        rows = [
+            row(),
+        ]
+    }
+
+}

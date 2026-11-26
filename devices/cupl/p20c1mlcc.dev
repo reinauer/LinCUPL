@@ -1,0 +1,160 @@
+# Device library interface; field values and record order are retained.
+# Compiler modes are ABI settings, not inferred hardware properties.
+format = 1
+
+device p20c1mlcc {
+    representation = library
+
+    package {
+        pins = 28
+        drawing_style = 4
+        internal_nodes = 0
+    }
+
+    power {
+        ground = 14
+        supply = 28
+    }
+
+    fuses {
+        count = 640
+        default = 0
+    }
+
+    signature {
+        bits = 0
+        first_fuse = 0
+    }
+
+    compiler {
+        revision = 8
+        family = pal
+        extra_nodes_a = 0
+        extra_nodes_b = 0
+        extra_nodes_c = 0
+        register_resources = 0
+        clocked_resources = 0
+        default_extension = none
+        product_rows = 16
+        initial_term_capacity = 40
+        array_slots = 2
+        input_line_slots = 27
+        extra_symbols = 0
+        download = jedec
+    }
+
+    simulation {
+        output_enable_mode = 0
+        output_polarity_mode = 0
+        internal_polarity_mode = 0
+        power_up = unknown
+        preload_polarity = 0
+    }
+
+    prom {
+        address_bits = 0
+        data_width = 2
+    }
+
+    fitter {
+        input_format = 0
+        name = ""
+        arguments = ""
+        pla_options = []
+        part = ""
+    }
+
+    pin_functions {
+        defaults {
+            function = none
+            variant = default
+            config_value = 0
+            config_bits = 0
+            config_first_fuse = 0
+        }
+        columns = [line, pin, compiler_type, true_column, complement_column]
+        rows = [
+            row(1, 1, unspecified, 2, 3),
+            row(2, 2, unspecified, 0, 1),
+            row(3, 3, unspecified, 4, 5),
+            row(4, 4, unspecified, 8, 9),
+            row(5, 6, unspecified, 12, 13),
+            row(6, 7, unspecified, 16, 17),
+            row(7, 9, unspecified, 20, 21),
+            row(8, 10, unspecified, 24, 25),
+            row(9, 12, unspecified, 28, 29),
+            row(10, 13, unspecified, 32, 33),
+            row(11, 14, unspecified, 36, 37),
+            row(12, 27, unspecified, 6, 7),
+            row(13, 26, unspecified, 10, 11),
+            row(14, 25, unspecified, 14, 15),
+            row(15, 24, unspecified, 18, 19),
+            row(16, 21, unspecified, 22, 23),
+            row(17, 20, unspecified, 26, 27),
+            row(18, 18, unspecified, 30, 31),
+            row(19, 17, unspecified, 34, 35),
+            row(20, 16, unspecified, 38, 39),
+            row(21, 15, ground, 0, 0),
+            row(22, 28, supply, 0, 0),
+            row(23, 5, not_connected, 0, 0),
+            row(24, 8, not_connected, 0, 0),
+            row(25, 11, not_connected, 0, 0),
+            row(26, 19, not_connected, 0, 0),
+        ]
+    }
+
+    node_functions {
+        defaults {
+            array = 1
+            invert = no
+            select_value = 0
+            config_value = 0
+            first_row_fuse = 0
+            first_or_fuse = 0
+            config_first_fuse = 0
+            pair_first_fuse = 0
+            or_width = 0
+            config_bits = 0
+            pair_bits = 0
+            split_terms = 0
+            default_rule = 0
+            has_default = no
+            alternate_step = 0
+        }
+        columns = [pin, function, polarity, row_width, max_terms, sharing_mode, active]
+        rows = [
+            row(0, array, negative, 40, 16, 0, no),
+            row(23, none, positive, 0, 0, 1, yes),
+            row(22, none, negative, 0, 0, 1, yes),
+        ]
+    }
+
+    plot {
+        columns = [operation, group, text, a, b, c, d]
+        rows = [
+            row(begin_fuses, 0, "", 0, 0, 0, 0),
+            row(set, 1, " ", 2, 23, 0, 0),
+            row(setup_loop, 1, " ", 1, 16, 0, 0),
+            row(loop, 1, " ", 7, 0, 16, 2),
+            row(print_decrement, 1, "Pin #", 2, 1, 1, 0),
+            row(print_decrement, 1, "Pin #", 2, 1, 1, 0),
+            row(address, 1, " ", 0, 0, 0, 0),
+            row(fuses_forward, 1, "x-", 0, 0, 1, 40),
+            row(newline, 1, " ", 1, 0, 0, 0),
+            row(end_row, 1, " ", 0, 0, 0, 40),
+            row(end, 0, "", 0, 0, 0, 0),
+        ]
+    }
+
+    fitter_arguments {
+        defaults {
+            kind = none
+            text = ""
+        }
+        columns = []
+        rows = [
+            row(),
+        ]
+    }
+
+}

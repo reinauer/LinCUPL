@@ -1,0 +1,253 @@
+# Device library interface; field values and record order are retained.
+# Compiler modes are ABI settings, not inferred hardware properties.
+format = 1
+
+device p7b336 {
+    representation = library
+
+    package {
+        pins = 28
+        drawing_style = 0
+        internal_nodes = 0
+    }
+
+    power {
+        ground = 8
+        supply = 22
+    }
+
+    fuses {
+        count = 384
+        default = 0
+    }
+
+    signature {
+        bits = 0
+        first_fuse = 0
+    }
+
+    compiler {
+        revision = 1
+        family = pal
+        extra_nodes_a = 0
+        extra_nodes_b = 0
+        extra_nodes_c = 0
+        register_resources = 12
+        clocked_resources = 0
+        default_extension = none
+        product_rows = 16
+        initial_term_capacity = 140
+        array_slots = 17
+        input_line_slots = 21
+        extra_symbols = 20
+        download = jedec
+    }
+
+    simulation {
+        output_enable_mode = 3
+        output_polarity_mode = 0
+        internal_polarity_mode = 0
+        power_up = low
+        preload_polarity = 0
+    }
+
+    prom {
+        address_bits = 0
+        data_width = 8
+    }
+
+    fitter {
+        input_format = 0
+        name = ""
+        arguments = ""
+        pla_options = []
+        part = ""
+    }
+
+    extensions {
+        columns = [name, function]
+        rows = [
+            row("oe", oe),
+            row("dq", dq),
+        ]
+    }
+
+    pin_functions {
+        defaults {
+            variant = default
+            config_value = 0
+            config_bits = 0
+            config_first_fuse = 0
+        }
+        columns = [line, pin, function, compiler_type, true_column, complement_column]
+        rows = [
+            row(1, 1, dq, unspecified, 0, 1),
+            row(1, 1, none, unspecified, 0, 0),
+            row(2, 2, dq, unspecified, 2, 3),
+            row(2, 2, none, unspecified, 0, 0),
+            row(3, 3, dq, unspecified, 4, 5),
+            row(3, 3, none, unspecified, 0, 0),
+            row(4, 4, dq, unspecified, 6, 7),
+            row(4, 4, none, unspecified, 0, 0),
+            row(5, 5, dq, unspecified, 8, 9),
+            row(5, 5, none, unspecified, 0, 0),
+            row(6, 6, dq, unspecified, 10, 11),
+            row(6, 6, none, unspecified, 0, 0),
+            row(7, 9, dq, unspecified, 12, 13),
+            row(7, 9, none, unspecified, 0, 0),
+            row(8, 10, dq, unspecified, 14, 15),
+            row(8, 10, none, unspecified, 0, 0),
+            row(9, 11, dq, unspecified, 16, 17),
+            row(9, 11, none, unspecified, 0, 0),
+            row(10, 12, dq, unspecified, 18, 19),
+            row(10, 12, none, unspecified, 0, 0),
+            row(11, 13, dq, unspecified, 20, 21),
+            row(11, 13, none, unspecified, 0, 0),
+            row(12, 14, dq, unspecified, 22, 23),
+            row(12, 14, none, unspecified, 0, 0),
+            row(13, 15, none, output_enable, 0, 0),
+            row(14, 28, none, clock, 0, 0),
+            row(15, 8, none, ground, 0, 0),
+            row(16, 20, none, ground, 0, 0),
+            row(17, 21, none, ground, 0, 0),
+            row(18, 23, none, ground, 0, 0),
+            row(19, 7, none, supply, 0, 0),
+            row(20, 22, none, supply, 0, 0),
+        ]
+    }
+
+    node_functions {
+        defaults {
+            invert = no
+            select_value = 0
+            config_value = 0
+            first_or_fuse = 0
+            config_first_fuse = 0
+            pair_first_fuse = 0
+            or_width = 0
+            config_bits = 0
+            pair_bits = 0
+            split_terms = 0
+            sharing_mode = 0
+            alternate_step = 0
+        }
+        columns = [array, pin, function, polarity, first_row_fuse, row_width, max_terms, default_rule, has_default, active]
+        rows = [
+            row(1, 27, oe, control, 0, 0, 0, 2, no, no),
+            row(1, 27, array, control, 0, 24, 1, 0, no, no),
+            row(2, 27, none, negative, 0, 0, 0, 0, yes, yes),
+            row(2, 27, array, negative, 24, 24, 1, 0, no, no),
+            row(3, 26, oe, control, 0, 0, 0, 2, no, no),
+            row(3, 26, array, control, 48, 24, 1, 0, no, no),
+            row(4, 26, none, negative, 0, 0, 0, 0, yes, yes),
+            row(4, 26, array, negative, 72, 24, 1, 0, no, no),
+            row(5, 25, oe, control, 0, 0, 0, 2, no, no),
+            row(5, 25, array, control, 96, 24, 1, 0, no, no),
+            row(6, 25, none, negative, 0, 0, 0, 0, yes, yes),
+            row(6, 25, array, negative, 120, 24, 1, 0, no, no),
+            row(7, 24, oe, control, 0, 0, 0, 2, no, no),
+            row(7, 24, array, control, 144, 24, 1, 0, no, no),
+            row(8, 24, none, negative, 0, 0, 0, 0, yes, yes),
+            row(8, 24, array, negative, 168, 24, 1, 0, no, no),
+            row(9, 19, oe, control, 0, 0, 0, 2, no, no),
+            row(9, 19, array, control, 192, 24, 1, 0, no, no),
+            row(10, 19, none, negative, 0, 0, 0, 0, yes, yes),
+            row(10, 19, array, negative, 216, 24, 1, 0, no, no),
+            row(11, 18, oe, control, 0, 0, 0, 2, no, no),
+            row(11, 18, array, control, 240, 24, 1, 0, no, no),
+            row(12, 18, none, negative, 0, 0, 0, 0, yes, yes),
+            row(12, 18, array, negative, 264, 24, 1, 0, no, no),
+            row(13, 17, oe, control, 0, 0, 0, 2, no, no),
+            row(13, 17, array, control, 288, 24, 1, 0, no, no),
+            row(14, 17, none, negative, 0, 0, 0, 0, yes, yes),
+            row(14, 17, array, negative, 312, 24, 1, 0, no, no),
+            row(15, 16, oe, control, 0, 0, 0, 2, no, no),
+            row(15, 16, array, control, 336, 24, 1, 0, no, no),
+            row(16, 16, none, negative, 0, 0, 0, 0, yes, yes),
+            row(16, 16, array, negative, 360, 24, 1, 0, no, no),
+        ]
+    }
+
+    plot {
+        columns = [operation, group, text, a, b, c, d]
+        rows = [
+            row(begin_fuses, 0, "", 0, 0, 0, 0),
+            row(setup_loop, 1, " ", 1, 8, 2, 27),
+            row(loop, 1, " ", 3, 0, 2, 2),
+            row(print_decrement, 1, "Pin #", 2, 1, 0, 0),
+            row(newline, 1, "", 1, 0, 0, 0),
+            row(address, 1, " ", 0, 0, 0, 0),
+            row(fuses_forward, 1, "x-", 0, 0, 1, 24),
+            row(newline, 1, " ", 1, 0, 0, 0),
+            row(end_row, 1, " ", 0, 0, 0, 24),
+            row(setup_loop, 2, " ", 1, 8, 2, 19),
+            row(loop, 2, " ", 3, 0, 2, 2),
+            row(print_decrement, 2, "Pin #", 2, 1, 0, 0),
+            row(newline, 2, "", 1, 0, 0, 0),
+            row(address, 2, " ", 0, 0, 0, 0),
+            row(fuses_forward, 2, "x-", 0, 0, 1, 24),
+            row(newline, 2, " ", 1, 0, 0, 0),
+            row(end_row, 2, " ", 0, 0, 0, 24),
+            row(end, 0, "", 0, 0, 0, 0),
+        ]
+    }
+
+    connections {
+        defaults {
+            config_value = 0
+        }
+        columns = [line, pin, function, group, member, source_pin, compiler_link]
+        rows = [
+            row(1, 27, oe, 1, 1, 0, yes),
+            row(2, 27, none, 1, 0, 0, yes),
+            row(3, 26, oe, 2, 1, 0, yes),
+            row(4, 26, none, 2, 0, 0, yes),
+            row(5, 25, oe, 3, 1, 0, yes),
+            row(6, 25, none, 3, 0, 0, yes),
+            row(7, 24, oe, 4, 1, 0, yes),
+            row(8, 24, none, 4, 0, 0, yes),
+            row(9, 19, oe, 5, 1, 0, yes),
+            row(10, 19, none, 5, 0, 0, yes),
+            row(11, 18, oe, 6, 1, 0, yes),
+            row(12, 18, none, 6, 0, 0, yes),
+            row(13, 17, oe, 7, 1, 0, yes),
+            row(14, 17, none, 7, 0, 0, yes),
+            row(15, 16, oe, 8, 1, 0, yes),
+            row(16, 16, none, 8, 0, 0, yes),
+            row(14, 28, ck, 9, 1, 1, yes),
+            row(1, 1, dq, 9, 0, 1, yes),
+            row(2, 2, dq, 9, 0, 1, yes),
+            row(3, 3, dq, 9, 0, 1, yes),
+            row(4, 4, dq, 9, 0, 1, yes),
+            row(5, 5, dq, 9, 0, 1, yes),
+            row(6, 6, dq, 9, 0, 1, yes),
+            row(7, 9, dq, 9, 0, 1, yes),
+            row(8, 10, dq, 9, 0, 1, yes),
+            row(9, 11, dq, 9, 0, 1, yes),
+            row(10, 12, dq, 9, 0, 1, yes),
+            row(11, 13, dq, 9, 0, 1, yes),
+            row(12, 14, dq, 9, 0, 1, yes),
+            row(13, 15, extension_20, 10, 1, 1, no),
+            row(2, 27, none, 10, 0, 0, no),
+            row(4, 26, none, 10, 0, 0, no),
+            row(6, 25, none, 10, 0, 0, no),
+            row(8, 24, none, 10, 0, 0, no),
+            row(10, 19, none, 10, 0, 0, no),
+            row(12, 18, none, 10, 0, 0, no),
+            row(14, 17, none, 10, 0, 0, no),
+            row(16, 16, none, 10, 0, 0, no),
+        ]
+    }
+
+    fitter_arguments {
+        defaults {
+            kind = none
+            text = ""
+        }
+        columns = []
+        rows = [
+            row(),
+        ]
+    }
+
+}
