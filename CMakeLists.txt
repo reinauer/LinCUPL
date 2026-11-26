@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.16)
 
 project(lincupl
-    VERSION 6.0
+    VERSION 1.0.0
     DESCRIPTION "Native CUPL compiler, simulator and ATF150x fitters"
     LANGUAGES C
 )
@@ -403,6 +403,10 @@ if(Python3_EXECUTABLE)
         COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/backpin.py"
             "$<TARGET_FILE:backpin>")
     set_tests_properties(backpin PROPERTIES TIMEOUT 60)
+    add_test(NAME fit150x_builtin
+        COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/fit150x_builtin.py"
+            "$<TARGET_FILE_DIR:cupl>")
+    set_tests_properties(fit150x_builtin PROPERTIES TIMEOUT 600)
     add_test(NAME jedinspect
         COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/jedinspect.py" "$<TARGET_FILE:jedinspect>")
     add_test(NAME jedcompare

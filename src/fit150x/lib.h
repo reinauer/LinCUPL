@@ -180,6 +180,10 @@ typedef struct FitLibKindGroup {
  * success, 0 on failure. */
 int lib_load_library(FitList *params);
 
+/* Default mapping primitives when no external atmel.std is available.
+ * The returned gate list is owned by the library handle. */
+FitList *lib_builtin_atf150x(void);
+
 /* Parser of a gate library file (text, or the binary form that starts with
  * the words 0x30, 0xd).  On success *gates is a list of FitLibGate and
  * *header a FitLibHeader, and 1 is returned; on failure both are released

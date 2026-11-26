@@ -720,7 +720,7 @@ int run() {
         false);
     allOk &= checkHighlighting("CUPL highlighting of a simulator listing",
         QStringLiteral(
-            "LinCUPL 6.0 csim: CUPL Simulation Program\n"             // 0
+            "LinCUPL " LINCUPL_VERSION " csim: CUPL Simulation Program\n" // 0
             "   1: Device g16v8; /* x */\n"                            // 1
             "===================\n"                                    // 2
             "0001: 0000  LLHH\n"                                       // 3

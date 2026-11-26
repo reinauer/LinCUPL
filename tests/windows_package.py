@@ -1,14 +1,12 @@
 """Exercise the extracted Windows ZIP without build tools on PATH."""
 import os
 from pathlib import Path
-import shutil
 import subprocess
 import sys
 import tempfile
 import zipfile
 
 archive = Path(sys.argv[1]).resolve()
-share = Path(sys.argv[2]).resolve()
 with tempfile.TemporaryDirectory(prefix="LinCUPL package ") as tmp:
     root = Path(tmp)
     with zipfile.ZipFile(archive) as z:
@@ -33,8 +31,8 @@ with tempfile.TemporaryDirectory(prefix="LinCUPL package ") as tmp:
     run("jedinspect", "--help")
     run("jedcompare", "--help")
 
-    # Device data is downloaded for tests, not distributed in the archive.
-    shutil.copytree(share, package / "share/lincupl", dirs_exist_ok=True)
+    # Compile and simulate with the library shipped in the archive.
+    assert (package / "share/lincupl/lincupl.dl").is_file()
     (root / "test.pld").write_text(
         "Name test;\nDevice g16v8;\nPIN 2 = A;\nPIN 19 = Y;\nY = !A;\n")
     (root / "test.si").write_text("ORDER: A, Y;\nVECTORS:\n0 H\n1 L\n")

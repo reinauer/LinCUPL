@@ -171,6 +171,10 @@ own:
 fit1508 -i design.tt2 -CUPL -dev P1508C84 -str JTAG OFF
 ```
 
+The fitters include their default register and buffer mapping primitives.
+An external `atmel.std` gate library is optional; an available library is
+used in preference to the built-in primitives.
+
 The fitters run in a legacy mode by default. With
 `LINCUPL_FIT150X_MODE=extended` set in the environment they run in an
 extended mode that knows more options and devices and writes a different

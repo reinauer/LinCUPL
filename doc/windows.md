@@ -8,14 +8,9 @@ or Command Prompt. Keep the DLLs and plugin directories beside them.
 The binaries are built with Visual C++ 2022. The archive includes the
 Visual C++ runtime and Qt libraries; no development environment is needed.
 
-Device-dependent compilation needs the device data. With Python 3 installed,
-run this command from the extracted directory:
-
-```powershell
-python wincupl-extract-data
-```
-
-The tools find the extracted data in `share/lincupl` beside `bin`.
+The archive includes `share/lincupl/lincupl.dl`, the default device library
+with 660 device mnemonics. The tools find it beside `bin`; no download or
+Python installation is needed to use the binaries.
 
 To build from source, install Visual Studio 2022 with the C++ desktop
 workload, CMake 3.21 or newer, Python 3 and a Qt 6 MSVC 2022 x64 kit. For example:

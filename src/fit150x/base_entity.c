@@ -278,8 +278,12 @@ int lib_open(const char *file, const char *name, char *fmt, FitLibHandle **out)
         util_str_append(&path, file);
         f = file_open_read(path);
         if (f == NULL) {
-            util_report_error(FIT_ERR_FILE_NOT_FOUND, file);
-            return 0;
+            if (util_str_ieq(file, "atmel.std") && util_str_ieq(fmt, "stdcell")) {
+                gates = lib_builtin_atf150x();
+            } else {
+                util_report_error(FIT_ERR_FILE_NOT_FOUND, file);
+                return 0;
+            }
         }
     }
     k = util_str_choice(fmt, 3, "PAL", "MACH", "stdcell");
@@ -291,10 +295,12 @@ int lib_open(const char *file, const char *name, char *fmt, FitLibHandle **out)
         util_report_error(FIT_ERR_PARAM_VALUE, "allowed values for -ofmt are PAL/MACH/stdcell");
         return 0;
     }
-    util_fclose(f);
-    f = NULL;
-    if (lib_parse_file(path, &gates, &header) == 0)
-        return 0;
+    if (f != NULL) {
+        util_fclose(f);
+        f = NULL;
+        if (lib_parse_file(path, &gates, &header) == 0)
+            return 0;
+    }
     if (name == NULL) {
         slot = 2;
         name = "";
