@@ -1,0 +1,305 @@
+# Compile with tools/devcompile.py.
+# See doc/device-implementation.md for supported behavior and differences.
+format = 1
+
+family ATF2500C {
+    architecture = atf2500
+    mnemonic = v2500c
+    package = DIP40
+    pins = 40
+    fuses = 71816
+    default_fuse = 0
+
+    power { ground = 30 supply = 10 }
+    inputs = [1..3, 17..23, 37..40]
+    outputs = [4..9, 11..16, 24..29, 31..36]
+    global_clock = pin(1)
+
+    array logic {
+        rows = 416
+        columns = 172
+        first_fuse = 0
+        address_order = row_major
+        crosspoint { connected = 0 disconnected = 1 }
+    }
+
+    pin_columns {
+        pin 1 { high = 44 low = 45 }
+        pin 2 { high = 46 low = 47 }
+        pin 3 { high = 48 low = 49 }
+        pin 4 { high = 54 low = 55 }
+        pin 5 { high = 60 low = 61 }
+        pin 6 { high = 66 low = 67 }
+        pin 7 { high = 72 low = 73 }
+        pin 8 { high = 78 low = 79 }
+        pin 9 { high = 84 low = 85 }
+        pin 11 { high = 170 low = 171 }
+        pin 12 { high = 164 low = 165 }
+        pin 13 { high = 158 low = 159 }
+        pin 14 { high = 152 low = 153 }
+        pin 15 { high = 146 low = 147 }
+        pin 16 { high = 140 low = 141 }
+        pin 17 { high = 134 low = 135 }
+        pin 18 { high = 132 low = 133 }
+        pin 19 { high = 130 low = 131 }
+        pin 20 { high = 128 low = 129 }
+        pin 21 { high = 126 low = 127 }
+        pin 22 { high = 124 low = 125 }
+        pin 23 { high = 122 low = 123 }
+        pin 24 { high = 120 low = 121 }
+        pin 25 { high = 114 low = 115 }
+        pin 26 { high = 108 low = 109 }
+        pin 27 { high = 102 low = 103 }
+        pin 28 { high = 96 low = 97 }
+        pin 29 { high = 90 low = 91 }
+        pin 31 { high = 4 low = 5 }
+        pin 32 { high = 10 low = 11 }
+        pin 33 { high = 16 low = 17 }
+        pin 34 { high = 22 low = 23 }
+        pin 35 { high = 28 low = 29 }
+        pin 36 { high = 34 low = 35 }
+        pin 37 { high = 36 low = 37 }
+        pin 38 { high = 38 low = 39 }
+        pin 39 { high = 40 low = 41 }
+        pin 40 { high = 42 low = 43 }
+    }
+
+    user_row { first_fuse = 71746 bits = 64 default_bit = 1 }
+    setting pin_keeper {
+        fuse = 71745
+        disabled = 0
+        enabled = 1
+        default = disabled
+    }
+    compatibility_fuses {
+        positions = [71648, 71810..71815]
+        value = 0
+        purpose = undocumented
+    }
+    variant v2500cppk { pin_keeper = enabled }
+
+    macrocell_template dual_register {
+        parameters = [pin, first_row, output_fuses, register_fuses, preset_row,
+                      primary_node, secondary_node, io_column]
+        product_terms {
+            first_sum = rows(logic, first_row, 4)
+            middle_sum = rows(logic, first_row + 4, 4)
+            last_sum = rows(logic, first_row + 8, 4)
+            reset_primary = product(logic, first_row + 12)
+            clock_primary = product(logic, first_row + 13)
+            clock_secondary = product(logic, first_row + 14)
+            reset_secondary = product(logic, first_row + 15)
+            output_enable = product(logic, first_row + 16)
+            preset = product(logic, preset_row)
+        }
+        setting term_routing {
+            positions = [output_fuses, output_fuses + 1]
+            combined = 0
+            independent = 1
+            extended = 2
+            feedback_bypass = 3
+        }
+        setting output_source {
+            positions = [output_fuses + 2]
+            registered = 0
+            combinational = 1
+        }
+        setting output_polarity {
+            positions = [output_fuses + 3]
+            inverted = 0
+            normal = 1
+        }
+        routing combinational {
+            combined = sum(first_sum, middle_sum)
+            independent = first_sum
+            extended = sum(first_sum, middle_sum, last_sum)
+            feedback_bypass = sum(first_sum, selected(last_sum, secondary.type.t))
+        }
+        routing registered {
+            combined = sum(first_sum, middle_sum)
+            independent = unsupported
+            extended = sum(first_sum, middle_sum, last_sum)
+            feedback_bypass = sum(first_sum, middle_sum)
+        }
+        register primary {
+            data = select(output_source.registered, routing.registered, middle_sum)
+            asynchronous_reset = reset_primary
+            synchronous_preset = preset
+            power_up = low
+            clock {
+                select_fuse = register_fuses + 2
+                product_term = 0
+                gated_global = 1
+                edge = rising
+                source = clock_primary
+                global_pin = device.global_clock
+            }
+            type { select_fuse = register_fuses + 0 d = 0 t = 1 }
+        }
+        register secondary {
+            data = last_sum
+            asynchronous_reset = reset_secondary
+            synchronous_preset = preset
+            power_up = low
+            clock {
+                select_fuse = register_fuses + 3
+                product_term = 0
+                gated_global = 1
+                edge = rising
+                source = clock_secondary
+                global_pin = device.global_clock
+            }
+            type { select_fuse = register_fuses + 1 d = 0 t = 1 }
+        }
+        feedback {
+            primary {
+                source = primary.q
+                high_column = io_column - 2
+                low_column = io_column - 1
+                alias = node(primary_node)
+            }
+            secondary {
+                source = select(term_routing.feedback_bypass, last_sum, secondary.q)
+                high_column = io_column - 4
+                low_column = io_column - 3
+                alias = node(secondary_node)
+            }
+            io { source = pin_level(pin) columns = device.pin_columns[pin] }
+        }
+    }
+
+    macrocell output29 : dual_register {
+        pin = 29 first_row = 0 preset_row = 34
+        output_fuses = 71552 register_fuses = 71649
+        primary_node = 82 secondary_node = 58 io_column = 90
+    }
+    macrocell output28 : dual_register {
+        pin = 28 first_row = 17 preset_row = 34
+        output_fuses = 71556 register_fuses = 71653
+        primary_node = 81 secondary_node = 57 io_column = 96
+    }
+    macrocell output27 : dual_register {
+        pin = 27 first_row = 35 preset_row = 103
+        output_fuses = 71560 register_fuses = 71657
+        primary_node = 80 secondary_node = 56 io_column = 102
+    }
+    macrocell output26 : dual_register {
+        pin = 26 first_row = 52 preset_row = 103
+        output_fuses = 71564 register_fuses = 71661
+        primary_node = 79 secondary_node = 55 io_column = 108
+    }
+    macrocell output25 : dual_register {
+        pin = 25 first_row = 69 preset_row = 103
+        output_fuses = 71568 register_fuses = 71665
+        primary_node = 78 secondary_node = 54 io_column = 114
+    }
+    macrocell output24 : dual_register {
+        pin = 24 first_row = 86 preset_row = 103
+        output_fuses = 71572 register_fuses = 71669
+        primary_node = 77 secondary_node = 53 io_column = 120
+    }
+    macrocell output11 : dual_register {
+        pin = 11 first_row = 104 preset_row = 138
+        output_fuses = 71576 register_fuses = 71673
+        primary_node = 71 secondary_node = 47 io_column = 170
+    }
+    macrocell output12 : dual_register {
+        pin = 12 first_row = 121 preset_row = 138
+        output_fuses = 71580 register_fuses = 71677
+        primary_node = 72 secondary_node = 48 io_column = 164
+    }
+    macrocell output13 : dual_register {
+        pin = 13 first_row = 139 preset_row = 207
+        output_fuses = 71584 register_fuses = 71681
+        primary_node = 73 secondary_node = 49 io_column = 158
+    }
+    macrocell output14 : dual_register {
+        pin = 14 first_row = 156 preset_row = 207
+        output_fuses = 71588 register_fuses = 71685
+        primary_node = 74 secondary_node = 50 io_column = 152
+    }
+    macrocell output15 : dual_register {
+        pin = 15 first_row = 173 preset_row = 207
+        output_fuses = 71592 register_fuses = 71689
+        primary_node = 75 secondary_node = 51 io_column = 146
+    }
+    macrocell output16 : dual_register {
+        pin = 16 first_row = 190 preset_row = 207
+        output_fuses = 71596 register_fuses = 71693
+        primary_node = 76 secondary_node = 52 io_column = 140
+    }
+    macrocell output31 : dual_register {
+        pin = 31 first_row = 208 preset_row = 242
+        output_fuses = 71600 register_fuses = 71697
+        primary_node = 83 secondary_node = 59 io_column = 4
+    }
+    macrocell output32 : dual_register {
+        pin = 32 first_row = 225 preset_row = 242
+        output_fuses = 71604 register_fuses = 71701
+        primary_node = 84 secondary_node = 60 io_column = 10
+    }
+    macrocell output33 : dual_register {
+        pin = 33 first_row = 243 preset_row = 311
+        output_fuses = 71608 register_fuses = 71705
+        primary_node = 85 secondary_node = 61 io_column = 16
+    }
+    macrocell output34 : dual_register {
+        pin = 34 first_row = 260 preset_row = 311
+        output_fuses = 71612 register_fuses = 71709
+        primary_node = 86 secondary_node = 62 io_column = 22
+    }
+    macrocell output35 : dual_register {
+        pin = 35 first_row = 277 preset_row = 311
+        output_fuses = 71616 register_fuses = 71713
+        primary_node = 87 secondary_node = 63 io_column = 28
+    }
+    macrocell output36 : dual_register {
+        pin = 36 first_row = 294 preset_row = 311
+        output_fuses = 71620 register_fuses = 71717
+        primary_node = 88 secondary_node = 64 io_column = 34
+    }
+    macrocell output9 : dual_register {
+        pin = 9 first_row = 312 preset_row = 346
+        output_fuses = 71624 register_fuses = 71721
+        primary_node = 70 secondary_node = 46 io_column = 84
+    }
+    macrocell output8 : dual_register {
+        pin = 8 first_row = 329 preset_row = 346
+        output_fuses = 71628 register_fuses = 71725
+        primary_node = 69 secondary_node = 45 io_column = 78
+    }
+    macrocell output7 : dual_register {
+        pin = 7 first_row = 347 preset_row = 415
+        output_fuses = 71632 register_fuses = 71729
+        primary_node = 68 secondary_node = 44 io_column = 72
+    }
+    macrocell output6 : dual_register {
+        pin = 6 first_row = 364 preset_row = 415
+        output_fuses = 71636 register_fuses = 71733
+        primary_node = 67 secondary_node = 43 io_column = 66
+    }
+    macrocell output5 : dual_register {
+        pin = 5 first_row = 381 preset_row = 415
+        output_fuses = 71640 register_fuses = 71737
+        primary_node = 66 secondary_node = 42 io_column = 60
+    }
+    macrocell output4 : dual_register {
+        pin = 4 first_row = 398 preset_row = 415
+        output_fuses = 71644 register_fuses = 71741
+        primary_node = 65 secondary_node = 41 io_column = 54
+    }
+}
+
+device ATF2500C_DIP40 : ATF2500C {}
+
+device ATF2500C_PLCC44 : ATF2500C {
+    mnemonic = v2500clcc
+    package = PLCC44
+    pins = 44
+    pin_map {
+        physical = [1..3, 5..10, 12..25, 27..32, 34..44]
+        ground = [4, 26, 33]
+        supply = [11]
+    }
+    variant v2500cppklcc { pin_keeper = enabled }
+}

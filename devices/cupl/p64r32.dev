@@ -1,0 +1,673 @@
+# Device library interface; field values and record order are retained.
+# Compiler modes are ABI settings, not inferred hardware properties.
+format = 1
+
+device p64r32 {
+    representation = library
+
+    package {
+        pins = 84
+        drawing_style = 0
+        internal_nodes = 0
+    }
+
+    power {
+        ground = 11
+        supply = 32
+    }
+
+    fuses {
+        count = 33316
+        default = 0
+    }
+
+    signature {
+        bits = 0
+        first_fuse = 0
+    }
+
+    compiler {
+        revision = 16
+        family = 1
+        extra_nodes_a = 0
+        extra_nodes_b = 0
+        extra_nodes_c = 0
+        register_resources = 32
+        clocked_resources = 32
+        default_extension = d
+        product_rows = 256
+        initial_term_capacity = 280
+        array_slots = 20
+        input_line_slots = 89
+        extra_symbols = 0
+        download = jedec
+    }
+
+    simulation {
+        output_enable_mode = 0
+        output_polarity_mode = 2
+        internal_polarity_mode = 0
+        power_up = unknown
+        preload_polarity = 0
+    }
+
+    prom {
+        address_bits = 0
+        data_width = 0
+    }
+
+    fitter {
+        input_format = 0
+        name = ""
+        arguments = ""
+        pla_options = []
+        part = ""
+    }
+
+    extensions {
+        defaults {
+            name = "d"
+            function = d
+        }
+        columns = []
+        rows = [
+            row(),
+        ]
+    }
+
+    pin_functions {
+        defaults {
+            function = none
+            variant = default
+            config_value = 0
+            config_bits = 0
+            config_first_fuse = 0
+        }
+        columns = [line, pin, compiler_type, true_column, complement_column]
+        rows = [
+            row(1, 1, unspecified, 0, 1),
+            row(2, 14, feedback, 2, 3),
+            row(3, 2, unspecified, 4, 5),
+            row(4, 15, feedback, 6, 7),
+            row(5, 3, unspecified, 8, 9),
+            row(6, 16, feedback, 10, 11),
+            row(7, 4, unspecified, 12, 13),
+            row(8, 17, feedback, 14, 15),
+            row(9, 5, unspecified, 16, 17),
+            row(10, 18, feedback, 18, 19),
+            row(11, 6, unspecified, 20, 21),
+            row(12, 19, feedback, 22, 23),
+            row(13, 7, unspecified, 24, 25),
+            row(14, 20, feedback, 26, 27),
+            row(15, 8, unspecified, 28, 29),
+            row(16, 21, feedback, 30, 31),
+            row(17, 35, unspecified, 32, 33),
+            row(18, 22, feedback, 34, 35),
+            row(19, 36, unspecified, 36, 37),
+            row(20, 23, feedback, 38, 39),
+            row(21, 37, unspecified, 40, 41),
+            row(22, 24, feedback, 42, 43),
+            row(23, 38, unspecified, 44, 45),
+            row(24, 25, feedback, 46, 47),
+            row(25, 39, unspecified, 48, 49),
+            row(26, 26, feedback, 50, 51),
+            row(27, 40, unspecified, 52, 53),
+            row(28, 27, feedback, 54, 55),
+            row(29, 41, unspecified, 56, 57),
+            row(30, 28, feedback, 58, 59),
+            row(31, 42, unspecified, 60, 61),
+            row(32, 29, feedback, 62, 63),
+            row(33, 43, unspecified, 64, 65),
+            row(34, 56, feedback, 66, 67),
+            row(35, 44, unspecified, 68, 69),
+            row(36, 57, feedback, 70, 71),
+            row(37, 45, unspecified, 72, 73),
+            row(38, 58, feedback, 74, 75),
+            row(39, 46, unspecified, 76, 77),
+            row(40, 59, feedback, 78, 79),
+            row(41, 47, unspecified, 80, 81),
+            row(42, 60, feedback, 82, 83),
+            row(43, 48, unspecified, 84, 85),
+            row(44, 61, feedback, 86, 87),
+            row(45, 49, unspecified, 88, 89),
+            row(46, 62, feedback, 90, 91),
+            row(47, 50, unspecified, 92, 93),
+            row(48, 63, feedback, 94, 95),
+            row(49, 77, unspecified, 96, 97),
+            row(50, 64, feedback, 98, 99),
+            row(51, 78, unspecified, 100, 101),
+            row(52, 65, feedback, 102, 103),
+            row(53, 79, unspecified, 104, 105),
+            row(54, 66, feedback, 106, 107),
+            row(55, 80, unspecified, 108, 109),
+            row(56, 67, feedback, 110, 111),
+            row(57, 81, unspecified, 112, 113),
+            row(58, 68, feedback, 114, 115),
+            row(59, 82, unspecified, 116, 117),
+            row(60, 69, feedback, 118, 119),
+            row(61, 83, unspecified, 120, 121),
+            row(62, 70, feedback, 122, 123),
+            row(63, 84, unspecified, 124, 125),
+            row(64, 71, feedback, 126, 127),
+            row(65, 73, clock, 0, 0),
+            row(66, 54, clock, 0, 0),
+            row(67, 31, clock, 0, 0),
+            row(68, 12, clock, 0, 0),
+            row(69, 72, output_enable, 0, 0),
+            row(70, 55, output_enable, 0, 0),
+            row(71, 30, output_enable, 0, 0),
+            row(72, 13, output_enable, 0, 0),
+            row(73, 76, 17, 0, 0),
+            row(74, 51, 17, 0, 0),
+            row(75, 34, 17, 0, 0),
+            row(76, 9, 17, 0, 0),
+            row(77, 11, ground, 0, 0),
+            row(78, 53, ground, 0, 0),
+            row(79, 32, supply, 0, 0),
+            row(80, 74, supply, 0, 0),
+            row(81, 10, 18, 0, 0),
+            row(82, 33, 18, 0, 0),
+            row(83, 52, 18, 0, 0),
+            row(84, 75, 18, 0, 0),
+        ]
+    }
+
+    node_functions {
+        defaults {
+            invert = no
+            pair_first_fuse = 0
+            pair_bits = 0
+            split_terms = 0
+            sharing_mode = 0
+            alternate_step = 0
+        }
+        columns = [array, pin, function, polarity, select_value, config_value, first_row_fuse, first_or_fuse, config_first_fuse, row_width, or_width, config_bits, max_terms, default_rule, has_default, active]
+        rows = [
+            row(1, 0, array, negative, 0, 0, 30720, 33280, 0, 128, 2, 0, 16, 0, no, no),
+            row(1, 71, d, programmable_positive, 1, 0, 32799, 1, 0, 1, 0, 0, 0, 4, yes, yes),
+            row(1, 71, d, programmable_negative, 0, 0, 32799, 1, 0, 1, 0, 0, 0, 4, yes, yes),
+            row(1, 71, none, programmable_positive, 1, 1, 32799, 1, 33315, 1, 0, 1, 0, 4, yes, yes),
+            row(1, 71, none, programmable_negative, 0, 1, 32799, 1, 33315, 1, 0, 1, 0, 4, yes, yes),
+            row(1, 70, d, programmable_positive, 1, 0, 32798, 0, 0, 1, 0, 0, 0, 4, yes, yes),
+            row(1, 70, d, programmable_negative, 0, 0, 32798, 0, 0, 1, 0, 0, 0, 4, yes, yes),
+            row(1, 70, none, programmable_positive, 1, 1, 32798, 0, 33315, 1, 0, 1, 0, 4, yes, yes),
+            row(1, 70, none, programmable_negative, 0, 1, 32798, 0, 33315, 1, 0, 1, 0, 4, yes, yes),
+            row(2, 0, array, negative, 0, 0, 28672, 33248, 0, 128, 2, 0, 16, 0, no, no),
+            row(2, 69, d, programmable_positive, 1, 0, 32797, 1, 0, 1, 0, 0, 0, 4, yes, yes),
+            row(2, 69, d, programmable_negative, 0, 0, 32797, 1, 0, 1, 0, 0, 0, 4, yes, yes),
+            row(2, 69, none, programmable_positive, 1, 1, 32797, 1, 33315, 1, 0, 1, 0, 4, yes, yes),
+            row(2, 69, none, programmable_negative, 0, 1, 32797, 1, 33315, 1, 0, 1, 0, 4, yes, yes),
+            row(2, 68, d, programmable_positive, 1, 0, 32796, 0, 0, 1, 0, 0, 0, 4, yes, yes),
+            row(2, 68, d, programmable_negative, 0, 0, 32796, 0, 0, 1, 0, 0, 0, 4, yes, yes),
+            row(2, 68, none, programmable_positive, 1, 1, 32796, 0, 33315, 1, 0, 1, 0, 4, yes, yes),
+            row(2, 68, none, programmable_negative, 0, 1, 32796, 0, 33315, 1, 0, 1, 0, 4, yes, yes),
+            row(3, 0, array, negative, 0, 0, 26624, 33216, 0, 128, 2, 0, 16, 0, no, no),
+            row(3, 67, d, programmable_positive, 1, 0, 32795, 1, 0, 1, 0, 0, 0, 4, yes, yes),
+            row(3, 67, d, programmable_negative, 0, 0, 32795, 1, 0, 1, 0, 0, 0, 4, yes, yes),
+            row(3, 67, none, programmable_positive, 1, 1, 32795, 1, 33315, 1, 0, 1, 0, 4, yes, yes),
+            row(3, 67, none, programmable_negative, 0, 1, 32795, 1, 33315, 1, 0, 1, 0, 4, yes, yes),
+            row(3, 66, d, programmable_positive, 1, 0, 32794, 0, 0, 1, 0, 0, 0, 4, yes, yes),
+            row(3, 66, d, programmable_negative, 0, 0, 32794, 0, 0, 1, 0, 0, 0, 4, yes, yes),
+            row(3, 66, none, programmable_positive, 1, 1, 32794, 0, 33315, 1, 0, 1, 0, 4, yes, yes),
+            row(3, 66, none, programmable_negative, 0, 1, 32794, 0, 33315, 1, 0, 1, 0, 4, yes, yes),
+            row(4, 0, array, negative, 0, 0, 24576, 33184, 0, 128, 2, 0, 16, 0, no, no),
+            row(4, 65, d, programmable_positive, 1, 0, 32793, 1, 0, 1, 0, 0, 0, 4, yes, yes),
+            row(4, 65, d, programmable_negative, 0, 0, 32793, 1, 0, 1, 0, 0, 0, 4, yes, yes),
+            row(4, 65, none, programmable_positive, 1, 1, 32793, 1, 33315, 1, 0, 1, 0, 4, yes, yes),
+            row(4, 65, none, programmable_negative, 0, 1, 32793, 1, 33315, 1, 0, 1, 0, 4, yes, yes),
+            row(4, 64, d, programmable_positive, 1, 0, 32792, 0, 0, 1, 0, 0, 0, 4, yes, yes),
+            row(4, 64, d, programmable_negative, 0, 0, 32792, 0, 0, 1, 0, 0, 0, 4, yes, yes),
+            row(4, 64, none, programmable_positive, 1, 1, 32792, 0, 33315, 1, 0, 1, 0, 4, yes, yes),
+            row(4, 64, none, programmable_negative, 0, 1, 32792, 0, 33315, 1, 0, 1, 0, 4, yes, yes),
+            row(5, 0, array, negative, 0, 0, 22528, 33152, 0, 128, 2, 0, 16, 0, no, no),
+            row(5, 63, d, programmable_positive, 1, 0, 32791, 1, 0, 1, 0, 0, 0, 5, yes, yes),
+            row(5, 63, d, programmable_negative, 0, 0, 32791, 1, 0, 1, 0, 0, 0, 5, yes, yes),
+            row(5, 63, none, programmable_positive, 1, 1, 32791, 1, 33314, 1, 0, 1, 0, 5, yes, yes),
+            row(5, 63, none, programmable_negative, 0, 1, 32791, 1, 33314, 1, 0, 1, 0, 5, yes, yes),
+            row(5, 62, d, programmable_positive, 1, 0, 32790, 0, 0, 1, 0, 0, 0, 5, yes, yes),
+            row(5, 62, d, programmable_negative, 0, 0, 32790, 0, 0, 1, 0, 0, 0, 5, yes, yes),
+            row(5, 62, none, programmable_positive, 1, 1, 32790, 0, 33314, 1, 0, 1, 0, 5, yes, yes),
+            row(5, 62, none, programmable_negative, 0, 1, 32790, 0, 33314, 1, 0, 1, 0, 5, yes, yes),
+            row(6, 0, array, negative, 0, 0, 20480, 33120, 0, 128, 2, 0, 16, 0, no, no),
+            row(6, 61, d, programmable_positive, 1, 0, 32789, 1, 0, 1, 0, 0, 0, 5, yes, yes),
+            row(6, 61, d, programmable_negative, 0, 0, 32789, 1, 0, 1, 0, 0, 0, 5, yes, yes),
+            row(6, 61, none, programmable_positive, 1, 1, 32789, 1, 33314, 1, 0, 1, 0, 5, yes, yes),
+            row(6, 61, none, programmable_negative, 0, 1, 32789, 1, 33314, 1, 0, 1, 0, 5, yes, yes),
+            row(6, 60, d, programmable_positive, 1, 0, 32788, 0, 0, 1, 0, 0, 0, 5, yes, yes),
+            row(6, 60, d, programmable_negative, 0, 0, 32788, 0, 0, 1, 0, 0, 0, 5, yes, yes),
+            row(6, 60, none, programmable_positive, 1, 1, 32788, 0, 33314, 1, 0, 1, 0, 5, yes, yes),
+            row(6, 60, none, programmable_negative, 0, 1, 32788, 0, 33314, 1, 0, 1, 0, 5, yes, yes),
+            row(7, 0, array, negative, 0, 0, 18432, 33088, 0, 128, 2, 0, 16, 0, no, no),
+            row(7, 59, d, programmable_positive, 1, 0, 32787, 1, 0, 1, 0, 0, 0, 5, yes, yes),
+            row(7, 59, d, programmable_negative, 0, 0, 32787, 1, 0, 1, 0, 0, 0, 5, yes, yes),
+            row(7, 59, none, programmable_positive, 1, 1, 32787, 1, 33314, 1, 0, 1, 0, 5, yes, yes),
+            row(7, 59, none, programmable_negative, 0, 1, 32787, 1, 33314, 1, 0, 1, 0, 5, yes, yes),
+            row(7, 58, d, programmable_positive, 1, 0, 32786, 0, 0, 1, 0, 0, 0, 5, yes, yes),
+            row(7, 58, d, programmable_negative, 0, 0, 32786, 0, 0, 1, 0, 0, 0, 5, yes, yes),
+            row(7, 58, none, programmable_positive, 1, 1, 32786, 0, 33314, 1, 0, 1, 0, 5, yes, yes),
+            row(7, 58, none, programmable_negative, 0, 1, 32786, 0, 33314, 1, 0, 1, 0, 5, yes, yes),
+            row(8, 0, array, negative, 0, 0, 16384, 33056, 0, 128, 2, 0, 16, 0, no, no),
+            row(8, 57, d, programmable_positive, 1, 0, 32785, 1, 0, 1, 0, 0, 0, 5, yes, yes),
+            row(8, 57, d, programmable_negative, 0, 0, 32785, 1, 0, 1, 0, 0, 0, 5, yes, yes),
+            row(8, 57, none, programmable_positive, 1, 1, 32785, 1, 33314, 1, 0, 1, 0, 5, yes, yes),
+            row(8, 57, none, programmable_negative, 0, 1, 32785, 1, 33314, 1, 0, 1, 0, 5, yes, yes),
+            row(8, 56, d, programmable_positive, 1, 0, 32784, 0, 0, 1, 0, 0, 0, 5, yes, yes),
+            row(8, 56, d, programmable_negative, 0, 0, 32784, 0, 0, 1, 0, 0, 0, 5, yes, yes),
+            row(8, 56, none, programmable_positive, 1, 1, 32784, 0, 33314, 1, 0, 1, 0, 5, yes, yes),
+            row(8, 56, none, programmable_negative, 0, 1, 32784, 0, 33314, 1, 0, 1, 0, 5, yes, yes),
+            row(9, 0, array, negative, 0, 0, 14336, 33024, 0, 128, 2, 0, 16, 0, no, no),
+            row(9, 29, d, programmable_positive, 1, 0, 32783, 1, 0, 1, 0, 0, 0, 6, yes, yes),
+            row(9, 29, d, programmable_negative, 0, 0, 32783, 1, 0, 1, 0, 0, 0, 6, yes, yes),
+            row(9, 29, none, programmable_positive, 1, 1, 32783, 1, 33313, 1, 0, 1, 0, 6, yes, yes),
+            row(9, 29, none, programmable_negative, 0, 1, 32783, 1, 33313, 1, 0, 1, 0, 6, yes, yes),
+            row(9, 28, d, programmable_positive, 1, 0, 32782, 0, 0, 1, 0, 0, 0, 6, yes, yes),
+            row(9, 28, d, programmable_negative, 0, 0, 32782, 0, 0, 1, 0, 0, 0, 6, yes, yes),
+            row(9, 28, none, programmable_positive, 1, 1, 32782, 0, 33313, 1, 0, 1, 0, 6, yes, yes),
+            row(9, 28, none, programmable_negative, 0, 1, 32782, 0, 33313, 1, 0, 1, 0, 6, yes, yes),
+            row(10, 0, array, negative, 0, 0, 12288, 32992, 0, 128, 2, 0, 16, 0, no, no),
+            row(10, 27, d, programmable_positive, 1, 0, 32781, 1, 0, 1, 0, 0, 0, 6, yes, yes),
+            row(10, 27, d, programmable_negative, 0, 0, 32781, 1, 0, 1, 0, 0, 0, 6, yes, yes),
+            row(10, 27, none, programmable_positive, 1, 1, 32781, 1, 33313, 1, 0, 1, 0, 6, yes, yes),
+            row(10, 27, none, programmable_negative, 0, 1, 32781, 1, 33313, 1, 0, 1, 0, 6, yes, yes),
+            row(10, 26, d, programmable_positive, 1, 0, 32780, 0, 0, 1, 0, 0, 0, 6, yes, yes),
+            row(10, 26, d, programmable_negative, 0, 0, 32780, 0, 0, 1, 0, 0, 0, 6, yes, yes),
+            row(10, 26, none, programmable_positive, 1, 1, 32780, 0, 33313, 1, 0, 1, 0, 6, yes, yes),
+            row(10, 26, none, programmable_negative, 0, 1, 32780, 0, 33313, 1, 0, 1, 0, 6, yes, yes),
+            row(11, 0, array, negative, 0, 0, 10240, 32960, 0, 128, 2, 0, 16, 0, no, no),
+            row(11, 25, d, programmable_positive, 1, 0, 32779, 1, 0, 1, 0, 0, 0, 6, yes, yes),
+            row(11, 25, d, programmable_negative, 0, 0, 32779, 1, 0, 1, 0, 0, 0, 6, yes, yes),
+            row(11, 25, none, programmable_positive, 1, 1, 32779, 1, 33313, 1, 0, 1, 0, 6, yes, yes),
+            row(11, 25, none, programmable_negative, 0, 1, 32779, 1, 33313, 1, 0, 1, 0, 6, yes, yes),
+            row(11, 24, d, programmable_positive, 1, 0, 32778, 0, 0, 1, 0, 0, 0, 6, yes, yes),
+            row(11, 24, d, programmable_negative, 0, 0, 32778, 0, 0, 1, 0, 0, 0, 6, yes, yes),
+            row(11, 24, none, programmable_positive, 1, 1, 32778, 0, 33313, 1, 0, 1, 0, 6, yes, yes),
+            row(11, 24, none, programmable_negative, 0, 1, 32778, 0, 33313, 1, 0, 1, 0, 6, yes, yes),
+            row(12, 0, array, negative, 0, 0, 8192, 32928, 0, 128, 2, 0, 16, 0, no, no),
+            row(12, 23, d, programmable_positive, 1, 0, 32777, 1, 0, 1, 0, 0, 0, 6, yes, yes),
+            row(12, 23, d, programmable_negative, 0, 0, 32777, 1, 0, 1, 0, 0, 0, 6, yes, yes),
+            row(12, 23, none, programmable_positive, 1, 1, 32777, 1, 33313, 1, 0, 1, 0, 6, yes, yes),
+            row(12, 23, none, programmable_negative, 0, 1, 32777, 1, 33313, 1, 0, 1, 0, 6, yes, yes),
+            row(12, 22, d, programmable_positive, 1, 0, 32776, 0, 0, 1, 0, 0, 0, 6, yes, yes),
+            row(12, 22, d, programmable_negative, 0, 0, 32776, 0, 0, 1, 0, 0, 0, 6, yes, yes),
+            row(12, 22, none, programmable_positive, 1, 1, 32776, 0, 33313, 1, 0, 1, 0, 6, yes, yes),
+            row(12, 22, none, programmable_negative, 0, 1, 32776, 0, 33313, 1, 0, 1, 0, 6, yes, yes),
+            row(13, 0, array, negative, 0, 0, 6144, 32896, 0, 128, 2, 0, 16, 0, no, no),
+            row(13, 21, d, programmable_positive, 1, 0, 32775, 1, 0, 1, 0, 0, 0, 7, yes, yes),
+            row(13, 21, d, programmable_negative, 0, 0, 32775, 1, 0, 1, 0, 0, 0, 7, yes, yes),
+            row(13, 21, none, programmable_positive, 1, 1, 32775, 1, 33312, 1, 0, 1, 0, 7, yes, yes),
+            row(13, 21, none, programmable_negative, 0, 1, 32775, 1, 33312, 1, 0, 1, 0, 7, yes, yes),
+            row(13, 20, d, programmable_positive, 1, 0, 32774, 0, 0, 1, 0, 0, 0, 7, yes, yes),
+            row(13, 20, d, programmable_negative, 0, 0, 32774, 0, 0, 1, 0, 0, 0, 7, yes, yes),
+            row(13, 20, none, programmable_positive, 1, 1, 32774, 0, 33312, 1, 0, 1, 0, 7, yes, yes),
+            row(13, 20, none, programmable_negative, 0, 1, 32774, 0, 33312, 1, 0, 1, 0, 7, yes, yes),
+            row(14, 0, array, negative, 0, 0, 4096, 32864, 0, 128, 2, 0, 16, 0, no, no),
+            row(14, 19, d, programmable_positive, 1, 0, 32773, 1, 0, 1, 0, 0, 0, 7, yes, yes),
+            row(14, 19, d, programmable_negative, 0, 0, 32773, 1, 0, 1, 0, 0, 0, 7, yes, yes),
+            row(14, 19, none, programmable_positive, 1, 1, 32773, 1, 33312, 1, 0, 1, 0, 7, yes, yes),
+            row(14, 19, none, programmable_negative, 0, 1, 32773, 1, 33312, 1, 0, 1, 0, 7, yes, yes),
+            row(14, 18, d, programmable_positive, 1, 0, 32772, 0, 0, 1, 0, 0, 0, 7, yes, yes),
+            row(14, 18, d, programmable_negative, 0, 0, 32772, 0, 0, 1, 0, 0, 0, 7, yes, yes),
+            row(14, 18, none, programmable_positive, 1, 1, 32772, 0, 33312, 1, 0, 1, 0, 7, yes, yes),
+            row(14, 18, none, programmable_negative, 0, 1, 32772, 0, 33312, 1, 0, 1, 0, 7, yes, yes),
+            row(15, 0, array, negative, 0, 0, 2048, 32832, 0, 128, 2, 0, 16, 0, no, no),
+            row(15, 17, d, programmable_positive, 1, 0, 32771, 1, 0, 1, 0, 0, 0, 7, yes, yes),
+            row(15, 17, d, programmable_negative, 0, 0, 32771, 1, 0, 1, 0, 0, 0, 7, yes, yes),
+            row(15, 17, none, programmable_positive, 1, 1, 32771, 1, 33312, 1, 0, 1, 0, 7, yes, yes),
+            row(15, 17, none, programmable_negative, 0, 1, 32771, 1, 33312, 1, 0, 1, 0, 7, yes, yes),
+            row(15, 16, d, programmable_positive, 1, 0, 32770, 0, 0, 1, 0, 0, 0, 7, yes, yes),
+            row(15, 16, d, programmable_negative, 0, 0, 32770, 0, 0, 1, 0, 0, 0, 7, yes, yes),
+            row(15, 16, none, programmable_positive, 1, 1, 32770, 0, 33312, 1, 0, 1, 0, 7, yes, yes),
+            row(15, 16, none, programmable_negative, 0, 1, 32770, 0, 33312, 1, 0, 1, 0, 7, yes, yes),
+            row(16, 0, array, negative, 0, 0, 0, 32800, 0, 128, 2, 0, 16, 0, no, no),
+            row(16, 15, d, programmable_positive, 1, 0, 32769, 1, 0, 1, 0, 0, 0, 7, yes, yes),
+            row(16, 15, d, programmable_negative, 0, 0, 32769, 1, 0, 1, 0, 0, 0, 7, yes, yes),
+            row(16, 15, none, programmable_positive, 1, 1, 32769, 1, 33312, 1, 0, 1, 0, 7, yes, yes),
+            row(16, 15, none, programmable_negative, 0, 1, 32769, 1, 33312, 1, 0, 1, 0, 7, yes, yes),
+            row(16, 14, d, programmable_positive, 1, 0, 32768, 0, 0, 1, 0, 0, 0, 7, yes, yes),
+            row(16, 14, d, programmable_negative, 0, 0, 32768, 0, 0, 1, 0, 0, 0, 7, yes, yes),
+            row(16, 14, none, programmable_positive, 1, 1, 32768, 0, 33312, 1, 0, 1, 0, 7, yes, yes),
+            row(16, 14, none, programmable_negative, 0, 1, 32768, 0, 33312, 1, 0, 1, 0, 7, yes, yes),
+        ]
+    }
+
+    plot {
+        columns = [operation, group, text, a, b, c, d]
+        rows = [
+            row(begin_fuses, 0, "", 0, 0, 0, 0),
+            row(setup_loop, 0, " ", 9, 1, 5, 33312),
+            row(text, 0, "BYPASS", 0, 0, 0, 0),
+            row(address, 0, " ", 5, 0, 0, 0),
+            row(fuses_forward, 0, "x-", 5, 0, 1, 4),
+            row(newline, 0, " ", 1, 0, 0, 0),
+            row(end_row, 0, " ", 0, 0, 0, 0),
+            row(set, 1, " ", 6, 32768, 0, 0),
+            row(set, 1, " ", 7, 32800, 0, 0),
+            row(setup_loop, 1, " ", 1, 128, 2, 14),
+            row(loop, 1, " ", 9, 0, 16, 12),
+            row(print_increment, 1, "Pin #", 2, 1, 0, 0),
+            row(address, 1, " ", 6, 0, 0, 0),
+            row(text, 1, " Pol", 0, 0, 0, 0),
+            row(fuses_forward, 1, "x-", 6, 0, 1, 1),
+            row(newline, 1, "", 1, 0, 0, 0),
+            row(add, 1, "", 6, 1, 0, 0),
+            row(print_increment, 1, "Pin #", 2, 1, 0, 0),
+            row(address, 1, " ", 6, 0, 0, 0),
+            row(text, 1, " Pol", 0, 0, 0, 0),
+            row(fuses_forward, 1, "x-", 6, 0, 1, 1),
+            row(newline, 1, "", 1, 0, 0, 0),
+            row(add, 1, "", 6, 1, 0, 0),
+            row(address, 1, " ", 0, 0, 0, 0),
+            row(fuses_forward, 1, "x-", 0, 0, 1, 64),
+            row(newline, 1, "", 1, 0, 0, 0),
+            row(text, 1, "     ", 0, 0, 0, 0),
+            row(fuses_forward, 1, "x-", 0, 64, 1, 64),
+            row(address, 1, "", 7, 0, 0, 0),
+            row(fuses_forward, 1, "x-", 7, 0, 1, 2),
+            row(newline, 1, " ", 1, 0, 0, 0),
+            row(add, 1, " ", 7, 2, 0, 0),
+            row(end_row, 1, " ", 0, 0, 0, 128),
+            row(setup_loop, 2, " ", 1, 128, 2, 56),
+            row(loop, 2, " ", 9, 0, 16, 12),
+            row(print_increment, 2, "Pin #", 2, 1, 0, 0),
+            row(address, 2, " ", 6, 0, 0, 0),
+            row(text, 2, " Pol", 0, 0, 0, 0),
+            row(fuses_forward, 2, "x-", 6, 0, 1, 1),
+            row(newline, 2, "", 1, 0, 0, 0),
+            row(add, 2, "", 6, 1, 0, 0),
+            row(print_increment, 2, "Pin #", 2, 1, 0, 0),
+            row(address, 2, " ", 6, 0, 0, 0),
+            row(text, 2, " Pol", 0, 0, 0, 0),
+            row(fuses_forward, 2, "x-", 6, 0, 1, 1),
+            row(newline, 2, "", 1, 0, 0, 0),
+            row(add, 2, "", 6, 1, 0, 0),
+            row(address, 2, " ", 0, 0, 0, 0),
+            row(fuses_forward, 2, "x-", 0, 0, 1, 64),
+            row(newline, 2, "", 1, 0, 0, 0),
+            row(text, 2, "     ", 0, 0, 0, 0),
+            row(fuses_forward, 2, "x-", 0, 64, 1, 64),
+            row(address, 2, "", 7, 0, 0, 0),
+            row(fuses_forward, 2, "x-", 7, 0, 1, 2),
+            row(newline, 2, " ", 1, 0, 0, 0),
+            row(add, 2, " ", 7, 2, 0, 0),
+            row(end_row, 2, " ", 0, 0, 0, 128),
+            row(end, 0, "", 0, 0, 0, 0),
+        ]
+    }
+
+    initialization {
+        defaults {
+            first_fuse = 33312
+            last_fuse = 33315
+            value = 0
+        }
+        columns = []
+        rows = [
+            row(),
+        ]
+    }
+
+    connections {
+        defaults {
+            config_value = 0
+        }
+        columns = [line, pin, function, group, member, source_pin, compiler_link]
+        rows = [
+            row(65, 73, ck, 0, 1, 1, no),
+            row(1, 71, d, 0, 0, 0, no),
+            row(1, 70, d, 0, 0, 0, no),
+            row(2, 69, d, 0, 0, 0, no),
+            row(2, 68, d, 0, 0, 0, no),
+            row(3, 67, d, 0, 0, 0, no),
+            row(3, 66, d, 0, 0, 0, no),
+            row(4, 65, d, 0, 0, 0, no),
+            row(4, 64, d, 0, 0, 0, no),
+            row(66, 54, ck, 1, 1, 1, no),
+            row(5, 63, d, 1, 0, 0, no),
+            row(5, 62, d, 1, 0, 0, no),
+            row(6, 61, d, 1, 0, 0, no),
+            row(6, 60, d, 1, 0, 0, no),
+            row(7, 59, d, 1, 0, 0, no),
+            row(7, 58, d, 1, 0, 0, no),
+            row(8, 57, d, 1, 0, 0, no),
+            row(8, 56, d, 1, 0, 0, no),
+            row(67, 31, ck, 2, 1, 1, no),
+            row(9, 29, d, 2, 0, 0, no),
+            row(9, 28, d, 2, 0, 0, no),
+            row(10, 27, d, 2, 0, 0, no),
+            row(10, 26, d, 2, 0, 0, no),
+            row(11, 25, d, 2, 0, 0, no),
+            row(11, 24, d, 2, 0, 0, no),
+            row(12, 23, d, 2, 0, 0, no),
+            row(12, 22, d, 2, 0, 0, no),
+            row(68, 12, ck, 3, 1, 1, no),
+            row(13, 21, d, 3, 0, 0, no),
+            row(13, 20, d, 3, 0, 0, no),
+            row(14, 19, d, 3, 0, 0, no),
+            row(14, 18, d, 3, 0, 0, no),
+            row(15, 17, d, 3, 0, 0, no),
+            row(15, 16, d, 3, 0, 0, no),
+            row(16, 15, d, 3, 0, 0, no),
+            row(16, 14, d, 3, 0, 0, no),
+            row(69, 72, oe_term, 4, 1, 1, no),
+            row(1, 71, d, 4, 0, 0, no),
+            row(1, 71, none, 4, 0, 0, no),
+            row(1, 70, d, 4, 0, 0, no),
+            row(1, 70, none, 4, 0, 0, no),
+            row(2, 69, d, 4, 0, 0, no),
+            row(2, 69, none, 4, 0, 0, no),
+            row(2, 68, d, 4, 0, 0, no),
+            row(2, 68, none, 4, 0, 0, no),
+            row(3, 67, d, 4, 0, 0, no),
+            row(3, 67, none, 4, 0, 0, no),
+            row(3, 66, d, 4, 0, 0, no),
+            row(3, 66, none, 4, 0, 0, no),
+            row(4, 65, d, 4, 0, 0, no),
+            row(4, 65, none, 4, 0, 0, no),
+            row(4, 64, d, 4, 0, 0, no),
+            row(4, 64, none, 4, 0, 0, no),
+            row(70, 55, oe_term, 5, 1, 1, no),
+            row(5, 63, d, 5, 0, 0, no),
+            row(5, 63, none, 5, 0, 0, no),
+            row(5, 62, d, 5, 0, 0, no),
+            row(5, 62, none, 5, 0, 0, no),
+            row(6, 61, d, 5, 0, 0, no),
+            row(6, 61, none, 5, 0, 0, no),
+            row(6, 60, d, 5, 0, 0, no),
+            row(6, 60, none, 5, 0, 0, no),
+            row(7, 59, d, 5, 0, 0, no),
+            row(7, 59, none, 5, 0, 0, no),
+            row(7, 58, d, 5, 0, 0, no),
+            row(7, 58, none, 5, 0, 0, no),
+            row(8, 57, d, 5, 0, 0, no),
+            row(8, 57, none, 5, 0, 0, no),
+            row(8, 56, d, 5, 0, 0, no),
+            row(8, 56, none, 5, 0, 0, no),
+            row(71, 30, oe_term, 6, 1, 1, no),
+            row(9, 29, d, 6, 0, 0, no),
+            row(9, 29, none, 6, 0, 0, no),
+            row(9, 28, d, 6, 0, 0, no),
+            row(9, 28, none, 6, 0, 0, no),
+            row(10, 27, d, 6, 0, 0, no),
+            row(10, 27, none, 6, 0, 0, no),
+            row(10, 26, d, 6, 0, 0, no),
+            row(10, 26, none, 6, 0, 0, no),
+            row(11, 25, d, 6, 0, 0, no),
+            row(11, 25, none, 6, 0, 0, no),
+            row(11, 24, d, 6, 0, 0, no),
+            row(11, 24, none, 6, 0, 0, no),
+            row(12, 23, d, 6, 0, 0, no),
+            row(12, 23, none, 6, 0, 0, no),
+            row(12, 22, d, 6, 0, 0, no),
+            row(12, 22, none, 6, 0, 0, no),
+            row(72, 13, oe_term, 7, 1, 1, no),
+            row(13, 21, d, 7, 0, 0, no),
+            row(13, 21, none, 7, 0, 0, no),
+            row(13, 20, d, 7, 0, 0, no),
+            row(13, 20, none, 7, 0, 0, no),
+            row(14, 19, d, 7, 0, 0, no),
+            row(14, 19, none, 7, 0, 0, no),
+            row(14, 18, d, 7, 0, 0, no),
+            row(14, 18, none, 7, 0, 0, no),
+            row(15, 17, d, 7, 0, 0, no),
+            row(15, 17, none, 7, 0, 0, no),
+            row(15, 16, d, 7, 0, 0, no),
+            row(15, 16, none, 7, 0, 0, no),
+            row(16, 15, d, 7, 0, 0, no),
+            row(16, 15, none, 7, 0, 0, no),
+            row(16, 14, d, 7, 0, 0, no),
+            row(16, 14, none, 7, 0, 0, no),
+            row(0, 0, byp, 8, 1, 1, yes),
+            row(1, 71, d, 8, 0, 0, yes),
+            row(1, 71, none, 8, 0, 0, yes),
+            row(1, 70, d, 8, 0, 0, yes),
+            row(1, 70, none, 8, 0, 0, yes),
+            row(2, 69, d, 8, 0, 0, yes),
+            row(2, 69, none, 8, 0, 0, yes),
+            row(2, 68, d, 8, 0, 0, yes),
+            row(2, 68, none, 8, 0, 0, yes),
+            row(3, 67, d, 8, 0, 0, yes),
+            row(3, 67, none, 8, 0, 0, yes),
+            row(3, 66, d, 8, 0, 0, yes),
+            row(3, 66, none, 8, 0, 0, yes),
+            row(4, 65, d, 8, 0, 0, yes),
+            row(4, 65, none, 8, 0, 0, yes),
+            row(4, 64, d, 8, 0, 0, yes),
+            row(4, 64, none, 8, 0, 0, yes),
+            row(0, 0, byp, 9, 1, 1, yes),
+            row(5, 63, d, 9, 0, 0, yes),
+            row(5, 63, none, 9, 0, 0, yes),
+            row(5, 62, d, 9, 0, 0, yes),
+            row(5, 62, none, 9, 0, 0, yes),
+            row(6, 61, d, 9, 0, 0, yes),
+            row(6, 61, none, 9, 0, 0, yes),
+            row(6, 60, d, 9, 0, 0, yes),
+            row(6, 60, none, 9, 0, 0, yes),
+            row(7, 59, d, 9, 0, 0, yes),
+            row(7, 59, none, 9, 0, 0, yes),
+            row(7, 58, d, 9, 0, 0, yes),
+            row(7, 58, none, 9, 0, 0, yes),
+            row(8, 57, d, 9, 0, 0, yes),
+            row(8, 57, none, 9, 0, 0, yes),
+            row(8, 56, d, 9, 0, 0, yes),
+            row(8, 56, none, 9, 0, 0, yes),
+            row(0, 0, byp, 10, 1, 1, yes),
+            row(9, 29, d, 10, 0, 0, yes),
+            row(9, 29, none, 10, 0, 0, yes),
+            row(9, 28, d, 10, 0, 0, yes),
+            row(9, 28, none, 10, 0, 0, yes),
+            row(10, 27, d, 10, 0, 0, yes),
+            row(10, 27, none, 10, 0, 0, yes),
+            row(10, 26, d, 10, 0, 0, yes),
+            row(10, 26, none, 10, 0, 0, yes),
+            row(11, 25, d, 10, 0, 0, yes),
+            row(11, 25, none, 10, 0, 0, yes),
+            row(11, 24, d, 10, 0, 0, yes),
+            row(11, 24, none, 10, 0, 0, yes),
+            row(12, 23, d, 10, 0, 0, yes),
+            row(12, 23, none, 10, 0, 0, yes),
+            row(12, 22, d, 10, 0, 0, yes),
+            row(12, 22, none, 10, 0, 0, yes),
+            row(0, 0, byp, 11, 1, 1, yes),
+            row(13, 21, d, 11, 0, 0, yes),
+            row(13, 21, none, 11, 0, 0, yes),
+            row(13, 20, d, 11, 0, 0, yes),
+            row(13, 20, none, 11, 0, 0, yes),
+            row(14, 19, d, 11, 0, 0, yes),
+            row(14, 19, none, 11, 0, 0, yes),
+            row(14, 18, d, 11, 0, 0, yes),
+            row(14, 18, none, 11, 0, 0, yes),
+            row(15, 17, d, 11, 0, 0, yes),
+            row(15, 17, none, 11, 0, 0, yes),
+            row(15, 16, d, 11, 0, 0, yes),
+            row(15, 16, none, 11, 0, 0, yes),
+            row(16, 15, d, 11, 0, 0, yes),
+            row(16, 15, none, 11, 0, 0, yes),
+            row(16, 14, d, 11, 0, 0, yes),
+            row(16, 14, none, 11, 0, 0, yes),
+            row(73, 76, extension_25, 12, 1, 1, no),
+            row(1, 71, d, 12, 0, 0, no),
+            row(1, 70, d, 12, 0, 0, no),
+            row(2, 69, d, 12, 0, 0, no),
+            row(2, 68, d, 12, 0, 0, no),
+            row(3, 67, d, 12, 0, 0, no),
+            row(3, 66, d, 12, 0, 0, no),
+            row(4, 65, d, 12, 0, 0, no),
+            row(4, 64, d, 12, 0, 0, no),
+            row(74, 51, extension_25, 13, 1, 1, no),
+            row(5, 63, d, 13, 0, 0, no),
+            row(5, 62, d, 13, 0, 0, no),
+            row(6, 61, d, 13, 0, 0, no),
+            row(6, 60, d, 13, 0, 0, no),
+            row(7, 59, d, 13, 0, 0, no),
+            row(7, 58, d, 13, 0, 0, no),
+            row(8, 57, d, 13, 0, 0, no),
+            row(8, 56, d, 13, 0, 0, no),
+            row(75, 34, extension_25, 14, 1, 1, no),
+            row(9, 29, d, 14, 0, 0, no),
+            row(9, 28, d, 14, 0, 0, no),
+            row(10, 27, d, 14, 0, 0, no),
+            row(10, 26, d, 14, 0, 0, no),
+            row(11, 25, d, 14, 0, 0, no),
+            row(11, 24, d, 14, 0, 0, no),
+            row(12, 23, d, 14, 0, 0, no),
+            row(12, 22, d, 14, 0, 0, no),
+            row(76, 9, extension_25, 15, 1, 1, no),
+            row(13, 21, d, 15, 0, 0, no),
+            row(13, 20, d, 15, 0, 0, no),
+            row(14, 19, d, 15, 0, 0, no),
+            row(14, 18, d, 15, 0, 0, no),
+            row(15, 17, d, 15, 0, 0, no),
+            row(15, 16, d, 15, 0, 0, no),
+            row(16, 15, d, 15, 0, 0, no),
+            row(16, 14, d, 15, 0, 0, no),
+            row(84, 75, extension_26, 16, 1, 1, no),
+            row(1, 71, d, 16, 0, 0, no),
+            row(1, 70, d, 16, 0, 0, no),
+            row(2, 69, d, 16, 0, 0, no),
+            row(2, 68, d, 16, 0, 0, no),
+            row(3, 67, d, 16, 0, 0, no),
+            row(3, 66, d, 16, 0, 0, no),
+            row(4, 65, d, 16, 0, 0, no),
+            row(4, 64, d, 16, 0, 0, no),
+            row(83, 52, extension_26, 17, 1, 1, no),
+            row(5, 63, d, 17, 0, 0, no),
+            row(5, 62, d, 17, 0, 0, no),
+            row(6, 61, d, 17, 0, 0, no),
+            row(6, 60, d, 17, 0, 0, no),
+            row(7, 59, d, 17, 0, 0, no),
+            row(7, 58, d, 17, 0, 0, no),
+            row(8, 57, d, 17, 0, 0, no),
+            row(8, 56, d, 17, 0, 0, no),
+            row(82, 33, extension_26, 18, 1, 1, no),
+            row(9, 29, d, 18, 0, 0, no),
+            row(9, 28, d, 18, 0, 0, no),
+            row(10, 27, d, 18, 0, 0, no),
+            row(10, 26, d, 18, 0, 0, no),
+            row(11, 25, d, 18, 0, 0, no),
+            row(11, 24, d, 18, 0, 0, no),
+            row(12, 23, d, 18, 0, 0, no),
+            row(12, 22, d, 18, 0, 0, no),
+            row(81, 10, extension_26, 19, 1, 1, no),
+            row(13, 21, d, 19, 0, 0, no),
+            row(13, 20, d, 19, 0, 0, no),
+            row(14, 19, d, 19, 0, 0, no),
+            row(14, 18, d, 19, 0, 0, no),
+            row(15, 17, d, 19, 0, 0, no),
+            row(15, 16, d, 19, 0, 0, no),
+            row(16, 15, d, 19, 0, 0, no),
+            row(16, 14, d, 19, 0, 0, no),
+        ]
+    }
+
+    fitter_arguments {
+        defaults {
+            kind = none
+            text = ""
+        }
+        columns = []
+        rows = [
+            row(),
+        ]
+    }
+
+}

@@ -41,13 +41,12 @@ You need:
 
 - CMake 3.16 or newer
 - a C11 compiler
-- Python 3, for the data download
+- Python 3, to compile the device library
 
 For the GUI programs you also need a C++17 compiler and Qt 6 (Widgets and
 PrintSupport; Qt Help is optional).
 
 ```sh
-./wincupl-extract-data          # download the device libraries (see below)
 cmake -B build
 cmake --build build -j
 cmake --install build --prefix /usr/local
@@ -66,21 +65,15 @@ sudo dnf install gcc gcc-c++ cmake qt6-qtbase-devel python3    # Fedora
 
 ### Device libraries
 
-The device descriptions (`Atmel.dl`, `cupl.dl`), macros and example designs
-are not part of this repository. `wincupl-extract-data` downloads Microchip's
-WinCUPL installer and extracts these files into `share/lincupl/`. It uses
-only the Python standard library, and it checks the archive's SHA-256.
+The build compiles the checked-in descriptions into `lincupl.dl`, the default
+library used by the compiler, simulator and device tools. It covers all 660
+mnemonics from the `Atmel.dl` and `cupl.dl` catalogs. `cmake --install` installs
+it under `<prefix>/share/lincupl`; no library download is required.
 
-```sh
-./wincupl-extract-data                         # download from microchip.com
-./wincupl-extract-data --file awincupl.exe.zip # or use a copy you already have
-```
-
-The build works without these files. The tools then have no devices to
-compile for. When the files are present, the
-build also makes `lincupl.dl`, a library with the devices of both
-`Atmel.dl` and `cupl.dl`. `cmake --install` installs it with the other data
-under `<prefix>/share/lincupl`.
+The `.dev` sources are in `devices/Atmel/` and `devices/cupl/`, with reusable
+hardware models in `devices/families/`. See the [language reference](doc/device-language.md)
+and [implementation notes](doc/device-implementation.md) for compilation,
+validation and deliberate differences.
 
 ## Usage
 

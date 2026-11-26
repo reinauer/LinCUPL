@@ -1,0 +1,602 @@
+{
+  "format": "lincupl-device-catalog-1",
+  "source_sha256": "9dd8197f01a07adf053ce237e4cfae95e22b705ac441e2bec5bbf88f6b2a47a7",
+  "entries": [
+    {
+      "name": "v750",
+      "occurrence": 1,
+      "file": "v750.dev",
+      "directory_index": 0,
+      "flags": 1
+    },
+    {
+      "name": "v750b",
+      "occurrence": 1,
+      "file": "v750b.dev",
+      "directory_index": 1,
+      "flags": 1
+    },
+    {
+      "name": "v750c",
+      "occurrence": 1,
+      "file": "v750c.dev",
+      "directory_index": 2,
+      "flags": 1
+    },
+    {
+      "name": "v750cext",
+      "occurrence": 1,
+      "file": "v750cext.dev",
+      "directory_index": 3,
+      "flags": 1
+    },
+    {
+      "name": "v750cextppk",
+      "occurrence": 1,
+      "file": "v750cextppk.dev",
+      "directory_index": 4,
+      "flags": 1
+    },
+    {
+      "name": "v750cppk",
+      "occurrence": 1,
+      "file": "v750cppk.dev",
+      "directory_index": 5,
+      "flags": 1
+    },
+    {
+      "name": "v2500",
+      "occurrence": 1,
+      "file": "v2500.dev",
+      "directory_index": 6,
+      "flags": 1
+    },
+    {
+      "name": "v2500b",
+      "occurrence": 1,
+      "file": "v2500b.dev",
+      "directory_index": 7,
+      "flags": 1
+    },
+    {
+      "name": "v2500c",
+      "occurrence": 1,
+      "file": "v2500c.dev",
+      "directory_index": 8,
+      "flags": 1
+    },
+    {
+      "name": "v2500cppk",
+      "occurrence": 1,
+      "file": "v2500cppk.dev",
+      "directory_index": 9,
+      "flags": 1
+    },
+    {
+      "name": "f1500",
+      "occurrence": 1,
+      "file": "f1500.dev",
+      "directory_index": 10,
+      "flags": 1
+    },
+    {
+      "name": "f1500t",
+      "occurrence": 1,
+      "file": "f1500t.dev",
+      "directory_index": 11,
+      "flags": 1
+    },
+    {
+      "name": "f1500a",
+      "occurrence": 1,
+      "file": "f1500a.dev",
+      "directory_index": 12,
+      "flags": 1
+    },
+    {
+      "name": "f1500at",
+      "occurrence": 1,
+      "file": "f1500at.dev",
+      "directory_index": 13,
+      "flags": 1
+    },
+    {
+      "name": "f1502plcc44",
+      "occurrence": 1,
+      "file": "f1502plcc44.dev",
+      "directory_index": 14,
+      "flags": 1
+    },
+    {
+      "name": "f1502ispplcc44",
+      "occurrence": 1,
+      "file": "f1502ispplcc44.dev",
+      "directory_index": 15,
+      "flags": 1
+    },
+    {
+      "name": "f1502tqfp44",
+      "occurrence": 1,
+      "file": "f1502tqfp44.dev",
+      "directory_index": 16,
+      "flags": 1
+    },
+    {
+      "name": "f1502isptqfp44",
+      "occurrence": 1,
+      "file": "f1502isptqfp44.dev",
+      "directory_index": 17,
+      "flags": 1
+    },
+    {
+      "name": "f1504plcc44",
+      "occurrence": 1,
+      "file": "f1504plcc44.dev",
+      "directory_index": 18,
+      "flags": 1
+    },
+    {
+      "name": "f1504ispplcc44",
+      "occurrence": 1,
+      "file": "f1504ispplcc44.dev",
+      "directory_index": 19,
+      "flags": 1
+    },
+    {
+      "name": "f1504tqfp44",
+      "occurrence": 1,
+      "file": "f1504tqfp44.dev",
+      "directory_index": 20,
+      "flags": 1
+    },
+    {
+      "name": "f1504isptqfp44",
+      "occurrence": 1,
+      "file": "f1504isptqfp44.dev",
+      "directory_index": 21,
+      "flags": 1
+    },
+    {
+      "name": "f1504plcc68",
+      "occurrence": 1,
+      "file": "f1504plcc68.dev",
+      "directory_index": 22,
+      "flags": 1
+    },
+    {
+      "name": "f1504ispplcc68",
+      "occurrence": 1,
+      "file": "f1504ispplcc68.dev",
+      "directory_index": 23,
+      "flags": 1
+    },
+    {
+      "name": "f1504plcc84",
+      "occurrence": 1,
+      "file": "f1504plcc84.dev",
+      "directory_index": 24,
+      "flags": 1
+    },
+    {
+      "name": "f1504ispplcc84",
+      "occurrence": 1,
+      "file": "f1504ispplcc84.dev",
+      "directory_index": 25,
+      "flags": 1
+    },
+    {
+      "name": "f1504qfp100",
+      "occurrence": 1,
+      "file": "f1504qfp100.dev",
+      "directory_index": 26,
+      "flags": 1
+    },
+    {
+      "name": "f1504ispqfp100",
+      "occurrence": 1,
+      "file": "f1504ispqfp100.dev",
+      "directory_index": 27,
+      "flags": 1
+    },
+    {
+      "name": "f1504tqfp100",
+      "occurrence": 1,
+      "file": "f1504tqfp100.dev",
+      "directory_index": 28,
+      "flags": 1
+    },
+    {
+      "name": "f1504isptqfp100",
+      "occurrence": 1,
+      "file": "f1504isptqfp100.dev",
+      "directory_index": 29,
+      "flags": 1
+    },
+    {
+      "name": "f1508plcc84",
+      "occurrence": 1,
+      "file": "f1508plcc84.dev",
+      "directory_index": 30,
+      "flags": 1
+    },
+    {
+      "name": "f1508ispplcc84",
+      "occurrence": 1,
+      "file": "f1508ispplcc84.dev",
+      "directory_index": 31,
+      "flags": 1
+    },
+    {
+      "name": "f1508qfp100",
+      "occurrence": 1,
+      "file": "f1508qfp100.dev",
+      "directory_index": 32,
+      "flags": 1
+    },
+    {
+      "name": "f1508ispqfp100",
+      "occurrence": 1,
+      "file": "f1508ispqfp100.dev",
+      "directory_index": 33,
+      "flags": 1
+    },
+    {
+      "name": "f1508tqfp100",
+      "occurrence": 1,
+      "file": "f1508tqfp100.dev",
+      "directory_index": 34,
+      "flags": 1
+    },
+    {
+      "name": "f1508isptqfp100",
+      "occurrence": 1,
+      "file": "f1508isptqfp100.dev",
+      "directory_index": 35,
+      "flags": 1
+    },
+    {
+      "name": "f1508pqfp160",
+      "occurrence": 1,
+      "file": "f1508pqfp160.dev",
+      "directory_index": 36,
+      "flags": 1
+    },
+    {
+      "name": "f1508isppqfp160",
+      "occurrence": 1,
+      "file": "f1508isppqfp160.dev",
+      "directory_index": 37,
+      "flags": 1
+    },
+    {
+      "name": "atfvirtual",
+      "occurrence": 1,
+      "file": "atfvirtual.dev",
+      "directory_index": 38,
+      "flags": 1
+    },
+    {
+      "name": "g16v8",
+      "occurrence": 1,
+      "file": "g16v8.dev",
+      "directory_index": 39,
+      "flags": 1
+    },
+    {
+      "name": "g16v8ma",
+      "occurrence": 1,
+      "file": "g16v8ma.dev",
+      "directory_index": 40,
+      "flags": 1
+    },
+    {
+      "name": "g16v8ms",
+      "occurrence": 1,
+      "file": "g16v8ms.dev",
+      "directory_index": 41,
+      "flags": 1
+    },
+    {
+      "name": "g16v8a",
+      "occurrence": 1,
+      "file": "g16v8a.dev",
+      "directory_index": 42,
+      "flags": 1
+    },
+    {
+      "name": "g16v8as",
+      "occurrence": 1,
+      "file": "g16v8as.dev",
+      "directory_index": 43,
+      "flags": 1
+    },
+    {
+      "name": "g16v8s",
+      "occurrence": 1,
+      "file": "g16v8s.dev",
+      "directory_index": 44,
+      "flags": 1
+    },
+    {
+      "name": "g16v8cpms",
+      "occurrence": 1,
+      "file": "g16v8cpms.dev",
+      "directory_index": 45,
+      "flags": 1
+    },
+    {
+      "name": "g16v8cp",
+      "occurrence": 1,
+      "file": "g16v8cp.dev",
+      "directory_index": 46,
+      "flags": 1
+    },
+    {
+      "name": "g16v8cpas",
+      "occurrence": 1,
+      "file": "g16v8cpas.dev",
+      "directory_index": 47,
+      "flags": 1
+    },
+    {
+      "name": "g16v8cpma",
+      "occurrence": 1,
+      "file": "g16v8cpma.dev",
+      "directory_index": 48,
+      "flags": 1
+    },
+    {
+      "name": "g20v8",
+      "occurrence": 1,
+      "file": "g20v8.dev",
+      "directory_index": 49,
+      "flags": 1
+    },
+    {
+      "name": "g20v8ma",
+      "occurrence": 1,
+      "file": "g20v8ma.dev",
+      "directory_index": 50,
+      "flags": 1
+    },
+    {
+      "name": "g20v8ms",
+      "occurrence": 1,
+      "file": "g20v8ms.dev",
+      "directory_index": 51,
+      "flags": 1
+    },
+    {
+      "name": "g20v8a",
+      "occurrence": 1,
+      "file": "g20v8a.dev",
+      "directory_index": 52,
+      "flags": 1
+    },
+    {
+      "name": "g20v8as",
+      "occurrence": 1,
+      "file": "g20v8as.dev",
+      "directory_index": 53,
+      "flags": 1
+    },
+    {
+      "name": "g20v8cp",
+      "occurrence": 1,
+      "file": "g20v8cp.dev",
+      "directory_index": 54,
+      "flags": 1
+    },
+    {
+      "name": "g20v8cps",
+      "occurrence": 1,
+      "file": "g20v8cps.dev",
+      "directory_index": 55,
+      "flags": 1
+    },
+    {
+      "name": "g20v8cpma",
+      "occurrence": 1,
+      "file": "g20v8cpma.dev",
+      "directory_index": 56,
+      "flags": 1
+    },
+    {
+      "name": "g20v8cpms",
+      "occurrence": 1,
+      "file": "g20v8cpms.dev",
+      "directory_index": 57,
+      "flags": 1
+    },
+    {
+      "name": "g22v10",
+      "occurrence": 1,
+      "file": "g22v10.dev",
+      "directory_index": 58,
+      "flags": 1
+    },
+    {
+      "name": "g22v10cp",
+      "occurrence": 1,
+      "file": "g22v10cp.dev",
+      "directory_index": 59,
+      "flags": 1
+    },
+    {
+      "name": "p22v10",
+      "occurrence": 1,
+      "file": "p22v10.dev",
+      "directory_index": 60,
+      "flags": 1
+    },
+    {
+      "name": "virtual",
+      "occurrence": 1,
+      "file": "virtual.dev",
+      "directory_index": 61,
+      "flags": 1
+    },
+    {
+      "name": "v750lcc",
+      "occurrence": 1,
+      "file": "v750lcc.dev",
+      "directory_index": 62,
+      "flags": 1
+    },
+    {
+      "name": "v750blcc",
+      "occurrence": 1,
+      "file": "v750blcc.dev",
+      "directory_index": 63,
+      "flags": 1
+    },
+    {
+      "name": "v750clcc",
+      "occurrence": 1,
+      "file": "v750clcc.dev",
+      "directory_index": 64,
+      "flags": 1
+    },
+    {
+      "name": "v750cextlcc",
+      "occurrence": 1,
+      "file": "v750cextlcc.dev",
+      "directory_index": 65,
+      "flags": 1
+    },
+    {
+      "name": "v750cextppklcc",
+      "occurrence": 1,
+      "file": "v750cextppklcc.dev",
+      "directory_index": 66,
+      "flags": 1
+    },
+    {
+      "name": "v750cppklcc",
+      "occurrence": 1,
+      "file": "v750cppklcc.dev",
+      "directory_index": 67,
+      "flags": 1
+    },
+    {
+      "name": "v2500lcc",
+      "occurrence": 1,
+      "file": "v2500lcc.dev",
+      "directory_index": 68,
+      "flags": 1
+    },
+    {
+      "name": "v2500blcc",
+      "occurrence": 1,
+      "file": "v2500blcc.dev",
+      "directory_index": 69,
+      "flags": 1
+    },
+    {
+      "name": "v2500clcc",
+      "occurrence": 1,
+      "file": "v2500clcc.dev",
+      "directory_index": 70,
+      "flags": 1
+    },
+    {
+      "name": "v2500cppklcc",
+      "occurrence": 1,
+      "file": "v2500cppklcc.dev",
+      "directory_index": 71,
+      "flags": 1
+    },
+    {
+      "name": "g20v8lcc",
+      "occurrence": 1,
+      "file": "g20v8lcc.dev",
+      "directory_index": 72,
+      "flags": 1
+    },
+    {
+      "name": "g20v8alcc",
+      "occurrence": 1,
+      "file": "g20v8alcc.dev",
+      "directory_index": 73,
+      "flags": 1
+    },
+    {
+      "name": "g20v8aslcc",
+      "occurrence": 1,
+      "file": "g20v8aslcc.dev",
+      "directory_index": 74,
+      "flags": 1
+    },
+    {
+      "name": "g20v8malcc",
+      "occurrence": 1,
+      "file": "g20v8malcc.dev",
+      "directory_index": 75,
+      "flags": 1
+    },
+    {
+      "name": "g20v8mslcc",
+      "occurrence": 1,
+      "file": "g20v8mslcc.dev",
+      "directory_index": 76,
+      "flags": 1
+    },
+    {
+      "name": "g20v8slcc",
+      "occurrence": 1,
+      "file": "g20v8slcc.dev",
+      "directory_index": 77,
+      "flags": 1
+    },
+    {
+      "name": "g20v8cplcc",
+      "occurrence": 1,
+      "file": "g20v8cplcc.dev",
+      "directory_index": 78,
+      "flags": 1
+    },
+    {
+      "name": "g20v8cpslcc",
+      "occurrence": 1,
+      "file": "g20v8cpslcc.dev",
+      "directory_index": 79,
+      "flags": 1
+    },
+    {
+      "name": "g20v8cpmalcc",
+      "occurrence": 1,
+      "file": "g20v8cpmalcc.dev",
+      "directory_index": 80,
+      "flags": 1
+    },
+    {
+      "name": "g20v8cpmslcc",
+      "occurrence": 1,
+      "file": "g20v8cpmslcc.dev",
+      "directory_index": 81,
+      "flags": 1
+    },
+    {
+      "name": "g22v10lcc",
+      "occurrence": 1,
+      "file": "g22v10lcc.dev",
+      "directory_index": 82,
+      "flags": 1
+    },
+    {
+      "name": "g22v10cplcc",
+      "occurrence": 1,
+      "file": "g22v10cplcc.dev",
+      "directory_index": 83,
+      "flags": 1
+    },
+    {
+      "name": "p22v10lcc",
+      "occurrence": 1,
+      "file": "p22v10lcc.dev",
+      "directory_index": 84,
+      "flags": 1
+    }
+  ],
+  "reference_library": "Atmel.dl"
+}

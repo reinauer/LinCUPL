@@ -1,0 +1,174 @@
+# Device library interface; field values and record order are retained.
+# Compiler modes are ABI settings, not inferred hardware properties.
+format = 1
+
+device ra6p16 {
+    representation = library
+
+    package {
+        pins = 24
+        drawing_style = 0
+        internal_nodes = 0
+    }
+
+    power {
+        ground = 12
+        supply = 24
+    }
+
+    fuses {
+        count = 1024
+        default = 0
+    }
+
+    signature {
+        bits = 0
+        first_fuse = 0
+    }
+
+    compiler {
+        revision = 2
+        family = prom
+        extra_nodes_a = 0
+        extra_nodes_b = 0
+        extra_nodes_c = 0
+        register_resources = 0
+        clocked_resources = 0
+        default_extension = none
+        product_rows = 64
+        initial_term_capacity = 70
+        array_slots = 2
+        input_line_slots = 10
+        extra_symbols = 0
+        download = ascii_hex
+    }
+
+    simulation {
+        output_enable_mode = 0
+        output_polarity_mode = 0
+        internal_polarity_mode = 0
+        power_up = unknown
+        preload_polarity = 0
+    }
+
+    prom {
+        address_bits = 6
+        data_width = 16
+    }
+
+    fitter {
+        input_format = 0
+        name = ""
+        arguments = ""
+        pla_options = []
+        part = ""
+    }
+
+    pin_functions {
+        defaults {
+            function = none
+            variant = default
+            complement_column = 0
+            config_value = 0
+            config_bits = 0
+            config_first_fuse = 131072
+        }
+        columns = [line, pin, compiler_type, true_column]
+        rows = [
+            row(1, 12, ground, 0),
+            row(2, 1, unspecified, 0),
+            row(3, 2, unspecified, 1),
+            row(4, 3, unspecified, 2),
+            row(5, 4, unspecified, 3),
+            row(6, 5, unspecified, 4),
+            row(7, 6, unspecified, 5),
+            row(8, 6, output_enable, 0),
+            row(9, 24, supply, 0),
+        ]
+    }
+
+    node_functions {
+        defaults {
+            array = 1
+            invert = no
+            select_value = 0
+            config_value = 0
+            first_row_fuse = 131072
+            config_first_fuse = 131072
+            pair_first_fuse = 0
+            row_width = 0
+            config_bits = 0
+            pair_bits = 0
+            split_terms = 0
+            default_rule = 0
+            has_default = no
+            sharing_mode = 0
+            alternate_step = 0
+        }
+        columns = [pin, function, polarity, first_or_fuse, or_width, max_terms, active]
+        rows = [
+            row(7, none, programmable_negative, 0, 0, 0, yes),
+            row(7, none, programmable_positive, 0, 0, 0, yes),
+            row(8, none, programmable_negative, 1, 0, 0, yes),
+            row(8, none, programmable_positive, 1, 0, 0, yes),
+            row(9, none, programmable_negative, 2, 0, 0, yes),
+            row(9, none, programmable_positive, 2, 0, 0, yes),
+            row(10, none, programmable_negative, 3, 0, 0, yes),
+            row(10, none, programmable_positive, 3, 0, 0, yes),
+            row(11, none, programmable_negative, 4, 0, 0, yes),
+            row(11, none, programmable_positive, 4, 0, 0, yes),
+            row(13, none, programmable_negative, 5, 0, 0, yes),
+            row(13, none, programmable_positive, 5, 0, 0, yes),
+            row(14, none, programmable_negative, 6, 0, 0, yes),
+            row(14, none, programmable_positive, 6, 0, 0, yes),
+            row(15, none, programmable_negative, 7, 0, 0, yes),
+            row(15, none, programmable_positive, 7, 0, 0, yes),
+            row(16, none, programmable_negative, 8, 0, 0, yes),
+            row(16, none, programmable_positive, 8, 0, 0, yes),
+            row(17, none, programmable_negative, 9, 0, 0, yes),
+            row(17, none, programmable_positive, 9, 0, 0, yes),
+            row(18, none, programmable_negative, 10, 0, 0, yes),
+            row(18, none, programmable_positive, 10, 0, 0, yes),
+            row(19, none, programmable_negative, 11, 0, 0, yes),
+            row(19, none, programmable_positive, 11, 0, 0, yes),
+            row(20, none, programmable_negative, 12, 0, 0, yes),
+            row(20, none, programmable_positive, 12, 0, 0, yes),
+            row(21, none, programmable_negative, 13, 0, 0, yes),
+            row(21, none, programmable_positive, 13, 0, 0, yes),
+            row(22, none, programmable_negative, 14, 0, 0, yes),
+            row(22, none, programmable_positive, 14, 0, 0, yes),
+            row(23, none, programmable_negative, 15, 0, 0, yes),
+            row(23, none, programmable_positive, 15, 0, 0, yes),
+            row(0, array, positive, 0, 16, 32, no),
+        ]
+    }
+
+    plot {
+        defaults {
+            group = 0
+            text = ""
+            a = 0
+            b = 0
+            c = 0
+            d = 0
+        }
+        columns = [operation]
+        rows = [
+            row(begin_fuses),
+            row(prom),
+            row(end),
+        ]
+    }
+
+    fitter_arguments {
+        defaults {
+            kind = none
+            text = ""
+        }
+        columns = []
+        rows = [
+            row(),
+        ]
+    }
+
+}

@@ -1,0 +1,243 @@
+# Device library interface; field values and record order are retained.
+# Compiler modes are ABI settings, not inferred hardware properties.
+format = 1
+
+device c331 {
+    representation = library
+
+    package {
+        pins = 28
+        drawing_style = 0
+        internal_nodes = 12
+    }
+
+    power {
+        ground = 8
+        supply = 22
+    }
+
+    fuses {
+        count = 11934
+        default = 0
+    }
+
+    signature {
+        bits = 0
+        first_fuse = 0
+    }
+
+    compiler {
+        revision = 1
+        family = external_fitter
+        extra_nodes_a = 0
+        extra_nodes_b = 6
+        extra_nodes_c = 0
+        register_resources = 36
+        clocked_resources = 12
+        default_extension = none
+        product_rows = 216
+        initial_term_capacity = 400
+        array_slots = 1
+        input_line_slots = 47
+        extra_symbols = 70
+        download = jedec
+    }
+
+    simulation {
+        output_enable_mode = 0
+        output_polarity_mode = 0
+        internal_polarity_mode = 0
+        power_up = low
+        preload_polarity = 0
+    }
+
+    prom {
+        address_bits = 0
+        data_width = 12
+    }
+
+    fitter {
+        input_format = 6
+        name = "cupl2cyp"
+        arguments = ""
+        pla_options = [tool_header, jedec_keyword]
+        part = ""
+    }
+
+    extensions {
+        columns = [name, function]
+        rows = [
+            row("d", d),
+            row("dq", dq),
+            row("ar", ar),
+            row("ap", ap),
+            row("imux", imux),
+            row("oe", oe),
+            row("ck", ck),
+            row("oemux", oemux),
+            row("iod", iod),
+            row("ioar", ioar),
+            row("ioap", ioap),
+            row("iock", iock),
+        ]
+    }
+
+    fitter_extensions {
+        columns = [extension, alias]
+        rows = [
+            row("d", "D"),
+            row("t", "T"),
+            row("l", "G"),
+            row("dq", "R"),
+            row("tq", "R"),
+            row("lq", "L"),
+            row("oe", "OE"),
+            row("ar", "AR"),
+            row("ap", "AP"),
+            row("sp", "PR"),
+            row("sr", "RE"),
+            row("ck", "C"),
+            row("le", "LH"),
+            row("io", "PIN"),
+            row("iod", "R"),
+            row("iol", "L"),
+            row("ioar", "AR"),
+            row("ioap", "AP"),
+            row("iosp", "PR"),
+            row("iosr", "RE"),
+            row("iock", "C"),
+            row("int", "X"),
+            row("ckmux", "C"),
+            row("lemux", "LH"),
+            row("oemux", "OE"),
+            row("j", "J"),
+            row("k", "K"),
+            row("ce", "CE"),
+            row("reg", "Q"),
+        ]
+    }
+
+    pin_functions {
+        defaults {
+            config_value = 0
+        }
+        columns = [line, pin, function, compiler_type, variant, true_column, complement_column, config_bits, config_first_fuse]
+        rows = [
+            row(1, 1, none, unspecified, default, 0, 1, 0, 0),
+            row(2, 2, none, unspecified, default, 2, 3, 0, 0),
+            row(3, 3, none, unspecified, default, 10, 11, 0, 0),
+            row(4, 4, none, unspecified, default, 12, 13, 0, 0),
+            row(5, 5, none, unspecified, default, 20, 21, 0, 0),
+            row(6, 6, none, unspecified, default, 22, 23, 0, 0),
+            row(7, 7, none, unspecified, default, 30, 31, 0, 0),
+            row(8, 8, none, ground, default, 0, 0, 0, 0),
+            row(9, 9, none, unspecified, default, 32, 33, 0, 0),
+            row(10, 10, none, unspecified, default, 40, 41, 0, 0),
+            row(11, 11, none, unspecified, default, 42, 43, 0, 0),
+            row(12, 12, none, unspecified, default, 50, 51, 0, 0),
+            row(13, 13, none, unspecified, default, 52, 53, 0, 0),
+            row(14, 14, none, 13, default, 60, 61, 0, 0),
+            row(15, 22, none, supply, default, 0, 0, 0, 0),
+            row(16, 28, dq, unspecified, default, 4, 5, 0, 0),
+            row(16, 28, iod, feedback, default, 4, 5, 0, 0),
+            row(16, 28, none, register_feedback, d, 4, 5, 1, 11905),
+            row(17, 29, none, register_feedback, default, 4, 5, 1, 11905),
+            row(18, 27, dq, unspecified, default, 8, 9, 0, 0),
+            row(18, 27, iod, feedback, default, 8, 9, 0, 0),
+            row(18, 27, none, register_feedback, d, 8, 9, 1, 11908),
+            row(19, 30, none, register_feedback, default, 8, 9, 1, 11908),
+            row(20, 26, dq, unspecified, default, 14, 15, 0, 0),
+            row(20, 26, iod, feedback, default, 14, 15, 0, 0),
+            row(20, 26, none, register_feedback, d, 14, 15, 1, 11910),
+            row(21, 31, none, register_feedback, default, 14, 15, 1, 11910),
+            row(22, 25, dq, unspecified, default, 18, 19, 0, 0),
+            row(22, 25, iod, feedback, default, 18, 19, 0, 0),
+            row(22, 25, none, register_feedback, d, 18, 19, 1, 11913),
+            row(23, 32, none, register_feedback, default, 18, 19, 1, 11913),
+            row(24, 24, dq, unspecified, default, 24, 25, 0, 0),
+            row(24, 24, iod, feedback, default, 24, 25, 0, 0),
+            row(24, 24, none, register_feedback, d, 24, 25, 1, 11915),
+            row(25, 33, none, register_feedback, default, 24, 25, 1, 11915),
+            row(26, 23, dq, unspecified, default, 28, 29, 0, 0),
+            row(26, 23, iod, feedback, default, 28, 29, 0, 0),
+            row(26, 23, none, register_feedback, d, 28, 29, 1, 11918),
+            row(27, 34, none, register_feedback, default, 28, 29, 1, 11918),
+            row(28, 20, dq, unspecified, default, 34, 35, 0, 0),
+            row(28, 20, iod, feedback, default, 34, 35, 0, 0),
+            row(28, 20, none, register_feedback, d, 34, 35, 1, 11920),
+            row(29, 35, none, register_feedback, default, 34, 35, 1, 11920),
+            row(30, 19, dq, unspecified, default, 38, 39, 0, 0),
+            row(30, 19, iod, feedback, default, 38, 39, 0, 0),
+            row(30, 19, none, register_feedback, d, 38, 39, 1, 11923),
+            row(31, 36, none, register_feedback, default, 38, 39, 1, 11923),
+            row(32, 18, dq, unspecified, default, 44, 45, 0, 0),
+            row(32, 18, iod, feedback, default, 44, 45, 0, 0),
+            row(32, 18, none, register_feedback, d, 44, 45, 1, 11925),
+            row(33, 37, none, register_feedback, default, 44, 45, 1, 11925),
+            row(34, 17, dq, unspecified, default, 48, 49, 0, 0),
+            row(34, 17, iod, feedback, default, 48, 49, 0, 0),
+            row(34, 17, none, register_feedback, d, 48, 49, 1, 11928),
+            row(35, 38, none, register_feedback, default, 48, 49, 1, 11928),
+            row(36, 16, dq, unspecified, default, 54, 55, 0, 0),
+            row(36, 16, iod, feedback, default, 54, 55, 0, 0),
+            row(36, 16, none, register_feedback, d, 54, 55, 1, 11930),
+            row(37, 39, none, register_feedback, default, 54, 55, 1, 11930),
+            row(38, 15, dq, unspecified, default, 58, 59, 0, 0),
+            row(38, 15, iod, feedback, default, 58, 59, 0, 0),
+            row(38, 15, none, register_feedback, d, 58, 59, 1, 11933),
+            row(39, 40, none, register_feedback, default, 58, 59, 1, 11933),
+            row(40, 21, none, ground, default, 0, 0, 0, 0),
+            row(41, 41, none, register_feedback, default, 6, 7, 0, 0),
+            row(42, 42, none, register_feedback, default, 16, 17, 0, 0),
+            row(43, 43, none, register_feedback, default, 26, 27, 0, 0),
+            row(44, 44, none, register_feedback, default, 36, 37, 0, 0),
+            row(45, 45, none, register_feedback, default, 46, 47, 0, 0),
+            row(46, 46, none, register_feedback, default, 56, 57, 0, 0),
+        ]
+    }
+
+    node_functions {
+        defaults {
+            array = 0
+            pin = 0
+            function = none
+            polarity = unspecified
+            invert = no
+            select_value = 0
+            config_value = 0
+            first_row_fuse = 0
+            first_or_fuse = 0
+            config_first_fuse = 131072
+            pair_first_fuse = 0
+            row_width = 0
+            or_width = 0
+            config_bits = 0
+            pair_bits = 0
+            max_terms = 0
+            split_terms = 0
+            default_rule = 0
+            has_default = no
+            sharing_mode = 0
+            active = no
+            alternate_step = 0
+        }
+        columns = []
+        rows = [
+            row(),
+        ]
+    }
+
+    fitter_arguments {
+        columns = [kind, text]
+        rows = [
+            row(pla_file, ""),
+            row(literal, "-SILENT"),
+            row(literal, "-JED"),
+            row(jedec_file, ""),
+            row(literal, "-RPT"),
+            row(file_suffix, ".LOG"),
+            row(none, ""),
+        ]
+    }
+
+}

@@ -1,0 +1,155 @@
+# Device library interface; field values and record order are retained.
+# Compiler modes are ABI settings, not inferred hardware properties.
+format = 1
+
+device p8x12a {
+    representation = library
+
+    package {
+        pins = 200
+        drawing_style = 0
+        internal_nodes = 100
+    }
+
+    power {
+        ground = 0
+        supply = 0
+    }
+
+    fuses {
+        count = 99999
+        default = 0
+    }
+
+    signature {
+        bits = 0
+        first_fuse = 0
+    }
+
+    compiler {
+        revision = 1
+        family = external_fitter
+        extra_nodes_a = 0
+        extra_nodes_b = 0
+        extra_nodes_c = 0
+        register_resources = 255
+        clocked_resources = 199
+        default_extension = none
+        product_rows = 5000
+        initial_term_capacity = 200
+        array_slots = 1
+        input_line_slots = 1
+        extra_symbols = 0
+        download = jedec_and_hl
+    }
+
+    simulation {
+        output_enable_mode = 0
+        output_polarity_mode = 0
+        internal_polarity_mode = 0
+        power_up = unknown
+        preload_polarity = 0
+    }
+
+    prom {
+        address_bits = 0
+        data_width = 199
+    }
+
+    fitter {
+        input_format = 2
+        name = "PLA2QDIF"
+        arguments = "PLAFITTER"
+        pla_options = [tool_header, output_keyword]
+        part = ""
+    }
+
+    fitter_extensions {
+        columns = [extension, alias]
+        rows = [
+            row("ap", "ap"),
+            row("ar", "ar"),
+            row("ck", "c"),
+            row("d", "D"),
+            row("t", "T"),
+            row("l", "G"),
+            row("oe", "OE"),
+            row("ar", "AR"),
+            row("ap", "AP"),
+            row("sp", "SP"),
+            row("sr", "SR"),
+            row("ck", "C"),
+            row("io", "PIN"),
+            row("iock", "C"),
+            row("ckmux", "C"),
+            row("lemux", "LH"),
+            row("oemux", "OE"),
+            row("j", "J"),
+            row("k", "K"),
+            row("ce", "CE"),
+            row("reg", "Q"),
+        ]
+    }
+
+    pin_functions {
+        defaults {
+            line = 0
+            pin = 0
+            function = none
+            compiler_type = not_connected
+            variant = default
+            true_column = 0
+            complement_column = 0
+            config_value = 0
+            config_bits = 0
+            config_first_fuse = 0
+        }
+        columns = []
+        rows = [
+            row(),
+        ]
+    }
+
+    node_functions {
+        defaults {
+            array = 0
+            pin = 0
+            function = none
+            polarity = unspecified
+            invert = no
+            select_value = 0
+            config_value = 0
+            first_row_fuse = 0
+            first_or_fuse = 0
+            config_first_fuse = 131072
+            pair_first_fuse = 0
+            row_width = 0
+            or_width = 0
+            config_bits = 0
+            pair_bits = 0
+            max_terms = 0
+            split_terms = 0
+            default_rule = 0
+            has_default = no
+            sharing_mode = 0
+            active = no
+            alternate_step = 0
+        }
+        columns = []
+        rows = [
+            row(),
+        ]
+    }
+
+    fitter_arguments {
+        defaults {
+            text = ""
+        }
+        columns = [kind]
+        rows = [
+            row(pla_file),
+            row(none),
+        ]
+    }
+
+}

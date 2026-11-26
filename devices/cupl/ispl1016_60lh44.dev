@@ -1,0 +1,415 @@
+# Device library interface; field values and record order are retained.
+# Compiler modes are ABI settings, not inferred hardware properties.
+format = 1
+
+device ispl1016_60lh44 {
+    representation = library
+
+    package {
+        pins = 44
+        drawing_style = 1
+        internal_nodes = 64
+    }
+
+    power {
+        ground = 0
+        supply = 0
+    }
+
+    fuses {
+        count = 15360
+        default = 0
+    }
+
+    signature {
+        bits = 0
+        first_fuse = 0
+    }
+
+    compiler {
+        revision = 2
+        family = external_fitter
+        extra_nodes_a = 0
+        extra_nodes_b = 0
+        extra_nodes_c = 0
+        register_resources = 96
+        clocked_resources = 32
+        default_extension = none
+        product_rows = 320
+        initial_term_capacity = 200
+        array_slots = 1
+        input_line_slots = 109
+        extra_symbols = 0
+        download = jedec
+    }
+
+    simulation {
+        output_enable_mode = 0
+        output_polarity_mode = 0
+        internal_polarity_mode = 0
+        power_up = low
+        preload_polarity = 0
+    }
+
+    prom {
+        address_bits = 0
+        data_width = 32
+    }
+
+    fitter {
+        input_format = 4
+        name = "plsifit"
+        arguments = ""
+        pla_options = [tool_header, jedec_keyword, copy_tt2, omit_device, omit_pin_zero, short_labels]
+        part = ""
+    }
+
+    extensions {
+        columns = [name, function]
+        rows = [
+            row("d", d),
+            row("t", t),
+            row("j", j),
+            row("k", k),
+            row("oe", oe),
+            row("oemux", oemux),
+            row("ck", ck),
+            row("ckmux", ckmux),
+            row("ar", ar),
+            row("dq", dq),
+            row("lq", lq),
+            row("io", io),
+            row("iod", iod),
+            row("iol", iol),
+            row("iock", iock),
+            row("ioar", ioar),
+        ]
+    }
+
+    fitter_extensions {
+        columns = [extension, alias]
+        rows = [
+            row("d", "D"),
+            row("t", "T"),
+            row("l", "G"),
+            row("dq", "R"),
+            row("tq", "R"),
+            row("lq", "L"),
+            row("oe", "OE"),
+            row("ar", "AR"),
+            row("ap", "AP"),
+            row("sp", "PR"),
+            row("sr", "RE"),
+            row("ck", "C"),
+            row("le", "LH"),
+            row("io", "PIN"),
+            row("iod", "R"),
+            row("iol", "L"),
+            row("ioar", "AR"),
+            row("ioap", "AP"),
+            row("iosp", "PR"),
+            row("iosr", "RE"),
+            row("iock", "C"),
+            row("int", "D"),
+            row("ckmux", "C"),
+            row("lemux", "LH"),
+            row("oemux", "OE"),
+            row("j", "J"),
+            row("k", "K"),
+            row("ce", "CE"),
+            row("reg", "Q"),
+        ]
+    }
+
+    pin_functions {
+        defaults {
+            variant = default
+            true_column = 0
+            complement_column = 0
+            config_value = 0
+            config_bits = 0
+            config_first_fuse = 0
+        }
+        columns = [line, pin, function, compiler_type]
+        rows = [
+            row(0, 0, none, not_connected),
+            row(1, 1, none, ground),
+            row(2, 2, none, unspecified),
+            row(3, 3, none, feedback),
+            row(3, 3, none, register_feedback),
+            row(3, 3, io, feedback),
+            row(3, 3, iod, feedback),
+            row(3, 3, iol, feedback),
+            row(4, 4, none, feedback),
+            row(4, 4, none, register_feedback),
+            row(4, 4, io, feedback),
+            row(4, 4, iod, feedback),
+            row(4, 4, iol, feedback),
+            row(5, 5, none, feedback),
+            row(5, 5, none, register_feedback),
+            row(5, 5, io, feedback),
+            row(5, 5, iod, feedback),
+            row(5, 5, iol, feedback),
+            row(6, 6, none, feedback),
+            row(6, 6, none, register_feedback),
+            row(6, 6, io, feedback),
+            row(6, 6, iod, feedback),
+            row(6, 6, iol, feedback),
+            row(7, 7, none, feedback),
+            row(7, 7, none, register_feedback),
+            row(7, 7, io, feedback),
+            row(7, 7, iod, feedback),
+            row(7, 7, iol, feedback),
+            row(8, 8, none, feedback),
+            row(8, 8, none, register_feedback),
+            row(8, 8, io, feedback),
+            row(8, 8, iod, feedback),
+            row(8, 8, iol, feedback),
+            row(9, 9, none, feedback),
+            row(9, 9, none, register_feedback),
+            row(9, 9, io, feedback),
+            row(9, 9, iod, feedback),
+            row(9, 9, iol, feedback),
+            row(10, 10, none, feedback),
+            row(10, 10, none, register_feedback),
+            row(10, 10, io, feedback),
+            row(10, 10, iod, feedback),
+            row(10, 10, iol, feedback),
+            row(11, 11, none, clock_input),
+            row(12, 12, none, supply),
+            row(13, 13, none, negative_supply),
+            row(14, 14, none, unspecified),
+            row(15, 15, none, feedback),
+            row(15, 15, none, register_feedback),
+            row(15, 15, io, feedback),
+            row(15, 15, iod, feedback),
+            row(15, 15, iol, feedback),
+            row(16, 16, none, feedback),
+            row(16, 16, none, register_feedback),
+            row(16, 16, io, feedback),
+            row(16, 16, iod, feedback),
+            row(16, 16, iol, feedback),
+            row(17, 17, none, feedback),
+            row(17, 17, none, register_feedback),
+            row(17, 17, io, feedback),
+            row(17, 17, iod, feedback),
+            row(17, 17, iol, feedback),
+            row(18, 18, none, feedback),
+            row(18, 18, none, register_feedback),
+            row(18, 18, io, feedback),
+            row(18, 18, iod, feedback),
+            row(18, 18, iol, feedback),
+            row(19, 19, none, feedback),
+            row(19, 19, none, register_feedback),
+            row(19, 19, io, feedback),
+            row(19, 19, iod, feedback),
+            row(19, 19, iol, feedback),
+            row(20, 20, none, feedback),
+            row(20, 20, none, register_feedback),
+            row(20, 20, io, feedback),
+            row(20, 20, iod, feedback),
+            row(20, 20, iol, feedback),
+            row(21, 21, none, feedback),
+            row(21, 21, none, register_feedback),
+            row(21, 21, io, feedback),
+            row(21, 21, iod, feedback),
+            row(21, 21, iol, feedback),
+            row(22, 22, none, feedback),
+            row(22, 22, none, register_feedback),
+            row(22, 22, io, feedback),
+            row(22, 22, iod, feedback),
+            row(22, 22, iol, feedback),
+            row(23, 23, none, ground),
+            row(24, 24, none, unspecified),
+            row(25, 25, none, feedback),
+            row(25, 25, none, register_feedback),
+            row(25, 25, io, feedback),
+            row(25, 25, iod, feedback),
+            row(25, 25, iol, feedback),
+            row(26, 26, none, feedback),
+            row(26, 26, none, register_feedback),
+            row(26, 26, io, feedback),
+            row(26, 26, iod, feedback),
+            row(26, 26, iol, feedback),
+            row(27, 27, none, feedback),
+            row(27, 27, none, register_feedback),
+            row(27, 27, io, feedback),
+            row(27, 27, iod, feedback),
+            row(27, 27, iol, feedback),
+            row(28, 28, none, feedback),
+            row(28, 28, none, register_feedback),
+            row(28, 28, io, feedback),
+            row(28, 28, iod, feedback),
+            row(28, 28, iol, feedback),
+            row(29, 29, none, feedback),
+            row(29, 29, none, register_feedback),
+            row(29, 29, io, feedback),
+            row(29, 29, iod, feedback),
+            row(29, 29, iol, feedback),
+            row(30, 30, none, feedback),
+            row(30, 30, none, register_feedback),
+            row(30, 30, io, feedback),
+            row(30, 30, iod, feedback),
+            row(30, 30, iol, feedback),
+            row(31, 31, none, feedback),
+            row(31, 31, none, register_feedback),
+            row(31, 31, io, feedback),
+            row(31, 31, iod, feedback),
+            row(31, 31, iol, feedback),
+            row(32, 32, none, feedback),
+            row(32, 32, none, register_feedback),
+            row(32, 32, io, feedback),
+            row(32, 32, iod, feedback),
+            row(32, 32, iol, feedback),
+            row(33, 33, none, clock_input),
+            row(34, 34, none, supply),
+            row(35, 35, none, clock_input),
+            row(36, 36, none, unspecified),
+            row(37, 37, none, feedback),
+            row(37, 37, none, register_feedback),
+            row(37, 37, io, feedback),
+            row(37, 37, iod, feedback),
+            row(37, 37, iol, feedback),
+            row(38, 38, none, feedback),
+            row(38, 38, none, register_feedback),
+            row(38, 38, io, feedback),
+            row(38, 38, iod, feedback),
+            row(38, 38, iol, feedback),
+            row(39, 39, none, feedback),
+            row(39, 39, none, register_feedback),
+            row(39, 39, io, feedback),
+            row(39, 39, iod, feedback),
+            row(39, 39, iol, feedback),
+            row(40, 40, none, feedback),
+            row(40, 40, none, register_feedback),
+            row(40, 40, io, feedback),
+            row(40, 40, iod, feedback),
+            row(40, 40, iol, feedback),
+            row(41, 41, none, feedback),
+            row(41, 41, none, register_feedback),
+            row(41, 41, io, feedback),
+            row(41, 41, iod, feedback),
+            row(41, 41, iol, feedback),
+            row(42, 42, none, feedback),
+            row(42, 42, none, register_feedback),
+            row(42, 42, io, feedback),
+            row(42, 42, iod, feedback),
+            row(42, 42, iol, feedback),
+            row(43, 43, none, feedback),
+            row(43, 43, none, register_feedback),
+            row(43, 43, io, feedback),
+            row(43, 43, iod, feedback),
+            row(43, 43, iol, feedback),
+            row(44, 44, none, feedback),
+            row(44, 44, none, register_feedback),
+            row(44, 44, io, feedback),
+            row(44, 44, iod, feedback),
+            row(44, 44, iol, feedback),
+            row(45, 45, none, register_feedback),
+            row(46, 46, none, register_feedback),
+            row(47, 47, none, register_feedback),
+            row(48, 48, none, register_feedback),
+            row(49, 49, none, register_feedback),
+            row(50, 50, none, register_feedback),
+            row(51, 51, none, register_feedback),
+            row(52, 52, none, register_feedback),
+            row(53, 53, none, register_feedback),
+            row(54, 54, none, register_feedback),
+            row(55, 55, none, register_feedback),
+            row(56, 56, none, register_feedback),
+            row(57, 57, none, register_feedback),
+            row(58, 58, none, register_feedback),
+            row(59, 59, none, register_feedback),
+            row(60, 60, none, register_feedback),
+            row(61, 61, none, register_feedback),
+            row(62, 62, none, register_feedback),
+            row(63, 63, none, register_feedback),
+            row(64, 64, none, register_feedback),
+            row(65, 65, none, register_feedback),
+            row(66, 66, none, register_feedback),
+            row(67, 67, none, register_feedback),
+            row(68, 68, none, register_feedback),
+            row(69, 69, none, register_feedback),
+            row(70, 70, none, register_feedback),
+            row(71, 71, none, register_feedback),
+            row(72, 72, none, register_feedback),
+            row(73, 73, none, register_feedback),
+            row(74, 74, none, register_feedback),
+            row(75, 75, none, register_feedback),
+            row(76, 76, none, register_feedback),
+            row(77, 77, none, register_feedback),
+            row(78, 78, none, register_feedback),
+            row(79, 79, none, register_feedback),
+            row(80, 80, none, register_feedback),
+            row(81, 81, none, register_feedback),
+            row(82, 82, none, register_feedback),
+            row(83, 83, none, register_feedback),
+            row(84, 84, none, register_feedback),
+            row(85, 85, none, register_feedback),
+            row(86, 86, none, register_feedback),
+            row(87, 87, none, register_feedback),
+            row(88, 88, none, register_feedback),
+            row(89, 89, none, register_feedback),
+            row(90, 90, none, register_feedback),
+            row(91, 91, none, register_feedback),
+            row(92, 92, none, register_feedback),
+            row(93, 93, none, register_feedback),
+            row(94, 94, none, register_feedback),
+            row(95, 95, none, register_feedback),
+            row(96, 96, none, register_feedback),
+            row(97, 97, none, register_feedback),
+            row(98, 98, none, register_feedback),
+            row(99, 99, none, register_feedback),
+            row(100, 100, none, register_feedback),
+            row(101, 101, none, register_feedback),
+            row(102, 102, none, register_feedback),
+            row(103, 103, none, register_feedback),
+            row(104, 104, none, register_feedback),
+            row(105, 105, none, register_feedback),
+            row(106, 106, none, register_feedback),
+            row(107, 107, none, register_feedback),
+            row(108, 108, none, register_feedback),
+        ]
+    }
+
+    node_functions {
+        defaults {
+            array = 0
+            pin = 0
+            function = none
+            polarity = unspecified
+            invert = no
+            select_value = 0
+            config_value = 0
+            first_row_fuse = 0
+            first_or_fuse = 0
+            config_first_fuse = 131072
+            pair_first_fuse = 0
+            row_width = 0
+            or_width = 0
+            config_bits = 0
+            pair_bits = 0
+            max_terms = 0
+            split_terms = 0
+            default_rule = 0
+            has_default = no
+            sharing_mode = 0
+            active = no
+            alternate_step = 0
+        }
+        columns = []
+        rows = [
+            row(),
+        ]
+    }
+
+    fitter_arguments {
+        columns = [kind, text]
+        rows = [
+            row(file_suffix, ".tt2"),
+            row(part_name, ""),
+            row(none, ""),
+        ]
+    }
+
+}

@@ -1,0 +1,486 @@
+# Device library interface; field values and record order are retained.
+# Compiler modes are ABI settings, not inferred hardware properties.
+format = 1
+
+device c372 {
+    representation = library
+
+    package {
+        pins = 44
+        drawing_style = 1
+        internal_nodes = 32
+    }
+
+    power {
+        ground = 0
+        supply = 0
+    }
+
+    fuses {
+        count = 131224
+        default = 0
+    }
+
+    signature {
+        bits = 0
+        first_fuse = 0
+    }
+
+    compiler {
+        revision = 2
+        family = external_fitter
+        extra_nodes_a = 0
+        extra_nodes_b = 32
+        extra_nodes_c = 0
+        register_resources = 32
+        clocked_resources = 32
+        default_extension = none
+        product_rows = 140
+        initial_term_capacity = 300
+        array_slots = 109
+        input_line_slots = 77
+        extra_symbols = 128
+        download = jedec
+    }
+
+    simulation {
+        output_enable_mode = 0
+        output_polarity_mode = 0
+        internal_polarity_mode = 1
+        power_up = low
+        preload_polarity = 1
+    }
+
+    prom {
+        address_bits = 0
+        data_width = 32
+    }
+
+    fitter {
+        input_format = 6
+        name = "cy37xfit"
+        arguments = ""
+        pla_options = [tool_header, jedec_keyword]
+        part = ""
+    }
+
+    extensions {
+        columns = [name, function]
+        rows = [
+            row("d", d),
+            row("t", t),
+            row("", none),
+            row("l", l),
+            row("dq", dq),
+            row("lq", lq),
+            row("ap", ap),
+            row("ar", ar),
+            row("ck", ck),
+            row("ckmux", ckmux),
+            row("le", le),
+            row("lemux", lemux),
+            row("oe", oe),
+            row("oemux", oemux),
+            row("int", int),
+            row("io", io),
+            row("iod", iod),
+            row("iol", iol),
+            row("iock", iock),
+        ]
+    }
+
+    fitter_extensions {
+        columns = [extension, alias]
+        rows = [
+            row("d", "D"),
+            row("t", "T"),
+            row("l", "G"),
+            row("dq", "R"),
+            row("tq", "R"),
+            row("lq", "L"),
+            row("oe", "OE"),
+            row("ar", "AR"),
+            row("ap", "AP"),
+            row("sp", "PR"),
+            row("sr", "RE"),
+            row("ck", "C"),
+            row("le", "LH"),
+            row("io", "PIN"),
+            row("iockmux", "C"),
+            row("iod", "R"),
+            row("iol", "L"),
+            row("ioar", "AR"),
+            row("ioap", "AP"),
+            row("iosp", "PR"),
+            row("iosr", "RE"),
+            row("iock", "C"),
+            row("int", "CMB"),
+            row("ckmux", "C"),
+            row("lemux", "LH"),
+            row("oemux", "OE"),
+            row("j", "J"),
+            row("k", "K"),
+            row("ce", "CE"),
+            row("reg", "Q"),
+        ]
+    }
+
+    pin_functions {
+        defaults {
+            true_column = 0
+            complement_column = 0
+            config_value = 0
+            config_bits = 0
+            config_first_fuse = 0
+        }
+        columns = [line, pin, function, compiler_type, variant]
+        rows = [
+            row(0, 0, none, not_connected, default),
+            row(1, 1, none, ground, default),
+            row(2, 2, none, combinational, default),
+            row(2, 2, none, registered, d),
+            row(2, 2, none, registered, t),
+            row(2, 2, int, registered, default),
+            row(2, 2, io, combinational, d),
+            row(2, 2, io, combinational, t),
+            row(3, 3, none, combinational, default),
+            row(3, 3, none, registered, d),
+            row(3, 3, none, registered, t),
+            row(3, 3, int, registered, default),
+            row(3, 3, io, combinational, d),
+            row(3, 3, io, combinational, t),
+            row(4, 4, none, combinational, default),
+            row(4, 4, none, registered, d),
+            row(4, 4, none, registered, t),
+            row(4, 4, int, registered, default),
+            row(4, 4, io, combinational, d),
+            row(4, 4, io, combinational, t),
+            row(5, 5, none, combinational, default),
+            row(5, 5, none, registered, d),
+            row(5, 5, none, registered, t),
+            row(5, 5, int, registered, default),
+            row(5, 5, io, combinational, d),
+            row(5, 5, io, combinational, t),
+            row(6, 6, none, combinational, default),
+            row(6, 6, none, registered, d),
+            row(6, 6, none, registered, t),
+            row(6, 6, int, registered, default),
+            row(6, 6, io, combinational, d),
+            row(6, 6, io, combinational, t),
+            row(7, 7, none, combinational, default),
+            row(7, 7, none, registered, d),
+            row(7, 7, none, registered, t),
+            row(7, 7, int, registered, default),
+            row(7, 7, io, combinational, d),
+            row(7, 7, io, combinational, t),
+            row(8, 8, none, combinational, default),
+            row(8, 8, none, registered, d),
+            row(8, 8, none, registered, t),
+            row(8, 8, int, registered, default),
+            row(8, 8, io, combinational, d),
+            row(8, 8, io, combinational, t),
+            row(9, 9, none, combinational, default),
+            row(9, 9, none, registered, d),
+            row(9, 9, none, registered, t),
+            row(9, 9, int, registered, default),
+            row(9, 9, io, combinational, d),
+            row(9, 9, io, combinational, t),
+            row(10, 10, none, unspecified, default),
+            row(11, 11, none, unspecified, default),
+            row(12, 12, none, ground, default),
+            row(13, 13, none, clock_input, default),
+            row(14, 14, none, combinational, default),
+            row(14, 14, none, registered, d),
+            row(14, 14, none, registered, t),
+            row(14, 14, int, registered, default),
+            row(14, 14, io, combinational, d),
+            row(14, 14, io, combinational, t),
+            row(15, 15, none, combinational, default),
+            row(15, 15, none, registered, d),
+            row(15, 15, none, registered, t),
+            row(15, 15, int, registered, default),
+            row(15, 15, io, combinational, d),
+            row(15, 15, io, combinational, t),
+            row(16, 16, none, combinational, default),
+            row(16, 16, none, registered, d),
+            row(16, 16, none, registered, t),
+            row(16, 16, int, registered, default),
+            row(16, 16, io, combinational, d),
+            row(16, 16, io, combinational, t),
+            row(17, 17, none, combinational, default),
+            row(17, 17, none, registered, d),
+            row(17, 17, none, registered, t),
+            row(17, 17, int, registered, default),
+            row(17, 17, io, combinational, d),
+            row(17, 17, io, combinational, t),
+            row(18, 18, none, combinational, default),
+            row(18, 18, none, registered, d),
+            row(18, 18, none, registered, t),
+            row(18, 18, int, registered, default),
+            row(18, 18, io, combinational, d),
+            row(18, 18, io, combinational, t),
+            row(19, 19, none, combinational, default),
+            row(19, 19, none, registered, d),
+            row(19, 19, none, registered, t),
+            row(19, 19, int, registered, default),
+            row(19, 19, io, combinational, d),
+            row(19, 19, io, combinational, t),
+            row(20, 20, none, combinational, default),
+            row(20, 20, none, registered, d),
+            row(20, 20, none, registered, t),
+            row(20, 20, int, registered, default),
+            row(20, 20, io, combinational, d),
+            row(20, 20, io, combinational, t),
+            row(21, 21, none, combinational, default),
+            row(21, 21, none, registered, d),
+            row(21, 21, none, registered, t),
+            row(21, 21, int, registered, default),
+            row(21, 21, io, combinational, d),
+            row(21, 21, io, combinational, t),
+            row(22, 22, none, supply, default),
+            row(23, 23, none, ground, default),
+            row(24, 24, none, combinational, default),
+            row(24, 24, none, registered, d),
+            row(24, 24, none, registered, t),
+            row(24, 24, int, registered, default),
+            row(24, 24, io, combinational, d),
+            row(24, 24, io, combinational, t),
+            row(25, 25, none, combinational, default),
+            row(25, 25, none, registered, d),
+            row(25, 25, none, registered, t),
+            row(25, 25, int, registered, default),
+            row(25, 25, io, combinational, d),
+            row(25, 25, io, combinational, t),
+            row(26, 26, none, combinational, default),
+            row(26, 26, none, registered, d),
+            row(26, 26, none, registered, t),
+            row(26, 26, int, registered, default),
+            row(26, 26, io, combinational, d),
+            row(26, 26, io, combinational, t),
+            row(27, 27, none, combinational, default),
+            row(27, 27, none, registered, d),
+            row(27, 27, none, registered, t),
+            row(27, 27, int, registered, default),
+            row(27, 27, io, combinational, d),
+            row(27, 27, io, combinational, t),
+            row(28, 28, none, combinational, default),
+            row(28, 28, none, registered, d),
+            row(28, 28, none, registered, t),
+            row(28, 28, int, registered, default),
+            row(28, 28, io, combinational, d),
+            row(28, 28, io, combinational, t),
+            row(29, 29, none, combinational, default),
+            row(29, 29, none, registered, d),
+            row(29, 29, none, registered, t),
+            row(29, 29, int, registered, default),
+            row(29, 29, io, combinational, d),
+            row(29, 29, io, combinational, t),
+            row(30, 30, none, combinational, default),
+            row(30, 30, none, registered, d),
+            row(30, 30, none, registered, t),
+            row(30, 30, int, registered, default),
+            row(30, 30, io, combinational, d),
+            row(30, 30, io, combinational, t),
+            row(31, 31, none, combinational, default),
+            row(31, 31, none, registered, d),
+            row(31, 31, none, registered, t),
+            row(31, 31, int, registered, default),
+            row(31, 31, io, combinational, d),
+            row(31, 31, io, combinational, t),
+            row(32, 32, none, unspecified, default),
+            row(33, 33, none, unspecified, default),
+            row(34, 34, none, ground, default),
+            row(35, 35, none, clock_input, default),
+            row(36, 36, none, combinational, default),
+            row(36, 36, none, registered, d),
+            row(36, 36, none, registered, t),
+            row(36, 36, int, registered, default),
+            row(36, 36, io, combinational, d),
+            row(36, 36, io, combinational, t),
+            row(37, 37, none, combinational, default),
+            row(37, 37, none, registered, d),
+            row(37, 37, none, registered, t),
+            row(37, 37, int, registered, default),
+            row(37, 37, io, combinational, d),
+            row(37, 37, io, combinational, t),
+            row(38, 38, none, combinational, default),
+            row(38, 38, none, registered, d),
+            row(38, 38, none, registered, t),
+            row(38, 38, int, registered, default),
+            row(38, 38, io, combinational, d),
+            row(38, 38, io, combinational, t),
+            row(39, 39, none, combinational, default),
+            row(39, 39, none, registered, d),
+            row(39, 39, none, registered, t),
+            row(39, 39, int, registered, default),
+            row(39, 39, io, combinational, d),
+            row(39, 39, io, combinational, t),
+            row(40, 40, none, combinational, default),
+            row(40, 40, none, registered, d),
+            row(40, 40, none, registered, t),
+            row(40, 40, int, registered, default),
+            row(40, 40, io, combinational, d),
+            row(40, 40, io, combinational, t),
+            row(41, 41, none, combinational, default),
+            row(41, 41, none, registered, d),
+            row(41, 41, none, registered, t),
+            row(41, 41, int, registered, default),
+            row(41, 41, io, combinational, d),
+            row(41, 41, io, combinational, t),
+            row(42, 42, none, combinational, default),
+            row(42, 42, none, registered, d),
+            row(42, 42, none, registered, t),
+            row(42, 42, int, registered, default),
+            row(42, 42, io, combinational, d),
+            row(42, 42, io, combinational, t),
+            row(43, 43, none, combinational, default),
+            row(43, 43, none, registered, d),
+            row(43, 43, none, registered, t),
+            row(43, 43, int, registered, default),
+            row(43, 43, io, combinational, d),
+            row(43, 43, io, combinational, t),
+            row(44, 44, none, supply, default),
+            row(117, 117, none, registered, default),
+            row(117, 117, none, registered, d),
+            row(117, 117, none, registered, t),
+            row(118, 118, none, registered, default),
+            row(118, 118, none, registered, d),
+            row(118, 118, none, registered, t),
+            row(119, 119, none, registered, default),
+            row(119, 119, none, registered, d),
+            row(119, 119, none, registered, t),
+            row(120, 120, none, registered, default),
+            row(120, 120, none, registered, d),
+            row(120, 120, none, registered, t),
+            row(121, 121, none, registered, default),
+            row(121, 121, none, registered, d),
+            row(121, 121, none, registered, t),
+            row(122, 122, none, registered, default),
+            row(122, 122, none, registered, d),
+            row(122, 122, none, registered, t),
+            row(123, 123, none, registered, default),
+            row(123, 123, none, registered, d),
+            row(123, 123, none, registered, t),
+            row(124, 124, none, registered, default),
+            row(124, 124, none, registered, d),
+            row(124, 124, none, registered, t),
+            row(125, 125, none, registered, default),
+            row(125, 125, none, registered, d),
+            row(125, 125, none, registered, t),
+            row(126, 126, none, registered, default),
+            row(126, 126, none, registered, d),
+            row(126, 126, none, registered, t),
+            row(127, 127, none, registered, default),
+            row(127, 127, none, registered, d),
+            row(127, 127, none, registered, t),
+            row(128, 128, none, registered, default),
+            row(128, 128, none, registered, d),
+            row(128, 128, none, registered, t),
+            row(129, 129, none, registered, default),
+            row(129, 129, none, registered, d),
+            row(129, 129, none, registered, t),
+            row(130, 130, none, registered, default),
+            row(130, 130, none, registered, d),
+            row(130, 130, none, registered, t),
+            row(131, 131, none, registered, default),
+            row(131, 131, none, registered, d),
+            row(131, 131, none, registered, t),
+            row(132, 132, none, registered, default),
+            row(132, 132, none, registered, d),
+            row(132, 132, none, registered, t),
+            row(133, 133, none, registered, default),
+            row(133, 133, none, registered, d),
+            row(133, 133, none, registered, t),
+            row(134, 134, none, registered, default),
+            row(134, 134, none, registered, d),
+            row(134, 134, none, registered, t),
+            row(135, 135, none, registered, default),
+            row(135, 135, none, registered, d),
+            row(135, 135, none, registered, t),
+            row(136, 136, none, registered, default),
+            row(136, 136, none, registered, d),
+            row(136, 136, none, registered, t),
+            row(137, 137, none, registered, default),
+            row(137, 137, none, registered, d),
+            row(137, 137, none, registered, t),
+            row(138, 138, none, registered, default),
+            row(138, 138, none, registered, d),
+            row(138, 138, none, registered, t),
+            row(139, 139, none, registered, default),
+            row(139, 139, none, registered, d),
+            row(139, 139, none, registered, t),
+            row(140, 140, none, registered, default),
+            row(140, 140, none, registered, d),
+            row(140, 140, none, registered, t),
+            row(141, 141, none, registered, default),
+            row(141, 141, none, registered, d),
+            row(141, 141, none, registered, t),
+            row(142, 142, none, registered, default),
+            row(142, 142, none, registered, d),
+            row(142, 142, none, registered, t),
+            row(143, 143, none, registered, default),
+            row(143, 143, none, registered, d),
+            row(143, 143, none, registered, t),
+            row(144, 144, none, registered, default),
+            row(144, 144, none, registered, d),
+            row(144, 144, none, registered, t),
+            row(145, 145, none, registered, default),
+            row(145, 145, none, registered, d),
+            row(145, 145, none, registered, t),
+            row(146, 146, none, registered, default),
+            row(146, 146, none, registered, d),
+            row(146, 146, none, registered, t),
+            row(147, 147, none, registered, default),
+            row(147, 147, none, registered, d),
+            row(147, 147, none, registered, t),
+            row(148, 148, none, registered, default),
+            row(148, 148, none, registered, d),
+            row(148, 148, none, registered, t),
+        ]
+    }
+
+    node_functions {
+        defaults {
+            array = 0
+            pin = 0
+            function = none
+            polarity = unspecified
+            invert = no
+            select_value = 0
+            config_value = 0
+            first_row_fuse = 0
+            first_or_fuse = 0
+            config_first_fuse = 131072
+            pair_first_fuse = 0
+            row_width = 0
+            or_width = 0
+            config_bits = 0
+            pair_bits = 0
+            max_terms = 0
+            split_terms = 0
+            default_rule = 0
+            has_default = no
+            sharing_mode = 0
+            active = no
+            alternate_step = 0
+        }
+        columns = []
+        rows = [
+            row(),
+        ]
+    }
+
+    fitter_arguments {
+        columns = [kind, text]
+        rows = [
+            row(file_suffix, ".pla"),
+            row(literal, "-SILENT"),
+            row(literal, "-OUT"),
+            row(file_suffix, ".jed"),
+            row(literal, "-RPT"),
+            row(file_suffix, ".rpt"),
+            row(none, ""),
+        ]
+    }
+
+}

@@ -1,0 +1,304 @@
+# Compile with tools/devcompile.py.
+# See doc/device-implementation.md for supported behavior and differences.
+
+format = 1
+
+device ATF750C {
+    architecture = atf750c
+    mnemonic = v750c
+    package = DIP24
+    pins = 24
+    fuses = 14504
+    default_fuse = 0
+
+    power {
+        ground = 12
+        supply = 24
+    }
+
+    inputs = [1..11, 13]
+    outputs = [14..23]
+    global_clock = pin(1)
+
+    array logic {
+        rows = 171
+        columns = 84
+        first_fuse = 0
+        address_order = row_major
+
+        crosspoint {
+            connected = 0
+            disconnected = 1
+        }
+    }
+
+    # Physical pin input columns. Register feedback is a separate path.
+    pin_columns {
+        pin 1  { high = 83 low = 82 }
+        pin 2  { high = 75 low = 74 }
+        pin 3  { high = 67 low = 66 }
+        pin 4  { high = 59 low = 58 }
+        pin 5  { high = 51 low = 50 }
+        pin 6  { high = 43 low = 42 }
+        pin 7  { high = 35 low = 34 }
+        pin 8  { high = 27 low = 26 }
+        pin 9  { high = 19 low = 18 }
+        pin 10 { high = 11 low = 10 }
+        pin 11 { high = 3  low = 2  }
+        pin 13 { high = 1  low = 0  }
+        pin 14 { high = 9  low = 8  }
+        pin 15 { high = 17 low = 16 }
+        pin 16 { high = 25 low = 24 }
+        pin 17 { high = 33 low = 32 }
+        pin 18 { high = 41 low = 40 }
+        pin 19 { high = 49 low = 48 }
+        pin 20 { high = 57 low = 56 }
+        pin 21 { high = 65 low = 64 }
+        pin 22 { high = 73 low = 72 }
+        pin 23 { high = 81 low = 80 }
+    }
+
+    signature {
+        first_fuse = 14435
+        bits = 64
+        byte_order = text_order
+        bit_order = most_significant_first
+        default_bit = 0
+    }
+
+    setting power_down {
+        fuse = 14499
+        disabled = 0
+        pin_controlled = 1
+        default = disabled
+        control_pin = 4
+        active = high
+        pin_controlled_replaces = logic_input
+        functional_test_level = low
+    }
+
+    setting pin_keeper {
+        fuse = 14500
+        disabled = 0
+        enabled = 1
+        default = disabled
+    }
+
+    # These positions have no assigned function in the library or the
+    # public documents used for this mapping. Preserve the emitted value;
+    # it is not a claim that the silicon requires zero here.
+    compatibility_fuses {
+        positions = [14394, 14501..14503]
+        value = 0
+        purpose = undocumented
+    }
+
+    variant v750cext    { power_down = pin_controlled }
+    variant v750cppk    { pin_keeper = enabled }
+    variant v750cextppk { power_down = pin_controlled pin_keeper = enabled }
+
+    synchronous_preset = product(logic, 170)
+
+    # One definition for all ten cells. Parameters below are row and
+    # fuse coordinates; settings use names rather than numeric codes.
+    macrocell_template dual_register {
+        parameters = [pin, first_row, terms, output_fuses, register_fuses]
+
+        product_terms {
+            first_half = rows(logic, first_row, terms / 2)
+            second_half = rows(logic, first_row + terms / 2, terms / 2)
+            reset_primary = product(logic, first_row + terms)
+            clock_primary = product(logic, first_row + terms + 1)
+            clock_secondary = product(logic, first_row + terms + 2)
+            reset_secondary = product(logic, first_row + terms + 3)
+            output_enable = product(logic, first_row + terms + 4)
+        }
+
+        setting output_source {
+            fuse = output_fuses
+            registered = 0
+            combinational = 1
+        }
+        setting term_routing {
+            fuse = output_fuses + 1
+            combined = 0
+            separate = 1
+        }
+        setting output_polarity {
+            fuse = output_fuses + 2
+            inverted = 0
+            normal = 1
+        }
+
+        routing combined {
+            primary = sum(first_half, second_half)
+            secondary = sum(second_half)
+        }
+        routing separate {
+            primary = sum(first_half)
+            secondary = sum(second_half)
+        }
+
+        register primary {
+            data = term_routing.primary
+            asynchronous_reset = reset_primary
+            synchronous_preset = device.synchronous_preset
+            power_up = low
+
+            clock {
+                edge = rising
+                select_fuse = register_fuses
+                product_term = 0
+                global_pin = 1
+                product_term_source = clock_primary
+                global_pin_source = device.global_clock
+            }
+            type {
+                select_fuse = register_fuses + 2
+                d = 0
+                t = 1
+            }
+        }
+
+        register secondary {
+            data = term_routing.secondary
+            asynchronous_reset = reset_secondary
+            synchronous_preset = device.synchronous_preset
+            power_up = low
+
+            clock {
+                edge = rising
+                select_fuse = register_fuses + 1
+                product_term = 0
+                global_pin = 1
+                product_term_source = clock_secondary
+                global_pin_source = device.global_clock
+            }
+            type {
+                select_fuse = register_fuses + 3
+                d = 0
+                t = 1
+            }
+        }
+
+        output {
+            pin = pin
+            source = output_source
+            registered = primary.q
+            combinational = term_routing.primary
+            polarity = output_polarity
+            enable = output_enable
+        }
+
+        # Q0 and Q1 reach the array before output polarity and OE.
+        # Each cell occupies eight columns; pin 14 starts at column 4.
+        feedback {
+            primary {
+                source = primary.q
+                high_column = 6 + 8 * (pin - 14)
+                low_column = 7 + 8 * (pin - 14)
+                alias = node(pin + 21)
+            }
+            secondary {
+                source = secondary.q
+                high_column = 4 + 8 * (pin - 14)
+                low_column = 5 + 8 * (pin - 14)
+                alias = node(pin + 11)
+            }
+            io {
+                source = pin_level(pin)
+                columns = device.pin_columns[pin]
+            }
+        }
+    }
+
+    macrocell output23 : dual_register {
+        pin = 23
+        first_row = 0
+        terms = 8
+        output_fuses = 14364
+        register_fuses = 14395
+    }
+    macrocell output22 : dual_register {
+        pin = 22
+        first_row = 13
+        terms = 10
+        output_fuses = 14367
+        register_fuses = 14399
+    }
+    macrocell output21 : dual_register {
+        pin = 21
+        first_row = 28
+        terms = 12
+        output_fuses = 14370
+        register_fuses = 14403
+    }
+    macrocell output20 : dual_register {
+        pin = 20
+        first_row = 45
+        terms = 14
+        output_fuses = 14373
+        register_fuses = 14407
+    }
+    macrocell output19 : dual_register {
+        pin = 19
+        first_row = 64
+        terms = 16
+        output_fuses = 14376
+        register_fuses = 14411
+    }
+    macrocell output18 : dual_register {
+        pin = 18
+        first_row = 85
+        terms = 16
+        output_fuses = 14379
+        register_fuses = 14415
+    }
+    macrocell output17 : dual_register {
+        pin = 17
+        first_row = 106
+        terms = 14
+        output_fuses = 14382
+        register_fuses = 14419
+    }
+    macrocell output16 : dual_register {
+        pin = 16
+        first_row = 125
+        terms = 12
+        output_fuses = 14385
+        register_fuses = 14423
+    }
+    macrocell output15 : dual_register {
+        pin = 15
+        first_row = 142
+        terms = 10
+        output_fuses = 14388
+        register_fuses = 14427
+    }
+    macrocell output14 : dual_register {
+        pin = 14
+        first_row = 157
+        terms = 8
+        output_fuses = 14391
+        register_fuses = 14431
+    }
+
+}
+
+# The same silicon in a different package. References in the inherited
+# hardware graph retain their DIP24 identities; this map assigns package
+# pins and shifts buried-node aliases past the 28 physical positions.
+device ATF750C_PLCC28 : ATF750C {
+    mnemonic = v750clcc
+    package = PLCC28
+    pins = 28
+
+    pin_map {
+        physical = [2..7, 9..14, 16..21, 23..28]
+        unconnected = [1, 8, 15, 22]
+    }
+
+    variant v750cextlcc    { power_down = pin_controlled }
+    variant v750cppklcc    { pin_keeper = enabled }
+    variant v750cextppklcc { power_down = pin_controlled pin_keeper = enabled }
+}

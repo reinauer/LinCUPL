@@ -1,0 +1,155 @@
+# Compile with tools/devcompile.py.
+# See doc/device-implementation.md for supported behavior and differences.
+format = 1
+
+device GAL22V10 {
+    architecture = gal22v10
+    mnemonic = g22v10
+    package = DIP24
+    pins = 24
+    fuses = 5892
+    default_fuse = 0
+    inputs = [1..11, 13]
+    outputs = [14..23]
+    global_clock = pin(1)
+    asynchronous_reset = product(logic, 0)
+    synchronous_preset = product(logic, 131)
+
+    power { ground = 12 supply = 24 }
+
+    array logic {
+        rows = 132
+        columns = 44
+        first_fuse = 0
+        address_order = row_major
+        crosspoint { connected = 0 disconnected = 1 }
+    }
+
+    pin_columns {
+        pin 1  { high = 0  low = 1 }
+        pin 2  { high = 4  low = 5 }
+        pin 3  { high = 8  low = 9 }
+        pin 4  { high = 12 low = 13 }
+        pin 5  { high = 16 low = 17 }
+        pin 6  { high = 20 low = 21 }
+        pin 7  { high = 24 low = 25 }
+        pin 8  { high = 28 low = 29 }
+        pin 9  { high = 32 low = 33 }
+        pin 10 { high = 36 low = 37 }
+        pin 11 { high = 40 low = 41 }
+        pin 13 { high = 42 low = 43 }
+    }
+
+    signature {
+        first_fuse = 5828
+        bits = 64
+        byte_order = text_order
+        bit_order = most_significant_first
+        default_bit = 0
+    }
+
+    macrocell_template configurable {
+        parameters = [pin, enable_row, terms, mode_fuse, feedback_column]
+        product_terms {
+            sum = rows(logic, enable_row + 1, terms)
+            output_enable = product(logic, enable_row)
+        }
+        setting mode {
+            fuses = [mode_fuse, mode_fuse + 1]
+            registered_inverted = 0
+            registered_normal = 1
+            combinational_inverted = 2
+            combinational_normal = 3
+        }
+        register state {
+            data = sum
+            clock = device.global_clock
+            edge = rising
+            type = d
+            asynchronous_reset = device.asynchronous_reset
+            synchronous_preset = device.synchronous_preset
+            power_up = low
+        }
+        output {
+            pin = pin
+            source = mode
+            registered = state.q
+            combinational = sum
+            enable = output_enable
+        }
+        feedback {
+            source = mode
+            registered = inverted(state.q)
+            combinational = pin_level(pin)
+            high_column = feedback_column
+            low_column = feedback_column + 1
+        }
+    }
+
+    macrocell output23 : configurable {
+        pin = 23 enable_row = 1 terms = 8 mode_fuse = 5808 feedback_column = 2
+    }
+    macrocell output22 : configurable {
+        pin = 22 enable_row = 10 terms = 10 mode_fuse = 5810 feedback_column = 6
+    }
+    macrocell output21 : configurable {
+        pin = 21 enable_row = 21 terms = 12 mode_fuse = 5812 feedback_column = 10
+    }
+    macrocell output20 : configurable {
+        pin = 20 enable_row = 34 terms = 14 mode_fuse = 5814 feedback_column = 14
+    }
+    macrocell output19 : configurable {
+        pin = 19 enable_row = 49 terms = 16 mode_fuse = 5816 feedback_column = 18
+    }
+    macrocell output18 : configurable {
+        pin = 18 enable_row = 66 terms = 16 mode_fuse = 5818 feedback_column = 22
+    }
+    macrocell output17 : configurable {
+        pin = 17 enable_row = 83 terms = 14 mode_fuse = 5820 feedback_column = 26
+    }
+    macrocell output16 : configurable {
+        pin = 16 enable_row = 98 terms = 12 mode_fuse = 5822 feedback_column = 30
+    }
+    macrocell output15 : configurable {
+        pin = 15 enable_row = 111 terms = 10 mode_fuse = 5824 feedback_column = 34
+    }
+    macrocell output14 : configurable {
+        pin = 14 enable_row = 122 terms = 8 mode_fuse = 5826 feedback_column = 38
+    }
+}
+
+device GAL22V10_PLCC28 : GAL22V10 {
+    mnemonic = g22v10lcc
+    package = PLCC28
+    pins = 28
+    pin_map {
+        physical = [2..7, 9..14, 16..21, 23..28]
+        unconnected = [1, 8, 15, 22]
+    }
+}
+
+# This library mnemonic selects the same PLCC28 hardware description.
+device GAL22V10_I : GAL22V10_PLCC28 { mnemonic = g22v10i }
+
+# The standard 22V10 view omits the 64 user-signature fuse positions.
+device PAL22V10 : GAL22V10 {
+    mnemonic = p22v10
+    fuses = 5828
+    signature {
+        first_fuse = 0
+        bits = 0
+        byte_order = text_order
+        bit_order = most_significant_first
+        default_bit = 0
+    }
+}
+
+device PAL22V10_PLCC28 : PAL22V10 {
+    mnemonic = p22v10lcc
+    package = PLCC28
+    pins = 28
+    pin_map {
+        physical = [2..7, 9..14, 16..21, 23..28]
+        unconnected = [1, 8, 15, 22]
+    }
+}

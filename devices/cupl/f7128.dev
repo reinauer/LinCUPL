@@ -1,0 +1,269 @@
+# Device library interface; field values and record order are retained.
+# Compiler modes are ABI settings, not inferred hardware properties.
+format = 1
+
+device f7128 {
+    representation = library
+
+    package {
+        pins = 28
+        drawing_style = 0
+        internal_nodes = 144
+    }
+
+    power {
+        ground = 0
+        supply = 0
+    }
+
+    fuses {
+        count = 8488
+        default = 0
+    }
+
+    signature {
+        bits = 0
+        first_fuse = 0
+    }
+
+    compiler {
+        revision = 2
+        family = external_fitter
+        extra_nodes_a = 0
+        extra_nodes_b = 12
+        extra_nodes_c = 0
+        register_resources = 48
+        clocked_resources = 12
+        default_extension = none
+        product_rows = 68
+        initial_term_capacity = 200
+        array_slots = 1
+        input_line_slots = 65
+        extra_symbols = 0
+        download = jedec
+    }
+
+    simulation {
+        output_enable_mode = 0
+        output_polarity_mode = 0
+        internal_polarity_mode = 0
+        power_up = low
+        preload_polarity = 0
+    }
+
+    prom {
+        address_bits = 0
+        data_width = 12
+    }
+
+    fitter {
+        input_format = 8
+        name = "ict7128"
+        arguments = ""
+        pla_options = [tool_header, jedec_keyword, omit_plus, omit_pin_zero]
+        part = ""
+    }
+
+    extensions {
+        columns = [name, function]
+        rows = [
+            row("oe", oe),
+            row("io", io),
+            row("d", d),
+            row("t", t),
+            row("ar", ar),
+            row("ap", ap),
+            row("j", j),
+            row("k", k),
+            row("ck", ck),
+            row("iod", iod),
+            row("iol", iol),
+            row("dq", dq),
+            row("lq", lq),
+            row("ffm", ffm),
+        ]
+    }
+
+    fitter_extensions {
+        columns = [extension, alias]
+        rows = [
+            row("d", "D"),
+            row("t", "T"),
+            row("j", "J"),
+            row("k", "K"),
+            row("l", ""),
+            row("dq", "Q"),
+            row("tq", "Q"),
+            row("lq", "Q"),
+            row("oe", "OE"),
+            row("ar", "AR"),
+            row("ap", "AP"),
+            row("sp", "PR"),
+            row("sr", "RE"),
+            row("ck", "C"),
+            row("le", "LH"),
+            row("io", "PIN"),
+            row("iod", "Q"),
+            row("iol", "Q"),
+            row("ioar", "AR"),
+            row("ioap", "AP"),
+            row("iosp", "PR"),
+            row("iosr", "RE"),
+            row("iock", "C"),
+            row("int", "X"),
+            row("ckmux", "C"),
+            row("lemux", "LH"),
+            row("oemux", "OE"),
+            row("ce", "CE"),
+            row("reg", "Q"),
+            row("ffm", "FC"),
+            row("apmux", "AP"),
+            row("armux", "AR"),
+        ]
+    }
+
+    pin_functions {
+        defaults {
+            variant = default
+            true_column = 0
+            complement_column = 0
+            config_value = 0
+            config_bits = 0
+            config_first_fuse = 0
+        }
+        columns = [line, pin, function, compiler_type]
+        rows = [
+            row(0, 0, none, not_connected),
+            row(1, 1, none, clock_input),
+            row(2, 2, none, unspecified),
+            row(3, 3, none, unspecified),
+            row(4, 4, none, unspecified),
+            row(5, 5, none, unspecified),
+            row(6, 6, none, unspecified),
+            row(7, 7, none, supply),
+            row(8, 8, none, unspecified),
+            row(9, 9, none, unspecified),
+            row(10, 10, none, unspecified),
+            row(11, 11, none, unspecified),
+            row(12, 12, none, unspecified),
+            row(13, 13, none, unspecified),
+            row(14, 14, none, unspecified),
+            row(15, 15, none, register_feedback),
+            row(15, 15, none, feedback),
+            row(15, 15, io, feedback),
+            row(16, 16, none, register_feedback),
+            row(16, 16, none, feedback),
+            row(16, 16, io, feedback),
+            row(17, 17, none, register_feedback),
+            row(17, 17, none, feedback),
+            row(17, 17, io, feedback),
+            row(18, 18, none, register_feedback),
+            row(18, 18, none, feedback),
+            row(18, 18, io, feedback),
+            row(19, 19, none, register_feedback),
+            row(19, 19, none, feedback),
+            row(19, 19, io, feedback),
+            row(20, 20, none, register_feedback),
+            row(20, 20, none, feedback),
+            row(20, 20, io, feedback),
+            row(21, 21, none, ground),
+            row(22, 22, none, register_feedback),
+            row(22, 22, none, feedback),
+            row(22, 22, io, feedback),
+            row(23, 23, none, register_feedback),
+            row(23, 23, none, feedback),
+            row(23, 23, io, feedback),
+            row(24, 24, none, register_feedback),
+            row(24, 24, none, feedback),
+            row(24, 24, io, feedback),
+            row(25, 25, none, register_feedback),
+            row(25, 25, none, feedback),
+            row(25, 25, io, feedback),
+            row(26, 26, none, register_feedback),
+            row(26, 26, none, feedback),
+            row(26, 26, io, feedback),
+            row(27, 27, none, register_feedback),
+            row(27, 27, none, feedback),
+            row(27, 27, io, feedback),
+            row(28, 28, none, clock_input),
+            row(29, 45, none, register_feedback),
+            row(30, 46, none, register_feedback),
+            row(31, 47, none, register_feedback),
+            row(32, 48, none, register_feedback),
+            row(33, 49, none, register_feedback),
+            row(34, 50, none, register_feedback),
+            row(35, 52, none, register_feedback),
+            row(36, 53, none, register_feedback),
+            row(37, 54, none, register_feedback),
+            row(38, 55, none, register_feedback),
+            row(39, 56, none, register_feedback),
+            row(40, 57, none, register_feedback),
+            row(41, 62, none, register_feedback),
+            row(42, 63, none, register_feedback),
+            row(43, 64, none, register_feedback),
+            row(44, 65, none, register_feedback),
+            row(45, 66, none, register_feedback),
+            row(46, 68, none, register_feedback),
+            row(47, 69, none, register_feedback),
+            row(48, 70, none, register_feedback),
+            row(49, 71, none, register_feedback),
+            row(50, 72, none, register_feedback),
+            row(51, 73, none, register_feedback),
+            row(52, 74, none, register_feedback),
+            row(53, 75, none, register_feedback),
+            row(54, 76, none, register_feedback),
+            row(55, 77, none, register_feedback),
+            row(56, 78, none, register_feedback),
+            row(57, 79, none, register_feedback),
+            row(58, 80, none, register_feedback),
+            row(59, 82, none, register_feedback),
+            row(60, 83, none, register_feedback),
+            row(61, 84, none, register_feedback),
+            row(62, 85, none, register_feedback),
+            row(63, 86, none, register_feedback),
+            row(64, 87, none, register_feedback),
+        ]
+    }
+
+    node_functions {
+        defaults {
+            array = 0
+            pin = 0
+            function = none
+            polarity = unspecified
+            invert = no
+            select_value = 0
+            config_value = 0
+            first_row_fuse = 0
+            first_or_fuse = 0
+            config_first_fuse = 0
+            pair_first_fuse = 0
+            row_width = 0
+            or_width = 0
+            config_bits = 0
+            pair_bits = 0
+            max_terms = 0
+            split_terms = 0
+            default_rule = 0
+            has_default = no
+            sharing_mode = 0
+            active = no
+            alternate_step = 0
+        }
+        columns = []
+        rows = [
+            row(),
+        ]
+    }
+
+    fitter_arguments {
+        columns = [kind, text]
+        rows = [
+            row(pla_file, ""),
+            row(literal, "-log"),
+            row(file_suffix, ".log"),
+            row(none, ""),
+        ]
+    }
+
+}
