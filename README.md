@@ -25,7 +25,7 @@ Amiga 3000/4000, built for a GAL22V10):
 | `csim` | The simulator: runs the vectors of a `.si` file against the compiled design, or against the fuse map of a `.jed` file |
 | `jedinspect` | Inspects JEDEC fuse maps, prints fuse ranges and compares fuse states; supports JSON output |
 | `jedcompare` | Checks combinational JEDEC pin equivalence exhaustively and reports a counterexample when outputs differ |
-| `fit1502`, `fit1504`, `fit1508` | Fitters for the ATF150x CPLDs; `cupl` starts them itself |
+| `fit1502`, `fit1504`, `fit1508` | Fitters for ATF150x CPLDs, accepting CUPL truth tables and EDIF netlists |
 | `cbld` | Lists the devices of a device library (`.dl`) and builds libraries |
 | `backpin` | Writes the pins a fitter chose back into the `.pld` file |
 | `cfitr` | Helper that runs an external fitter and records its exit status |
@@ -76,6 +76,9 @@ and [implementation notes](doc/device-implementation.md) for compilation,
 validation and deliberate differences.
 
 ## Usage
+
+For Verilog synthesis with Yosys and direct ATF150x fitting, see
+[EDIF input](doc/edif.md).
 
 For fuse-map inspection and equivalence checking, see
 [JEDEC tools](doc/jed-tools.md). `jedcompare` currently supports combinational

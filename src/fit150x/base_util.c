@@ -3,7 +3,7 @@
  * names, error messages, checked allocation, checked file open/close,
  * command parameters, strings and timers.
  *
- * Helpers needed only by the EQN / EDIF readers or the simulation writers
+ * Helpers needed only by the equation reader or the simulation writers
  * are not implemented.
  *
  * Files are opened through lincupl_fopen_ci, so backslashes in paths become

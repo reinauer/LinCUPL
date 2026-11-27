@@ -88,7 +88,7 @@ void tt3_write(const char *base, FitEntity *entity, char *extra);
 
 /* read the design named by the first parameter of the list
  * (FitParam items; the job passes "i" first), format from parameter "ifmt"
- * (only TT is supported; EDIF, EQN and the others end in "fit150x: ... is not
+ * (TT and EDIF are supported; EQN and the others end in "fit150x: ... is not
  * supported", exit 3), store it in the entity table under the name given
  * by parameter "d" (the job passes "Fct"; without it: slot 1, name "") and
  * call tt2_print_entity_stats.  Returns 1 on success; on failure 0 with
@@ -96,6 +96,7 @@ void tt3_write(const char *base, FitEntity *entity, char *extra);
  * failed).  the extended mode adds the PROPERTY lines of a .tt2 file to the job
  * parameters `job`. */
 int input_read(FitList *params, FitList *job);
+int edif_read(FILE *in, FitEntity **entity, FitList *params);
 
 /* 1 if some function of the entity has a tree[2] that is
  * not the constant 0. */

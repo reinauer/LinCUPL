@@ -296,8 +296,8 @@ static void report_write_strategy_ext(const char *out_base, FILE *f)
     name = report_package_type();
     fprintf(f, " Package_type = %s\n", name);
     free(name);
-    /* (a -pinfile run, which would name the preassignment file here,
-     * ends with "not supported" before) */
+    if (g_opt.pin_filename != NULL)
+        fprintf(f, " Preassign_file = %s\n", g_opt.pin_filename);
     if (g_opt.preassign == FIT_PREASSIGN_KEEP)
         fprintf(f, " Preassignment = keep \n");
     else if (g_opt.preassign == FIT_PREASSIGN_TRY)
@@ -441,10 +441,14 @@ void report_write_strategy(const char *out_base, FILE *f)
     type = report_package_type();
     fprintf(f, " Package_type = %s\n", type);
     free(type);
-    fprintf(f, " Preassign_file = \n");
+    fprintf(f, " Preassign_file = %s\n", g_opt.pin_filename ? g_opt.pin_filename : "");
     fprintf(f, " Property_file = \n");
     fprintf(f, " Sleep_mode = \n");
-    fprintf(f, " Preassignment = \n");
+    if (g_opt.ifmt_edif)
+        fprintf(f, " Preassignment = %s\n", g_opt.preassign == FIT_PREASSIGN_KEEP ? "keep" :
+                g_opt.preassign == FIT_PREASSIGN_TRY ? "try" : "ignore");
+    else
+        fprintf(f, " Preassignment = \n");
     fprintf(f, g_opt.security != 0 ? " Security_mode = ON\n" : " Security_mode = OFF\n");
     fprintf(f, g_opt.pin_keep != 0 ? " Pin_keep_mode = ON\n" : " Pin_keep_mode = OFF\n");
     fprintf(f, " Dedicated_input_clock = \n");

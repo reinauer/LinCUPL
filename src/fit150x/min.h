@@ -173,12 +173,8 @@ int bitvec_nor(const unsigned *a, const unsigned *b, unsigned *out, int n_words)
 /* out = ~(a ^ b) */
 void bitvec_xnor(const unsigned *a, const unsigned *b, unsigned *out, int n_words);
 
-/* Stubs for unsupported options (reached only with -str ifmt eqn /
- * -str ifmt edif); each prints "fit150x: ... is not supported" and exits
- * with status 3. */
+/* Unsupported equation input, exits with status 3. */
 int bitvec_parse_eqn_cube(char *text, int *a, int *b, unsigned n);
-void *bitvec_cover_new(void);
-FitEntity *bitvec_cover_edif_postprocess(FitEntity *entity, int *arg2, int arg3);
 
 /* ------------------------------------------------------------------ */
 /* min_esp.c: Espresso-style minimiser                                 */

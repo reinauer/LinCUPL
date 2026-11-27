@@ -120,6 +120,12 @@ jobs:
       - name: Download and verify device data
         run: ./wincupl-extract-data
 
+      - name: Install EDIF integration test tools
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends yosys iverilog
+
       - name: Configure full regression build
         run: >-
           cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
