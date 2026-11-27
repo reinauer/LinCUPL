@@ -25,7 +25,7 @@ Amiga 3000/4000, built for a GAL22V10):
 | `csim` | The simulator: runs the vectors of a `.si` file against the compiled design, or against the fuse map of a `.jed` file |
 | `jedinspect` | Inspects JEDEC fuse maps, prints fuse ranges and compares fuse states; supports JSON output |
 | `jedcompare` | Checks combinational JEDEC pin equivalence exhaustively and reports a counterexample when outputs differ |
-| `fit1502`, `fit1504`, `fit1508` | Fitters for ATF150x CPLDs, accepting CUPL truth tables and EDIF netlists |
+| `fit1502`, `fit1504`, `fit1508` | Fitters for ATF150x CPLDs, accepting truth tables, EDIF and Boolean equations |
 | `cbld` | Lists the devices of a device library (`.dl`) and builds libraries |
 | `backpin` | Writes the pins a fitter chose back into the `.pld` file |
 | `cfitr` | Helper that runs an external fitter and records its exit status |
@@ -172,6 +172,13 @@ own:
 
 ```sh
 fit1508 -i design.tt2 -CUPL -dev P1508C84 -str JTAG OFF
+```
+
+For combinational designs, [Boolean equation input](doc/eqn.md) accepts
+`INORDER`, `OUTORDER` and equations such as `q = a * b + c`:
+
+```sh
+fit1504 -i design.eqn -ifmt EQN -device PLCC44 -tech ATF1504AS
 ```
 
 The fitters include their default register and buffer mapping primitives.

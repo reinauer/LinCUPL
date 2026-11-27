@@ -173,8 +173,6 @@ int bitvec_nor(const unsigned *a, const unsigned *b, unsigned *out, int n_words)
 /* out = ~(a ^ b) */
 void bitvec_xnor(const unsigned *a, const unsigned *b, unsigned *out, int n_words);
 
-/* Unsupported equation input, exits with status 3. */
-int bitvec_parse_eqn_cube(char *text, int *a, int *b, unsigned n);
 
 /* ------------------------------------------------------------------ */
 /* min_esp.c: Espresso-style minimiser                                 */
