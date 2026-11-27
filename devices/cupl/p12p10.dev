@@ -16,6 +16,13 @@ device p12p10 {
         supply = 24
     }
 
+    compatibility {
+        attribute_4 = 0
+        attribute_5 = 0
+        attribute_7 = 0
+        attribute_20 = 1
+    }
+
     fuses {
         count = 490
         default = 0
@@ -116,38 +123,38 @@ device p12p10 {
             sharing_mode = 0
             alternate_step = 0
         }
-        columns = [array, pin, function, polarity, select_value, first_row_fuse, row_width, max_terms, active]
+        columns = [array, pin, function, polarity, select_value, first_row_fuse, row_width, max_terms, active, legacy_width]
         rows = [
-            row(1, 23, array, negative, 0, 0, 24, 2, no),
-            row(1, 23, none, programmable_positive, 1, 480, 1, 0, yes),
-            row(1, 23, none, programmable_negative, 0, 480, 1, 0, yes),
-            row(2, 22, array, negative, 0, 48, 24, 2, no),
-            row(2, 22, none, programmable_positive, 1, 481, 1, 0, yes),
-            row(2, 22, none, programmable_negative, 0, 481, 1, 0, yes),
-            row(3, 21, array, negative, 0, 96, 24, 2, no),
-            row(3, 21, none, programmable_positive, 1, 482, 1, 0, yes),
-            row(3, 21, none, programmable_negative, 0, 482, 1, 0, yes),
-            row(4, 20, array, negative, 0, 144, 24, 2, no),
-            row(4, 20, none, programmable_positive, 1, 483, 1, 0, yes),
-            row(4, 20, none, programmable_negative, 0, 483, 1, 0, yes),
-            row(5, 19, array, negative, 0, 192, 24, 2, no),
-            row(5, 19, none, programmable_positive, 1, 484, 1, 0, yes),
-            row(5, 19, none, programmable_negative, 0, 484, 1, 0, yes),
-            row(6, 18, array, negative, 0, 240, 24, 2, no),
-            row(6, 18, none, programmable_positive, 1, 485, 1, 0, yes),
-            row(6, 18, none, programmable_negative, 0, 485, 1, 0, yes),
-            row(7, 17, array, negative, 0, 288, 24, 2, no),
-            row(7, 17, none, programmable_positive, 1, 486, 1, 0, yes),
-            row(7, 17, none, programmable_negative, 0, 486, 1, 0, yes),
-            row(8, 16, array, negative, 0, 336, 24, 2, no),
-            row(8, 16, none, programmable_positive, 1, 487, 1, 0, yes),
-            row(8, 16, none, programmable_negative, 0, 487, 1, 0, yes),
-            row(9, 15, array, negative, 0, 384, 24, 2, no),
-            row(9, 15, none, programmable_positive, 1, 488, 1, 0, yes),
-            row(9, 15, none, programmable_negative, 0, 488, 1, 0, yes),
-            row(10, 14, array, negative, 0, 432, 24, 2, no),
-            row(10, 14, none, programmable_positive, 1, 489, 1, 0, yes),
-            row(10, 14, none, programmable_negative, 0, 489, 1, 0, yes),
+            row(1, 23, array, negative, 0, 0, 24, 2, no, 40),
+            row(1, 23, none, programmable_positive, 1, 480, 1, 0, yes, 0),
+            row(1, 23, none, programmable_negative, 0, 480, 1, 0, yes, 0),
+            row(2, 22, array, negative, 0, 48, 24, 2, no, 40),
+            row(2, 22, none, programmable_positive, 1, 481, 1, 0, yes, 0),
+            row(2, 22, none, programmable_negative, 0, 481, 1, 0, yes, 0),
+            row(3, 21, array, negative, 0, 96, 24, 2, no, 40),
+            row(3, 21, none, programmable_positive, 1, 482, 1, 0, yes, 0),
+            row(3, 21, none, programmable_negative, 0, 482, 1, 0, yes, 0),
+            row(4, 20, array, negative, 0, 144, 24, 2, no, 40),
+            row(4, 20, none, programmable_positive, 1, 483, 1, 0, yes, 0),
+            row(4, 20, none, programmable_negative, 0, 483, 1, 0, yes, 0),
+            row(5, 19, array, negative, 0, 192, 24, 2, no, 40),
+            row(5, 19, none, programmable_positive, 1, 484, 1, 0, yes, 0),
+            row(5, 19, none, programmable_negative, 0, 484, 1, 0, yes, 0),
+            row(6, 18, array, negative, 0, 240, 24, 2, no, 40),
+            row(6, 18, none, programmable_positive, 1, 485, 1, 0, yes, 0),
+            row(6, 18, none, programmable_negative, 0, 485, 1, 0, yes, 0),
+            row(7, 17, array, negative, 0, 288, 24, 2, no, 40),
+            row(7, 17, none, programmable_positive, 1, 486, 1, 0, yes, 0),
+            row(7, 17, none, programmable_negative, 0, 486, 1, 0, yes, 0),
+            row(8, 16, array, negative, 0, 336, 24, 2, no, 40),
+            row(8, 16, none, programmable_positive, 1, 487, 1, 0, yes, 0),
+            row(8, 16, none, programmable_negative, 0, 487, 1, 0, yes, 0),
+            row(9, 15, array, negative, 0, 384, 24, 2, no, 40),
+            row(9, 15, none, programmable_positive, 1, 488, 1, 0, yes, 0),
+            row(9, 15, none, programmable_negative, 0, 488, 1, 0, yes, 0),
+            row(10, 14, array, negative, 0, 432, 24, 2, no, 40),
+            row(10, 14, none, programmable_positive, 1, 489, 1, 0, yes, 0),
+            row(10, 14, none, programmable_negative, 0, 489, 1, 0, yes, 0),
         ]
     }
 

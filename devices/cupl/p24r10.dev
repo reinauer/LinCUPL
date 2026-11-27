@@ -16,6 +16,13 @@ device p24r10 {
         supply = 21
     }
 
+    compatibility {
+        attribute_4 = 0
+        attribute_5 = 1
+        attribute_7 = 0
+        attribute_20 = 0
+    }
+
     fuses {
         count = 3840
         default = 0
@@ -142,28 +149,28 @@ device p24r10 {
             sharing_mode = 0
             alternate_step = 0
         }
-        columns = [array, pin, function, first_row_fuse, row_width, max_terms, has_default, active]
+        columns = [array, pin, function, first_row_fuse, row_width, max_terms, has_default, active, legacy_width]
         rows = [
-            row(1, 26, array, 0, 48, 8, no, no),
-            row(1, 26, d, 0, 0, 0, yes, yes),
-            row(2, 25, array, 384, 48, 8, no, no),
-            row(2, 25, d, 0, 0, 0, yes, yes),
-            row(3, 24, array, 768, 48, 8, no, no),
-            row(3, 24, d, 0, 0, 0, yes, yes),
-            row(4, 23, array, 1152, 48, 8, no, no),
-            row(4, 23, d, 0, 0, 0, yes, yes),
-            row(5, 22, array, 1536, 48, 8, no, no),
-            row(5, 22, d, 0, 0, 0, yes, yes),
-            row(6, 20, array, 1920, 48, 8, no, no),
-            row(6, 20, d, 0, 0, 0, yes, yes),
-            row(7, 19, array, 2304, 48, 8, no, no),
-            row(7, 19, d, 0, 0, 0, yes, yes),
-            row(8, 18, array, 2688, 48, 8, no, no),
-            row(8, 18, d, 0, 0, 0, yes, yes),
-            row(9, 17, array, 3072, 48, 8, no, no),
-            row(9, 17, d, 0, 0, 0, yes, yes),
-            row(10, 16, array, 3456, 48, 8, no, no),
-            row(10, 16, d, 0, 0, 0, yes, yes),
+            row(1, 26, array, 0, 48, 8, no, no, 48),
+            row(1, 26, d, 0, 0, 0, yes, yes, 0),
+            row(2, 25, array, 384, 48, 8, no, no, 48),
+            row(2, 25, d, 0, 0, 0, yes, yes, 0),
+            row(3, 24, array, 768, 48, 8, no, no, 48),
+            row(3, 24, d, 0, 0, 0, yes, yes, 0),
+            row(4, 23, array, 1152, 48, 8, no, no, 48),
+            row(4, 23, d, 0, 0, 0, yes, yes, 0),
+            row(5, 22, array, 1536, 48, 8, no, no, 48),
+            row(5, 22, d, 0, 0, 0, yes, yes, 0),
+            row(6, 20, array, 1920, 48, 8, no, no, 48),
+            row(6, 20, d, 0, 0, 0, yes, yes, 0),
+            row(7, 19, array, 2304, 48, 8, no, no, 48),
+            row(7, 19, d, 0, 0, 0, yes, yes, 0),
+            row(8, 18, array, 2688, 48, 8, no, no, 48),
+            row(8, 18, d, 0, 0, 0, yes, yes, 0),
+            row(9, 17, array, 3072, 48, 8, no, no, 48),
+            row(9, 17, d, 0, 0, 0, yes, yes, 0),
+            row(10, 16, array, 3456, 48, 8, no, no, 48),
+            row(10, 16, d, 0, 0, 0, yes, yes, 0),
         ]
     }
 

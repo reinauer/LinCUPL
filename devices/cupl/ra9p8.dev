@@ -16,6 +16,13 @@ device ra9p8 {
         supply = 20
     }
 
+    compatibility {
+        attribute_4 = 0
+        attribute_5 = 0
+        attribute_7 = 0
+        attribute_20 = 0
+    }
+
     fuses {
         count = 4096
         default = 0
@@ -101,6 +108,7 @@ device ra9p8 {
 
     node_functions {
         defaults {
+            legacy_width = 0
             array = 1
             invert = no
             select_value = 0

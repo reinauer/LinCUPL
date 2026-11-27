@@ -16,6 +16,13 @@ device m16v8ar {
         supply = 20
     }
 
+    compatibility {
+        attribute_4 = 0
+        attribute_5 = 1
+        attribute_7 = 0
+        attribute_20 = 1
+    }
+
     fuses {
         count = 3136
         default = 1
@@ -115,6 +122,7 @@ device m16v8ar {
 
     node_functions {
         defaults {
+            legacy_width = 0
             invert = no
             pair_first_fuse = 0
             pair_bits = 0

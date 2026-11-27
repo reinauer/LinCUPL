@@ -16,6 +16,13 @@ device c332 {
         supply = 22
     }
 
+    compatibility {
+        attribute_4 = 0
+        attribute_5 = 1
+        attribute_7 = 1
+        attribute_20 = 1
+    }
+
     fuses {
         count = 9902
         default = 0
@@ -251,6 +258,7 @@ device c332 {
 
     node_functions {
         defaults {
+            legacy_width = 0
             array = 0
             pin = 0
             function = none

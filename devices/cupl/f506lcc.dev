@@ -16,6 +16,13 @@ device f506lcc {
         supply = 28
     }
 
+    compatibility {
+        attribute_4 = 17
+        attribute_5 = 0
+        attribute_7 = 0
+        attribute_20 = 1
+    }
+
     fuses {
         count = 10680
         default = 0
@@ -138,6 +145,7 @@ device f506lcc {
 
     node_functions {
         defaults {
+            legacy_width = 0
             invert = no
             config_value = 0
             config_first_fuse = 0

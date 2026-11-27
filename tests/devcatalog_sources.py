@@ -10,6 +10,7 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / 'tools'))
 import devcompile
 from devlang import catalog
+from devlang.audit import RESERVED_ZERO_RANGES
 
 
 def main():
@@ -33,6 +34,11 @@ def main():
         for entry in entries:
             _, omitted = catalog.canonical(entry['image'])
             assert not any(omitted.values()), entry['name']
+            sections = catalog.records(entry['image'])
+            for section, ranges in RESERVED_ZERO_RANGES.items():
+                for row in sections[section]:
+                    for start, width in ranges:
+                        assert row[start:start + width] == bytes(width), (entry['name'], section, start)
             expected.setdefault(entry['name'], entry)
         occurrences = Counter(e['name'] for e in entries)
         assert {n: c for n, c in occurrences.items() if c > 1} == (
@@ -48,6 +54,14 @@ def main():
     selected = catalog.entries(devcompile.compile_directory(ROOT / 'devices', ['v750c', 'p16l8']))
     assert {e['name'] for e in selected} == {'v750c', 'p16l8'}
     assert all(e['image'] == expected[e['name']]['image'] for e in selected)
+    # These values are not reconstructible from the fuse row width or
+    # package pin count. Keep direct byte checks independent of the schema.
+    attrs = catalog.records(expected['f506']['image'])[3][0]
+    assert [attrs[b] for b in (4, 5, 7, 20)] == [17, 0, 0, 1]
+    attrs = catalog.records(expected['v750c']['image'])[3][0]
+    assert [attrs[b] for b in (4, 5, 7, 20)] == [0, 1, 1, 1]
+    nodes = catalog.records(expected['p10l8']['image'])[7]
+    assert {(n[26], n[27]) for n in nodes} == {(32, 20), (0, 0)}
     print('PASS: all 709 descriptions compile without reference libraries; 660 distinct mnemonics')
 
 

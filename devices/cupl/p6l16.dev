@@ -16,6 +16,13 @@ device p6l16 {
         supply = 24
     }
 
+    compatibility {
+        attribute_4 = 0
+        attribute_5 = 0
+        attribute_7 = 0
+        attribute_20 = 1
+    }
+
     fuses {
         count = 192
         default = 0
@@ -112,40 +119,40 @@ device p6l16 {
             sharing_mode = 0
             alternate_step = 0
         }
-        columns = [array, pin, function, first_row_fuse, row_width, max_terms, active]
+        columns = [array, pin, function, first_row_fuse, row_width, max_terms, active, legacy_width]
         rows = [
-            row(1, 1, array, 0, 12, 1, no),
-            row(1, 1, none, 0, 0, 0, yes),
-            row(2, 23, array, 12, 12, 1, no),
-            row(2, 23, none, 0, 0, 0, yes),
-            row(3, 2, array, 24, 12, 1, no),
-            row(3, 2, none, 0, 0, 0, yes),
-            row(4, 3, array, 36, 12, 1, no),
-            row(4, 3, none, 0, 0, 0, yes),
-            row(5, 22, array, 48, 12, 1, no),
-            row(5, 22, none, 0, 0, 0, yes),
-            row(6, 21, array, 60, 12, 1, no),
-            row(6, 21, none, 0, 0, 0, yes),
-            row(7, 20, array, 72, 12, 1, no),
-            row(7, 20, none, 0, 0, 0, yes),
-            row(8, 19, array, 84, 12, 1, no),
-            row(8, 19, none, 0, 0, 0, yes),
-            row(9, 18, array, 96, 12, 1, no),
-            row(9, 18, none, 0, 0, 0, yes),
-            row(10, 17, array, 108, 12, 1, no),
-            row(10, 17, none, 0, 0, 0, yes),
-            row(11, 16, array, 120, 12, 1, no),
-            row(11, 16, none, 0, 0, 0, yes),
-            row(12, 10, array, 132, 12, 1, no),
-            row(12, 10, none, 0, 0, 0, yes),
-            row(13, 15, array, 144, 12, 1, no),
-            row(13, 15, none, 0, 0, 0, yes),
-            row(14, 14, array, 156, 12, 1, no),
-            row(14, 14, none, 0, 0, 0, yes),
-            row(15, 11, array, 168, 12, 1, no),
-            row(15, 11, none, 0, 0, 0, yes),
-            row(16, 13, array, 180, 12, 1, no),
-            row(16, 13, none, 0, 0, 0, yes),
+            row(1, 1, array, 0, 12, 1, no, 12),
+            row(1, 1, none, 0, 0, 0, yes, 0),
+            row(2, 23, array, 12, 12, 1, no, 12),
+            row(2, 23, none, 0, 0, 0, yes, 0),
+            row(3, 2, array, 24, 12, 1, no, 12),
+            row(3, 2, none, 0, 0, 0, yes, 0),
+            row(4, 3, array, 36, 12, 1, no, 12),
+            row(4, 3, none, 0, 0, 0, yes, 0),
+            row(5, 22, array, 48, 12, 1, no, 12),
+            row(5, 22, none, 0, 0, 0, yes, 0),
+            row(6, 21, array, 60, 12, 1, no, 12),
+            row(6, 21, none, 0, 0, 0, yes, 0),
+            row(7, 20, array, 72, 12, 1, no, 12),
+            row(7, 20, none, 0, 0, 0, yes, 0),
+            row(8, 19, array, 84, 12, 1, no, 12),
+            row(8, 19, none, 0, 0, 0, yes, 0),
+            row(9, 18, array, 96, 12, 1, no, 12),
+            row(9, 18, none, 0, 0, 0, yes, 0),
+            row(10, 17, array, 108, 12, 1, no, 12),
+            row(10, 17, none, 0, 0, 0, yes, 0),
+            row(11, 16, array, 120, 12, 1, no, 12),
+            row(11, 16, none, 0, 0, 0, yes, 0),
+            row(12, 10, array, 132, 12, 1, no, 12),
+            row(12, 10, none, 0, 0, 0, yes, 0),
+            row(13, 15, array, 144, 12, 1, no, 12),
+            row(13, 15, none, 0, 0, 0, yes, 0),
+            row(14, 14, array, 156, 12, 1, no, 12),
+            row(14, 14, none, 0, 0, 0, yes, 0),
+            row(15, 11, array, 168, 12, 1, no, 12),
+            row(15, 11, none, 0, 0, 0, yes, 0),
+            row(16, 13, array, 180, 12, 1, no, 12),
+            row(16, 13, none, 0, 0, 0, yes, 0),
         ]
     }
 

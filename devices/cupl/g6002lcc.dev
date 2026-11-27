@@ -16,6 +16,13 @@ device g6002lcc {
         supply = 28
     }
 
+    compatibility {
+        attribute_4 = 0
+        attribute_5 = 0
+        attribute_7 = 1
+        attribute_20 = 1
+    }
+
     fuses {
         count = 8330
         default = 0
@@ -234,6 +241,7 @@ device g6002lcc {
 
     node_functions {
         defaults {
+            legacy_width = 0
             config_value = 0
             config_first_fuse = 0
             pair_first_fuse = 0

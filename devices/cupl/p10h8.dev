@@ -16,6 +16,13 @@ device p10h8 {
         supply = 20
     }
 
+    compatibility {
+        attribute_4 = 0
+        attribute_5 = 0
+        attribute_7 = 0
+        attribute_20 = 1
+    }
+
     fuses {
         count = 320
         default = 0
@@ -116,24 +123,24 @@ device p10h8 {
             sharing_mode = 0
             alternate_step = 0
         }
-        columns = [array, pin, function, first_row_fuse, row_width, max_terms, active]
+        columns = [array, pin, function, first_row_fuse, row_width, max_terms, active, legacy_width]
         rows = [
-            row(1, 19, array, 0, 20, 2, no),
-            row(1, 19, none, 0, 0, 0, yes),
-            row(2, 18, array, 40, 20, 2, no),
-            row(2, 18, none, 0, 0, 0, yes),
-            row(3, 17, array, 80, 20, 2, no),
-            row(3, 17, none, 0, 0, 0, yes),
-            row(4, 16, array, 120, 20, 2, no),
-            row(4, 16, none, 0, 0, 0, yes),
-            row(5, 15, array, 160, 20, 2, no),
-            row(5, 15, none, 0, 0, 0, yes),
-            row(6, 14, array, 200, 20, 2, no),
-            row(6, 14, none, 0, 0, 0, yes),
-            row(7, 13, array, 240, 20, 2, no),
-            row(7, 13, none, 0, 0, 0, yes),
-            row(8, 12, array, 280, 20, 2, no),
-            row(8, 12, none, 0, 0, 0, yes),
+            row(1, 19, array, 0, 20, 2, no, 32),
+            row(1, 19, none, 0, 0, 0, yes, 0),
+            row(2, 18, array, 40, 20, 2, no, 32),
+            row(2, 18, none, 0, 0, 0, yes, 0),
+            row(3, 17, array, 80, 20, 2, no, 32),
+            row(3, 17, none, 0, 0, 0, yes, 0),
+            row(4, 16, array, 120, 20, 2, no, 32),
+            row(4, 16, none, 0, 0, 0, yes, 0),
+            row(5, 15, array, 160, 20, 2, no, 32),
+            row(5, 15, none, 0, 0, 0, yes, 0),
+            row(6, 14, array, 200, 20, 2, no, 32),
+            row(6, 14, none, 0, 0, 0, yes, 0),
+            row(7, 13, array, 240, 20, 2, no, 32),
+            row(7, 13, none, 0, 0, 0, yes, 0),
+            row(8, 12, array, 280, 20, 2, no, 32),
+            row(8, 12, none, 0, 0, 0, yes, 0),
         ]
     }
 

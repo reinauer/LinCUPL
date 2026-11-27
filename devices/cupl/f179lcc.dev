@@ -16,6 +16,13 @@ device f179lcc {
         supply = 28
     }
 
+    compatibility {
+        attribute_4 = 0
+        attribute_5 = 0
+        attribute_7 = 0
+        attribute_20 = 1
+    }
+
     fuses {
         count = 2452
         default = 0
@@ -130,6 +137,7 @@ device f179lcc {
 
     node_functions {
         defaults {
+            legacy_width = 0
             config_value = 0
             config_first_fuse = 0
             pair_first_fuse = 0

@@ -16,6 +16,13 @@ device f253 {
         supply = 20
     }
 
+    compatibility {
+        attribute_4 = 0
+        attribute_5 = 0
+        attribute_7 = 0
+        attribute_20 = 1
+    }
+
     fuses {
         count = 2378
         default = 0
@@ -119,6 +126,7 @@ device f253 {
 
     node_functions {
         defaults {
+            legacy_width = 0
             array = 1
             invert = no
             config_value = 0

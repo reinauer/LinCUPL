@@ -16,6 +16,13 @@ device p64r32pga {
         supply = 33
     }
 
+    compatibility {
+        attribute_4 = 0
+        attribute_5 = 0
+        attribute_7 = 0
+        attribute_20 = 1
+    }
+
     fuses {
         count = 33316
         default = 0
@@ -187,6 +194,7 @@ device p64r32pga {
 
     node_functions {
         defaults {
+            legacy_width = 0
             invert = no
             pair_first_fuse = 0
             pair_bits = 0

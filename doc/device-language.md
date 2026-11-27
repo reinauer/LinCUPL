@@ -21,11 +21,16 @@ python3 tools/devcompile.py devices/families/atf750c.dev -o /tmp/atf750-family.d
 
 `--device mnemonic` selects entries and may be repeated. `--compare file.dl`
 reports raw-byte identity separately from canonical record equality;
-`--report file.json` saves the comparison. A mismatch returns status 1 and
-still writes the compiled library and report. Invalid input or a missing
+`--report file.json` saves the comparison. A canonical mismatch returns
+status 1 and still writes the compiled library and report. Invalid input or a missing
 reference entry fails before output is created. Existing output/report files
 are never overwritten. The CMake build uses a temporary file and replaces
 its generated library only after successful compilation.
+
+For hardware descriptions, compatibility metadata is a separate console
+and JSON result; those differences alone do not change the exit status.
+Catalog comparison includes that metadata in canonical equality. Neither
+comparison treats reserved record bytes as padding.
 
 ## Common syntax
 
@@ -57,8 +62,9 @@ by the parser and cannot execute Python code.
 record interface. This representation covers every catalog entry, including
 PROMs, programmable OR arrays and external-fitter interfaces.
 
-Attribute blocks are `package`, `power`, `fuses`, `signature`, `compiler`,
-`simulation`, `sequence`, `prom` and `fitter`. Each declares all its named fields.
+Attribute blocks are `package`, `power`, `compatibility`, `fuses`, `signature`,
+`compiler`, `simulation`, `sequence`, `prom` and `fitter`. Each declares all
+its named fields.
 The `sequence` block supplies generic state-machine register defaults;
 explicit `SEQUENCED`, `SEQUENCERS`, `SEQUENCEJK` and `SEQUENCET` override them.
 Tables use `columns`, `rows`, and optional `defaults`:
@@ -80,6 +86,15 @@ Every table field appears exactly once in `columns` or `defaults`.
 `row(...)` values follow column order. A table may be absent to represent
 zero records; `row()` still emits a record when all fields have defaults.
 Record order and inactive operands are significant and retained.
+
+The library profile also preserves compatibility metadata whose circuit
+meaning is not established. The `compatibility` block contains
+`attribute_4`, `attribute_5`, `attribute_7` and `attribute_20`, named by
+attribute-record offset. The node table's `legacy_width` is a separate
+field from `row_width`; their values need not agree. These fields are
+required and range from 0 to 255. They belong to the library interface,
+not the hardware model, and are compared exactly when checking catalogs.
+Reserved zero regions are also compared; no record byte is silently ignored.
 
 Supported tables are `extensions`, `fitter_extensions`, `pin_functions`,
 `node_functions`, `connections`, `initialization`, `fitter_arguments`,

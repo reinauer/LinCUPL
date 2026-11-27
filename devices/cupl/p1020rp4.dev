@@ -16,6 +16,13 @@ device p1020rp4 {
         supply = 28
     }
 
+    compatibility {
+        attribute_4 = 0
+        attribute_5 = 0
+        attribute_7 = 0
+        attribute_20 = 1
+    }
+
     fuses {
         count = 2568
         default = 0
@@ -139,20 +146,20 @@ device p1020rp4 {
             sharing_mode = 0
             alternate_step = 0
         }
-        columns = [array, pin, function, polarity, invert, select_value, first_row_fuse, row_width, max_terms, has_default, active]
+        columns = [array, pin, function, polarity, invert, select_value, first_row_fuse, row_width, max_terms, has_default, active, legacy_width]
         rows = [
-            row(1, 24, array, negative, no, 0, 640, 40, 8, no, no),
-            row(1, 24, d, programmable_positive, yes, 1, 2562, 1, 0, yes, yes),
-            row(1, 24, d, programmable_negative, yes, 0, 2562, 1, 0, yes, yes),
-            row(2, 6, array, negative, no, 0, 960, 40, 8, no, no),
-            row(2, 6, d, programmable_positive, yes, 1, 2563, 1, 0, yes, yes),
-            row(2, 6, d, programmable_negative, yes, 0, 2563, 1, 0, yes, yes),
-            row(3, 22, array, negative, no, 0, 1280, 40, 8, no, no),
-            row(3, 22, d, programmable_positive, yes, 1, 2564, 1, 0, yes, yes),
-            row(3, 22, d, programmable_negative, yes, 0, 2564, 1, 0, yes, yes),
-            row(4, 8, array, negative, no, 0, 1600, 40, 8, no, no),
-            row(4, 8, d, programmable_positive, yes, 1, 2565, 1, 0, yes, yes),
-            row(4, 8, d, programmable_negative, yes, 0, 2565, 1, 0, yes, yes),
+            row(1, 24, array, negative, no, 0, 640, 40, 8, no, no, 40),
+            row(1, 24, d, programmable_positive, yes, 1, 2562, 1, 0, yes, yes, 0),
+            row(1, 24, d, programmable_negative, yes, 0, 2562, 1, 0, yes, yes, 0),
+            row(2, 6, array, negative, no, 0, 960, 40, 8, no, no, 40),
+            row(2, 6, d, programmable_positive, yes, 1, 2563, 1, 0, yes, yes, 0),
+            row(2, 6, d, programmable_negative, yes, 0, 2563, 1, 0, yes, yes, 0),
+            row(3, 22, array, negative, no, 0, 1280, 40, 8, no, no, 40),
+            row(3, 22, d, programmable_positive, yes, 1, 2564, 1, 0, yes, yes, 0),
+            row(3, 22, d, programmable_negative, yes, 0, 2564, 1, 0, yes, yes, 0),
+            row(4, 8, array, negative, no, 0, 1600, 40, 8, no, no, 40),
+            row(4, 8, d, programmable_positive, yes, 1, 2565, 1, 0, yes, yes, 0),
+            row(4, 8, d, programmable_negative, yes, 0, 2565, 1, 0, yes, yes, 0),
         ]
     }
 

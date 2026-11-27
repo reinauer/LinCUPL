@@ -12,6 +12,7 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / 'tools'))
 import devcompile
 from devlang import binary, catalog
+from devlang.compare import compare_image as compare_hardware
 from devlang.audit import validate_coverage
 from devlang.syntax import Error, parse
 
@@ -28,11 +29,15 @@ def main():
     # A missing mapped field must not become an implicit exclusion. The
     # field removed here previously changed real clock-selection fuses.
     validate_coverage(catalog.FIELDS, binary.WIDTHS)
-    for section, field in [(10, 'config_value'), (3, 'pla_options')]:
+    for section, field in [(10, 'config_value'), (3, 'pla_options'),
+                           (3, 'attribute_4'), (3, 'attribute_5'),
+                           (3, 'attribute_7'), (3, 'attribute_20'),
+                           (7, 'legacy_width')]:
         missing = dict(catalog.FIELDS)
         missing[section] = [f for f in missing[section] if f.name != field]
         rejected(lambda: validate_coverage(missing, binary.WIDTHS))
-    for section, field in [(7, catalog.F('overlap_unknown', 26)),
+    for section, field in [(3, catalog.F('overlap_reserved', 6)),
+                           (7, catalog.F('overlap_width', 26)),
                            (10, catalog.F('overlap_value', 12)),
                            (10, catalog.F('outside_record', 13))]:
         overlapping = dict(catalog.FIELDS)
@@ -49,6 +54,58 @@ def main():
     assert not catalog.compare_image(modified['image'], item['image'])['canonical_equal']
     assert catalog.records(modified['image'])[3][0][2] == 11
     assert catalog.records(item['image'])[3][0][2] == 12
+
+    # Independently enumerate every formerly omitted byte. Both sides of
+    # catalog comparison must expose a changed value, including reserved
+    # bytes and metadata whose hardware interpretation is not established.
+    prior_offsets = {3: (4, 5, 6, 7, 20, 31, 32, 33, 34, 35, 36, 50, 57, 58, 59, 60),
+                     6: (9,), 7: (26,), 10: (4,)}
+    metadata_offsets = {(3, 4): 'attribute_4', (3, 5): 'attribute_5',
+                        (3, 7): 'attribute_7', (3, 20): 'attribute_20',
+                        (7, 26): 'legacy_width'}
+    hardware = devcompile.compile_text((ROOT / 'devices/families/gal22v10.dev').read_text(),
+                                      devices=['g22v10'])
+    hardware_image = catalog.entries(hardware)[0]['image']
+    for section, offsets in prior_offsets.items():
+        for offset in offsets:
+            for image in (item['image'], hardware_image):
+                changed = bytearray(image)
+                start = struct.unpack_from('<I', image, section * 20 + 8)[0]
+                changed[start + offset] ^= 173
+                for left, right in ((changed, image), (image, changed)):
+                    result = catalog.compare_image(left, right)
+                    assert not result['canonical_equal'], (section, offset)
+                    assert result['differences'][0]['examples'][0]['byte'] == offset
+            # Hardware equality and preservation of compatibility metadata
+            # are separate results. Reserved bytes are never normalized.
+            for left, right in ((changed, hardware_image), (hardware_image, changed)):
+                result = compare_hardware(left, right, family='gal22v10')
+                metadata_only = (section, offset) in metadata_offsets
+                assert result['canonical_equal'] == metadata_only, (section, offset, result)
+                assert result['compatibility_equal'] != metadata_only, (section, offset, result)
+                assert bool(result['compatibility_differences']) == metadata_only
+                if metadata_only:
+                    difference, = result['compatibility_differences']
+                    assert difference['field'] == metadata_offsets[section, offset]
+                    assert difference['different_records'] == 1
+                    assert difference['examples'][0]['record'] == 0
+
+    # Compatibility fields can be edited without a binary patch or raw blob.
+    metadata_text = text.replace('attribute_4 = 0', 'attribute_4 = 173')
+    metadata_text = metadata_text.replace('attribute_5 = 1', 'attribute_5 = 174')
+    metadata_text = metadata_text.replace('attribute_7 = 1', 'attribute_7 = 175')
+    metadata_text = metadata_text.replace('attribute_20 = 1', 'attribute_20 = 176')
+    metadata, = catalog.compile_text(metadata_text)
+    attrs = catalog.records(metadata['image'])[3][0]
+    assert [attrs[b] for b in (4, 5, 7, 20)] == [173, 174, 175, 176]
+    width_text = (ROOT / 'devices/cupl/p10l8.dev').read_text()
+    width_text = width_text.replace('row(1, 19, array, 0, 20, 2, no, 32)',
+                                    'row(1, 19, array, 0, 20, 2, no, 177)')
+    width, = catalog.compile_text(width_text)
+    assert catalog.records(width['image'])[7][0][26:28] == bytes([177, 20])
+    for before, after in [('attribute_4 = 0', ''), ('attribute_4 = 0', 'attribute_4 = 256'),
+                          ('attribute_5 = 1', 'attribute_5 = -1')]:
+        rejected(lambda: catalog.compile_text(text.replace(before, after, 1)))
 
     # Preserve inactive operands and configuration fields from the source.
     # Edits are made in the description, with byte positions checked separately.

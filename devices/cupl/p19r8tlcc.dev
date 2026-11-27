@@ -16,6 +16,13 @@ device p19r8tlcc {
         supply = 28
     }
 
+    compatibility {
+        attribute_4 = 0
+        attribute_5 = 0
+        attribute_7 = 0
+        attribute_20 = 1
+    }
+
     fuses {
         count = 2443
         default = 0
@@ -146,32 +153,32 @@ device p19r8tlcc {
             has_default = no
             alternate_step = 0
         }
-        columns = [array, pin, function, polarity, first_row_fuse, row_width, max_terms, sharing_mode, active]
+        columns = [array, pin, function, polarity, first_row_fuse, row_width, max_terms, sharing_mode, active, legacy_width]
         rows = [
-            row(1, 26, array, negative, 0, 38, 8, 0, no),
-            row(1, 26, none, unspecified, 0, 0, 0, 2, no),
-            row(1, 26, d, negative, 0, 0, 0, 0, yes),
-            row(2, 25, array, negative, 304, 38, 8, 0, no),
-            row(2, 25, none, unspecified, 0, 0, 0, 2, no),
-            row(2, 25, d, negative, 0, 0, 0, 0, yes),
-            row(3, 24, array, negative, 608, 38, 8, 0, no),
-            row(3, 24, none, unspecified, 0, 0, 0, 2, no),
-            row(3, 24, d, negative, 0, 0, 0, 0, yes),
-            row(4, 23, array, negative, 912, 38, 8, 0, no),
-            row(4, 23, none, unspecified, 0, 0, 0, 2, no),
-            row(4, 23, d, negative, 0, 0, 0, 0, yes),
-            row(5, 21, array, negative, 1216, 38, 8, 0, no),
-            row(5, 21, none, unspecified, 0, 0, 0, 2, no),
-            row(5, 21, d, negative, 0, 0, 0, 0, yes),
-            row(6, 20, array, negative, 1520, 38, 8, 0, no),
-            row(6, 20, none, unspecified, 0, 0, 0, 2, no),
-            row(6, 20, d, negative, 0, 0, 0, 0, yes),
-            row(7, 19, array, negative, 1824, 38, 8, 0, no),
-            row(7, 19, none, unspecified, 0, 0, 0, 2, no),
-            row(7, 19, d, negative, 0, 0, 0, 0, yes),
-            row(8, 18, array, negative, 2128, 38, 8, 0, no),
-            row(8, 18, none, unspecified, 0, 0, 0, 2, no),
-            row(8, 18, d, negative, 0, 0, 0, 0, yes),
+            row(1, 26, array, negative, 0, 38, 8, 0, no, 38),
+            row(1, 26, none, unspecified, 0, 0, 0, 2, no, 0),
+            row(1, 26, d, negative, 0, 0, 0, 0, yes, 0),
+            row(2, 25, array, negative, 304, 38, 8, 0, no, 38),
+            row(2, 25, none, unspecified, 0, 0, 0, 2, no, 0),
+            row(2, 25, d, negative, 0, 0, 0, 0, yes, 0),
+            row(3, 24, array, negative, 608, 38, 8, 0, no, 38),
+            row(3, 24, none, unspecified, 0, 0, 0, 2, no, 0),
+            row(3, 24, d, negative, 0, 0, 0, 0, yes, 0),
+            row(4, 23, array, negative, 912, 38, 8, 0, no, 38),
+            row(4, 23, none, unspecified, 0, 0, 0, 2, no, 0),
+            row(4, 23, d, negative, 0, 0, 0, 0, yes, 0),
+            row(5, 21, array, negative, 1216, 38, 8, 0, no, 38),
+            row(5, 21, none, unspecified, 0, 0, 0, 2, no, 0),
+            row(5, 21, d, negative, 0, 0, 0, 0, yes, 0),
+            row(6, 20, array, negative, 1520, 38, 8, 0, no, 38),
+            row(6, 20, none, unspecified, 0, 0, 0, 2, no, 0),
+            row(6, 20, d, negative, 0, 0, 0, 0, yes, 0),
+            row(7, 19, array, negative, 1824, 38, 8, 0, no, 38),
+            row(7, 19, none, unspecified, 0, 0, 0, 2, no, 0),
+            row(7, 19, d, negative, 0, 0, 0, 0, yes, 0),
+            row(8, 18, array, negative, 2128, 38, 8, 0, no, 38),
+            row(8, 18, none, unspecified, 0, 0, 0, 2, no, 0),
+            row(8, 18, d, negative, 0, 0, 0, 0, yes, 0),
         ]
     }
 

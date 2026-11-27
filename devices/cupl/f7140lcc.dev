@@ -16,6 +16,13 @@ device f7140lcc {
         supply = 0
     }
 
+    compatibility {
+        attribute_4 = 0
+        attribute_5 = 0
+        attribute_7 = 0
+        attribute_20 = 0
+    }
+
     fuses {
         count = 22103
         default = 0
@@ -299,6 +306,7 @@ device f7140lcc {
 
     node_functions {
         defaults {
+            legacy_width = 0
             array = 0
             pin = 0
             function = none

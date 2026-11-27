@@ -16,6 +16,13 @@ device f529 {
         supply = 20
     }
 
+    compatibility {
+        attribute_4 = 0
+        attribute_5 = 0
+        attribute_7 = 0
+        attribute_20 = 1
+    }
+
     fuses {
         count = 128
         default = 0
@@ -115,24 +122,24 @@ device f529 {
             sharing_mode = 0
             alternate_step = 0
         }
-        columns = [array, pin, function, polarity, first_row_fuse, row_width, max_terms, active]
+        columns = [array, pin, function, polarity, first_row_fuse, row_width, max_terms, active, legacy_width]
         rows = [
-            row(1, 18, array, programmable, 0, 16, 1, no),
-            row(1, 18, none, negative, 0, 0, 0, yes),
-            row(2, 17, array, programmable, 16, 16, 1, no),
-            row(2, 17, none, negative, 0, 0, 0, yes),
-            row(3, 16, array, programmable, 32, 16, 1, no),
-            row(3, 16, none, negative, 0, 0, 0, yes),
-            row(4, 15, array, programmable, 48, 16, 1, no),
-            row(4, 15, none, negative, 0, 0, 0, yes),
-            row(5, 14, array, programmable, 64, 16, 1, no),
-            row(5, 14, none, negative, 0, 0, 0, yes),
-            row(6, 13, array, programmable, 80, 16, 1, no),
-            row(6, 13, none, negative, 0, 0, 0, yes),
-            row(7, 12, array, programmable, 96, 16, 1, no),
-            row(7, 12, none, negative, 0, 0, 0, yes),
-            row(8, 11, array, programmable, 112, 16, 1, no),
-            row(8, 11, none, negative, 0, 0, 0, yes),
+            row(1, 18, array, programmable, 0, 16, 1, no, 16),
+            row(1, 18, none, negative, 0, 0, 0, yes, 0),
+            row(2, 17, array, programmable, 16, 16, 1, no, 16),
+            row(2, 17, none, negative, 0, 0, 0, yes, 0),
+            row(3, 16, array, programmable, 32, 16, 1, no, 16),
+            row(3, 16, none, negative, 0, 0, 0, yes, 0),
+            row(4, 15, array, programmable, 48, 16, 1, no, 16),
+            row(4, 15, none, negative, 0, 0, 0, yes, 0),
+            row(5, 14, array, programmable, 64, 16, 1, no, 16),
+            row(5, 14, none, negative, 0, 0, 0, yes, 0),
+            row(6, 13, array, programmable, 80, 16, 1, no, 16),
+            row(6, 13, none, negative, 0, 0, 0, yes, 0),
+            row(7, 12, array, programmable, 96, 16, 1, no, 16),
+            row(7, 12, none, negative, 0, 0, 0, yes, 0),
+            row(8, 11, array, programmable, 112, 16, 1, no, 16),
+            row(8, 11, none, negative, 0, 0, 0, yes, 0),
         ]
     }
 

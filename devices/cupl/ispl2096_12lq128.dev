@@ -16,6 +16,13 @@ device ispl2096_12lq128 {
         supply = 0
     }
 
+    compatibility {
+        attribute_4 = 0
+        attribute_5 = 0
+        attribute_7 = 0
+        attribute_20 = 0
+    }
+
     fuses {
         count = 57600
         default = 0
@@ -846,6 +853,7 @@ device ispl2096_12lq128 {
 
     node_functions {
         defaults {
+            legacy_width = 0
             array = 0
             pin = 0
             function = none

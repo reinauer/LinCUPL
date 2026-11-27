@@ -3,7 +3,8 @@
 
 Report raw identity separately from canonical record equality. The latter
 excludes storage metadata and applies the existing ATF750C reader repairs.
-Every excluded byte is counted by rule; all remaining record bytes must match.
+Compatibility metadata is reported separately. Every normalized byte is
+counted by rule; all remaining record bytes, including reserved bytes, match.
 """
 from collections import Counter
 import hashlib
@@ -12,7 +13,7 @@ from .binary import (HEADER_SIZE, DIRECTORY_COUNT, ENTRY_SIZE, DATA_START,
                      SECTION_COUNT, SECTION_HEADER_SIZE, SECTION_NAMES, WIDTHS,
                      D, TFB, ARRAY, REGISTER, NORMAL_OUTPUT, POSITIVE, CONTROL)
 from .model import require
-from .audit import UNMAPPED_RANGES, excluded_offsets
+from .audit import COMPATIBILITY_FIELDS
 
 
 def u16(data, offset):
@@ -64,7 +65,33 @@ def records(image):
     return result
 
 
-def canonical(image, repairs=True, family='atf750c'):
+def normalize_compatibility(sections, changes):
+    for section, fields in COMPATIBILITY_FIELDS.items():
+        for record in sections[section]:
+            for offset, name in fields:
+                changes[f'compatibility metadata: {name}'] += record[offset] != 0
+                record[offset] = 0
+
+
+def compatibility_differences(left, right):
+    """Report metadata after the same row removals as hardware comparison."""
+    differences = []
+    for section, fields in COMPATIBILITY_FIELDS.items():
+        for offset, name in fields:
+            a = [r[offset] for r in left[section]]
+            b = [r[offset] for r in right[section]]
+            if a != b:
+                differences.append(dict(section=SECTION_NAMES[section], field=name,
+                    generated_records=len(a), reference_records=len(b),
+                    different_records=sum(x != y for x, y in zip(a, b)) + abs(len(a) - len(b)),
+                    examples=[dict(record=i, generated=a[i] if i < len(a) else None,
+                                   reference=b[i] if i < len(b) else None)
+                              for i in range(max(len(a), len(b)))
+                              if i >= len(a) or i >= len(b) or a[i] != b[i]][:8]))
+    return differences
+
+
+def canonical(image, repairs=True, family='atf750c', compatibility=True):
     require(family in ('atf750c', 'gal22v10', 'atf2500'), 'unsupported hardware comparison family')
     result = records(image)
     changes = Counter()
@@ -108,9 +135,8 @@ def canonical(image, repairs=True, family='atf750c'):
     # These two fields have PROM consumers, but no PROM meaning in the
     # supported PLD architectures. Do not classify them as unmapped.
     zero(attr, [9, 10], f'inactive {family.upper()} PROM operands')
-    for section in UNMAPPED_RANGES:
-        for r in result[section]:
-            zero(r, excluded_offsets(section), 'unmapped record bytes')
+    if compatibility:
+        normalize_compatibility(result, changes)
     if family == 'atf750c':
         for p in result[6]:
             if p[11] == 0:
@@ -137,8 +163,12 @@ def canonical(image, repairs=True, family='atf750c'):
 def compare_image(generated, reference, family='atf750c'):
     # A compiler must emit corrected records itself. Repairing its output
     # here could hide a regression in the writer.
-    left, left_rules = canonical(generated, repairs=False, family=family)
-    right, right_rules = canonical(reference, family=family)
+    left, left_rules = canonical(generated, repairs=False, family=family, compatibility=False)
+    right, right_rules = canonical(reference, family=family, compatibility=False)
+    metadata = compatibility_differences(left, right)
+    left_rules, right_rules = Counter(left_rules), Counter(right_rules)
+    normalize_compatibility(left, left_rules)
+    normalize_compatibility(right, right_rules)
     differences = []
     section_results = []
     for section, (a, b) in enumerate(zip(left, right)):
@@ -156,7 +186,9 @@ def compare_image(generated, reference, family='atf750c'):
                 generated_sha256=hashlib.sha256(generated).hexdigest(),
                 reference_sha256=hashlib.sha256(reference).hexdigest(),
                 canonical_equal=left == right, sections=section_results, differences=differences,
-                generated_normalizations=left_rules, reference_normalizations=right_rules,
+                compatibility_equal=not metadata, compatibility_differences=metadata,
+                generated_normalizations={k: v for k, v in left_rules.items() if v},
+                reference_normalizations={k: v for k, v in right_rules.items() if v},
                 storage_note='Section offsets, capacities, process pointers and image padding are excluded; '
                              'record order and every remaining record byte are compared.')
 

@@ -16,6 +16,13 @@ device p18l4 {
         supply = 24
     }
 
+    compatibility {
+        attribute_4 = 0
+        attribute_5 = 0
+        attribute_7 = 0
+        attribute_20 = 1
+    }
+
     fuses {
         count = 720
         default = 0
@@ -124,16 +131,16 @@ device p18l4 {
             sharing_mode = 0
             alternate_step = 0
         }
-        columns = [array, pin, function, first_row_fuse, row_width, max_terms, active]
+        columns = [array, pin, function, first_row_fuse, row_width, max_terms, active, legacy_width]
         rows = [
-            row(1, 20, array, 0, 36, 6, no),
-            row(1, 20, none, 0, 0, 0, yes),
-            row(2, 19, array, 216, 36, 4, no),
-            row(2, 19, none, 0, 0, 0, yes),
-            row(3, 18, array, 360, 36, 4, no),
-            row(3, 18, none, 0, 0, 0, yes),
-            row(4, 17, array, 504, 36, 6, no),
-            row(4, 17, none, 0, 0, 0, yes),
+            row(1, 20, array, 0, 36, 6, no, 40),
+            row(1, 20, none, 0, 0, 0, yes, 0),
+            row(2, 19, array, 216, 36, 4, no, 40),
+            row(2, 19, none, 0, 0, 0, yes, 0),
+            row(3, 18, array, 360, 36, 4, no, 40),
+            row(3, 18, none, 0, 0, 0, yes, 0),
+            row(4, 17, array, 504, 36, 6, no, 40),
+            row(4, 17, none, 0, 0, 0, yes, 0),
         ]
     }
 

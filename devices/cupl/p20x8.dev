@@ -16,6 +16,13 @@ device p20x8 {
         supply = 24
     }
 
+    compatibility {
+        attribute_4 = 0
+        attribute_5 = 0
+        attribute_7 = 0
+        attribute_20 = 1
+    }
+
     fuses {
         count = 1600
         default = 0
@@ -131,40 +138,40 @@ device p20x8 {
             pair_bits = 0
             alternate_step = 0
         }
-        columns = [array, pin, function, polarity, first_row_fuse, row_width, max_terms, split_terms, default_rule, has_default, sharing_mode, active]
+        columns = [array, pin, function, polarity, first_row_fuse, row_width, max_terms, split_terms, default_rule, has_default, sharing_mode, active, legacy_width]
         rows = [
-            row(1, 23, array, negative, 0, 40, 3, 0, 0, no, 0, no),
-            row(1, 23, oe, control, 0, 0, 0, 0, 2, no, 0, no),
-            row(2, 23, array, negative, 40, 40, 3, 0, 0, no, 0, no),
-            row(2, 23, none, negative, 0, 0, 0, 0, 0, yes, 0, yes),
-            row(3, 22, array, negative, 160, 40, 4, 2, 0, no, 0, no),
-            row(3, 22, none, unspecified, 0, 0, 0, 0, 0, no, 2, no),
-            row(3, 22, d, negative, 0, 0, 0, 0, 0, no, 0, yes),
-            row(4, 21, array, negative, 320, 40, 4, 2, 0, no, 0, no),
-            row(4, 21, none, unspecified, 0, 0, 0, 0, 0, no, 2, no),
-            row(4, 21, d, negative, 0, 0, 0, 0, 0, no, 0, yes),
-            row(5, 20, array, negative, 480, 40, 4, 2, 0, no, 0, no),
-            row(5, 20, none, unspecified, 0, 0, 0, 0, 0, no, 2, no),
-            row(5, 20, d, negative, 0, 0, 0, 0, 0, no, 0, yes),
-            row(6, 19, array, negative, 640, 40, 4, 2, 0, no, 0, no),
-            row(6, 19, none, unspecified, 0, 0, 0, 0, 0, no, 2, no),
-            row(6, 19, d, negative, 0, 0, 0, 0, 0, no, 0, yes),
-            row(7, 18, array, negative, 800, 40, 4, 2, 0, no, 0, no),
-            row(7, 18, none, unspecified, 0, 0, 0, 0, 0, no, 2, no),
-            row(7, 18, d, negative, 0, 0, 0, 0, 0, no, 0, yes),
-            row(8, 17, array, negative, 960, 40, 4, 2, 0, no, 0, no),
-            row(8, 17, none, unspecified, 0, 0, 0, 0, 0, no, 2, no),
-            row(8, 17, d, negative, 0, 0, 0, 0, 0, no, 0, yes),
-            row(9, 16, array, negative, 1120, 40, 4, 2, 0, no, 0, no),
-            row(9, 16, none, unspecified, 0, 0, 0, 0, 0, no, 2, no),
-            row(9, 16, d, negative, 0, 0, 0, 0, 0, no, 0, yes),
-            row(10, 15, array, negative, 1280, 40, 4, 2, 0, no, 0, no),
-            row(10, 15, none, unspecified, 0, 0, 0, 0, 0, no, 2, no),
-            row(10, 15, d, negative, 0, 0, 0, 0, 0, no, 0, yes),
-            row(11, 14, array, control, 1440, 40, 1, 0, 0, no, 0, no),
-            row(11, 14, oe, control, 0, 0, 0, 0, 2, no, 0, no),
-            row(12, 14, array, negative, 1480, 40, 3, 0, 0, no, 0, no),
-            row(12, 14, none, negative, 0, 0, 0, 0, 0, yes, 0, yes),
+            row(1, 23, array, negative, 0, 40, 3, 0, 0, no, 0, no, 40),
+            row(1, 23, oe, control, 0, 0, 0, 0, 2, no, 0, no, 0),
+            row(2, 23, array, negative, 40, 40, 3, 0, 0, no, 0, no, 40),
+            row(2, 23, none, negative, 0, 0, 0, 0, 0, yes, 0, yes, 0),
+            row(3, 22, array, negative, 160, 40, 4, 2, 0, no, 0, no, 40),
+            row(3, 22, none, unspecified, 0, 0, 0, 0, 0, no, 2, no, 0),
+            row(3, 22, d, negative, 0, 0, 0, 0, 0, no, 0, yes, 0),
+            row(4, 21, array, negative, 320, 40, 4, 2, 0, no, 0, no, 40),
+            row(4, 21, none, unspecified, 0, 0, 0, 0, 0, no, 2, no, 0),
+            row(4, 21, d, negative, 0, 0, 0, 0, 0, no, 0, yes, 0),
+            row(5, 20, array, negative, 480, 40, 4, 2, 0, no, 0, no, 40),
+            row(5, 20, none, unspecified, 0, 0, 0, 0, 0, no, 2, no, 0),
+            row(5, 20, d, negative, 0, 0, 0, 0, 0, no, 0, yes, 0),
+            row(6, 19, array, negative, 640, 40, 4, 2, 0, no, 0, no, 40),
+            row(6, 19, none, unspecified, 0, 0, 0, 0, 0, no, 2, no, 0),
+            row(6, 19, d, negative, 0, 0, 0, 0, 0, no, 0, yes, 0),
+            row(7, 18, array, negative, 800, 40, 4, 2, 0, no, 0, no, 40),
+            row(7, 18, none, unspecified, 0, 0, 0, 0, 0, no, 2, no, 0),
+            row(7, 18, d, negative, 0, 0, 0, 0, 0, no, 0, yes, 0),
+            row(8, 17, array, negative, 960, 40, 4, 2, 0, no, 0, no, 40),
+            row(8, 17, none, unspecified, 0, 0, 0, 0, 0, no, 2, no, 0),
+            row(8, 17, d, negative, 0, 0, 0, 0, 0, no, 0, yes, 0),
+            row(9, 16, array, negative, 1120, 40, 4, 2, 0, no, 0, no, 40),
+            row(9, 16, none, unspecified, 0, 0, 0, 0, 0, no, 2, no, 0),
+            row(9, 16, d, negative, 0, 0, 0, 0, 0, no, 0, yes, 0),
+            row(10, 15, array, negative, 1280, 40, 4, 2, 0, no, 0, no, 40),
+            row(10, 15, none, unspecified, 0, 0, 0, 0, 0, no, 2, no, 0),
+            row(10, 15, d, negative, 0, 0, 0, 0, 0, no, 0, yes, 0),
+            row(11, 14, array, control, 1440, 40, 1, 0, 0, no, 0, no, 40),
+            row(11, 14, oe, control, 0, 0, 0, 0, 2, no, 0, no, 0),
+            row(12, 14, array, negative, 1480, 40, 3, 0, 0, no, 0, no, 40),
+            row(12, 14, none, negative, 0, 0, 0, 0, 0, yes, 0, yes, 0),
         ]
     }
 

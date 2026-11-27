@@ -16,6 +16,13 @@ device pc960 {
         supply = 28
     }
 
+    compatibility {
+        attribute_4 = 0
+        attribute_5 = 15
+        attribute_7 = 1
+        attribute_20 = 1
+    }
+
     fuses {
         count = 256
         default = 0
@@ -161,40 +168,40 @@ device pc960 {
             sharing_mode = 0
             alternate_step = 0
         }
-        columns = [array, pin, function, polarity, first_row_fuse, row_width, max_terms, has_default, active]
+        columns = [array, pin, function, polarity, first_row_fuse, row_width, max_terms, has_default, active, legacy_width]
         rows = [
-            row(1, 24, l, positive, 0, 0, 0, yes, yes),
-            row(1, 24, array, negative, 0, 16, 1, no, no),
-            row(2, 23, l, positive, 0, 0, 0, yes, yes),
-            row(2, 23, array, negative, 16, 16, 1, no, no),
-            row(3, 22, l, positive, 0, 0, 0, yes, yes),
-            row(3, 22, array, negative, 32, 16, 1, no, no),
-            row(4, 21, l, positive, 0, 0, 0, yes, yes),
-            row(4, 21, array, negative, 48, 16, 1, no, no),
-            row(5, 29, l, positive, 0, 0, 0, yes, yes),
-            row(5, 29, array, negative, 64, 16, 1, no, no),
-            row(6, 30, l, positive, 0, 0, 0, yes, yes),
-            row(6, 30, array, negative, 80, 16, 1, no, no),
-            row(7, 31, l, positive, 0, 0, 0, yes, yes),
-            row(7, 31, array, negative, 96, 16, 1, no, no),
-            row(8, 32, l, positive, 0, 0, 0, yes, yes),
-            row(8, 32, array, negative, 112, 16, 1, no, no),
-            row(9, 33, none, positive, 0, 0, 0, yes, yes),
-            row(9, 33, array, negative, 128, 16, 1, no, no),
-            row(10, 34, none, positive, 0, 0, 0, yes, yes),
-            row(10, 34, array, negative, 144, 16, 1, no, no),
-            row(11, 35, none, positive, 0, 0, 0, yes, yes),
-            row(11, 35, array, negative, 160, 16, 1, no, no),
-            row(12, 36, none, positive, 0, 0, 0, yes, yes),
-            row(12, 36, array, negative, 176, 16, 1, no, no),
-            row(13, 37, none, positive, 0, 0, 0, yes, yes),
-            row(13, 37, array, negative, 192, 16, 1, no, no),
-            row(14, 38, none, positive, 0, 0, 0, yes, yes),
-            row(14, 38, array, negative, 208, 16, 1, no, no),
-            row(15, 39, none, positive, 0, 0, 0, yes, yes),
-            row(15, 39, array, negative, 224, 16, 1, no, no),
-            row(16, 40, none, positive, 0, 0, 0, yes, yes),
-            row(16, 40, array, negative, 240, 16, 1, no, no),
+            row(1, 24, l, positive, 0, 0, 0, yes, yes, 0),
+            row(1, 24, array, negative, 0, 16, 1, no, no, 16),
+            row(2, 23, l, positive, 0, 0, 0, yes, yes, 0),
+            row(2, 23, array, negative, 16, 16, 1, no, no, 16),
+            row(3, 22, l, positive, 0, 0, 0, yes, yes, 0),
+            row(3, 22, array, negative, 32, 16, 1, no, no, 16),
+            row(4, 21, l, positive, 0, 0, 0, yes, yes, 0),
+            row(4, 21, array, negative, 48, 16, 1, no, no, 16),
+            row(5, 29, l, positive, 0, 0, 0, yes, yes, 0),
+            row(5, 29, array, negative, 64, 16, 1, no, no, 16),
+            row(6, 30, l, positive, 0, 0, 0, yes, yes, 0),
+            row(6, 30, array, negative, 80, 16, 1, no, no, 16),
+            row(7, 31, l, positive, 0, 0, 0, yes, yes, 0),
+            row(7, 31, array, negative, 96, 16, 1, no, no, 16),
+            row(8, 32, l, positive, 0, 0, 0, yes, yes, 0),
+            row(8, 32, array, negative, 112, 16, 1, no, no, 16),
+            row(9, 33, none, positive, 0, 0, 0, yes, yes, 0),
+            row(9, 33, array, negative, 128, 16, 1, no, no, 16),
+            row(10, 34, none, positive, 0, 0, 0, yes, yes, 0),
+            row(10, 34, array, negative, 144, 16, 1, no, no, 16),
+            row(11, 35, none, positive, 0, 0, 0, yes, yes, 0),
+            row(11, 35, array, negative, 160, 16, 1, no, no, 16),
+            row(12, 36, none, positive, 0, 0, 0, yes, yes, 0),
+            row(12, 36, array, negative, 176, 16, 1, no, no, 16),
+            row(13, 37, none, positive, 0, 0, 0, yes, yes, 0),
+            row(13, 37, array, negative, 192, 16, 1, no, no, 16),
+            row(14, 38, none, positive, 0, 0, 0, yes, yes, 0),
+            row(14, 38, array, negative, 208, 16, 1, no, no, 16),
+            row(15, 39, none, positive, 0, 0, 0, yes, yes, 0),
+            row(15, 39, array, negative, 224, 16, 1, no, no, 16),
+            row(16, 40, none, positive, 0, 0, 0, yes, yes, 0),
+            row(16, 40, array, negative, 240, 16, 1, no, no, 16),
         ]
     }
 

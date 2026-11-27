@@ -16,6 +16,13 @@ device pc508 {
         supply = 28
     }
 
+    compatibility {
+        attribute_4 = 0
+        attribute_5 = 15
+        attribute_7 = 1
+        attribute_20 = 1
+    }
+
     fuses {
         count = 256
         default = 0
@@ -142,24 +149,24 @@ device pc508 {
             sharing_mode = 0
             alternate_step = 0
         }
-        columns = [array, pin, function, first_row_fuse, row_width, max_terms, has_default, active]
+        columns = [array, pin, function, first_row_fuse, row_width, max_terms, has_default, active, legacy_width]
         rows = [
-            row(1, 18, l, 0, 0, 0, yes, yes),
-            row(1, 18, array, 0, 32, 1, no, no),
-            row(2, 19, l, 0, 0, 0, yes, yes),
-            row(2, 19, array, 32, 32, 1, no, no),
-            row(3, 20, l, 0, 0, 0, yes, yes),
-            row(3, 20, array, 64, 32, 1, no, no),
-            row(4, 21, l, 0, 0, 0, yes, yes),
-            row(4, 21, array, 96, 32, 1, no, no),
-            row(5, 22, l, 0, 0, 0, yes, yes),
-            row(5, 22, array, 128, 32, 1, no, no),
-            row(6, 23, l, 0, 0, 0, yes, yes),
-            row(6, 23, array, 160, 32, 1, no, no),
-            row(7, 24, l, 0, 0, 0, yes, yes),
-            row(7, 24, array, 192, 32, 1, no, no),
-            row(8, 25, l, 0, 0, 0, yes, yes),
-            row(8, 25, array, 224, 32, 1, no, no),
+            row(1, 18, l, 0, 0, 0, yes, yes, 0),
+            row(1, 18, array, 0, 32, 1, no, no, 32),
+            row(2, 19, l, 0, 0, 0, yes, yes, 0),
+            row(2, 19, array, 32, 32, 1, no, no, 32),
+            row(3, 20, l, 0, 0, 0, yes, yes, 0),
+            row(3, 20, array, 64, 32, 1, no, no, 32),
+            row(4, 21, l, 0, 0, 0, yes, yes, 0),
+            row(4, 21, array, 96, 32, 1, no, no, 32),
+            row(5, 22, l, 0, 0, 0, yes, yes, 0),
+            row(5, 22, array, 128, 32, 1, no, no, 32),
+            row(6, 23, l, 0, 0, 0, yes, yes, 0),
+            row(6, 23, array, 160, 32, 1, no, no, 32),
+            row(7, 24, l, 0, 0, 0, yes, yes, 0),
+            row(7, 24, array, 192, 32, 1, no, no, 32),
+            row(8, 25, l, 0, 0, 0, yes, yes, 0),
+            row(8, 25, array, 224, 32, 1, no, no, 32),
         ]
     }
 

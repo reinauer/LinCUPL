@@ -11,7 +11,7 @@ import re
 import struct
 
 from . import binary
-from .audit import excluded_offsets, validate_coverage
+from .audit import validate_coverage
 from .compare import records
 from .syntax import Error, Expr, evaluate, parse, symbol
 
@@ -104,6 +104,8 @@ F = Field
 ATTRIBUTES = {
     'package': [F('pins', 8), F('drawing_style', 11), F('internal_nodes', 12, 2)],
     'power': [F('ground', 2), F('supply', 3)],
+    'compatibility': [F('attribute_4', 4), F('attribute_5', 5),
+                      F('attribute_7', 7), F('attribute_20', 20)],
     'fuses': [F('count', 21, 4), F('default', 19)],
     'signature': [F('bits', 61), F('first_fuse', 62, 4)],
     'compiler': [F('revision', 0, 2), F('family', 17, names=FAMILIES),
@@ -140,7 +142,7 @@ TABLES = {
         F('select_value', 7, 2), F('config_value', 9),
         F('first_row_fuse', 10, 4), F('first_or_fuse', 14, 4),
         F('config_first_fuse', 18, 4), F('pair_first_fuse', 22, 4),
-        F('row_width', 27), F('or_width', 28), F('config_bits', 29),
+        F('legacy_width', 26), F('row_width', 27), F('or_width', 28), F('config_bits', 29),
         F('pair_bits', 30), F('max_terms', 31, 2), F('split_terms', 33),
         F('default_rule', 34), F('has_default', 35, names=BOOL),
         F('sharing_mode', 36), F('active', 37, names=BOOL), F('alternate_step', 38)]),
@@ -278,21 +280,17 @@ def compile_text(text, filename='<input>'):
 
 
 def canonical(image):
-    """Preserve every mapped byte; exclude unmapped bytes and string tails.
+    """Compare every record byte except bytes after text terminators.
 
     Unlike the ATF750C hardware comparison, this performs NO reader repairs,
     active-operand filtering, array annotation changes or empty-row removal.
-    Equality is limited to mapped fields, not a proof that excluded bytes
-    have no meaning in other implementations.
+    Compatibility metadata and reserved bytes are compared unchanged.
     """
     validate_coverage(FIELDS, binary.WIDTHS)
     sections = records(image)
-    omitted = dict(unmapped_record_bytes=0, bytes_after_text_terminator=0)
+    omitted = dict(bytes_after_text_terminator=0)
     for section, fields in FIELDS.items():
         for record in sections[section]:
-            for p in excluded_offsets(section):
-                omitted['unmapped_record_bytes'] += record[p] != 0
-                record[p] = 0
             for f in fields:
                 if not f.text:
                     continue
