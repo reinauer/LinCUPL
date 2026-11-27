@@ -794,6 +794,7 @@ sym_t *find_symbol(const char *name)
  * the product terms. */
 void pair_feedback_symbols(void)
 {
+    if (jed150x_active()) return;
     if (g_vsima) {
         for (int i = 0; i < g_nsyms; i++) {
             const sym_t *s = &g_syms[i];
@@ -1754,6 +1755,7 @@ static void bind_cells_vsima(void)
  * initialisation (twice, so that cells can refer to each other). */
 void bind_cells(void)
 {
+    if (jed150x_active()) { jed150x_bind(); return; }
     int has_node_5_or_7 = 0;
     int has_pin_kind_e = 0;
     if (g_vsima) {

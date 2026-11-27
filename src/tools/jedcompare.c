@@ -14,7 +14,7 @@ static void usage(FILE *out)
 {
     fprintf(out, "Usage: jedcompare [-u LIBRARY] [-d DEVICE] [--max-inputs N] LEFT RIGHT\n"
                  "Prove combinational pin equivalence of two JEDEC files.\n"
-                 "Uses csim's GAL16V8, GAL20V8 and GAL22V10 decoder.\n"
+                 "Uses csim's GAL16V8, GAL20V8, GAL22V10 and ATF150x decoders.\n"
                  "Registers, output feedback and indeterminate levels are unsupported.\n"
                  "Checks every binary input combination and output enable (0/1/Z).\n"
                  "--max-inputs limits the combined used inputs (default 16; maximum 20).\n"
@@ -118,8 +118,9 @@ int main(int argc, char **argv)
         if (strlen(lib_arg) >= sizeof(library)) goto bad_usage;
         lincupl_resolve_explicit_dl(lib_arg, library, sizeof(library));
     } else if (!lincupl_find_default_dl(library, sizeof(library))) {
-        fprintf(stderr, "jedcompare: no device library; use -u LIBRARY or run wincupl-extract-data\n");
-        return 2;
+        /* Built-in decoders need no library. Other devices report the
+         * missing file when their decoder tries to open it. */
+        snprintf(library, sizeof(library), "lincupl.dl");
     }
     for (int i = 0; i < 2; i++) {
         if (!sim_jed_truth(paths[i], library, device_name, max_inputs, &tables[i], error, sizeof(error))) {

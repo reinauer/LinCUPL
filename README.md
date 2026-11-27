@@ -82,7 +82,8 @@ For Verilog synthesis with Yosys and direct ATF150x fitting, see
 
 For fuse-map inspection and equivalence checking, see
 [JEDEC tools](doc/jed-tools.md). `jedcompare` currently supports combinational
-GAL16V8, GAL20V8 and GAL22V10 designs without output feedback.
+GAL16V8, GAL20V8, GAL22V10 and ATF1502/1504/1508 designs without physical
+output feedback.
 
 Compile a design to a JEDEC file (`-j`), an absolute file for the simulator
 (`-a`), a documentation file (`-x`) and a listing (`-l`), then simulate it:
@@ -108,8 +109,8 @@ for the list of flags. The most common ones:
 
 **Simulating a JEDEC file.** `csim -f` takes the design from the fuse map
 in `name.jed` and needs no `.abs` file. It supports GAL16V8, GAL20V8,
-GAL22V10, ATF750 and ATF2500 maps, including files read back from a part
-or written by another compiler.
+GAL22V10, ATF750, ATF2500 and ATF1502/1504/1508 maps, including files read
+back from a part or written by another compiler.
 
 ```sh
 csim -lf u12              # reads u12.jed and u12.si, writes u12.so and u12.wo
@@ -134,6 +135,17 @@ csim -lf g20v8lcc u12     # the same as this device (for a file that does not sa
   and enable, product and global clocks, asynchronous reset and shared
   synchronous preset. Pin keepers are identified, but their electrical
   behavior is not simulated.
+- ATF1502AS, ATF1504AS and ATF1508AS maps have 16808, 34192 and 74136 fuses.
+  Their package comes from the device name, such as `f1504plcc44`, or QP
+  when the pin count identifies exactly one package. Ambiguous packages
+  require an explicit device. Routing, foldback, cascades, D/T registers,
+  latches, clocks, clear/preset, enables, open-drain outputs and logical
+  bus-keeper state are decoded using the fitter's package/wiring tables.
+  Simulation observes physical package pins; internal macrocells are
+  evaluated but are not exposed as numbered `PINNODE` signals. Power-down
+  pin operation and register preload are rejected. Timing and JTAG
+  programming are not simulated. The decoder assumes the AS-family fuse
+  layout; BE-series maps are unsupported.
 - A fuse map has no names. The pins are `P1`, `P2`, … in the `ORDER`
   statement, and their test values are levels at the pins. If `u12.pld` is
   there, the pins also have the names of its `PIN` declarations (and its

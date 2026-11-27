@@ -104,6 +104,7 @@ static void set_pin_value(int sym_index, int value)
 /* Initial state of the simulation core's globals. */
 void sim_reset(void)
 {
+    jed150x_reset();
     g_preload = 0;
     g_preload_pin = 0;
     g_rand_seed = 1;
@@ -124,6 +125,7 @@ int cell_kind(int sym_index)
 /* Power-up state of registers and outputs. */
 static void init_levels(void)
 {
+    jed150x_powerup();
     const uint8_t *hdr = dev_header();
     int level;
     switch (hdr[0x31]) {
@@ -294,6 +296,7 @@ static void mark_undefined_feedback(int sym, int error)
  * the fed-back symbol is passed to mark_undefined_feedback. */
 void update_cells(int pass)
 {
+    if (jed150x_active()) { jed150x_step(pass); return; }
     for (int i = 0; i < g_nsyms; i++) {
         if (eval_node_cell(i, pass) < 1) {
             mark_undefined_feedback(i, 0x40a);
@@ -489,6 +492,7 @@ static void report_unstable(void)
  * MAX_SETTLE_PASSES times). */
 static void settle(int pass)
 {
+    if (jed150x_active()) { jed150x_step(pass); return; }
     int twice = dev_header()[0x11] == 3;
     memset(g_fb_undefined, 0, g_plane_words * sizeof(uint16_t));
     for (int iteration = 0;; ) {
@@ -794,7 +798,7 @@ static int drive_clocks(int phase)
         const sym_t *s = &g_syms[sym];
         int kind;
         int value = o->value;
-        if (strcmp(g_device_name, "v5000") == 0 && !o->positive) {
+        if ((strcmp(g_device_name, "v5000") == 0 || jed150x_active()) && !o->positive) {
             if (value == T_VAL_C) value = T_VAL_K;
             else if (value == T_VAL_K) value = T_VAL_C;
         }
