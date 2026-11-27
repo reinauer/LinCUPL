@@ -205,7 +205,7 @@ def main():
             simulate(work, mapping, ['a', 'en', 'pad', 'q'],
                      '000L\n001H\n00ZH\n01LL\n11HH\n10ZH\n')
             text = run('jedcompare', ['test.jed', 'test.jed'], work, 2)
-            assert 'output feedback is not supported' in text, text
+            assert 'use --sequential to compare output feedback' in text, text
 
             # Change a connected AND literal without changing its pins.
             # Equivalence must depend on decoded fuses, not design names

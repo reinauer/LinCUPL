@@ -7,6 +7,7 @@
 #include "sim_seq.h"
 
 #include <inttypes.h>
+#include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -17,6 +18,7 @@
 typedef struct {
     uint32_t parent;
     uint32_t input;
+    uint32_t root;
 } seq_node_t;
 
 typedef struct {
@@ -102,13 +104,139 @@ static void add_state(seq_graph_t *graph, size_t slot, const unsigned char *stat
     memcpy(graph->states + graph->count * graph->stride, state, graph->state_size);
     graph->nodes[graph->count].parent = parent;
     graph->nodes[graph->count].input = input;
+    graph->nodes[graph->count].root = parent == NO_PARENT ? input : graph->nodes[parent].root;
     graph->slots[slot] = (uint32_t)++graph->count;
+}
+
+#define MAX_SEEDS 20
+#define MAX_ASSIGNMENTS 256
+
+typedef struct {
+    unsigned storage;
+    int seed;                  /* -1 for a constant */
+    unsigned invert;           /* constant value or seed inversion */
+    char name[32];
+} preload_assignment_t;
+typedef struct {
+    char seeds[MAX_SEEDS][32];
+    unsigned nseeds, count[2];
+    preload_assignment_t assignments[2][MAX_ASSIGNMENTS];
+} preload_t;
+
+static int parse_preload(preload_t *preload, int side, const char *text,
+                          sim_seq_model_t *model, char *error, size_t size)
+{
+    if (!text) return 1;
+    if (!*text) goto invalid;
+    while (*text) {
+        const char *end = strchr(text, ',');
+        size_t len = end ? (size_t)(end - text) : strlen(text);
+        char item[96], name[32];
+        if (!len || len >= sizeof(item)) goto invalid;
+        memcpy(item, text, len);
+        item[len] = 0;
+        char *eq = strchr(item, '=');
+        if (!eq || eq == item || !eq[1]) goto invalid;
+        *eq++ = 0;
+        unsigned index, n = sim_seq_storage_count(model);
+        for (index = 0; index < n; index++) {
+            unsigned char level;
+            if (!sim_seq_storage(model, index, name, sizeof(name), &level)) goto invalid;
+            if (!strcmp(name, item)) break;
+        }
+        if (index == n) {
+            snprintf(error, size, "unknown storage '%s'; use --list-state", item);
+            return 0;
+        }
+        for (unsigned i = 0; i < preload->count[side]; i++) {
+            if (preload->assignments[side][i].storage == index) {
+                snprintf(error, size, "duplicate preload for %s", item);
+                return 0;
+            }
+        }
+        if (preload->count[side] == MAX_ASSIGNMENTS) goto invalid;
+        preload_assignment_t *a = &preload->assignments[side][preload->count[side]++];
+        a->storage = index;
+        snprintf(a->name, sizeof(a->name), "%s", name);
+        a->seed = -1;
+        a->invert = 0;
+        if (!strcmp(eq, "0") || !strcmp(eq, "1")) a->invert = (unsigned)(*eq - '0');
+        else {
+            if (*eq == '!') { a->invert = 1; eq++; }
+            if ((!isalpha((unsigned char)*eq) && *eq != '_') || strlen(eq) >= sizeof(preload->seeds[0])) goto invalid;
+            for (const char *p = eq; *p; p++)
+                if (!isalnum((unsigned char)*p) && *p != '_') goto invalid;
+            unsigned seed;
+            for (seed = 0; seed < preload->nseeds; seed++) if (!strcmp(eq, preload->seeds[seed])) break;
+            if (seed == preload->nseeds) {
+                if (seed == MAX_SEEDS) {
+                    snprintf(error, size, "more than %u preload seed bits", MAX_SEEDS);
+                    return 0;
+                }
+                strcpy(preload->seeds[preload->nseeds++], eq);
+            }
+            a->seed = (int)seed;
+        }
+        if (!end) break;
+        text = end + 1;
+        if (!*text) goto invalid;
+    }
+    return 1;
+invalid:
+    snprintf(error, size, "invalid preload map; expected STORAGE=0, STORAGE=1 or STORAGE=[!]seed (without spaces)");
+    return 0;
+}
+
+static unsigned preload_value(const preload_assignment_t *a, uint32_t root)
+{ return a->invert ^ (a->seed < 0 ? 0U : ((root >> a->seed) & 1U)); }
+
+static void print_preload(const preload_t *preload, uint32_t root)
+{
+    if (preload->nseeds) {
+        printf("Preload seeds:");
+        for (unsigned s = 0; s < preload->nseeds; s++)
+            printf(" %s=%u", preload->seeds[s], (root >> s) & 1U);
+        putchar('\n');
+    }
+    for (unsigned side = 0; side < 2; side++) {
+        if (!preload->count[side]) continue;
+        printf("Initial %s:", side ? "right" : "left");
+        for (unsigned i = 0; i < preload->count[side]; i++) {
+            const preload_assignment_t *a = &preload->assignments[side][i];
+            printf("%s%s=%u", i ? "," : " ", a->name, preload_value(a, root));
+        }
+        putchar('\n');
+    }
+}
+
+int jedcompare_list_state(const char *path, const char *library, const char *device)
+{
+    sim_seq_model_t *model = NULL;
+    char error[256], name[32];
+    if (!sim_jed_seq_load(path, library, device, &model, error, sizeof(error))) {
+        fprintf(stderr, "jedcompare: inconclusive: %s: %s\n", path, error);
+        return 2;
+    }
+    printf("%s: %s raw storage (before output polarity and enable)\n", path, sim_seq_pins(model)->device);
+    unsigned count = sim_seq_storage_count(model);
+    for (unsigned i = 0; i < count; i++) {
+        unsigned char powerup;
+        if (!sim_seq_storage(model, i, name, sizeof(name), &powerup)) {
+            sim_seq_free(model);
+            return 2;
+        }
+        printf("%s=%c\n", name, powerup);
+    }
+    if (!count) puts("(no storage)");
+    sim_seq_free(model);
+    return 0;
 }
 
 static int counterexample(const seq_graph_t *graph, size_t parent, uint32_t input,
                            const unsigned *pins, unsigned count,
-                           unsigned output, int left, int right)
+                           unsigned output, int left, int right, const preload_t *preload)
 {
+    uint32_t root = graph->nodes[parent].root;
     size_t depth = 0;
     for (size_t n = parent; graph->nodes[n].parent != NO_PARENT; n = graph->nodes[n].parent)
         depth++;
@@ -121,8 +249,9 @@ static int counterexample(const seq_graph_t *graph, size_t parent, uint32_t inpu
     size_t i = depth;
     for (size_t n = parent; graph->nodes[n].parent != NO_PARENT; n = graph->nodes[n].parent)
         trace[--i] = graph->nodes[n].input;
+    print_preload(preload, root);
     printf("Not equivalent: P%u is %c versus %c\n", output, left, right);
-    printf("Shortest input trace: %zu steps (step 0 settles power-up inputs)\n", depth + 1);
+    printf("Shortest input trace: %zu steps (step 0 settles initial inputs)\n", depth + 1);
     for (i = 0; i <= depth; i++) {
         printf("Step %zu:", i);
         for (unsigned j = 0; j < count; j++)
@@ -136,8 +265,10 @@ static int counterexample(const seq_graph_t *graph, size_t parent, uint32_t inpu
 
 int jedcompare_sequential(const char *const paths[2], const char *library,
                           const char *device, unsigned max_inputs,
-                          size_t max_states, uint64_t max_transitions)
+                          size_t max_states, uint64_t max_transitions,
+                          const char *const preload_text[2])
 {
+    preload_t preload = {0};
     sim_seq_model_t *models[2] = {NULL, NULL};
     const sim_truth_t *pins[2];
     unsigned inputs[SIM_TRUTH_PINS], ninputs = 0, noutputs = 0;
@@ -196,6 +327,17 @@ int jedcompare_sequential(const char *const paths[2], const char *library,
                 ninputs, max_inputs);
         goto done;
     }
+    for (int i = 0; i < 2; i++) {
+        if (!parse_preload(&preload, i, preload_text[i], models[i], error, sizeof(error))) {
+            fprintf(stderr, "jedcompare: inconclusive: %s: %s\n", paths[i], error);
+            goto done;
+        }
+    }
+    uint32_t roots = UINT32_C(1) << preload.nseeds;
+    if (roots > max_states || roots > max_transitions) {
+        fprintf(stderr, "jedcompare: inconclusive: %u preload assignments exceed exploration limits\n", roots);
+        goto done;
+    }
     if (sizes[0] > SIZE_MAX - sizes[1]) goto memory_limit;
     graph.state_size = sizes[0] + sizes[1];
     graph.stride = graph.state_size ? graph.state_size : 1;
@@ -213,11 +355,25 @@ int jedcompare_sequential(const char *const paths[2], const char *library,
     current = calloc(1, graph.stride);
     next = calloc(1, graph.stride);
     if (!graph.nodes || !graph.slots || !current || !next || !reserve_states(&graph)) goto memory_limit;
-    sim_seq_initial(models[0], current);
-    sim_seq_initial(models[1], current + sizes[0]);
     int found;
-    size_t slot = state_slot(&graph, current, &found);
-    add_state(&graph, slot, current, NO_PARENT, 0);
+    size_t slot;
+    for (uint32_t root = 0; root < roots; root++) {
+        for (int side = 0; side < 2; side++) {
+            unsigned char *state = current + (side ? sizes[0] : 0);
+            sim_seq_initial(models[side], state);
+            for (unsigned i = 0; i < preload.count[side]; i++) {
+                const preload_assignment_t *a = &preload.assignments[side][i];
+                if (!sim_seq_preload(models[side], state, a->storage, preload_value(a, root))) {
+                    fprintf(stderr, "jedcompare: inconclusive: cannot preload %s\n", a->name);
+                    goto done;
+                }
+            }
+        }
+        slot = state_slot(&graph, current, &found);
+        if (found) continue;
+        if (graph.count == graph.capacity) goto memory_limit;
+        add_state(&graph, slot, current, NO_PARENT, root);
+    }
     for (size_t head = 0; head < graph.count; head++) {
         /* Keep a stable parent snapshot for the outgoing edge loop. */
         memcpy(current, graph.states + head * graph.stride, graph.state_size);
@@ -248,7 +404,7 @@ int jedcompare_sequential(const char *const paths[2], const char *library,
                     goto done;
                 }
                 if (a != b) {
-                    result = counterexample(&graph, head, row, inputs, ninputs, p, a, b);
+                    result = counterexample(&graph, head, row, inputs, ninputs, p, a, b, &preload);
                     goto done;
                 }
             }
@@ -264,7 +420,8 @@ int jedcompare_sequential(const char *const paths[2], const char *library,
         }
     }
     printf("Equivalent: %zu reachable state pairs, %" PRIu64
-           " transitions, %u outputs (including high impedance)\n", graph.count, transitions, noutputs);
+           " transitions, %u outputs (including high impedance), %u initial assignments\n",
+           graph.count, transitions, noutputs, roots);
     result = 0;
     goto done;
 memory_limit:

@@ -94,11 +94,10 @@ Current proof scope:
 - Binary external inputs and logical output levels, including high
   impedance. Timing, hazards, programming/security settings and analog
   behavior are outside the comparison.
-- The default mode rejects registers and power-down state. Physical output
-  feedback is rejected in both modes, including acyclic output feedback.
-  csim can simulate ATF750 and ATF2500 maps, but their buried registers
-  remain outside this proof scope even when the pin outputs are combinational.
-  Invalid active routing configurations are rejected.
+- The default mode rejects registers, power-down state and physical output
+  feedback. Use sequential mode for these designs and for ATF750/ATF2500
+  maps with buried registers. Invalid active routing configurations are
+  rejected.
 
 ### Sequential equivalence
 
@@ -107,28 +106,63 @@ jedcompare --sequential left.jed right.jed
 jedcompare --sequential --max-states 100000 --max-transitions 10000000 left.jed right.jed
 ```
 
-Sequential mode explores reachable pairs of ATF150x states from their
-configured power-up values. It tries every binary assignment to the union
+Sequential mode supports GAL16V8, GAL20V8, GAL22V10, ATF750, ATF2500 and
+ATF150x maps. It explores reachable pairs of states from their configured
+power-up values. It tries every binary assignment to the union
 of used inputs at each state, including asynchronous controls and clocks.
 Registers need not occupy matching macrocells or have matching counts.
-Power-down retains registers, clock history, output values and output enables.
+Physical output feedback is included, along with output enables. Output
+pins are not externally driven during comparison; an undriven feedback
+pin needs a determinate pull or keeper value when its output is disabled.
+ATF150x power-down retains
+registers, clock history, output values and output enables; logical pin
+keeper state is retained too.
 
 The first input assignment settles the power-up inputs. Subsequent
 assignments use csim's binary-vector transition rules: register updates
 are simultaneous, and derived clocks are processed until the circuit settles.
 Inputs are simultaneous logical levels, without a timing or hazard model.
-The comparison covers normal operation from power-up; it does not assert
-equivalence from arbitrary preloaded states.
+By default the comparison starts at power-up. To select other initial
+register values, first list the storage decoded from each map:
+
+```sh
+jedcompare --list-state left.jed
+jedcompare --list-state right.jed
+jedcompare --sequential --preload-left MC1=s,MC2=1 --preload-right MC5=s left.jed right.jed
+```
+
+`MC<n>` identifies ATF150x storage; `R<n>` identifies storage in the other
+architectures. These names refer to raw register Q, before output polarity
+and output enable, including buried registers. The listing gives the
+configured power-up value of each register. Register names are local to
+each map and need not match between maps.
+
+A preload value is `0`, `1`, a symbolic bit such as `s`, or its complement
+such as `!s`. A shared name denotes the same bit on both sides. Every binary
+assignment to the named bits is checked, so `MC1=s` and `MC5=!s` describe a
+pair of registers with opposite encodings of the same initial state.
+Different symbolic names vary independently. Registers omitted from the
+preload list retain their configured power-up values. Preloading changes
+storage before the first input-settling step; it does not clock the design
+or apply reset/preset controls by itself.
+Preload lists have no spaces and support up to 20 distinct symbolic bits.
+Use the concrete initial assignments printed with a counterexample to
+repeat that comparison. The sequential simulation API can also replay its
+exact steps, including buried storage; csim's `.si` preload vectors address
+only registers exposed by its pin/node interface.
 
 Equivalence is reported only when every reachable pair and outgoing input
 assignment has been checked. A difference includes a shortest input trace
-starting at power-up, with physical pin numbers and levels. Indeterminate
-outputs, unsupported feedback or nonsettling controls return inconclusive.
+starting at the selected initial state, with physical pin numbers and
+levels. A preload counterexample identifies its initial symbolic assignment.
+Indeterminate outputs or nonsettling controls return inconclusive.
 Identical unknown values are never accepted as proof.
 
 The defaults are 10,000 state pairs and 1,000,000 transitions. The maximum
 limits are 1,000,000 states and 1,000,000,000 transitions. State exploration
-buffers have a 512 MiB budget; decoded models and runtime overhead are additional. The combined-input limit applies in both modes. Reaching any
+buffers have a 512 MiB budget; decoded models and runtime overhead are
+additional. All preload assignments share the same exploration budget.
+The combined-input limit applies in both modes. Reaching any
 limit returns inconclusive, even if every transition checked so far agrees.
 
 Exit status is 0 only for proven equivalence within this scope, 1 for a

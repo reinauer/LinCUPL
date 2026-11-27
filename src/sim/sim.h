@@ -329,6 +329,10 @@ sim_seq_model_t *jed150x_seq_copy(char *error, size_t size);
 
 SIM_EXTERN uint8_t *g_dev_rec;      /* the device record */
 void use_device_image(uint8_t *image, size_t size);
+size_t device_image_size(void);
+struct phase_block;
+void sim_seq_take_allocations(struct phase_block *pool);
+int sim_seq_vector(char *error, size_t size);
 int jed150x_load(const uint8_t *fuses, unsigned nfuses, unsigned pins,
                 const char *name, const char *description);
 int jed150x_name_matches(const char *name, unsigned nfuses, unsigned pins);

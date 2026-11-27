@@ -1,7 +1,7 @@
 /* SPDX-License-Identifier: BSD-2-Clause
  * Copyright (c) 2026, LinCUPL team
  *
- * Compare physical pin behavior using exhaustive csim truth tables.
+ * Compare physical pin behavior using exhaustive csim models.
  */
 #include "platform.h"
 #include "sim_truth.h"
@@ -15,13 +15,18 @@
 static void usage(FILE *out)
 {
     fprintf(out, "Usage: jedcompare [-u LIBRARY] [-d DEVICE] [--max-inputs N]\n"
-                 "                  [--sequential [--max-states N] [--max-transitions N]] LEFT RIGHT\n"
+                 "                  [--sequential [--max-states N] [--max-transitions N]\n"
+                 "                   [--preload-left MAP] [--preload-right MAP]] LEFT RIGHT\n"
+                 "       jedcompare [-u LIBRARY] [-d DEVICE] --list-state FILE\n"
                  "Prove physical pin equivalence of two JEDEC files.\n"
-                 "Uses csim's GAL16V8, GAL20V8, GAL22V10 and ATF150x decoders.\n"
+                 "Uses csim's GAL16V8, GAL20V8, GAL22V10, ATF750, ATF2500 and ATF150x decoders.\n"
                  "The default checks every combinational binary input and output enable (0/1/Z).\n"
                  "--sequential explores all reachable paired states from configured power-up.\n"
-                 "Sequential mode currently supports ATF150x and prints shortest input traces.\n"
-                 "Physical output feedback and indeterminate levels are unsupported.\n"
+                 "Sequential mode includes physical output feedback and prints shortest input traces.\n"
+                 "--list-state lists raw storage names and configured power-up values.\n"
+                 "--preload-left/right MAP sets initial storage, e.g. 'MC1=s,MC2=!s,MC3=1'.\n"
+                 "Named seed bits are shared across both designs and exhaustively enumerated.\n"
+                 "Unassigned storage retains power-up; unknown levels are inconclusive.\n"
                  "--max-inputs limits the combined used inputs (default 16; maximum 20).\n"
                  "--max-states bounds reachable state pairs (default 10000; maximum 1000000).\n"
                  "--max-transitions bounds paired steps (default 1000000; maximum 1000000000).\n"
@@ -105,7 +110,8 @@ int main(int argc, char **argv)
     unsigned max_inputs = 16;
     size_t max_states = JED_SEQ_DEFAULT_STATES;
     uint64_t max_transitions = JED_SEQ_DEFAULT_TRANSITIONS;
-    int sequential = 0, sequential_limits = 0;
+    const char *preload[2] = {NULL, NULL};
+    int sequential = 0, sequential_limits = 0, list_state = 0;
     int npaths = 0, options = 1, result = 2;
 
     for (int i = 1; i < argc; i++) {
@@ -125,6 +131,14 @@ int main(int argc, char **argv)
             max_inputs = (unsigned)value;
         } else if (options && strcmp(arg, "--sequential") == 0 && !sequential) {
             sequential = 1;
+        } else if (options && strcmp(arg, "--list-state") == 0 && !list_state) {
+            list_state = 1;
+        } else if (options && strcmp(arg, "--preload-left") == 0 && i + 1 < argc && !preload[0]) {
+            preload[0] = argv[++i];
+            sequential_limits = 1;
+        } else if (options && strcmp(arg, "--preload-right") == 0 && i + 1 < argc && !preload[1]) {
+            preload[1] = argv[++i];
+            sequential_limits = 1;
         } else if (options && strcmp(arg, "--max-states") == 0 && i + 1 < argc) {
             uint64_t value;
             if (!parse_limit(argv[++i], 1, JED_SEQ_MAX_STATES, &value)) goto bad_usage;
@@ -139,7 +153,9 @@ int main(int argc, char **argv)
             paths[npaths++] = arg;
         }
     }
-    if (npaths != 2 || strlen(device) >= sizeof(device_name) || (sequential_limits && !sequential)) goto bad_usage;
+    if (npaths != (list_state ? 1 : 2) || (list_state && sequential_limits) ||
+        strlen(device) >= sizeof(device_name) || (sequential_limits && !sequential))
+        goto bad_usage;
     for (size_t i = 0; i <= strlen(device); i++)
         device_name[i] = device[i] >= 'A' && device[i] <= 'Z' ? device[i] - 'A' + 'a' : device[i];
     if (lib_arg) {
@@ -150,8 +166,13 @@ int main(int argc, char **argv)
          * missing file when their decoder tries to open it. */
         snprintf(library, sizeof(library), "lincupl.dl");
     }
+    if (list_state) {
+        result = jedcompare_list_state(paths[0], library, device_name);
+        goto done;
+    }
     if (sequential) {
-        result = jedcompare_sequential(paths, library, device_name, max_inputs, max_states, max_transitions);
+        result = jedcompare_sequential(paths, library, device_name, max_inputs,
+                                       max_states, max_transitions, preload);
         goto done;
     }
     for (int i = 0; i < 2; i++) {

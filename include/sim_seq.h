@@ -26,6 +26,15 @@ void sim_seq_initial(sim_seq_model_t *model, unsigned char *state);
 int sim_seq_step(sim_seq_model_t *model, const unsigned char *state,
                  const unsigned char *inputs, unsigned char *next,
                  unsigned char *outputs, char *error, size_t size);
+/* Storage names identify raw register Q, before output polarity and OE.
+ * powerup is ASCII '0', '1' or 'X'. Preload changes storage only, before
+ * the first input-settling step; it does not apply controls or clock it.
+ */
+unsigned sim_seq_storage_count(const sim_seq_model_t *model);
+int sim_seq_storage(const sim_seq_model_t *model, unsigned index,
+                    char *name, size_t size, unsigned char *powerup);
+int sim_seq_preload(sim_seq_model_t *model, unsigned char *state,
+                    unsigned index, unsigned value);
 void sim_seq_free(sim_seq_model_t *model);
 
 #endif
