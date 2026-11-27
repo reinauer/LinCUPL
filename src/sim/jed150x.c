@@ -403,6 +403,17 @@ int jed150x_same_package(const char *name)
     return !*name || package_for_name(chip->device, name) == chip->package;
 }
 
+int jed150x_ball_pin(const char *name)
+{
+    if (!chip || !chip->package->balls) return 0;
+    if (!strncasecmp(name, "BALL_", 5)) name += 5;
+    else if ((name[0] == 'P' || name[0] == 'p') && isdigit((unsigned char)name[1]))
+        return 0; /* P<n> remains the numeric JEDEC vector position. */
+    for (int p = 1; p <= chip->package->n_pins; p++)
+        if (!strcasecmp(name, chip->package->balls[p - 1].name)) return p;
+    return 0;
+}
+
 int jed150x_load(const uint8_t *fuses, unsigned nfuses, unsigned pins,
                 const char *name, const char *description)
 {
@@ -428,6 +439,8 @@ int jed150x_load(const uint8_t *fuses, unsigned nfuses, unsigned pins,
         if (candidates != 1) bad("ATF150x package is ambiguous; specify the device explicitly");
     }
     if (pins && pins != (unsigned)p->n_pins) bad("ATF150x package disagrees with QP pin count");
+    if (!be && p->id == FIT_PKG_CBGA132)
+        bad("ATF1508 CBGA132 requires a BE-series fuse map");
     chip = alloc_tracked(sizeof(*chip), "ATF150x decoder");
     chip->nodes = alloc_tracked(J_MAX_NODES * sizeof(*chip->nodes), "ATF150x logic");
     chip->device = d; chip->package = p; chip->fuses = fuses; chip->be = be;

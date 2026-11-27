@@ -23,6 +23,7 @@
 #include "locate.h"
 
 #include <signal.h>
+#include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -279,7 +280,7 @@ static int main_usage_ext(void)
         { DALL, " Options:\n" },
         { DALL, "   -help\n" },
         { DALL, "   -o output_file_name (for *.tt3 and *.jed)\n" },
-        { D1508, "   -device package_type (PLCC84/TQFP100/PQFP100/PQFP160)\n" },
+        { D1508, "   -device package_type (PLCC84/TQFP100/PQFP100/PQFP160/CBGA132)\n" },
         { D1508, "   -tech tech_name (ATF1508AS/ATF1508ASV/ATF1508BE)\n" },
         { D1502, "   -device package_type (PLCC44/TQFP44)\n" },
         { D1502, "   -tech tech_name (ATF1502AS/ATF1502ASV/ATF1502BE)\n" },
@@ -1003,6 +1004,11 @@ static void main_device_package(void)
     };
 
     lincupl_strupr(g_dev_package);
+    if (strstr(g_dev_package, "CBGA132") || strstr(g_dev_package, "B132") ||
+        strstr(g_dev_package, "C132")) {
+        fprintf(g_msg, "CBGA132 requires ATF1508BE in extended mode\n");
+        util_abort_job(FIT_EXIT_USAGE);
+    }
     for (size_t i = 0; i < sizeof(map) / sizeof(map[0]); i++) {
         if (strstr(g_dev_package, map[i].suffix) != NULL) {
             set_package(map[i].package);
@@ -1027,14 +1033,15 @@ static void main_device_package(void)
 
 /* Extended mode: device name or package name -> package name in g_dev_package; a
  * name that is not a package of the device and technology gives a warning
- * and the default (BE devices come in TQFP packages only) */
+ * and the default. */
 static void main_device_package_ext(void)
 {
     static const struct {
         const char *code, *package;
     } map[] = {
         { "T44", "TQFP44" }, { "C44", "PLCC44" }, { "C68", "PLCC68" }, { "C84", "PLCC84" },
-        { "Q100", "PQFP100" }, { "T100", "TQFP100" }, { "Q160", "PQFP160" }
+        { "Q100", "PQFP100" }, { "T100", "TQFP100" }, { "Q160", "PQFP160" },
+        { "B132", "CBGA132" }, { "C132", "CBGA132" }
     };
     const char *def = NULL, *msg = NULL;
     int is1508 = util_str_icmp(g_family, "1508") == 0;
@@ -1051,11 +1058,15 @@ static void main_device_package_ext(void)
             break;
         }
     }
+    if (util_str_ieq(g_dev_package, "CBGA132") && (!is1508 || !g_opt.be)) {
+        fprintf(g_msg, "CBGA132 requires ATF1508BE\n");
+        util_abort_job(FIT_EXIT_USAGE);
+    }
     if (util_str_choice(g_dev_package, 5, "PLCC68", "PLCC84", "PQFP100", "TQFP100", "PQFP160") == 0 && is1508 &&
         g_opt.be == 0) {
         def = "PQFP100";
         msg = "Wrong device name, Defaulting to P1508Q100\n";
-    } else if (util_str_choice(g_dev_package, 1, "TQFP100") == 0 && is1508 && g_opt.be != 0) {
+    } else if (util_str_choice(g_dev_package, 2, "TQFP100", "CBGA132") == 0 && is1508 && g_opt.be != 0) {
         def = "TQFP100";
         msg = "Wrong device name, Defaulting to TQFP100\n";
     } else if (util_str_choice(g_dev_package, 2, "PLCC44", "TQFP44") == 0 && is1502 && g_opt.be == 0) {
@@ -1140,7 +1151,13 @@ static void main_fit_options(FitList *params)
 
                     number[n] = '\0';
                     n = 0;
-                    pin = atoi(number);
+                    char *end;
+                    pin = dev_parse_pin(params, number, &end);
+                    while (isspace((unsigned char)*end)) end++;
+                    if (!pin || *end) {
+                        fprintf(g_msg, "Invalid OE pin location: %s\n", number);
+                        util_abort_job(FIT_EXIT_USAGE);
+                    }
                     k++;
                     if ((g_opt.global_oe == NULL ? 0 : g_opt.global_oe->count) < k)
                         break;

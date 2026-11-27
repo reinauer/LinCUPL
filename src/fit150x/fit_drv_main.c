@@ -683,8 +683,11 @@ static void fit_drv_write_pin_file(void)
     for (i = 0; i < LN(g_fit_slots); i++) {
         FitSlot *slot = (FitSlot *)g_fit_slots->items[i];
 
-        if (util_str_icmp(slot->signal, FIT_FREE_NAME) != 0)
-            fprintf(f, "%s\t\t\t\t\t: %d\n", slot->signal, slot->pin);
+        if (util_str_icmp(slot->signal, FIT_FREE_NAME) != 0) {
+            char number[16];
+            fprintf(f, "%s\t\t\t\t\t: %s\n", slot->signal,
+                    dev_pin_name(slot->pin, number, sizeof(number)));
+        }
         if (util_str_icmp(slot->buried, FIT_FREE_NAME) != 0)
             fprintf(f, "%s\t\t\t\t\t: %d\n", slot->buried, slot->macrocell + 600);
     }
@@ -715,12 +718,14 @@ static void fit_drv_write_io_file(void)
         FitSlot *slot = (FitSlot *)g_fit_slots->items[i];
 
         if (util_str_icmp(slot->signal, FIT_FREE_NAME) != 0) {
+            char number[16];
+            const char *pin = dev_pin_name(slot->pin, number, sizeof(number));
             fprintf(f, "    \"%s\"", slot->signal);
             report_put_blanks(f, 0x28 - (int)strlen(slot->signal));
             if (slot->fct_id == 0)
-                fprintf(f, ": INPUT_PIN = %d ;\n", slot->pin);
+                fprintf(f, ": INPUT_PIN = %s ;\n", pin);
             else
-                fprintf(f, ": OUTPUT_PIN = %d ;\n", slot->pin);
+                fprintf(f, ": OUTPUT_PIN = %s ;\n", pin);
         }
         if (util_str_icmp(slot->buried, FIT_FREE_NAME) != 0) {
             fprintf(f, "    \"%s\"", slot->buried);

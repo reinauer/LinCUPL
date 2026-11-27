@@ -57,6 +57,26 @@ Assignments are checked for unknown names, duplicate pins and conflicting
 locations. Package legality and JTAG reservations are checked by the fitter.
 `-preassign KEEP`, `TRY` and `IGNORE` retain their usual meanings.
 
+For ATF1508BE, `-device CBGA132 -tech ATF1508BE` selects the 132-ball
+package. Pin files and port location properties accept case-insensitive
+ball names such as `L2`, `G1` and `P12`. The fitter's `.pin`, `.io` and
+placement reports use the physical ball names. `P1508B132` is an alias
+for this package. Set `LINCUPL_FIT150X_MODE=extended` to enable the BE fitter.
+
+JEDEC vectors still use numeric positions. They enumerate occupied balls
+left to right in rows A, B, C, D, E, F, G, H, J, K, L, M, N, P.
+Rows A-C and M-P contain columns 1-14; rows D-L contain columns 1-3 and
+12-14. For example, position 1 is A1, 61 is G1, 86 is L2 and 132 is P14.
+The placement report includes the complete position-to-ball table.
+
+The package connections follow [ATF1508BE data sheet 3663A](https://ww1.microchip.com/downloads/en/DeviceDoc/doc3663.pdf), tables 13-1
+and 13-2 (pages 23-25), with one deliberate correction: MC17 uses G2.
+Table 13-2 prints C2 for MC17, but table 13-1 and figure 1-2 (page 4)
+identify C2 as the separate OE1 input. G2 is the only I/O ball left after
+mapping the other 79 bonded macrocells. This correction follows the
+package diagram and complete I/O mapping; it has not been verified on
+physical hardware.
+
 EDIF identifiers are case insensitive. A `rename` string supplies a display
 name, not another identifier for reference lookup. Ordinary names and bus
 subscripts remain readable in reports. Punctuation and spaces that the

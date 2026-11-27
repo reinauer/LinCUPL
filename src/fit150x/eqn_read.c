@@ -1,6 +1,5 @@
 /* Boolean equation input, lowered to the fitter's function trees. */
 #include <ctype.h>
-#include <errno.h>
 #include <stdarg.h>
 #include "tt_priv.h"
 
@@ -315,10 +314,9 @@ static void pin_constraints(EqRead *r, FitList *params)
                 }
             }
             if (!colon) { error(r, "expected 'signal : pin' in '%s'", path); break; }
-            errno = 0;
-            number = strtol(colon + 1, &end, 10);
+            number = dev_parse_pin(params, colon + 1, &end);
             while (isspace((unsigned char)*end)) end++;
-            if (errno || number < 1 || number > 256 ||
+            if (!number ||
                 (*end && *end != '#' && strncmp(end, "//", 2))) {
                 error(r, "invalid pin assignment in '%s'", path);
                 break;

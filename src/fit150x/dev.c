@@ -13,6 +13,8 @@
  */
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
+#include <errno.h>
 
 #include "base.h"
 #include "dev.h"
@@ -82,6 +84,54 @@ static const FitPackageDesc *dev_find_package(const char *name)
 const FitPackageDesc *dev_current_package(void)
 {
     return dev_find_package(g_dev_package);
+}
+
+int dev_parse_pin(FitList *params, const char *text, char **end)
+{
+    const FitPackageDesc *pkg = dev_current_package();
+    char *option = param_get(params, "device");
+    const char *start = text;
+    long pin;
+
+    if (option == NULL)
+        option = param_get(params, "dev");
+    if (option != NULL) {
+        lincupl_strupr(option);
+        if (strstr(option, "CBGA132") || strstr(option, "B132") ||
+            strstr(option, "C132"))
+            pkg = dev_find_package("CBGA132");
+        free(option);
+    }
+    while (isspace((unsigned char)*text)) text++;
+    if (pkg != NULL && pkg->balls != NULL && isalpha((unsigned char)*text)) {
+        const char *limit = text;
+        while (isalnum((unsigned char)*limit)) limit++;
+        for (int i = 0; i < pkg->n_pins; i++) {
+            const char *name = pkg->balls[i].name;
+            if (strlen(name) == (size_t)(limit - text) &&
+                strncasecmp(name, text, (size_t)(limit - text)) == 0) {
+                *end = (char *)limit;
+                return i + 1;
+            }
+        }
+        *end = (char *)start;
+        return 0;
+    }
+    if (*text == 'P' || *text == 'p') text++;
+    errno = 0;
+    pin = strtol(text, end, 10);
+    if (errno || *end == text || pin < 1 || pin > 256)
+        return 0;
+    return (int)pin;
+}
+
+const char *dev_pin_name(int pin, char *buffer, size_t size)
+{
+    const FitPackageDesc *pkg = dev_current_package();
+    if (pkg != NULL && pkg->balls != NULL && pin > 0 && pin <= pkg->n_pins)
+        return pkg->balls[pin - 1].name;
+    snprintf(buffer, size, "%d", pin);
+    return buffer;
 }
 
 void dev_params_set_clock_mode(int word, int value)
@@ -364,6 +414,10 @@ void dev_print_pinout(FILE *f, FitList *slots)
 
     if (pkg == NULL)
         return;     /* no package: nothing is drawn */
+    if (pkg->balls != NULL) {
+        dev_print_pinout_ext(f, slots);
+        return;
+    }
     fr = &pkg->frame;
     dev_draw_package(pkg);
     for (i = 0; i < (slots != NULL ? slots->count : 0); i++) {

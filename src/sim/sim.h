@@ -333,6 +333,7 @@ int jed150x_load(const uint8_t *fuses, unsigned nfuses, unsigned pins,
                 const char *name, const char *description);
 int jed150x_name_matches(const char *name, unsigned nfuses, unsigned pins);
 int jed150x_same_package(const char *name);
+int jed150x_ball_pin(const char *name);
 int jed150x_active(void);
 int jed150x_sequential(void);
 void jed150x_reset(void);
