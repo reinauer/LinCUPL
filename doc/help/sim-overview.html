@@ -112,10 +112,20 @@ exactly one package. The native fitters write the package in the heading.
 Routing, foldback, cascades, D/T registers, latches, global and product
 clocks, clear/preset, enables, open-drain outputs and logical bus-keeper
 state are decoded. Vectors observe physical pins; internal macrocells
-are evaluated without exposing numbered PINNODE signals. Power-down pin
-operation and register preload are rejected. Timing and JTAG programming
-are not simulated. This decoder assumes the AS-family fuse layout;
-BE-series maps are unsupported.</li>
+are evaluated without exposing numbered PINNODE signals. Power-down holds
+registers, outputs and output enables. A <tt>P</tt> vector loads bonded
+macrocell registers with physical storage values <tt>0</tt>, <tt>1</tt> or
+<tt>X</tt>; omitted registers retain their state. ATF1502BE, ATF1504BE and
+ATF1508BE maps use distinct 16814/34198/74146-fuse layouts, including per-pin
+termination and native ATF1504BE/1508BE toggle storage. Timing, JTAG
+programming and JTAG-specific input termination are not simulated.</li>
+<li><b>ATF150x power-down.</b> Either enabled PD input at a high level
+freezes internal logic, registers, outputs and their high-impedance state.
+Pin keepers continue tracking externally driven pad levels while asleep.
+Normal inputs are restored on release; clock changes are evaluated from
+the last active clock level. This is a logical transition model without
+the device's power-down entry, recovery or clock setup/hold timing.
+An indeterminate PD input can make retained state indeterminate.</li>
 <li><b>Names.</b> A fuse map has none.  The pins are <tt>P1</tt>, <tt>P2</tt>, … in the
 <tt>ORDER</tt> statement, and the values of such a column are levels at
 the pin.  If <i>name</i><tt>.pld</tt> is there, the pins also have the

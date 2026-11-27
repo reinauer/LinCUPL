@@ -1024,3 +1024,30 @@ int sim_jed_truth(const char *path, const char *library, const char *device,
     phase_end(&g_rt);
     return result;
 }
+
+int sim_jed_seq_load(const char *path, const char *library, const char *device,
+                     sim_seq_model_t **model, char *error, size_t size)
+{
+    *model = NULL;
+    snprintf(error, size, "could not decode the sequential JEDEC design");
+    g_vsima = 0;
+    reset_globals();
+    for (int i = 0; i < 9; i++) g_args[i] = "";
+    g_args[2] = library;
+    g_args[4] = device;
+    g_args[5] = path;
+    g_options = OPT_FUSEMAP;
+    g_truth_error = error;
+    g_truth_error_size = size;
+    if (setjmp(g_abort_jmp) == 0) {
+        g_dir_prefix = dup_string("", "initialization");
+        load_jedec_file(path, 0);
+        if (jed150x_active()) *model = jed150x_seq_copy(error, size);
+        else snprintf(error, size, "sequential equivalence requires an ATF150x map");
+    }
+    g_truth_error = NULL;
+    g_truth_error_size = 0;
+    phase_end(&g_rt);
+    jed150x_reset();
+    return *model != NULL;
+}

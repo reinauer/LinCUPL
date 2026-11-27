@@ -6,6 +6,7 @@
  * all logic and register controls below are reconstructed from fuses.
  */
 #include "sim.h"
+#include "sim_seq.h"
 #include <ctype.h>
 #include "../fit150x/dev.h"
 
@@ -24,7 +25,7 @@ typedef struct {
 } jnode_t;
 
 typedef struct {
-    uint8_t cfg[24], q, previous_clock, used;
+    uint8_t cfg[24], q, previous_clock, used, toggle, invalid_storage;
     int pt[5], sum, cascade, foldback, feedback, logic;
     int state, data, clock, enable, clear, preset, output, oe, pin;
 } jmacro_t;
@@ -34,8 +35,11 @@ typedef struct {
     const FitPackageDesc *package;
     const uint8_t *fuses;
     uint8_t config[32], input_used[257], output_used[257], drive[257], keeper[257];
+    uint8_t pd_pin[257], held_pins[257], held_nodes[257];
+    uint8_t termination[257]; /* 0 none, 1 keeper, 2 pull-up, 3 pull-down */
+    int power_down, be, jtag;
     int pin_sym[257], pin_mc[257], pad[257];
-    int uim[8][40], goe[6], gclk[3], gclr, nnodes, sequential;
+    int uim[8][40], goe[6], gclk[3], gclr, nnodes, sequential, evaluation_failed;
     jmacro_t mc[128];
     jnode_t *nodes;
 } jdevice_t;
@@ -136,6 +140,46 @@ static void configuration(void)
     };
     int blocks = chip->device->params.n_blocks;
     int small = chip->device->id == FIT_DEV_1502;
+    if (chip->be) {
+        const uint8_t *f = chip->fuses;
+        int base = chip->device->jedec->cfg_bits_addr;
+        memset(chip->config, 1, sizeof(chip->config));
+        for (int i = 0; i < blocks * 16; i++) {
+            jmacro_t *m = &chip->mc[i];
+            int start = fit_be_macrocell_base(chip->device->id, i);
+            for (int k = 0; k < 24; k++)
+                m->cfg[k] = fit_be_cfg_offsets[k] < 0 ? 0 : f[start + fit_be_cfg_offsets[k]];
+            if (!small) {
+                m->toggle = f[start + 8] && !f[start + 9];
+                m->invalid_storage = f[start + 8] && f[start + 9];
+                if (m->toggle) m->cfg[C_STORAGE] = 1;
+            }
+            if (m->pin) {
+                int term = f[start] + 2 * f[start + 1];
+                chip->termination[m->pin] = term == 3 ? 1 : term == 1 ? 2 : 0;
+                if (term == 2) bad("ATF150x BE pin selects an invalid termination");
+            }
+        }
+        for (int i = 0; i < 6; i++)
+            chip->config[27 - (small ? 5 - i : i)] = f[base + 1 + i];
+        chip->config[21] = f[base + 7];
+        for (int i = 0; i < 3; i++) {
+            int c = 18 - i * 3, b = base + 8 + i * 3;
+            chip->config[c + 2] = f[b];
+            chip->config[c + 1] = f[b + 1];
+            chip->config[c] = f[b + 2];
+        }
+        chip->config[29] = f[base + 34];
+        chip->config[28] = f[base + 35];
+        chip->jtag = f[base + 33];
+        int inputs[4] = {chip->package->gclk_pins[0], chip->package->gclk_pins[1],
+                         chip->package->oe_pins[0], chip->package->gclr_pin};
+        for (int i = 0; i < 4; i++) {
+            int term = f[base + 23 + i * 2] + 2 * f[base + 24 + i * 2];
+            chip->termination[inputs[i]] = term == 3 ? 1 : term == 1 ? 3 : term == 2 ? 2 : 0;
+        }
+        return;
+    }
     for (int half = 0; half < 2; half++) {
         int address = chip->device->jedec->cfg_half_addr[half];
         for (int group = 0; group < 6; group++) {
@@ -157,6 +201,9 @@ static void configuration(void)
     }
     for (int i = 0; i < 32; i++)
         chip->config[i] = chip->fuses[chip->device->jedec->cfg_bits_addr + 31 - i];
+    chip->jtag = chip->fuses[chip->device->jedec->jtag_bits_addr + 1];
+    for (int p = 1; p <= chip->package->n_pins; p++)
+        if (chip->pin_mc[p] >= 0 && !chip->config[30]) chip->termination[p] = 1;
 }
 
 static void routing(void)
@@ -278,10 +325,13 @@ static void reachable(int n, int depth)
     switch (v->op) {
     case J_INVALID: bad("ATF150x active routing selects an invalid or unbonded source"); break;
     case J_PAD:
+        if (chip->pd_pin[v->a])
+            bad("ATF150x power-down pin is also routed as a logic input");
         chip->input_used[v->a] = 1;
         break;
     case J_STATE: {
         jmacro_t *m = &chip->mc[v->a];
+        if (m->invalid_storage) bad("ATF150x BE macrocell selects an invalid storage mode");
         m->used = chip->sequential = 1;
         reachable(m->data, depth + 1);
         reachable(m->clock, depth + 1);
@@ -319,8 +369,12 @@ static void device_view(void)
 
 static const FitDeviceDesc *device_for_fuses(unsigned nfuses)
 {
-    for (int i = 0; i < 3; i++)
-        if ((unsigned)g_dev_descs[i].jedec->n_fuses == nfuses) return &g_dev_descs[i];
+    for (int i = 0; i < 3; i++) {
+        const FitJedecLayout *be = fit_be_jedec_layout(g_dev_descs[i].id);
+        if ((unsigned)g_dev_descs[i].jedec->n_fuses == nfuses ||
+            (be && (unsigned)be->n_fuses == nfuses))
+            return &g_dev_descs[i];
+    }
     return NULL;
 }
 
@@ -355,11 +409,12 @@ int jed150x_load(const uint8_t *fuses, unsigned nfuses, unsigned pins,
     const FitDeviceDesc *d = device_for_fuses(nfuses);
     const FitPackageDesc *p = NULL;
     if (!d) return 0;
+    int be = nfuses != (unsigned)d->jedec->n_fuses;
     char be_name[16];
     snprintf(be_name, sizeof(be_name), "ATF%.4sBE", d->jedec->part + 3);
     for (const char *s = description; s && *s; s++)
-        if (!strncasecmp(s, be_name, strlen(be_name)))
-            bad("ATF150x BE-series fuse maps are not supported");
+        if (!strncasecmp(s, be_name, strlen(be_name)) && !be)
+            bad("ATF150x BE-series description disagrees with QF fuse count");
     char family[8];
     snprintf(family, sizeof(family), "%.4s", d->jedec->part + 3);
     if (name && *name) {
@@ -375,7 +430,7 @@ int jed150x_load(const uint8_t *fuses, unsigned nfuses, unsigned pins,
     if (pins && pins != (unsigned)p->n_pins) bad("ATF150x package disagrees with QP pin count");
     chip = alloc_tracked(sizeof(*chip), "ATF150x decoder");
     chip->nodes = alloc_tracked(J_MAX_NODES * sizeof(*chip->nodes), "ATF150x logic");
-    chip->device = d; chip->package = p; chip->fuses = fuses;
+    chip->device = d; chip->package = p; chip->fuses = fuses; chip->be = be;
     node(J_CONST, LV_LOW, 0); node(J_CONST, LV_HIGH, 0);
     for (int pin = 0; pin <= 256; pin++) chip->pin_mc[pin] = chip->pin_sym[pin] = -1;
     for (int i = 0; i < d->params.n_macrocells + d->params.n_ded_inputs; i++) {
@@ -394,16 +449,21 @@ int jed150x_load(const uint8_t *fuses, unsigned nfuses, unsigned pins,
         }
     }
     configuration();
-    if (!chip->config[28] || !chip->config[29])
-        bad("ATF150x power-down pin operation is not supported");
+    for (int i = 0; i < 2; i++) {
+        if (chip->config[29 - i]) continue;
+        int pin = p->pd_pins[i];
+        if (!pin || !chip->pad[pin]) bad("ATF150x power-down pin is not bonded");
+        chip->pd_pin[pin] = chip->input_used[pin] = 1;
+        chip->power_down = chip->sequential = 1;
+    }
     routing();
     for (int i = 0; i < d->params.n_macrocells; i++) macrocell(i);
     for (int i = 0; i < d->params.n_macrocells; i++) {
         jmacro_t *m = &chip->mc[i];
         int jtag = 0;
-        if (fuses[d->jedec->jtag_bits_addr + 1])
+        if (chip->jtag)
             for (int k = 0; k < 4; k++) if (m->pin == p->jtag_pins[k]) jtag = 1;
-        if (m->pin && m->oe != 0 && !jtag) {
+        if (m->pin && m->oe != 0 && !jtag && !chip->pd_pin[m->pin]) {
             chip->output_used[m->pin] = 1;
             reachable(m->output, 0);
             reachable(m->oe, 0);
@@ -442,14 +502,20 @@ void jed150x_bind(void)
     }
 }
 
+static void clear_cache(void);
+static void observe(uint8_t *pins, uint8_t *nodes);
+
 void jed150x_powerup(void)
 {
     if (!chip) return;
     memset(chip->keeper, LV_UNKNOWN, sizeof(chip->keeper));
+    memset(chip->drive, LV_HIGHZ, sizeof(chip->drive));
     for (int i = 0; i < chip->device->params.n_macrocells; i++) {
         chip->mc[i].q = chip->mc[i].cfg[C_INVERT] ? LV_HIGH : LV_LOW;
         chip->mc[i].previous_clock = LV_UNKNOWN;
     }
+    clear_cache();
+    observe(chip->held_pins, chip->held_nodes);
 }
 
 static int not_level(int a)
@@ -474,7 +540,10 @@ static int value(int id, int depth)
     int a, b, result = LV_UNKNOWN;
     if (n->color == 2) return n->value;
     if (n->color == 1) return LV_UNKNOWN;
-    if (depth > J_MAX_DEPTH) bad("ATF150x combinational routing is too deep");
+    if (depth > J_MAX_DEPTH) {
+        chip->evaluation_failed = 1;
+        return LV_UNKNOWN;
+    }
     n->color = 1;
     switch (n->op) {
     case J_CONST: result = n->a; break;
@@ -487,7 +556,9 @@ static int value(int id, int depth)
         if (result == LV_HIGHZ) {
             result = external;
             if (result == LV_HIGHZ)
-                result = mc >= 0 && !chip->config[30] ? chip->keeper[p] : LV_UNKNOWN;
+                result = chip->termination[p] == 1 ? chip->keeper[p] :
+                         chip->termination[p] == 2 ? LV_HIGH :
+                         chip->termination[p] == 3 ? LV_LOW : LV_UNKNOWN;
         }
         else if ((external == LV_LOW || external == LV_HIGH) && external != result)
             result = LV_UNKNOWN;
@@ -523,23 +594,10 @@ static void clear_cache(void)
 
 /* Snapshot all D/clock/control values before changing any register.
  * Derived clocks are then reevaluated until no further event is pending. */
-void jed150x_step(int pass)
+static int advance(int pass)
 {
     uint8_t next_state[128];
-    if (!chip) return;
-    if (pass == 0) bad("ATF150x register preload is not supported");
-    memset(chip->drive, LV_HIGHZ, sizeof(chip->drive));
-    for (int i = 0; i < g_value_count; i++) {
-        const order_t *o = &g_order[i];
-        int p = o->sym->pin;
-        if (p < 1 || p > chip->package->n_pins) continue;
-        if (o->value == T_VAL_C || o->value == T_VAL_K)
-            chip->drive[p] = g_sig_value[o->sym_index];
-        else if (o->value == T_VAL_0 || o->value == T_VAL_1 || o->value == T_VAL_R)
-            chip->drive[p] = g_vec_level[o->sym_index];
-        else if (o->value == T_VAL_X)
-            chip->drive[p] = LV_UNKNOWN;
-    }
+    chip->evaluation_failed = 0;
     for (int event = 0; event < J_MAX_EVENTS; event++) {
         int changed = 0;
         clear_cache();
@@ -550,6 +608,8 @@ void jed150x_step(int pass)
                 int reset = value(m->clear, 0), preset = value(m->preset, 0);
                 int clock = value(m->clock, 0), enable = value(m->enable, 0);
                 int data = value(m->data, 0);
+                if (m->toggle)
+                    data = data == LV_LOW ? m->q : data == LV_HIGH ? not_level(m->q) : LV_UNKNOWN;
                 if (reset == LV_HIGH && preset == LV_LOW) result = LV_LOW;
                 else if (preset == LV_HIGH && reset == LV_LOW) result = LV_HIGH;
                 else if (reset != LV_LOW || preset != LV_LOW) result = LV_UNKNOWN;
@@ -570,22 +630,126 @@ void jed150x_step(int pass)
         }
         for (int i = 0; i < chip->device->params.n_macrocells; i++) chip->mc[i].q = next_state[i];
         if (!changed) break;
-        if (event == J_MAX_EVENTS - 1) bad("ATF150x register/control feedback did not settle");
+        if (event == J_MAX_EVENTS - 1) return 0;
     }
     clear_cache();
+    return !chip->evaluation_failed;
+}
+
+static void observe(uint8_t *pins, uint8_t *nodes)
+{
     for (int p = 1; p <= chip->package->n_pins; p++) {
-        int sym = chip->pin_sym[p];
-        if (sym < 0) continue;
         int mc = chip->pin_mc[p];
         int result = chip->pad[p] ? value(chip->pad[p], 0) : LV_UNKNOWN;
         if (result == LV_LOW || result == LV_HIGH) chip->keeper[p] = (uint8_t)result;
+        nodes[p] = (uint8_t)result;
         if (chip->output_used[p]) {
             jmacro_t *m = &chip->mc[mc];
-            g_node_level[sym] = (uint8_t)value(m->output, 0);
+            nodes[p] = (uint8_t)value(m->output, 0);
             result = output_value(m, 0);
         }
-        g_sig_out[sym] = chip->output_used[p] ? (uint8_t)result : LV_NONE;
-        g_sig_value[sym] = (uint8_t)result;
+        pins[p] = (uint8_t)result;
+    }
+}
+
+/* Power-down blocks every ordinary input and retains both the output
+ * value and its enable. Restoring inputs on wake-up lets the normal
+ * event engine see transitions from the last active clock levels. */
+static int transition(const uint8_t *drive, int pass, uint8_t *pins, uint8_t *nodes)
+{
+    int pd = LV_LOW;
+    for (int p = 1; p <= chip->package->n_pins; p++) {
+        if (!chip->pd_pin[p]) continue;
+        if (drive[p] == LV_HIGH) { pd = LV_HIGH; break; }
+        if (drive[p] != LV_LOW) pd = LV_UNKNOWN;
+    }
+    if (pd != LV_LOW) {
+        if (pd == LV_UNKNOWN) {
+            for (int i = 0; i < chip->device->params.n_macrocells; i++) {
+                chip->mc[i].q = LV_UNKNOWN;
+                chip->mc[i].previous_clock = LV_UNKNOWN;
+            }
+            memset(chip->held_pins, LV_UNKNOWN, sizeof(chip->held_pins));
+            memset(chip->held_nodes, LV_UNKNOWN, sizeof(chip->held_nodes));
+        }
+        memcpy(pins, chip->held_pins, sizeof(chip->held_pins));
+        memcpy(nodes, chip->held_nodes, sizeof(chip->held_nodes));
+        for (int p = 1; p <= chip->package->n_pins; p++) {
+            if (!chip->pad[p]) continue;
+            /* Pin hold circuits remain active independently of the
+             * sleeping logic. Preserve externally driven keeper levels
+             * for the next active evaluation, including tri-state I/O. */
+            int level = chip->output_used[p] ? chip->held_pins[p] : LV_HIGHZ;
+            if (level == LV_HIGHZ) {
+                level = drive[p];
+                if (level == LV_HIGHZ)
+                    level = chip->termination[p] == 1 ? chip->keeper[p] :
+                            chip->termination[p] == 2 ? LV_HIGH :
+                            chip->termination[p] == 3 ? LV_LOW : LV_UNKNOWN;
+            } else if ((drive[p] == LV_LOW || drive[p] == LV_HIGH) && drive[p] != level) {
+                level = LV_UNKNOWN;
+            }
+            if (level == LV_LOW || level == LV_HIGH) chip->keeper[p] = (uint8_t)level;
+            if (!chip->output_used[p]) pins[p] = nodes[p] = (uint8_t)level;
+        }
+        return 1;
+    }
+    memcpy(chip->drive, drive, sizeof(chip->drive));
+    if (!advance(pass)) return 0;
+    observe(pins, nodes);
+    memcpy(chip->held_pins, pins, sizeof(chip->held_pins));
+    memcpy(chip->held_nodes, nodes, sizeof(chip->held_nodes));
+    return !chip->evaluation_failed;
+}
+
+void jed150x_step(int pass)
+{
+    uint8_t pins[257] = {0}, nodes[257] = {0}, drive[257];
+    if (!chip) return;
+    memset(drive, LV_HIGHZ, sizeof(drive));
+    for (int i = 0; i < g_value_count; i++) {
+        const order_t *o = &g_order[i];
+        int p = o->sym->pin;
+        if (p < 1 || p > chip->package->n_pins) continue;
+        if (pass == 0 && chip->pin_mc[p] >= 0 && chip->mc[chip->pin_mc[p]].used) {
+            jmacro_t *m = &chip->mc[chip->pin_mc[p]];
+            if (o->value == T_VAL_0 || o->value == T_VAL_1 || o->value == T_VAL_X)
+                m->q = o->value == T_VAL_X ? LV_UNKNOWN :
+                       o->value == T_VAL_1 ? LV_HIGH : LV_LOW;
+            continue;
+        }
+        if (pass == 0 && chip->output_used[p] &&
+            (o->value == T_VAL_0 || o->value == T_VAL_1))
+            bad("ATF150x preload value targets a macrocell without active storage");
+        if (o->value == T_VAL_C || o->value == T_VAL_K)
+            drive[p] = g_sig_value[o->sym_index];
+        else if (o->value == T_VAL_0 || o->value == T_VAL_1 || o->value == T_VAL_R)
+            drive[p] = g_vec_level[o->sym_index];
+        else if (o->value == T_VAL_X)
+            drive[p] = LV_UNKNOWN;
+    }
+    if (pass == 0) {
+        /* P loads storage directly. It neither clocks registers nor
+         * applies asynchronous controls. Establish clock history after
+         * all loads so a changed buried state cannot create a pulse. */
+        memcpy(chip->drive, drive, sizeof(chip->drive));
+        clear_cache();
+        for (int i = 0; i < chip->device->params.n_macrocells; i++)
+            if (chip->mc[i].used)
+                chip->mc[i].previous_clock = (uint8_t)value(chip->mc[i].clock, 0);
+        observe(pins, nodes);
+        memcpy(chip->held_pins, pins, sizeof(chip->held_pins));
+        memcpy(chip->held_nodes, nodes, sizeof(chip->held_nodes));
+    } else if (!transition(drive, pass, pins, nodes)) {
+        bad("ATF150x register/control feedback did not settle");
+    }
+    if (chip->evaluation_failed) bad("ATF150x combinational routing is too deep");
+    for (int p = 1; p <= chip->package->n_pins; p++) {
+        int sym = chip->pin_sym[p];
+        if (sym < 0) continue;
+        g_node_level[sym] = nodes[p];
+        g_sig_out[sym] = chip->output_used[p] ? pins[p] : LV_NONE;
+        g_sig_value[sym] = pins[p];
     }
 }
 
@@ -603,5 +767,146 @@ void jed150x_truth_pins(sim_truth_t *table)
             table->role[p] = SIM_PIN_INPUT;
             if (chip->input_used[p]) table->inputs[table->ninputs++] = p;
         }
+    }
+}
+
+/* Retain a decoded graph after the compiler phase releases its transient
+ * allocations. Graph evaluation and state changes use the same engine as
+ * csim; traversal of reachable paired states lives in jedcompare. */
+struct sim_seq_model {
+    jdevice_t device;
+    sim_truth_t pins;
+};
+
+sim_seq_model_t *jed150x_seq_copy(char *error, size_t size)
+{
+    for (int p = 1; p <= chip->package->n_pins; p++) {
+        if (chip->input_used[p] && chip->output_used[p]) {
+            snprintf(error, size, "P%d uses physical output feedback; sequential comparison requires driven inputs", p);
+            return NULL;
+        }
+    }
+    sim_seq_model_t *model = calloc(1, sizeof(*model));
+    if (!model) {
+        snprintf(error, size, "out of memory for sequential model");
+        return NULL;
+    }
+    model->device = *chip;
+    size_t bytes = (size_t)chip->nnodes * sizeof(*chip->nodes);
+    model->device.nodes = malloc(bytes);
+    if (!model->device.nodes) {
+        free(model);
+        snprintf(error, size, "out of memory for sequential logic graph");
+        return NULL;
+    }
+    memcpy(model->device.nodes, chip->nodes, bytes);
+    model->device.fuses = NULL;
+    jed150x_truth_pins(&model->pins);
+    return model;
+}
+
+const sim_truth_t *sim_seq_pins(const sim_seq_model_t *model)
+{
+    return &model->pins;
+}
+
+size_t sim_seq_state_size(const sim_seq_model_t *model)
+{
+    size_t size = 1;  /* whether initial input settling has happened */
+    for (int i = 0; i < model->device.device->params.n_macrocells; i++)
+        if (model->device.mc[i].used) size += 2;
+    if (model->device.power_down)
+        for (int p = 1; p <= model->device.package->n_pins; p++)
+            if (model->device.output_used[p]) size += 2;
+    return size;
+}
+
+static void save_state(unsigned char *state, int initialized)
+{
+    *state++ = (unsigned char)initialized;
+    for (int i = 0; i < chip->device->params.n_macrocells; i++) {
+        if (!chip->mc[i].used) continue;
+        *state++ = chip->mc[i].q;
+        *state++ = chip->mc[i].previous_clock;
+    }
+    if (chip->power_down)
+        for (int p = 1; p <= chip->package->n_pins; p++) {
+            if (!chip->output_used[p]) continue;
+            *state++ = chip->held_pins[p];
+            *state++ = chip->held_nodes[p];
+        }
+}
+
+void sim_seq_initial(sim_seq_model_t *model, unsigned char *state)
+{
+    jdevice_t *saved = chip;
+    chip = &model->device;
+    jed150x_powerup();
+    save_state(state, 0);
+    chip = saved;
+}
+
+int sim_seq_step(sim_seq_model_t *model, const unsigned char *state,
+                 const unsigned char *inputs, unsigned char *next,
+                 unsigned char *outputs, char *error, size_t size)
+{
+    jdevice_t *saved = chip;
+    int success = 0;
+    state++;  /* startup marker */
+    uint8_t pins[257] = {0}, nodes[257] = {0}, drive[257];
+    chip = &model->device;
+    for (int i = 0; i < chip->device->params.n_macrocells; i++) {
+        if (!chip->mc[i].used) continue;
+        chip->mc[i].q = *state++;
+        chip->mc[i].previous_clock = *state++;
+    }
+    if (chip->power_down)
+        for (int p = 1; p <= chip->package->n_pins; p++) {
+            if (!chip->output_used[p]) continue;
+            chip->held_pins[p] = *state++;
+            chip->held_nodes[p] = *state++;
+        }
+    memset(drive, LV_HIGHZ, sizeof(drive));
+    memset(chip->keeper, LV_UNKNOWN, sizeof(chip->keeper));
+    for (unsigned i = 0; i < model->pins.ninputs; i++) {
+        unsigned p = model->pins.inputs[i];
+        if (inputs[p] > 1) {
+            snprintf(error, size, "P%u requires a binary input", p);
+            goto done;
+        }
+        drive[p] = inputs[p] ? LV_HIGH : LV_LOW;
+    }
+    if (!transition(drive, 1, pins, nodes) || !transition(drive, 2, pins, nodes)) {
+        snprintf(error, size, "register/control feedback did not settle");
+        goto done;
+    }
+    if (chip->evaluation_failed) {
+        snprintf(error, size, "combinational routing is too deep");
+        goto done;
+    }
+    memset(outputs, 0, SIM_TRUTH_PINS);
+    for (unsigned i = 0; i < model->pins.noutputs; i++) {
+        unsigned p = model->pins.outputs[i];
+        switch (pins[p]) {
+        case LV_LOW: outputs[p] = '0'; break;
+        case LV_HIGH: outputs[p] = '1'; break;
+        case LV_HIGHZ: outputs[p] = 'Z'; break;
+        default:
+            snprintf(error, size, "P%u is indeterminate in a reachable state", p);
+            goto done;
+        }
+    }
+    save_state(next, 1);
+    success = 1;
+done:
+    chip = saved;
+    return success;
+}
+
+void sim_seq_free(sim_seq_model_t *model)
+{
+    if (model) {
+        free(model->device.nodes);
+        free(model);
     }
 }
