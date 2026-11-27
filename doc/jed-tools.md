@@ -83,16 +83,23 @@ Current proof scope:
 
 - Combinational GAL16V8, GAL20V8 and GAL22V10 maps, including decoded PLCC
   packages and a GAL22V10 map without its signature fuses.
+- Combinational ATF1502AS/1504AS/1508AS maps in the fitter's supported packages,
+  including internal feedback, foldback, product-term cascades and output
+  enables. These use the built-in wiring tables. A package name such as
+  `f1504plcc44` is required when QP alone is ambiguous; the native fitters
+  write that name in the JEDEC heading. BE-series maps are unsupported.
 - Matching physical pin interfaces. A different pin count or input/output
   role is reported as an interface difference; pins are not remapped.
 - Binary external inputs and logical output levels, including high
   impedance. Timing, hazards, programming/security settings and analog
   behavior are outside the comparison.
-- Registers and output feedback are rejected, including acyclic output
+- Registers and physical output feedback are rejected, including acyclic output
   feedback. Sequential equivalence needs a separate proof method. csim
   can simulate ATF750 and ATF2500 maps, but their buried registers remain
   outside this proof scope even when the pin outputs are combinational.
-  ATF150x maps are not decoded.
+  ATF150x registers are detected through the active routing graph,
+  including buried state feeding a combinational pin. Power-down pin
+  operation and invalid active routing configurations are rejected.
 
 Exit status is 0 only for proven equivalence within this scope, 1 for a
 pin-interface difference or a counterexample, and 2 for an error,

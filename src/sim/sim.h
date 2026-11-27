@@ -325,6 +325,19 @@ enum {
 #define DEV_NODE_REC_SIZE 39
 
 SIM_EXTERN uint8_t *g_dev_rec;      /* the device record */
+void use_device_image(uint8_t *image, size_t size);
+int jed150x_load(const uint8_t *fuses, unsigned nfuses, unsigned pins,
+                const char *name, const char *description);
+int jed150x_name_matches(const char *name, unsigned nfuses, unsigned pins);
+int jed150x_same_package(const char *name);
+int jed150x_active(void);
+int jed150x_sequential(void);
+void jed150x_reset(void);
+void jed150x_symbols(void);
+void jed150x_bind(void);
+void jed150x_powerup(void);
+void jed150x_step(int pass);
+void jed150x_truth_pins(sim_truth_t *table);
 /* Start of section n inside the device record: rec + u32(rec + n*20 + 8). */
 const uint8_t *dev_section(int n);
 /* Number of records in section n: u16(rec + n*20 + 4). */

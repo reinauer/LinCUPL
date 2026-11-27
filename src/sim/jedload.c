@@ -1973,6 +1973,7 @@ static void print_summary(const char *jed_name)
  * has a fuse map simulated without the pin in the ORDER list. */
 void jedec_design_bound(void)
 {
+    if (jed150x_active()) return;
     int active = dev_header()[0x2e] == 4 ? LV_HIGH : LV_LOW;
     for (int i = 0; i < g_nsyms; i++) {
         if (g_syms[i].pin_rec >= 0 && dev_pin(g_syms[i].pin_rec)[PIN_KIND] == PIN_KIND_ENABLE) {
@@ -2044,12 +2045,27 @@ void load_jedec_file(const char *jed_name, int source_names)
     if (source_names) {
         read_pld();
     }
-    choose_device(jed_name, !source_names);
+    const char *device = g_args[4][0] != '&' && g_args[4][0] != '\0' ? g_args[4] :
+                         jed150x_name_matches(g_pld.device, g_jed.nfuses, g_jed.qp) ?
+                         g_pld.device : g_jed.device;
+    int atf150x = jed150x_load(g_jed.fuses, g_jed.nfuses, g_jed.qp, device, design);
+    if (atf150x) g_pld.use_names = jed150x_same_package(g_pld.device);
+    else choose_device(jed_name, !source_names);
     /* option j adds the vectors to the file that was read */
     lincupl_strcpy_trunc(g_abs_jedec_name, sizeof(g_abs_jedec_name), g_base_name);
     g_options |= OPT_N;
     read_header_items(design);
     collect_pins();
+    if (atf150x) {
+        name_pins();
+        build_symbols();
+        build_frames();
+        jed150x_symbols();
+        define_pld_fields();
+        if (source_names)
+            stream_printf(stdout, "JEDEC simulation: %s (%d pins)\n", g_device_name, g_jed.npins);
+        return;
+    }
     scan_arrays();
     if (g_jed.atf)
         configure_atf();
@@ -2075,6 +2091,7 @@ void load_design_jedec(void)
 /* Describe the physical pins of the map already decoded above. */
 void jedec_truth_pins(sim_truth_t *table)
 {
+    if (jed150x_active()) { jed150x_truth_pins(table); return; }
     table->npins = (unsigned)g_jed.npins;
     snprintf(table->device, sizeof(table->device), "%s", g_device_name);
     for (int p = 1; p <= g_jed.npins; p++) {

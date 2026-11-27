@@ -22,6 +22,7 @@
  * The .jed is written with CR LF line ends.
  */
 #include <stdarg.h>
+#include <ctype.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
@@ -774,8 +775,11 @@ static int jed_map_slot(FitSlot *slot)
     int kind;
     int id;
 
-    if (util_str_icmp(slot->signal, FIT_FREE_NAME) != 0)
-        jed_set_source(slot, 6, slot->fct_id == 0 ? 0x12 : 0x11);
+    /* A cell used only for cascade, foldback or buried logic must not
+     * enable its unused pin. Register/tri-state controls may override
+     * this default below. */
+    jed_set_source(slot, 6, slot->fct_id != 0 &&
+                   util_str_icmp(slot->signal, FIT_FREE_NAME) != 0 ? 0x11 : 0x12);
     if (util_str_icmp(slot->fn_kind, "reg") == 0) {
         if (slot->fct_id != 0) {
             inst = tt3_find_instance_by_alias(g_jed_ent, slot->signal, &kind);
@@ -1467,6 +1471,9 @@ static void jed_write_header(void)
         digits[i - 4] = g_dev_package[i];
     jed_printf("%c", 2);
     jed_printf("JEDEC file for: %s\n", g_dev_desc->jedec->part);
+    jed_printf("Device f%.4s", g_dev_desc->jedec->part + 3);
+    for (i = 0; i < len; i++) jed_printf("%c", tolower((unsigned char)g_dev_package[i]));
+    jed_printf("\n");
     jed_printf("Created on: %s*\n", ctime(&now));
     if (g_opt.security == 0)
         jed_printf("QF%d* QP%d * F0*\n", g_dev_desc->jedec->n_fuses, atoi(digits));

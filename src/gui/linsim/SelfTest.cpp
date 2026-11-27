@@ -378,6 +378,29 @@ int runLinSimSelfTest() {
     const bool simCount10Ok = win.runSimulation(true, false, &simLog);
     st.check(simCount10Ok, QStringLiteral("Compile & Simulate COUNT10 via cupl + csim -lw"), simLog);
 
+    // A fuse-map run must not require or regenerate the ABS, even with
+    // a companion source available. Missing JEDEC is a separate error.
+    {
+        QAction *mode = win.findChild<QAction *>(QStringLiteral("simulateJedec"));
+        const QString abs = SimDocument::findCompanionFile(count10Si, QStringLiteral(".abs"));
+        const QString jed = SimDocument::findCompanionFile(count10Si, QStringLiteral(".jed"));
+        const bool savedAbs = !abs.isEmpty() && QFile::rename(abs, abs + QStringLiteral(".saved"));
+        st.check(mode && savedAbs && !jed.isEmpty(), QStringLiteral("Prepare JEDEC-only simulation"));
+        if (mode && savedAbs && !jed.isEmpty()) {
+            mode->setChecked(true);
+            st.check(win.runSimulation(false, false, &simLog) &&
+                         simLog.contains(QStringLiteral("-lwf")) && !QFileInfo::exists(abs),
+                     QStringLiteral("JEDEC mode runs csim -f without rebuilding ABS"), simLog);
+            const bool savedJed = QFile::rename(jed, jed + QStringLiteral(".saved"));
+            st.check(savedJed && !win.runSimulation(false, false, &simLog) &&
+                         simLog.contains(QStringLiteral("No companion JEDEC file")),
+                     QStringLiteral("JEDEC mode reports a missing fuse map"), simLog);
+            if (savedJed) QFile::rename(jed + QStringLiteral(".saved"), jed);
+            mode->setChecked(false);
+        }
+        if (savedAbs) QFile::rename(abs + QStringLiteral(".saved"), abs);
+    }
+
     const QString count10Wo = SimDocument::findCompanionFile(count10Si, QStringLiteral(".wo"));
     st.check(!count10Wo.isEmpty() && QFileInfo::exists(count10Wo),
              QStringLiteral("COUNT10.wo generated on disk"));

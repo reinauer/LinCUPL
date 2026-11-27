@@ -96,6 +96,8 @@ static struct phase_rt g_rt = {
     .out_of_memory = out_of_memory,
 };
 jmp_buf g_abort_jmp;                           /* fatal_error jumps back to sim_run */
+static char *g_truth_error;
+static size_t g_truth_error_size;
 
 static queued_error_t g_queued[MAX_QUEUED_ERRORS]; /* messages of the current line */
 static int g_queued_count;
@@ -366,6 +368,8 @@ void close_abs_file(void);
  * and in the listing, close the files and jump back to sim_run. */
 void fatal_error(int code, const char *detail)
 {
+    if (g_truth_error != NULL && code >= 0)
+        snprintf(g_truth_error, g_truth_error_size, "%s%s", error_text(code), detail ? detail : "");
     if (g_line_pending) {
         g_line_pending = 0;     /* a failure inside the flush must not recurse */
         flush_source_line(g_line_text);
@@ -1007,12 +1011,16 @@ int sim_jed_truth(const char *path, const char *library, const char *device,
     g_args[4] = device;
     g_args[5] = path;
     g_options = OPT_FUSEMAP;
+    g_truth_error = error;
+    g_truth_error_size = error_size;
     if (setjmp(g_abort_jmp) == 0) {
         g_dir_prefix = dup_string("", "initialization");
         load_jedec_file(path, 0);
         sim_allocate();
         result = build_truth_table(max_inputs, table, error, error_size);
     }
+    g_truth_error = NULL;
+    g_truth_error_size = 0;
     phase_end(&g_rt);
     return result;
 }

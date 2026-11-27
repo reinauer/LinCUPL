@@ -34,7 +34,8 @@ typedef struct {
 
 /* Return 1 with a complete table, or 0 with a reason. No adjacent .pld or
  * .si files are read, and no files are written. Device "" selects the
- * decoder's automatic device detection. Library must name a .dl file.
+ * decoder's automatic device detection. Library names a .dl file for
+ * devices without built-in wiring tables.
  * Registers, output feedback, unknown levels and oversized tables fail.
  * On either outcome the caller releases the result with sim_truth_free(). */
 int sim_jed_truth(const char *path, const char *library, const char *device,
