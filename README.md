@@ -66,12 +66,14 @@ sudo dnf install gcc gcc-c++ cmake qt6-qtbase-devel python3    # Fedora
 ### Device libraries
 
 The build compiles the checked-in descriptions into `lincupl.dl`, the default
-library used by the compiler, simulator and device tools. It covers all 660
-mnemonics from the `Atmel.dl` and `cupl.dl` catalogs. `cmake --install` installs
+library used by the compiler, simulator and device tools. Reusable hardware
+models supply 17 ATF750C, GAL22V10 and ATF2500C interfaces; catalog descriptions
+supply the other 643 mnemonics from `Atmel.dl` and `cupl.dl`. `cmake --install` installs
 it under `<prefix>/share/lincupl`; no library download is required.
 
-The `.dev` sources are in `devices/Atmel/` and `devices/cupl/`, with reusable
-hardware models in `devices/families/`. See the [language reference](doc/device-language.md)
+The complete catalog sources remain in `devices/Atmel/` and `devices/cupl/`,
+with hardware models in `devices/families/`. `devices/manifest.json` selects
+the default replacements. See the [language reference](doc/device-language.md)
 and [implementation notes](doc/device-implementation.md) for compilation,
 validation and deliberate differences.
 

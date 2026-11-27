@@ -46,12 +46,13 @@ def main():
         names.update(occurrences)
         print(f'{name}: {count} checked-in descriptions compiled', flush=True)
     assert len(names) == 660
-    merged = catalog.entries(devcompile.compile_directory(ROOT / 'devices'))
+    merged = catalog.entries(devcompile.compile_directory(ROOT / 'devices', hardware=False))
     assert [e['name'] for e in merged] == list(expected)
     for entry in merged:
         first = expected[entry['name']]
         assert (entry['flags'], entry['image']) == (first['flags'], first['image'])
-    selected = catalog.entries(devcompile.compile_directory(ROOT / 'devices', ['v750c', 'p16l8']))
+    selected = catalog.entries(devcompile.compile_directory(
+        ROOT / 'devices', ['v750c', 'p16l8'], hardware=False))
     assert {e['name'] for e in selected} == {'v750c', 'p16l8'}
     assert all(e['image'] == expected[e['name']]['image'] for e in selected)
     # These values are not reconstructible from the fuse row width or

@@ -1,4 +1,21 @@
 {
-  "format": "lincupl-device-catalog-set-1",
-  "catalogs": ["Atmel", "cupl"]
+  "format": "lincupl-device-catalog-set-2",
+  "catalogs": ["Atmel", "cupl"],
+  "hardware": [
+    {
+      "file": "families/atf750c.dev",
+      "devices": [
+        "v750c", "v750cext", "v750cppk", "v750cextppk",
+        "v750clcc", "v750cextlcc", "v750cppklcc", "v750cextppklcc"
+      ]
+    },
+    {
+      "file": "families/gal22v10.dev",
+      "devices": ["g22v10", "g22v10lcc", "g22v10i", "p22v10", "p22v10lcc"]
+    },
+    {
+      "file": "families/atf2500.dev",
+      "devices": ["v2500c", "v2500cppk", "v2500clcc", "v2500cppklcc"]
+    }
+  ]
 }

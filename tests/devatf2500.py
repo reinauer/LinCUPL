@@ -29,10 +29,6 @@ def main():
     args = parser.parse_args()
     bindir = args.bin_dir.resolve()
     share = bindir.parent / 'share/lincupl'
-    reference = share / 'lincupl.dl'
-    if not reference.is_file():
-        print('SKIP: reference device library is required')
-        return 77
     env = dict(os.environ, LINCUPL_SHARE=str(share))
     env.pop('LIBCUPL', None)
     env.pop('FITTERDIR', None)
@@ -40,7 +36,9 @@ def main():
     compiled = devcompile.compile_text(source)
     assert compiled == devcompile.compile_text(source)
     descriptions = models(parse(source))
-    generated, originals = images(compiled), images(reference.read_bytes())
+    generated = images(compiled)
+    reference_data = devcompile.compile_directory(ROOT / 'devices', list(generated), hardware=False)
+    originals = images(reference_data)
     assert set(generated) == {'v2500c', 'v2500cppk', 'v2500clcc', 'v2500cppklcc'}
     for m in descriptions:
         assert set(m['fuse_owners']) == set(range(71816))
@@ -112,6 +110,8 @@ def main():
     runs, cases, plots = 0, [], []
     with tempfile.TemporaryDirectory(prefix='devatf2500-') as temp:
         root = Path(temp)
+        reference = root / 'catalog.dl'
+        reference.write_bytes(reference_data)
         library = root / 'hardware.dl'
         library.write_bytes(compiled)
 

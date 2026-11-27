@@ -197,6 +197,42 @@ def pack_library(items):
     return bytes(result)
 
 
+def preserve_compatibility(generated, reference):
+    """Attach catalog metadata without replacing modeled hardware records.
+
+    Node identity is its array, pin and function, not its record position.
+    Array declarations use only the array number; their historical pin
+    annotations do not identify a hardware resource. Never derive legacy
+    width from the modeled fuse-row width or guess an ambiguous match.
+    """
+    target, source = records(generated), records(reference)
+    for field in ATTRIBUTES['compatibility']:
+        start, stop = field.offset, field.offset + field.width
+        target[3][0][start:stop] = source[3][0][start:stop]
+    fields = {field.name: field for field in FIELDS[7]}
+
+    def value(row, name):
+        field = fields[name]
+        return int.from_bytes(row[field.offset:field.offset + field.width], 'little')
+
+    def identity(row):
+        function = value(row, 'function')
+        pin = 0 if function == binary.ARRAY else value(row, 'pin')
+        return value(row, 'array'), pin, function
+
+    widths = {}
+    for row in source[7]:
+        key, width = identity(row), value(row, 'legacy_width')
+        require(key not in widths or widths[key] == width,
+                f'ambiguous legacy width for node {key}')
+        widths[key] = width
+    for row in target[7]:
+        key = identity(row)
+        require(key in widths, f'no catalog legacy width for node {key}')
+        row[fields['legacy_width'].offset] = widths[key]
+    return binary.image(target)
+
+
 def bare_name(value, context):
     require(isinstance(value, Expr) and value.op == 'name', f'{context}: expected a field name')
     return value.args[0]

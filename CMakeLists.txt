@@ -372,6 +372,10 @@ if(Python3_EXECUTABLE)
         COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/devcatalog.py")
     add_test(NAME devcatalog_sources
         COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/devcatalog_sources.py")
+    add_test(NAME devdefault
+        COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/devdefault.py"
+            "$<TARGET_FILE_DIR:csim>")
+    set_tests_properties(devdefault PROPERTIES TIMEOUT 120)
     add_test(NAME devcatalog_libraries
         COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/devcatalog_libraries.py"
             "$<TARGET_FILE_DIR:csim>")

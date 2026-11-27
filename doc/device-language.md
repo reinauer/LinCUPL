@@ -13,6 +13,7 @@ listed by `devices/manifest.json`. To compile manually:
 
 ```sh
 python3 tools/devcompile.py devices -o /tmp/lincupl.dl
+python3 tools/devcompile.py devices --catalog-only -o /tmp/catalog.dl
 python3 tools/devcompile.py devices/Atmel -o /tmp/Atmel.dl
 python3 tools/devcompile.py devices/cupl -o /tmp/cupl.dl
 python3 tools/devcompile.py devices/Atmel/v750c.dev -o /tmp/v750c.dl
@@ -31,6 +32,9 @@ For hardware descriptions, compatibility metadata is a separate console
 and JSON result; those differences alone do not change the exit status.
 Catalog comparison includes that metadata in canonical equality. Neither
 comparison treats reserved record bytes as padding.
+The default library includes deliberate hardware-model differences. Use
+`--catalog-only` when comparing the combined catalog with a source library;
+this option disables hardware replacements without changing catalog order.
 
 ## Common syntax
 
@@ -168,9 +172,34 @@ second `p16l8` occurrence. Provenance fields are informational, not compiler
 inputs.
 
 A `lincupl-device-catalog-set-1` manifest lists child catalog directories in
-precedence order. The first occurrence of each mnemonic wins. The root
-manifest selects `Atmel` before `cupl`, producing 660 entries from the 709
-catalog descriptions. The reusable family files are compiled separately.
+precedence order. The first occurrence of each mnemonic wins.
+
+The root manifest uses `lincupl-device-catalog-set-2`. It first selects
+`Atmel` before `cupl`, producing 660 entries from the 709 catalog descriptions,
+then replaces explicitly listed mnemonics with hardware descriptions:
+
+```json
+{
+  "format": "lincupl-device-catalog-set-2",
+  "catalogs": ["Atmel", "cupl"],
+  "hardware": [
+    {"file": "families/atf750c.dev", "devices": ["v750c"]}
+  ]
+}
+```
+
+Each replacement must already exist in the selected catalog and must be
+emitted by the named hardware file. Duplicate replacements and files outside
+the catalog set are errors. Lookup positions and directory flags remain
+unchanged. `--device` selects from the resulting library; `--catalog-only`
+selects the catalog records before replacement. Catalogs and individual
+family files remain independently compilable.
+
+Default assembly retains the four compatibility attributes from the selected
+catalog entry. It matches each generated node's `legacy_width` by array, pin
+and function, ignoring pin annotations on array declarations. Missing or
+ambiguous metadata matches are errors. All hardware fields come from the
+family model, including its documented corrections.
 
 See [implementation and deliberate differences](device-implementation.md)
 for comparison rules and validation boundaries.
