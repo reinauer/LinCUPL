@@ -6,7 +6,7 @@
  * all logic and register controls below are reconstructed from fuses.
  */
 #include "sim.h"
-#include "sim_seq.h"
+#include "seq.h"
 #include <ctype.h>
 #include "../fit150x/dev.h"
 
@@ -798,20 +798,17 @@ void jed150x_truth_pins(sim_truth_t *table)
 /* Retain a decoded graph after the compiler phase releases its transient
  * allocations. Graph evaluation and state changes use the same engine as
  * csim; traversal of reachable paired states lives in jedcompare. */
-struct sim_seq_model {
+typedef struct {
     jdevice_t device;
     sim_truth_t pins;
-};
+    uint8_t powerup[128];
+} jseq_t;
+
+static const sim_seq_ops_t jseq_ops;
 
 sim_seq_model_t *jed150x_seq_copy(char *error, size_t size)
 {
-    for (int p = 1; p <= chip->package->n_pins; p++) {
-        if (chip->input_used[p] && chip->output_used[p]) {
-            snprintf(error, size, "P%d uses physical output feedback; sequential comparison requires driven inputs", p);
-            return NULL;
-        }
-    }
-    sim_seq_model_t *model = calloc(1, sizeof(*model));
+    jseq_t *model = calloc(1, sizeof(*model));
     if (!model) {
         snprintf(error, size, "out of memory for sequential model");
         return NULL;
@@ -827,22 +824,38 @@ sim_seq_model_t *jed150x_seq_copy(char *error, size_t size)
     memcpy(model->device.nodes, chip->nodes, bytes);
     model->device.fuses = NULL;
     jed150x_truth_pins(&model->pins);
-    return model;
+    jdevice_t *saved = chip;
+    chip = &model->device;
+    jed150x_powerup();
+    for (int i = 0; i < chip->device->params.n_macrocells; i++)
+        model->powerup[i] = chip->mc[i].q;
+    chip = saved;
+    sim_seq_model_t *result = sim_seq_create(model, &jseq_ops);
+    if (!result) {
+        free(model->device.nodes);
+        free(model);
+        snprintf(error, size, "out of memory for sequential model");
+    }
+    return result;
 }
 
-const sim_truth_t *sim_seq_pins(const sim_seq_model_t *model)
+static const sim_truth_t *jseq_pins(const void *context)
 {
+    const jseq_t *model = context;
     return &model->pins;
 }
 
-size_t sim_seq_state_size(const sim_seq_model_t *model)
+static size_t jseq_size(const void *context)
 {
+    const jseq_t *model = context;
     size_t size = 1;  /* whether initial input settling has happened */
     for (int i = 0; i < model->device.device->params.n_macrocells; i++)
         if (model->device.mc[i].used) size += 2;
     if (model->device.power_down)
         for (int p = 1; p <= model->device.package->n_pins; p++)
             if (model->device.output_used[p]) size += 2;
+    for (int p = 1; p <= model->device.package->n_pins; p++)
+        if (model->device.termination[p] == 1) size++;
     return size;
 }
 
@@ -860,10 +873,13 @@ static void save_state(unsigned char *state, int initialized)
             *state++ = chip->held_pins[p];
             *state++ = chip->held_nodes[p];
         }
+    for (int p = 1; p <= chip->package->n_pins; p++)
+        if (chip->termination[p] == 1) *state++ = chip->keeper[p];
 }
 
-void sim_seq_initial(sim_seq_model_t *model, unsigned char *state)
+static void jseq_initial(void *context, unsigned char *state)
 {
+    jseq_t *model = context;
     jdevice_t *saved = chip;
     chip = &model->device;
     jed150x_powerup();
@@ -871,13 +887,14 @@ void sim_seq_initial(sim_seq_model_t *model, unsigned char *state)
     chip = saved;
 }
 
-int sim_seq_step(sim_seq_model_t *model, const unsigned char *state,
+static int jseq_step(void *context, const unsigned char *state,
                  const unsigned char *inputs, unsigned char *next,
                  unsigned char *outputs, char *error, size_t size)
 {
+    jseq_t *model = context;
     jdevice_t *saved = chip;
     int success = 0;
-    state++;  /* startup marker */
+    int initialized = *state++;
     uint8_t pins[257] = {0}, nodes[257] = {0}, drive[257];
     chip = &model->device;
     for (int i = 0; i < chip->device->params.n_macrocells; i++) {
@@ -893,6 +910,8 @@ int sim_seq_step(sim_seq_model_t *model, const unsigned char *state,
         }
     memset(drive, LV_HIGHZ, sizeof(drive));
     memset(chip->keeper, LV_UNKNOWN, sizeof(chip->keeper));
+    for (int p = 1; p <= chip->package->n_pins; p++)
+        if (chip->termination[p] == 1) chip->keeper[p] = *state++;
     for (unsigned i = 0; i < model->pins.ninputs; i++) {
         unsigned p = model->pins.inputs[i];
         if (inputs[p] > 1) {
@@ -900,6 +919,13 @@ int sim_seq_step(sim_seq_model_t *model, const unsigned char *state,
             goto done;
         }
         drive[p] = inputs[p] ? LV_HIGH : LV_LOW;
+    }
+    if (!initialized && chip->power_down) {
+        /* A preload also changes the output level held when power-down
+         * is asserted in the first vector. It does not clock storage. */
+        memset(chip->drive, LV_HIGHZ, sizeof(chip->drive));
+        clear_cache();
+        observe(chip->held_pins, chip->held_nodes);
     }
     if (!transition(drive, 1, pins, nodes) || !transition(drive, 2, pins, nodes)) {
         snprintf(error, size, "register/control feedback did not settle");
@@ -928,10 +954,48 @@ done:
     return success;
 }
 
-void sim_seq_free(sim_seq_model_t *model)
+static void jseq_free(void *context)
 {
+    jseq_t *model = context;
     if (model) {
         free(model->device.nodes);
         free(model);
     }
 }
+
+static unsigned jseq_storage_count(const void *context)
+{
+    const jseq_t *model = context;
+    unsigned count = 0;
+    for (int i = 0; i < model->device.device->params.n_macrocells; i++)
+        count += model->device.mc[i].used != 0;
+    return count;
+}
+
+static int jseq_storage(const void *context, unsigned index, char *name,
+                         size_t size, unsigned char *powerup)
+{
+    const jseq_t *model = context;
+    for (int i = 0; i < model->device.device->params.n_macrocells; i++) {
+        if (!model->device.mc[i].used || index--) continue;
+        snprintf(name, size, "MC%d", i + 1);
+        int level = model->powerup[i];
+        *powerup = level == LV_LOW ? '0' : level == LV_HIGH ? '1' : 'X';
+        return 1;
+    }
+    return 0;
+}
+
+static int jseq_preload(void *context, unsigned char *state,
+                         unsigned index, unsigned value)
+{
+    const jseq_t *model = context;
+    if (state[0] || index >= jseq_storage_count(model)) return 0;
+    state[1 + 2 * index] = value ? LV_HIGH : LV_LOW;
+    return 1;
+}
+
+static const sim_seq_ops_t jseq_ops = {
+    jseq_pins, jseq_size, jseq_initial, jseq_step, jseq_free,
+    jseq_storage_count, jseq_storage, jseq_preload
+};

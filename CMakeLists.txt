@@ -90,6 +90,8 @@ set(LINCUPL_PHASE_SOURCES
     src/sim/jedload.c
     src/sim/jed150x.c
     src/sim/truth.c
+    src/sim/seq.c
+    src/sim/seqlegacy.c
     src/sim/parse.c
     src/sim/core.c
     src/sim/bind.c
@@ -443,6 +445,9 @@ if(Python3_EXECUTABLE)
     add_test(NAME jedcompare_seq
         COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/jedcompare_seq.py" "$<TARGET_FILE_DIR:jedcompare>")
     set_tests_properties(jedcompare_seq PROPERTIES TIMEOUT 180)
+    add_test(NAME jedcompare_generic
+        COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/jedcompare_generic.py" "$<TARGET_FILE_DIR:jedcompare>")
+    set_tests_properties(jedcompare_generic PROPERTIES TIMEOUT 180 SKIP_RETURN_CODE 77)
     add_test(NAME fit1508_cbga132
         COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/fit1508_cbga132.py" "$<TARGET_FILE_DIR:jedcompare>")
     set_tests_properties(fit1508_cbga132 PROPERTIES TIMEOUT 180)

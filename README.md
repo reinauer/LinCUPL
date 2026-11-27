@@ -24,7 +24,7 @@ Amiga 3000/4000, built for a GAL22V10):
 | `cupl` | The compiler: `.pld` → `.jed` (and `.abs`, `.doc`, `.lst`, `.pla`, …) |
 | `csim` | The simulator: runs the vectors of a `.si` file against the compiled design, or against the fuse map of a `.jed` file |
 | `jedinspect` | Inspects JEDEC fuse maps, prints fuse ranges and compares fuse states; supports JSON output |
-| `jedcompare` | Checks combinational or ATF150x sequential JEDEC pin equivalence and reports counterexamples |
+| `jedcompare` | Checks combinational or sequential JEDEC pin equivalence and reports counterexamples |
 | `fit1502`, `fit1504`, `fit1508` | Fitters for ATF150x CPLDs, accepting truth tables, EDIF and Boolean equations |
 | `cbld` | Lists the devices of a device library (`.dl`) and builds libraries |
 | `backpin` | Writes the pins a fitter chose back into the `.pld` file |
@@ -83,8 +83,10 @@ For Verilog synthesis with Yosys and direct ATF150x fitting, see
 For fuse-map inspection and equivalence checking, see
 [JEDEC tools](doc/jed-tools.md). `jedcompare` currently supports combinational
 GAL16V8, GAL20V8, GAL22V10 and ATF1502/1504/1508 designs without physical
-output feedback. `--sequential` proves ATF150x equivalence by exploring all
-reachable state pairs, with explicit resource limits and counterexample traces.
+output feedback. `--sequential` also covers ATF750 and ATF2500, includes
+physical output feedback, and supports explicit or symbolic register
+preloads. It explores all reachable state pairs, with explicit resource
+limits and counterexample traces.
 
 Compile a design to a JEDEC file (`-j`), an absolute file for the simulator
 (`-a`), a documentation file (`-x`) and a listing (`-l`), then simulate it:

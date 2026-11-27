@@ -49,16 +49,16 @@ int build_truth_table(unsigned max_inputs, sim_truth_t *table, char *error, size
         unsigned pin = table->outputs[i];
         int sym = pin_symbol(pin);
         if (table->role[pin] == SIM_PIN_REGISTER)
-            return fail(error, size, "P%u is registered; sequential equivalence is not supported", pin);
+            return fail(error, size, "P%u is registered; use --sequential for reachable-state equivalence", pin);
         if (sym < 0)
             return fail(error, size, "P%u has no simulation symbol", pin);
         if (g_syms[sym].flags & 0x80)
-            return fail(error, size, "P%u feeds the array; output feedback is not supported", pin);
+            return fail(error, size, "P%u feeds the array; use --sequential to compare output feedback", pin);
     }
     for (int i = 0; i < g_nsyms; i++) {
         if (g_syms[i].pin > table->npins && g_cells[i].is_node &&
             (g_cells[i].node_type == 1 || g_cells[i].node_type == 0x1b))
-            return fail(error, size, "buried registers are present; sequential equivalence is not supported");
+            return fail(error, size, "buried registers are present; use --sequential for reachable-state equivalence");
     }
     if (table->ninputs > max_inputs)
         return fail(error, size, "%u used inputs exceed the limit of %u", table->ninputs, max_inputs);

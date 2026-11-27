@@ -514,7 +514,9 @@ static void settle(int pass)
         compare_results(0);
         print_vector(0, 1);
         if (++iteration >= MAX_SETTLE_PASSES) {
+            int errors = g_error_count;
             report_unstable();
+            if (g_error_count == errors) report_error(ERR_UNSTABLE, "internal feedback");
             return;
         }
     }
@@ -871,7 +873,11 @@ static void clock_phase(int phase, int loop_pass)
     eval_pin_cells(PIN_CELLS_ALL, phase);
     remember_levels();
     settle(1);
-    while (clock_edge_pending()) {
+    for (int iteration = 0; clock_edge_pending(); iteration++) {
+        if (iteration == MAX_SETTLE_PASSES) {
+            report_error(ERR_UNSTABLE, "clock feedback");
+            return;
+        }
         update_cells(phase);
         eval_pin_cells(PIN_CELLS_ALL, phase);
         remember_levels();

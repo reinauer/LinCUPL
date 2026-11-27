@@ -12,6 +12,8 @@
 
 int jedcompare_sequential(const char *const paths[2], const char *library,
                           const char *device, unsigned max_inputs,
-                          size_t max_states, uint64_t max_transitions);
+                          size_t max_states, uint64_t max_transitions,
+                          const char *const preload[2]);
+int jedcompare_list_state(const char *path, const char *library, const char *device);
 
 #endif

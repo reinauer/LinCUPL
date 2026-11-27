@@ -146,8 +146,9 @@ timing measurements.
 Use `csim -fl design` with `design.jed` and `design.si` to simulate the
 fitted result without an ABS file. LinSim exposes the same mode through
 **Simulator > Simulate JEDEC Fuse Map**. `jedcompare` checks combinational
-maps using that decoder; it rejects active register state and physical
-output feedback. See [JEDEC tools](jed-tools.md) for the proof scope.
+maps using that decoder. Use `--sequential` for register state, physical
+output feedback and explicit or symbolic preloads. See
+[JEDEC tools](jed-tools.md) for the proof scope and exploration limits.
 
 ## BE electrical options
 

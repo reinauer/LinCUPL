@@ -24,6 +24,7 @@
 #include "platform.h"
 #include "banner.h"
 #include "sim.h"
+#include "seq.h"
 #include <time.h>
 #include "locate.h"
 #include "strutil.h"
@@ -298,6 +299,10 @@ static void queue_error(int code, int column, int severity, const char *text1, c
 {
     if (severity != 1) {
         g_error_count++;
+        if (g_truth_error != NULL) {
+            snprintf(g_truth_error, g_truth_error_size, "%s%s", error_text(code), text1 ? text1 : "");
+            return;
+        }
     }
     g_queued_count++;
     if (column < 0) {
@@ -1043,11 +1048,41 @@ int sim_jed_seq_load(const char *path, const char *library, const char *device,
         g_dir_prefix = dup_string("", "initialization");
         load_jedec_file(path, 0);
         if (jed150x_active()) *model = jed150x_seq_copy(error, size);
-        else snprintf(error, size, "sequential equivalence requires an ATF150x map");
+        else {
+            sim_allocate();
+            *model = sim_legacy_seq_copy(error, size);
+        }
     }
     g_truth_error = NULL;
     g_truth_error_size = 0;
     phase_end(&g_rt);
     jed150x_reset();
     return *model != NULL;
+}
+
+/* Transfer decoded model ownership before phase_end releases scratch. */
+void sim_seq_take_allocations(phase_pool_t *pool)
+{
+    if (!g_rt.allocs.next || g_rt.allocs.next == &g_rt.allocs) return;
+    *pool = g_rt.allocs;
+    pool->next->prev = pool;
+    pool->prev->next = pool;
+    g_rt.allocs.next = g_rt.allocs.prev = NULL;
+}
+
+int sim_seq_vector(char *error, size_t size)
+{
+    volatile int result = 0;
+    g_error_count = g_queued_count = 0;
+    g_truth_error = error;
+    g_truth_error_size = size;
+    if (setjmp(g_abort_jmp) == 0) {
+        simulate_vector();
+        result = g_error_count == 0;
+        if (!result && !error[0])
+            snprintf(error, size, "simulation did not settle or produced an invalid value");
+    }
+    g_truth_error = NULL;
+    g_truth_error_size = 0;
+    return result;
 }

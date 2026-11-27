@@ -11,6 +11,8 @@ static FILE *g_abs_file;
 static char *g_abs_name;
 static size_t g_dev_rec_size;
 
+size_t device_image_size(void) { return g_dev_rec_size; }
+
 void use_device_image(uint8_t *image, size_t size)
 {
     g_dev_rec = image;

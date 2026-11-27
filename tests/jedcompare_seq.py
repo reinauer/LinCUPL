@@ -232,7 +232,7 @@ def main():
             {'BIBUF': [('A', 'INPUT'), ('EN', 'INPUT'), ('PAD', 'INOUT'), ('Q', 'OUTPUT')]},
             [('gate', 'BIBUF')], [[(p.lower(), None), (p, 'gate')] for p in ('A', 'EN', 'PAD', 'Q')])
         feedback = fit(bidirectional, {'a': 2, 'en': 1, 'pad': 4, 'q': 5})
-        assert 'feedback' in compare(feedback, feedback, code=2)
+        assert 'indeterminate' in compare(feedback, feedback, code=2)
         broken = root / 'broken.jed'
         broken.write_text('not a JEDEC map')
         compare(direct, broken, code=2)
@@ -240,6 +240,65 @@ def main():
         unsupported = root / 'unsupported.jed'
         unsupported.write_text('\x02QF100*QP24*F0*\x030000')
         compare(unsupported, unsupported, code=2)
+
+        def storage(path):
+            text = run('jedcompare', ['-u', library, '--list-state', path])
+            return dict(re.findall(r'^(MC[0-9]+|R[0-9]+)=([01X])$', text, re.M))
+
+        # State names include buried registers, independent of bonded pins.
+        buried = compile_map('pinnode 605=m; m.d=a; m.ck=clk; q=m # b;')
+        moved = compile_map('pinnode 609=m; m.d=a; m.ck=clk; q=m # b;')
+        inverted = compile_map('pinnode 609=m; m.d=!a; m.ck=clk; q=!m # b;')
+        left_name, = storage(buried)
+        right_name, = storage(moved)
+        inverse_name, = storage(inverted)
+        assert left_name != right_name, (left_name, right_name)
+        paired = ['--preload-left', left_name + '=s', '--preload-right', right_name + '=s']
+        assert '2 initial assignments' in compare(buried, moved, *paired)
+        assert '2 initial assignments' in compare(
+            buried, inverted, '--preload-left', left_name + '=s',
+            '--preload-right', inverse_name + '=!s')
+        text = compare(buried, moved, '--preload-left', left_name + '=s',
+                       '--preload-right', right_name + '=!s', code=1)
+        assert 'Preload seeds: s=0' in text and 'Initial left: ' + left_name + '=0' in text
+        assert 'Initial right: ' + right_name + '=1' in text
+        assert len(trace(text)) == 1
+        # A concrete preload reproduces the same shortest counterexample.
+        concrete = compare(buried, moved, '--preload-left', left_name + '=0',
+                           '--preload-right', right_name + '=1', code=1)
+        assert trace(text) == trace(concrete)
+        assert 'preload assignments' in compare(buried, moved, *paired,
+                                                '--max-states', '1', code=2)
+        assert 'preload assignments' in compare(buried, moved, *paired,
+                                                '--max-transitions', '1', code=2)
+        for invalid in ('', left_name + '=X?', left_name + '=2',
+                        left_name + '=0,', left_name + '=0,' + left_name + '=1',
+                        left_name + '=!0', left_name + '==s'):
+            assert 'preload' in compare(buried, moved, '--preload-left', invalid, code=2)
+        # Unknown storage returns its own useful diagnostic.
+        assert '--list-state' in compare(buried, moved, '--preload-left', 'MC999=0', code=2)
+        assert 'Usage:' in run('jedcompare', ['--preload-left', left_name + '=0', buried, moved], code=2)
+
+        # Physical output feedback is deterministic while its driver is on.
+        physical = compile_map('pin 7=z; q.d=a; q.ck=clk; z=q.io;')
+        compare(physical, physical)
+        kept_source = compile_map('pin 7=z; q.d=a; q.ck=clk; q.oe=!q; z=q.io;')
+        kept = root / 'kept-feedback.jed'
+        bits = fuses(kept_source)
+        bits[16750 + 1] = 0  # global pin keeper enable
+        kept.write_text('\x02Device f1502plcc44\n*QF16808*QP44*L0 ' +
+                        ''.join(map(str, bits)) + '*\x030000')
+        compare(kept, kept)
+        assert 'indeterminate' in compare(kept_source, kept_source, code=2)
+        wrong_physical = compile_map('pin 7=z; q.d=a; q.ck=clk; z=!q.io;')
+        compare(physical, wrong_physical, code=1)
+
+        # A binary-looking unrelated output must not hide an oscillator.
+        loop = directory('unstable')
+        (loop / 'test.pld').write_text('Name test; Device g22v10; '
+            "pin 23=q; pin 22=y; q=!q; y='b'0;")
+        run('cupl', ['-jxm1', '-u', library, 'test.pld'], loop)
+        assert 'unstable' in compare(loop / 'test.jed', loop / 'test.jed', code=2)
 
         copied = root / 'a stateful map.bin'
         copied.write_bytes(direct.read_bytes())

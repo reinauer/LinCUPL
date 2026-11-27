@@ -296,7 +296,7 @@ def main():
         # merely because the observable pin is combinational.
         directory = root / '750-rows-0-0'
         out = run('jedcompare', ['-u', library, 'test.jed', 'test.jed'], directory, code=2)
-        assert 'not supported' in out
+        assert 'buried registers' in out and 'use --sequential' in out, out
     print(f'PASS: {checks} ATF compilation and simulation checks')
     return 0
 
