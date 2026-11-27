@@ -592,15 +592,19 @@ static void report_write_assignments(FILE *f, FitList *slots, FitEntity *ent)
     fprintf(f, "-------------------------------------------------------\n");
     for (i = 0; i < report_count(slots); i++) {
         FitSlot *s = slots->items[i];
+        char pin[16];
         if (list_find(g_fit_global_names, s->signal, report_name_eq) != 0)
-            fprintf(f, "%s assigned to pin  %d\n", report_display_name(s->signal, ent), s->pin);
+            fprintf(f, "%s assigned to pin  %s\n", report_display_name(s->signal, ent),
+                    dev_pin_name(s->pin, pin, sizeof(pin)));
     }
     fprintf(f, "\n\n\nPerforming input pin pre-assignments ...\n");
     fprintf(f, "------------------------------------\n");
     for (i = 0; i < report_count(slots); i++) {
         FitSlot *s = slots->items[i];
+        char pin[16];
         if (util_str_icmp(s->signal, FIT_FREE_NAME) != 0 && s->block == 0)
-            fprintf(f, "%s assigned to pin  %d\n", report_display_name(s->signal, ent), s->pin);
+            fprintf(f, "%s assigned to pin  %s\n", report_display_name(s->signal, ent),
+                    dev_pin_name(s->pin, pin, sizeof(pin)));
     }
     for (i = 0; i < report_count(slots); i++) {
         FitSlot *s = slots->items[i];
@@ -630,9 +634,10 @@ static void report_write_placement(FILE *f, FitEntity *ent, FitList *slots)
     fprintf(f, "------------------------------------\n");
     for (i = 0; i < report_count(slots); i++) {
         FitSlot *s = slots->items[i];
+        char pin[16];
         if (util_str_icmp(s->signal, FIT_FREE_NAME) != 0 && s->block != 0)
-            fprintf(f, "%s is placed at pin %d (MC %d)\n", report_display_name(s->signal, ent),
-                    s->pin, s->macrocell);
+            fprintf(f, "%s is placed at pin %s (MC %d)\n", report_display_name(s->signal, ent),
+                    dev_pin_name(s->pin, pin, sizeof(pin)), s->macrocell);
         if (util_str_icmp(s->buried, FIT_FREE_NAME) != 0)
             fprintf(f, "%s is placed at feedback node %d (MC %d)\n", report_fb_display_name(s->buried, ent, s->block),
                     s->macrocell + 600, s->macrocell);
@@ -728,21 +733,27 @@ static void report_write_uim(FitEntity *ent, FitList *uim)
     }
 }
 
-/* pin list in CUPL syntax.  Only pins 1..100 are listed. */
+/* Pin and node placement, with physical ball names for array packages. */
 static void report_write_pin_list(FILE *f, FitEntity *ent, FitList *slots)
 {
+    const FitPackageDesc *pkg = dev_current_package();
     int pin, i;
 
     fprintf(f, "\n%s Pin/Node Placement:\n", g_dev_package);
     fprintf(f, "------------------------------------\n");
-    for (pin = 1; pin <= 100; pin++) {
+    for (pin = 1; pin <= (pkg != NULL ? pkg->n_pins : 100); pin++) {
         for (i = 0; i < report_count(slots); i++) {
             FitSlot *s = slots->items[i];
             const char *name;
             if (util_str_icmp(s->signal, FIT_FREE_NAME) == 0 || s->pin != pin)
                 continue;
             name = report_display_name(s->signal, ent);
-            if (pin > 9) {
+            if (pkg != NULL && pkg->balls != NULL) {
+                fprintf(f, "Ball %s = %s;", pkg->balls[pin - 1].name, name);
+                if (s->block != 0)
+                    fprintf(f, " /* MC %d */", s->macrocell);
+                fputc('\n', f);
+            } else if (pin > 9) {
                 if (s->block == 0)
                     fprintf(f, "Pin %d = %s;\n", s->pin, name);
                 else if (s->macrocell < 10)
@@ -869,7 +880,8 @@ static void report_write_usage(FitEntity *ent, FILE *f, FitList *slots, FitList 
         io_total = 0x40;
     else if (util_str_icmp(g_dev_package, "PQFP160") == 0)
         io_total = 0x60;
-    else if (util_str_icmp(g_dev_package, "PQFP100") == 0 || util_str_icmp(g_dev_package, "TQFP100") == 0)
+    else if (util_str_icmp(g_dev_package, "PQFP100") == 0 || util_str_icmp(g_dev_package, "TQFP100") == 0 ||
+             util_str_icmp(g_dev_package, "CBGA132") == 0)
         io_total = util_str_icmp(g_family, "1504") != 0 ? 0x50 : 0x40;
     else
         io_total = 0x40;
@@ -976,9 +988,12 @@ static int report_in_list(FitList *names, const char *name)
  * and grounding is not */
 static int report_dedicated_pin(const FitSlot *s)
 {
-    if (util_str_icmp(g_dev_package, "TQFP44") == 0)
-        return s->pin > 36 && s->pin < 41;
-    return s->pin > 86 && s->pin < 91;
+    const FitPackageDesc *pkg = dev_current_package();
+    if (pkg != NULL)
+        for (int i = 0; i < g_dev->n_ded_inputs; i++)
+            if (pkg->rows[g_dev->n_macrocells + i].pin == s->pin)
+                return 1;
+    return 0;
 }
 
 /* Extended mode: the pin options field: for BE devices termination and hysteresis,
@@ -1066,13 +1081,19 @@ static void report_write_mc_table(FitEntity *ent, FitList *slots, FitList *rows)
             fprintf(f, "MC0");
         else
             fprintf(f, "MC%d", i);
-        if (i < 10 || g_dev->n_macrocells < i)
+        if (dev_current_package()->balls != NULL) {
+            char number[16];
+            fprintf(f, "%*s%-5s", i < 10 || g_dev->n_macrocells < i ? 3 :
+                    i < 100 ? 2 : 1, "", dev_pin_name(row->pin, number, sizeof(number)));
+        } else if (i < 10 || g_dev->n_macrocells < i)
             fprintf(f, "   %d", row->pin);
         else if (i < 100)
             fprintf(f, "  %d", row->pin);
         else
             fprintf(f, " %d", row->pin);
-        if (row->pin < 10)
+        if (dev_current_package()->balls != NULL)
+            pad = 1;
+        else if (row->pin < 10)
             pad = 5;
         else if (row->pin < 100)
             pad = 4;

@@ -52,6 +52,12 @@ typedef struct FitPkgFrame {
     int bottom_height; /* rows available below the package */
 } FitPkgFrame;
 
+/* Ball locations in JEDEC vector order.  Numeric packages use NULL. */
+typedef struct FitBallPin {
+    const char *name;
+    const char *function;
+} FitBallPin;
+
 typedef struct FitPackageDesc {
     enum FitPackage id;
     const char *name;           /* "PLCC84": value of g_dev_package */
@@ -75,6 +81,7 @@ typedef struct FitPackageDesc {
     int drawing_stride;         /* bytes per row of the drawing buffer: 0xa0, 100 on the ATF1502 */
     FitPkgFrame frame;
     const FitPkgLabel *labels;  /* n_pins entries */
+    const FitBallPin *balls;    /* n_pins entries, in occupied-ball row order */
 } FitPackageDesc;
 
 /* Comment line jed_write_cfg_note writes into the macrocell configuration
@@ -152,6 +159,13 @@ int dev_select_by_name(const char *name);
 /* Description of the package g_dev_package names, NULL when it names none
  * of this device's packages (or is NULL). */
 const FitPackageDesc *dev_current_package(void);
+
+/* Parse a numeric pin or a ball name for the package selected in params.
+ * The end pointer permits callers to check comments and trailing text. */
+int dev_parse_pin(FitList *params, const char *text, char **end);
+
+/* Pin label in the current package; numeric labels use the caller's buffer. */
+const char *dev_pin_name(int pin, char *buffer, size_t size);
 
 /* Package name ("PLCC84" ...); set from -dev by main_device_package,
  * replaced by the default in dev_select_package.  Owned string or NULL. */

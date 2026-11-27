@@ -1984,8 +1984,13 @@ void jedec_design_bound(void)
 
 sym_t *jedec_pin_symbol(const char *name, int *inverted, int *node_level)
 {
+    int ball = jed150x_ball_pin(name);
+    if (ball) {
+        *inverted = g_jed.pins[ball].low;
+        return &g_syms[g_jed.pins[ball].sym];
+    }
     int number = 0;
-    int numbered = name[0] == 'P' && name[1] >= '1' && name[1] <= '9';
+    int numbered = (name[0] == 'P' || name[0] == 'p') && name[1] >= '1' && name[1] <= '9';
     if (numbered) {
         for (const char *p = name + 1; *p != '\0'; p++) {
             if (*p < '0' || *p > '9' || number > MAX_PINS)
@@ -2005,7 +2010,7 @@ sym_t *jedec_pin_symbol(const char *name, int *inverted, int *node_level)
         *inverted = pin->low ^ (!numbered && g_jed.pins[number].low);
         return &g_syms[pin->out_sym];
     }
-    if (!numbered || !g_jed.pins[number].named)
+    if (!numbered)
         return NULL;
     *inverted = g_jed.pins[number].low;
     return find_symbol(g_jed.pins[number].name);

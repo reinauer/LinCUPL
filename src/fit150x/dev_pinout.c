@@ -552,9 +552,29 @@ static void pinout_text(FILE *f, const char *text)
 
 void dev_print_pinout_ext(FILE *f, FitList *slots)
 {
+    const FitPackageDesc *pkg = dev_current_package();
     const PinoutExt *po = NULL;
     FitList *used, *top, *bottom;
     int width, jtag_marks, i;
+
+    if (pkg != NULL && pkg->balls != NULL) {
+        fprintf(f, "\n%s ball assignments (top view row order)\n", pkg->name);
+        fprintf(f, "Vector Ball Function       Signal\n");
+        for (int pin = 1; pin <= pkg->n_pins; pin++) {
+            const FitBallPin *ball = &pkg->balls[pin - 1];
+            const char *name = "";
+            for (i = 0; i < (slots != NULL ? slots->count : 0); i++) {
+                FitSlot *slot = slots->items[i];
+                if (slot->pin == pin && strcmp(slot->signal, FIT_FREE_NAME)) {
+                    name = slot->signal;
+                    break;
+                }
+            }
+            fprintf(f, "%6d %-4s %-14s %s\n", pin, ball->name,
+                    ball->function, name);
+        }
+        return;
+    }
 
     for (i = 0; i < (int)(sizeof pinouts / sizeof pinouts[0]); i++)
         if (strcmp(pinouts[i].family, g_family) == 0 && util_str_icmp(g_dev_package, pinouts[i].package) == 0)

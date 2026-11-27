@@ -119,6 +119,17 @@ macrocell registers with physical storage values <tt>0</tt>, <tt>1</tt> or
 ATF1508BE maps use distinct 16814/34198/74146-fuse layouts, including per-pin
 termination and native ATF1504BE/1508BE toggle storage. Timing, JTAG
 programming and JTAG-specific input termination are not simulated.</li>
+<li><b>ATF1508BE CBGA132.</b> Select <tt>f1508cbga132</tt>. In an
+<tt>ORDER</tt> list, ball names such as <tt>A1</tt>, <tt>G2</tt> and
+<tt>L2</tt> denote physical levels. Numbered aliases <tt>P1</tt> through
+<tt>P132</tt> enumerate the occupied balls in row order, left to right,
+skipping the empty center positions. Prefix any ball name with
+<tt>BALL_</tt> to distinguish it from a numbered alias: <tt>BALL_P10</tt>
+means ball P10, while <tt>P10</tt> means the tenth vector position, A10.
+Ball aliases and numbered aliases accept either case. JEDEC test vectors use that same
+order. The pin map assigns MC17 to G2: the package diagram marks G2 as I/O,
+while the macrocell table's C2 assignment conflicts with dedicated OE1.
+This is an inferred correction, pending hardware confirmation.</li>
 <li><b>ATF150x power-down.</b> Either enabled PD input at a high level
 freezes internal logic, registers, outputs and their high-impedance state.
 Pin keepers continue tracking externally driven pad levels while asleep.

@@ -2,7 +2,6 @@
  * register/pad netlist. No textual intermediate or external cell library
  * is needed for the built-in primitives. */
 #include <ctype.h>
-#include <errno.h>
 #include "edif_priv.h"
 
 static FitVariable *variable(EdRead *r, const char *name, int cls)
@@ -587,10 +586,8 @@ static void constraints(EdRead *r, FitList *params)
             if (!value || !value->text)
                 ed_error(r, n, "pin location must be a scalar integer or string");
             name = value->text;
-            if (*name == 'P' || *name == 'p') name++;
-            errno = 0;
-            number = strtol(name, &end, 10);
-            if (errno || !*name || *end || number < 1 || number > 256)
+            number = dev_parse_pin(params, name, &end);
+            if (!number || *end)
                 ed_error(r, n, "invalid pin location '%s'", value->text);
             assign_pin(r, p->name, (int)number);
         }
@@ -626,10 +623,9 @@ static void constraints(EdRead *r, FitList *params)
             }
             if (!colon)
                 ed_error(r, NULL, "expected 'signal : pin' in '%s'", path);
-            errno = 0;
-            number = strtol(colon + 1, &end, 10);
+            number = dev_parse_pin(params, colon + 1, &end);
             while (isspace((unsigned char)*end)) end++;
-            if (errno || (*end && *end != '#' && strncmp(end, "//", 2)) || number < 1 || number > 256) {
+            if (!number || (*end && *end != '#' && strncmp(end, "//", 2))) {
                 ed_error(r, NULL, "invalid pin assignment in '%s'", path);
             }
             assign_pin(r, name, (int)number);

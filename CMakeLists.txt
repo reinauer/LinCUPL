@@ -443,6 +443,9 @@ if(Python3_EXECUTABLE)
     add_test(NAME jedcompare_seq
         COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/jedcompare_seq.py" "$<TARGET_FILE_DIR:jedcompare>")
     set_tests_properties(jedcompare_seq PROPERTIES TIMEOUT 180)
+    add_test(NAME fit1508_cbga132
+        COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/fit1508_cbga132.py" "$<TARGET_FILE_DIR:jedcompare>")
+    set_tests_properties(fit1508_cbga132 PROPERTIES TIMEOUT 180)
     add_test(NAME csim_150x_be
         COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/csim_150x_be.py" "$<TARGET_FILE_DIR:jedcompare>")
     set_tests_properties(csim_150x_be PROPERTIES TIMEOUT 180)
