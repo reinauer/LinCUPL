@@ -120,6 +120,9 @@ typedef struct FitJedecLayout {
  * NULL/-1. Macrocell numbers here are zero-based. */
 const FitJedecLayout *fit_be_jedec_layout(enum FitDevice id);
 int fit_be_macrocell_base(enum FitDevice id, int mc);
+/* Zero-based macrocell whose pad supplies VREF for I/O bank A=0 or B=1.
+ * Returns -1 when the device/bank has no SSTL reference input. */
+int fit_be_vref_macrocell(enum FitDevice id, int bank);
 extern const signed char fit_be_cfg_offsets[24];
 
 typedef struct FitDeviceDesc {

@@ -685,7 +685,8 @@ static void fit_drv_write_pin_file(void)
 
         if (util_str_icmp(slot->signal, FIT_FREE_NAME) != 0) {
             char number[16];
-            fprintf(f, "%s\t\t\t\t\t: %s\n", slot->signal,
+            /* Reserved pads are wiring notes, not netlist assignments. */
+            fprintf(f, "%s%s\t\t\t\t\t: %s\n", slot->reserved_pad ? "# " : "", slot->signal,
                     dev_pin_name(slot->pin, number, sizeof(number)));
         }
         if (util_str_icmp(slot->buried, FIT_FREE_NAME) != 0)

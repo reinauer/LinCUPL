@@ -535,7 +535,7 @@ void report_reserve_jtag_slots(FitList *slots, FitList *pins)
         if (pos != 0) {
             if (pos >= 1 && pos <= 4)
                 s->signal = (char *)names[pos - 1];     /* a string literal, not owned */
-            s->i28 = 1;
+            s->reserved_pad = 1;
         }
     }
 }
@@ -548,11 +548,13 @@ void report_reserve_pd_slots(FitList *slots, FitList *pins)
         FitSlot *s = slots->items[i];
         int pos = list_find(pins, FIT_INT2PTR(s->pin), list_ptr_eq);
         if (pos != 0) {
-            if (pos == 1 && g_opt.pd1 != 0)
+            if (pos == 1 && g_opt.pd1 != 0) {
                 s->signal = util_strdup("PD1");
-            else if (pos == 2 && g_opt.pd2 != 0)
+                s->reserved_pad = 1;
+            } else if (pos == 2 && g_opt.pd2 != 0) {
                 s->signal = util_strdup("PD2");
-            s->i28 = 1;
+                s->reserved_pad = 1;
+            }
         }
     }
 }
@@ -1031,8 +1033,13 @@ static const char *report_pin_options(const FitSlot *s)
     }
     if (g_opt.schmitt_trigger != 0 && report_in_list(g_opt.schmitt_list, s->signal))
         hyst = "s";
-    else if (g_opt.sstl_input != 0 && report_in_list(g_opt.sstl_list, s->signal))
+    else if (s->sstl_input)
         hyst = "S";
+    if (s->reserved_pad && (util_str_ieq(s->signal, "VREFA") ||
+                            util_str_ieq(s->signal, "VREFB"))) {
+        term = "n";
+        hyst = "-";
+    }
     snprintf(text, sizeof text, "%s%s%s%s", term, hyst, slew, opencol);
     return text;
 }
@@ -1255,8 +1262,8 @@ static void report_write_options_legend_ext(FILE *f)
     fprintf(f, "|\n");
     fprintf(f, "|____Termin [k,u,d,g,n] ==  Pin Termination, k = Pin Keeper, u = Pull up, d = Pull down, g = gnd, n = none.\n");
     fprintf(f, "\n");
-    fprintf(f, "Note: Pull down can be used only on dedicated pins & gnd only on unused pins,\n");
-    fprintf(f, "SSTL input is only avalaible for 1504BE/1508BE devices \n\n\n");
+    fprintf(f, "Note: Pull down is available on dedicated inputs and I/O pads.\n");
+    fprintf(f, "SSTL input is available only on 1504BE/1508BE I/O pads. \n\n\n");
 }
 
 void report_write_result(FitEntity *ent, const char *out_base, FitList *slots, FitList *uim)

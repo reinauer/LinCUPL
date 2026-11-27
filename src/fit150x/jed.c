@@ -1243,8 +1243,11 @@ static int jed_be_termination(int pin)
     if (slot == NULL) {
         if (g_opt.unused_to_pinkeeper) return 3;
         if (g_opt.pull_up_unused) return 1;
+        if (g_opt.unused_to_ground) return 2;
         return 0;
     }
+    if (slot->reserved_pad && (util_str_ieq(slot->signal, "VREFA") ||
+                               util_str_ieq(slot->signal, "VREFB"))) return 0;
     if (jed_option_applies(g_opt.pin_keep, g_opt.pin_keep_list, slot)) return 3;
     if (list_find(g_opt.pull_up_list, slot->signal, jed_name_eq)) return 1;
     if (list_find(g_opt.pull_down_list, slot->signal, jed_name_eq)) return 2;
@@ -1254,7 +1257,8 @@ static int jed_be_termination(int pin)
 static int jed_be_hysteresis(int pin)
 {
     const FitSlot *slot = jed_pin_slot(pin);
-    return slot != NULL && jed_option_applies(g_opt.schmitt_trigger, g_opt.schmitt_list, slot);
+    return slot != NULL && !slot->reserved_pad &&
+        jed_option_applies(g_opt.schmitt_trigger, g_opt.schmitt_list, slot);
 }
 
 static void jed_build_be_cfg_area(void)
@@ -1269,10 +1273,12 @@ static void jed_build_be_cfg_area(void)
         for (int i = 0; i < FIT_MC_CFG_BITS; i++)
             if (fit_be_cfg_offsets[i] >= 0)
                 c[fit_be_cfg_offsets[i]] = logical[i];
-        int term = pin > 0 ? jed_be_termination(pin) : 0;
+        int term = pin > 0 ? jed_be_termination(pin) : (g_opt.unused_to_ground ? 2 : 0);
+        const FitSlot *slot = pin > 0 ? jed_pin_slot(pin) : NULL;
         c[0] = term & 1 ? '1' : '0';
         c[1] = term & 2 ? '1' : '0';
         c[4] = pin > 0 && jed_be_hysteresis(pin) ? '1' : '0';
+        c[10] = slot != NULL && slot->sstl_input ? '1' : '0';
         /* A true T register replaces the AS XOR-with-feedback circuit. */
         if (g_dev_desc->id != FIT_DEV_1502 && g_opt.tff_ok) {
             for (int i = 0; i < jed_count(g_jed_slots); i++) {
@@ -1480,25 +1486,12 @@ int jed_build_fuse_map(FitEntity *ent, FitList *slots, FitList *uim)
         fprintf(g_msg, "BE macrocells have no mc_power configuration bit\n");
         return 0;
     }
-    if (g_opt.be && (g_opt.sstl_input || g_opt.voltage_a != 1 || g_opt.voltage_b != 1 ||
-                     g_opt.unused_to_ground || g_opt.por || g_opt.power_reset)) {
-        fprintf(g_msg, "BE fuse encoding is not supported for the requested voltage, SSTL, "
-                       "unused-ground or power-up option\n");
+    if (g_opt.be && (g_opt.voltage_a < 0 || g_opt.voltage_b < 0))
         return 0;
-    }
 
     g_jed_ent = ent;
     g_jed_uim = uim;
     g_jed_slots = slots;
-    if (g_opt.be) {
-        for (int mc = 0; mc < g_dev->n_macrocells; mc++) {
-            int pin = dev_pin_of_macrocell(g_dev_package, mc);
-            if (pin > 0 && jed_be_termination(pin) == 2) {
-                fprintf(g_msg, "BE pull-down is supported only on dedicated inputs (pin %d)\n", pin);
-                return 0;
-            }
-        }
-    }
     jed_collect_blocks();
     jed_collect_ctl_pin_slots();
     jed_alloc_map();

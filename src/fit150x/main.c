@@ -361,7 +361,7 @@ static int main_usage_all_ext(void)
         { DALL, "   -strategy unused_To_PinKeeper [ off | ON ] \n" },
         { DALL, "   -strategy pull_up_unused [ OFF | on]\n" },
         { DALL, "   -strategy unused_To_Ground [ OFF | on]\n" },
-        { DALL, "   -strategy pull_down [ OFF | = dedicated_pin1 dedicated_pin2...]\n" },
+        { DALL, "   -strategy pull_down [ OFF | = pin_name1 pin_name2...]\n" },
         { DALL, "   -strategy GCLK_ITD = [ AUTO | on | off | GCLK1 | GCLK2 | GCLK3 ]\n" },
     };
 
@@ -429,7 +429,7 @@ static int main_usage_be_ext(void)
         { DALL, "   -strategy unused_To_PinKeeper [ off | ON ] \n" },
         { DALL, "   -strategy pull_up_unused [ OFF | on]\n" },
         { DALL, "   -strategy unused_To_Ground [ OFF | on]\n" },
-        { DALL, "   -strategy pull_down [ OFF | = dedicated_pin1 dedicated_pin2...]\n" },
+        { DALL, "   -strategy pull_down [ OFF | = pin_name1 pin_name2...]\n" },
     };
 
     main_print_help(lines, sizeof(lines) / sizeof(lines[0]));
@@ -1305,7 +1305,7 @@ static void main_be_only(FitList *params, const char *name, int *flag, int other
     free(v);
 }
 
-/* "3.3" 3, "2.5" 2, "1.8" 1, anything else 0 (1.5 V) */
+/* Bank supply levels are timing and electrical constraints, not fuses. */
 static void main_voltage_level(FitList *params, const char *name, int *level)
 {
     char *v = param_get(params, name);
@@ -1315,33 +1315,16 @@ static void main_voltage_level(FitList *params, const char *name, int *level)
             *level = 3;
         else if (util_str_icmp(v, "2.5") == 0)
             *level = 2;
-        else
-            *level = util_str_icmp(v, "1.8") == 0;
-    }
-    free(v);
-}
-
-/* Extended mode: a pin may not be schmitt triggered and an SSTL input */
-static void main_check_schmitt_sstl(void)
-{
-    if (g_opt.schmitt_trigger == 0 || g_opt.sstl_input == 0)
-        return;
-    if (g_opt.schmitt_list == NULL && g_opt.sstl_list == NULL) {
-        fprintf(g_msg, "Warning: schmitt trigger and SSTL input cannot be both enabled.\n");
-        fprintf(g_msg, "SSTL Input will be disabled\n.");
-        g_opt.sstl_input = 0;
-        return;
-    }
-    for (int i = 0; i < (g_opt.schmitt_list == NULL ? 0 : g_opt.schmitt_list->count); i++) {
-        char *name = g_opt.schmitt_list->items[i];
-        int pos = list_find(g_opt.sstl_list, name, str_ieq_cb);
-
-        if (pos != 0) {
-            fprintf(g_msg, "Warning: Pin name: %s cannot be schmitt triggered and SSTL input.\n", name);
-            fprintf(g_msg, "Only schmitt trigger is enabled.\n");
-            list_del_shift(g_opt.sstl_list, pos);
+        else if (util_str_icmp(v, "1.8") == 0)
+            *level = 1;
+        else if (util_str_icmp(v, "1.5") == 0 && g_dev_desc->id != FIT_DEV_1502)
+            *level = 0;
+        else {
+            fprintf(g_msg, "Invalid %s: %s V for ATF%sBE\n", name, v, g_family);
+            *level = -1;
         }
     }
+    free(v);
 }
 
 /* Extended mode: the pin keeper wins over pull up and pull down, pull down over
@@ -1523,20 +1506,10 @@ static void main_device_options_ext(FitList *params)
         main_voltage_level(params, "voltage_level_A", &g_opt.voltage_a);
         main_voltage_level(params, "voltage_level_B", &g_opt.voltage_b);
     }
-    v = param_get(params, "SSTL_input");
-    if (v != NULL && util_str_icmp(v, "OFF") != 0) {
-        if (g_opt.be == 0 || util_str_icmp(g_family, "1502") == 0) {
-            fprintf(g_msg, "Warning : SSTL_input parameter only valid for 1504/08BE devices\n");
-        } else if (g_opt.voltage_a > 1 || g_opt.voltage_b > 1) {
-            g_opt.sstl_input = 1;
-            if (util_str_icmp(v, "ON") != 0)
-                main_split_list(&g_opt.sstl_list, v);
-        } else {
-            fprintf(g_msg, "Warning : SSTL_input parameter only supported for voltage levels 2.5 or 3.3\n");
-        }
-    }
-    free(v);
-    main_check_schmitt_sstl();
+    if (main_flag_list(params, "SSTL_input", &g_opt.sstl_list))
+        g_opt.sstl_input = 1;
+    if (g_opt.be && (g_opt.por || g_opt.power_reset))
+        fprintf(g_msg, "Info: POR and power_reset do not change BE configuration fuses.\n");
     main_check_pin_pulls();
 
     v = param_get(params, "Vhdl_sim");
