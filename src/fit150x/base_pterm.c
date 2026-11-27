@@ -12,7 +12,6 @@
  *                             uses it as a fourth value)
  *
  * The word operations themselves (fill, count, xnor ...) are in min.h.
- * Helpers needed only by the equation reader are not implemented.
  */
 #include <stdio.h>
 #include <stdlib.h>

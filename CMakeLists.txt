@@ -410,6 +410,13 @@ if(Python3_EXECUTABLE)
     add_test(NAME fit150x_edif
         COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/fit150x_edif.py"
             "$<TARGET_FILE_DIR:cupl>")
+    add_test(NAME fit150x_eqn
+        COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/fit150x_eqn.py"
+            "$<TARGET_FILE_DIR:cupl>")
+    add_test(NAME fit150x_eqn_extended
+        COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/fit150x_eqn.py"
+            "$<TARGET_FILE_DIR:cupl>" extended)
+    set_tests_properties(fit150x_eqn fit150x_eqn_extended PROPERTIES TIMEOUT 120)
     add_test(NAME fit150x_yosys
         COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/fit150x_yosys.py"
             "$<TARGET_FILE_DIR:cupl>")

@@ -40,6 +40,21 @@ unresolved connections and combinational loops are errors.</p>
 absolute file. Functional simulation through <tt>csim</tt> still requires
 the compiled CUPL design; ATF150x fuse-map simulation is not available.</p>
 
+<h2 id="eqn">Boolean equation input</h2>
+<p>Select <tt>-ifmt EQN</tt> for combinational equations. Declare inputs
+with <tt>INORDER</tt>, outputs with <tt>OUTORDER</tt>, and use intermediate
+signals as needed. Each statement ends with a semicolon.</p>
+<pre class="syntax">INORDER = a b select;
+OUTORDER = q;
+both = a * b;
+q = both + select;</pre>
+<p>Operators are <tt>!</tt> or <tt>~</tt> for complement,
+<tt>*</tt> or <tt>&amp;</tt> for AND, <tt>^</tt> for XOR, and
+<tt>+</tt> or <tt>|</tt> for OR, in that precedence order. Parentheses
+group expressions; <tt>0</tt> and <tt>1</tt> are constants.
+The optional <tt>-pinfile</tt> uses the same assignment syntax as EDIF.
+Use CUPL or EDIF for registers, latches and tristate buffers.</p>
+
 <h2 id="example">Example</h2>
 <pre data-example="cpld.pld" data-lines="9-47">Device   f1502ispplcc44;
 

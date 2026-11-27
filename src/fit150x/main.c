@@ -11,7 +11,7 @@
  * read the design, apply the options, load the gate library and map the
  * design onto it, run the fit driver.
  *
- * The command file "-c file" is not supported. EDIF pin assignments are
+ * The command file "-c file" is not supported. EDIF and EQN pin assignments are
  * read by the input stage when "-pinfile" is specified.
  *
  * FITTERDIR is joined with '/'; without FITTERDIR the directory holding
@@ -333,7 +333,7 @@ static int main_usage_all_ext(void)
 {
     static const HelpLine lines[] = {
         { DALL, "   -strategy c [command file name]\n" },
-        { DALL, "   -strategy ifmt (input file format) [TT | edif]\n" },
+        { DALL, "   -strategy ifmt (input file format) [TT | edif | eqn]\n" },
         { DALL, "   -strategy lib (library file name for edif input)\n" },
         { DALL, "   -strategy MC_power = [   OFF |   on | = pin_name1 pin_name2...] \n" },
         { DALL, "   -strategy open_collector = [   OFF |   on  | = pin_name1 pin_name2...]\n" },
@@ -374,7 +374,7 @@ static int main_usage_as_ext(void)
 {
     static const HelpLine lines[] = {
         { DALL, "   -strategy c [command file name]\n" },
-        { DALL, "   -strategy ifmt (input file format) [TT | edif]\n" },
+        { DALL, "   -strategy ifmt (input file format) [TT | edif | eqn]\n" },
         { DALL, "   -strategy lib (library file name for edif input)\n" },
         { DALL, "   -strategy MC_power = [   OFF |   on | = pin_name1 pin_name2...] \n" },
         { DALL, "   -strategy open_collector = [   OFF |   on  | = pin_name1 pin_name2...]\n" },
@@ -403,7 +403,7 @@ static int main_usage_be_ext(void)
 {
     static const HelpLine lines[] = {
         { DALL, "   -strategy c [command file name]\n" },
-        { DALL, "   -strategy ifmt (input file format) [TT | edif]\n" },
+        { DALL, "   -strategy ifmt (input file format) [TT | edif | eqn]\n" },
         { DALL, "   -strategy lib (library file name for edif input)\n" },
         { DALL, "   -strategy open_collector = [   OFF |   on  | = pin_name1 pin_name2...]\n" },
         { DALL, "   -strategy JTAG = [   off |   ON ] \n" },
@@ -463,7 +463,7 @@ static int main_usage_advanced(void)
 {
     static const char *const lines[] = {
         "   -strategy c [command file name]\n",
-        "   -strategy ifmt (input file format) [TT2 | edif]\n",
+        "   -strategy ifmt (input file format) [TT2 | edif | eqn]\n",
         "   -strategy lib (library file name for edif input)\n",
         "   -strategy MC_power = [   OFF |   on | = pin_name1 pin_name2...] \n",
         "   -strategy open_collector = [   OFF |   on  | = pin_name1 pin_name2...]\n",
@@ -1778,7 +1778,7 @@ static int main_fit_job(FitList *params)
     v = param_get(params, "pinfile");
     if (v != NULL) {
         g_opt.pinfile = 1;
-        if (g_opt.ifmt_edif == 0)
+        if (g_opt.pin_filename == NULL)
             not_supported("-pinfile");
     }
     free(v);

@@ -532,7 +532,7 @@ typedef struct FitOptions {
     int voltage_a;            /* I/O voltage of bank A, B: 0 1.5 V, 1 1.8 V, */
     int voltage_b;            /* 2 2.5 V, 3 3.3 V (BE) */
     int pinfile;              /* -pinfile given */
-    char *pin_filename;       /* resolved EDIF constraint file, or NULL */
+    char *pin_filename;       /* resolved input constraint file, or NULL */
     char    *tpd_text;        /* value of tPD, NULL without */
     FitList *pin_keep_list;
     FitList *schmitt_list;

@@ -2,10 +2,8 @@
  * tt_input.c - input_driver: reads the design in the format named by the
  * parameter "ifmt" and registers it in the entity table.
  *
- * The PLA (.tt2) and EDIF readers are implemented. The equation reader
- * (ifmt EQN), the PALASM post-processing and the ABEL branch
- * (one entity per item of a list that no reader fills in) are not: they are
- * reachable only with a -str ifmt value the CUPL flow never passes.
+ * The PLA (.tt2), EDIF and Boolean equation readers share the same
+ * function representation used by synthesis and placement.
  */
 #include "tt_priv.h"
 
@@ -42,9 +40,14 @@ int input_read(FitList *params, FitList *job)
         g_exit_code = FIT_EXIT_INPUT_SYNTAX;
         return 0;
     }
-    if (util_str_icmp(ifmt, "EQN") == 0)
-        tt_not_supported("-str ifmt eqn");
-    if (util_str_icmp(ifmt, "TT") != 0 && util_str_icmp(ifmt, "EDIF") != 0)
+    if (util_str_icmp(ifmt, "EQN") == 0 && !eqn_read(in, &entity, job)) {
+        util_fclose(in);
+        free(ifmt);
+        g_exit_code = FIT_EXIT_INPUT_SYNTAX;
+        return 0;
+    }
+    if (util_str_icmp(ifmt, "TT") != 0 && util_str_icmp(ifmt, "EDIF") != 0 &&
+        util_str_icmp(ifmt, "EQN") != 0)
         /* PALASM, ABEL, LDF, NSR pass the check above but have no
          * reader. */
         tt_not_supported("this -str ifmt value");

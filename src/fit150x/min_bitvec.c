@@ -2,7 +2,6 @@
  * min_bitvec.c - bit vectors of the ATF150x fitter: operations on arrays
  * of 32-bit words.  Variable v (1-based) is bit (v-1)&31 of word (v-1)>>5.
  *
- * Equation input (-str ifmt eqn) is an unsupported option.
  */
 #include <stdio.h>
 #include <stdlib.h>
@@ -147,20 +146,3 @@ void bitvec_xnor(const unsigned *a, const unsigned *b, unsigned *out, int n_word
 /* ------------------------------------------------------------------ */
 /* Entry points of unsupported options                                 */
 /* ------------------------------------------------------------------ */
-
-static void bitvec_unsupported(const char *what)
-{
-    fprintf(stderr, "fit150x: %s is not supported\n", what);
-    exit(3);
-}
-
-/* -str ifmt eqn */
-int bitvec_parse_eqn_cube(char *text, int *a, int *b, unsigned n)
-{
-    (void)text;
-    (void)a;
-    (void)b;
-    (void)n;
-    bitvec_unsupported("the equation input format (-str ifmt eqn)");
-    return 0;
-}

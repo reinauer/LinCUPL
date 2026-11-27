@@ -2,8 +2,6 @@
  * base_entity.c - the table of named entities, the library object kept in
  * it, constructors, copies and destructors of entity, function, netlist and
  * instance, and the lookups in an entity.
- *
- * Equation input is not implemented.
  */
 #include <stdio.h>
 #include <stdlib.h>

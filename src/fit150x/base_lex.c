@@ -6,8 +6,8 @@
  * the input stream and calls lex_start; lex_next_token then leaves the
  * token code in g_lex_token and its text in g_lex_text / g_lex_long_text.
  *
- * The equation parser is not implemented. EDIF uses a separate scanner
- * with source locations and bounded storage.
+ * EDIF and EQN use separate scanners with source locations and bounded
+ * storage.
  */
 #include <stdarg.h>
 #include <stdio.h>

@@ -88,8 +88,7 @@ void tt3_write(const char *base, FitEntity *entity, char *extra);
 
 /* read the design named by the first parameter of the list
  * (FitParam items; the job passes "i" first), format from parameter "ifmt"
- * (TT and EDIF are supported; EQN and the others end in "fit150x: ... is not
- * supported", exit 3), store it in the entity table under the name given
+ * (TT, EDIF and EQN are supported), store it in the entity table under the name given
  * by parameter "d" (the job passes "Fct"; without it: slot 1, name "") and
  * call tt2_print_entity_stats.  Returns 1 on success; on failure 0 with
  * g_exit_code set (0x65 bad ifmt, 0xc9 file not found, 0x12d reader
@@ -97,6 +96,7 @@ void tt3_write(const char *base, FitEntity *entity, char *extra);
  * parameters `job`. */
 int input_read(FitList *params, FitList *job);
 int edif_read(FILE *in, FitEntity **entity, FitList *params);
+int eqn_read(FILE *in, FitEntity **entity, FitList *params);
 
 /* 1 if some function of the entity has a tree[2] that is
  * not the constant 0. */
