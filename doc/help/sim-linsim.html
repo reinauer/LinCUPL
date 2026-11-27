@@ -76,6 +76,11 @@ into the waveforms and the listing tab is updated.</p>
 <li id="assign"><b>Assign Simulator Results</b> makes the simulated
 output values the expected values of the vectors, so a run that has
 been checked by eye becomes a regression test.</li>
+<li><b>Simulate JEDEC Fuse Map</b> selects <tt>csim -f</tt> and reads the
+companion <tt>.jed</tt> directly, without requiring or rebuilding an
+absolute file. The device in Design Properties, when present, selects
+the package. <b>Compile &amp; Simulate</b> can still rebuild the design
+first. A missing JEDEC file is reported before starting the simulator.</li>
 <li><b>Append Vectors to JEDEC</b> adds <tt>-j</tt>, <b>Use PLD Filename
 for JEDEC</b> adds <tt>-n</tt> (see <a href="sim-overview.html#csim">csim</a>).</li>
 <li><b>Set Library</b> chooses the device library.</li>

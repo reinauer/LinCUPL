@@ -43,6 +43,8 @@ static int order_pin(unsigned pin, int token)
 int build_truth_table(unsigned max_inputs, sim_truth_t *table, char *error, size_t size)
 {
     jedec_truth_pins(table);
+    if (jed150x_sequential())
+        return fail(error, size, "registers or latches are present; sequential equivalence is not supported");
     for (unsigned i = 0; i < table->noutputs; i++) {
         unsigned pin = table->outputs[i];
         int sym = pin_symbol(pin);

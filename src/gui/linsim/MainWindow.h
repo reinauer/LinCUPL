@@ -149,6 +149,7 @@ private:
     QString customLibraryPath_;
     bool appendVectorsToJedec_ = false;
     bool usePldFilename_ = false;
+    bool simulateJedec_ = false;
     bool loadingSettings_ = false;
     bool simulationRunning_ = false;
     bool siEditorDirty_ = false;
@@ -179,6 +180,7 @@ private:
     QAction *actShowSigDef_ = nullptr;
     QAction *actAppendJed_ = nullptr;
     QAction *actUsePldName_ = nullptr;
+    QAction *actSimulateJedec_ = nullptr;
 
     QMenu *windowMenu_ = nullptr;
     QAction *windowListEnd_ = nullptr;

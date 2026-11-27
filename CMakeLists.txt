@@ -88,6 +88,7 @@ set(LINCUPL_PHASE_SOURCES
     src/sim/sim.c
     src/sim/load.c
     src/sim/jedload.c
+    src/sim/jed150x.c
     src/sim/truth.c
     src/sim/parse.c
     src/sim/core.c
@@ -133,6 +134,7 @@ endif()
 # absolute file as text (for the GUI), the runtime of the compiler phases
 # and the simulator
 set(LINCUPL_SHARED_SOURCES
+    src/fit150x/dev_tables.c
     src/shared/absdump.c
     src/shared/cfile.c
     src/shared/devlib.c
@@ -183,6 +185,7 @@ target_compile_options(cfitr PRIVATE ${_cli_warn_flags})
 # One program for the three devices; the device is taken from the name it is
 # run under.  cupl starts it for these devices when it sits next to cupl.
 file(GLOB LINCUPL_FIT150X_SOURCES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/src/fit150x/*.c")
+list(REMOVE_ITEM LINCUPL_FIT150X_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/src/fit150x/dev_tables.c")
 add_library(fit150x_objects OBJECT ${LINCUPL_FIT150X_SOURCES})
 target_include_directories(fit150x_objects PRIVATE
     "${CMAKE_CURRENT_SOURCE_DIR}/src/fit150x"
@@ -446,6 +449,12 @@ if(Python3_EXECUTABLE)
         COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/csim_atf_jed.py"
             "$<TARGET_FILE_DIR:csim>")
     set_tests_properties(csim_atf_jed PROPERTIES TIMEOUT 600)
+    foreach(_mode IN ITEMS legacy extended)
+        add_test(NAME csim_150x_jed_${_mode}
+            COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/csim_150x_jed.py"
+                "$<TARGET_FILE_DIR:csim>" ${_mode})
+        set_tests_properties(csim_150x_jed_${_mode} PROPERTIES TIMEOUT 300)
+    endforeach()
     add_test(NAME atf750c_mapping
         COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/atf750c_mapping.py"
             "$<TARGET_FILE_DIR:csim>")

@@ -68,7 +68,7 @@ csim ends with exit status 1 when a vector fails.</p>
 <h2 id="jedec">Simulating a JEDEC file</h2>
 <p><tt>csim -f</tt> takes the design from the fuse map in
 <i>name</i><tt>.jed</tt> instead of the absolute file.  It is meant for a
-GAL16V8, GAL20V8, GAL22V10, ATF750 or ATF2500 whose source is not at hand: a file read
+GAL16V8, GAL20V8, GAL22V10, ATF750, ATF2500 or ATF1502/1504/1508 whose source is not at hand: a file read
 back from a part, or one written by another compiler.  The vectors come
 from <i>name</i><tt>.si</tt> as usual.</p>
 <pre class="shell">csim -lf u12              # u12.jed and u12.si: listing u12.so, waveforms u12.wo
@@ -105,6 +105,17 @@ and register aliases use their library numbers (<tt>P34</tt> on
 <tt>PINNODE</tt> declarations. Register and physical-pin feedback are
 independent. A map using an input column missing from its library entry
 is rejected.</li>
+<li><b>ATF150x.</b> ATF1502, ATF1504 and ATF1508 maps have 16808, 34192
+and 74136 fuses. The device name selects the package, for example
+<tt>csim -lf f1504plcc44 design</tt>. Without a name, QP must identify
+exactly one package. The native fitters write the package in the heading.
+Routing, foldback, cascades, D/T registers, latches, global and product
+clocks, clear/preset, enables, open-drain outputs and logical bus-keeper
+state are decoded. Vectors observe physical pins; internal macrocells
+are evaluated without exposing numbered PINNODE signals. Power-down pin
+operation and register preload are rejected. Timing and JTAG programming
+are not simulated. This decoder assumes the AS-family fuse layout;
+BE-series maps are unsupported.</li>
 <li><b>Names.</b> A fuse map has none.  The pins are <tt>P1</tt>, <tt>P2</tt>, … in the
 <tt>ORDER</tt> statement, and the values of such a column are levels at
 the pin.  If <i>name</i><tt>.pld</tt> is there, the pins also have the

@@ -650,6 +650,15 @@ void MainWindow::setupMenusAndToolbar() {
     simMenu->addAction(QStringLiteral("&Assign Simulator Results"), this, &MainWindow::onAssignSimulatorResults);
     simMenu->addSeparator();
 
+    actSimulateJedec_ = simMenu->addAction(QStringLiteral("Simulate JEDEC &Fuse Map (-f)"));
+    actSimulateJedec_->setObjectName(QStringLiteral("simulateJedec"));
+    actSimulateJedec_->setCheckable(true);
+    actSimulateJedec_->setChecked(simulateJedec_);
+    connect(actSimulateJedec_, &QAction::toggled, this, [this](bool on) {
+        simulateJedec_ = on;
+        settingsChanged();
+    });
+
     actAppendJed_ = simMenu->addAction(QStringLiteral("Append Vectors to &JEDEC (-j)"));
     actAppendJed_->setCheckable(true);
     actAppendJed_->setChecked(appendVectorsToJedec_);
@@ -760,6 +769,8 @@ void MainWindow::loadSharedSettings() {
     customLibraryPath_ = s.value(QStringLiteral("Simulator/libraryPath")).toString();
     appendVectorsToJedec_ = s.value(QStringLiteral("Simulator/appendJedec"), false).toBool();
     usePldFilename_ = s.value(QStringLiteral("Simulator/usePldName"), false).toBool();
+    simulateJedec_ = s.value(QStringLiteral("Simulator/simulateJedec"), false).toBool();
+    actSimulateJedec_->setChecked(simulateJedec_);
     actAppendJed_->setChecked(appendVectorsToJedec_);
     actUsePldName_->setChecked(usePldFilename_);
     actPrintColors_->setChecked(s.value(QStringLiteral("Print/colors"), true).toBool());
@@ -777,6 +788,7 @@ void MainWindow::saveSettings() const {
     s.setValue(QStringLiteral("Simulator/libraryPath"), customLibraryPath_);
     s.setValue(QStringLiteral("Simulator/appendJedec"), appendVectorsToJedec_);
     s.setValue(QStringLiteral("Simulator/usePldName"), usePldFilename_);
+    s.setValue(QStringLiteral("Simulator/simulateJedec"), simulateJedec_);
     s.setValue(QStringLiteral("Print/colors"), actPrintColors_->isChecked());
 }
 
@@ -1272,13 +1284,14 @@ bool MainWindow::runSimulation(bool compileFirst, bool interactive, QString *log
         return proc.exitStatus() == QProcess::NormalExit;
     };
 
-    // Check if companion .abs exists; if missing (or compileFirst requested) and .pld exists, compile first!
+    // Equation simulation can build its missing ABS. Fuse-map simulation
+    // uses the existing JEDEC unless Compile & Simulate was requested.
     const QString existingAbs = SimDocument::findCompanionFile(doc_.filePath, QStringLiteral(".abs"));
     const QString companionPld = SimDocument::findCompanionFile(doc_.filePath, QStringLiteral(".pld"));
-    if ((compileFirst || existingAbs.isEmpty()) && !companionPld.isEmpty()) {
+    if ((compileFirst || (!simulateJedec_ && existingAbs.isEmpty())) && !companionPld.isEmpty()) {
         const QString cuplBin = findCliBinary(QStringLiteral("cupl"));
         if (cuplBin.isEmpty()) {
-            const QString msg = QStringLiteral("Could not find 'cupl' compiler binary to build .abs file.");
+            const QString msg = QStringLiteral("Could not find 'cupl' compiler binary to build the design.");
             if (logOut) *logOut = msg;
             if (interactive) QMessageBox::warning(this, QStringLiteral("CUPL Not Found"), msg);
             return false;
@@ -1300,6 +1313,14 @@ bool MainWindow::runSimulation(bool compileFirst, bool interactive, QString *log
         }
     }
 
+    if (simulateJedec_ && SimDocument::findCompanionFile(doc_.filePath, QStringLiteral(".jed")).isEmpty()) {
+        const QString msg = QStringLiteral("No companion JEDEC file found. Build the design before simulating its fuse map.");
+        simConsoleOut_->appendPlainText(msg);
+        if (logOut) *logOut = msg;
+        if (interactive) QMessageBox::warning(this, QStringLiteral("JEDEC File Not Found"), msg);
+        return false;
+    }
+
     const QString csimBin = findCliBinary(QStringLiteral("csim"));
     if (csimBin.isEmpty()) {
         const QString msg = QStringLiteral("Could not find sibling 'csim' simulator binary.");
@@ -1310,6 +1331,7 @@ bool MainWindow::runSimulation(bool compileFirst, bool interactive, QString *log
     }
 
     QString flagStr = QStringLiteral("-lw");
+    if (simulateJedec_) flagStr += QLatin1Char('f');
     if (appendVectorsToJedec_) flagStr += QLatin1Char('j');
     if (usePldFilename_) flagStr += QLatin1Char('n');
 
@@ -1317,6 +1339,7 @@ bool MainWindow::runSimulation(bool compileFirst, bool interactive, QString *log
     if (!libPath.isEmpty()) {
         csimArgs << QStringLiteral("-u") << libPath;
     }
+    if (simulateJedec_ && !doc_.header.device.isEmpty()) csimArgs << doc_.header.device;
     csimArgs << stem;
 
     int csimExit = 0;

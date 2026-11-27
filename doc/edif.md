@@ -115,5 +115,16 @@ an independent readback of the fitted TT3 equations with the original RTL.
 It requires Yosys and Icarus Verilog and is skipped when they are unavailable.
 Both suites run in the legacy and extended fitter modes. Linux regression
 jobs install the synthesis and simulation tools so these checks run in CI.
-These checks verify logical behavior; they do not decode the resulting
-ATF150x JEDEC image or establish hardware timing.
+The `csim_150x_jed_legacy` and `csim_150x_jed_extended` suites additionally
+decode the emitted fuse maps and check physical pin vectors. They cover
+Boolean logic, cascades, foldback, internal and pad feedback, global and
+product clocks, registers, latches, enables, shared register/output
+macrocells and every supported package. Mutated maps check counterexamples
+and rejection of invalid routing. These are logical checks, not hardware
+timing measurements.
+
+Use `csim -fl design` with `design.jed` and `design.si` to simulate the
+fitted result without an ABS file. LinSim exposes the same mode through
+**Simulator > Simulate JEDEC Fuse Map**. `jedcompare` checks combinational
+maps using that decoder; it rejects active register state and physical
+output feedback. See [JEDEC tools](jed-tools.md) for the proof scope.
