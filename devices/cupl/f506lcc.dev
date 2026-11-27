@@ -51,6 +51,15 @@ device f506lcc {
         preload_polarity = 0
     }
 
+    sequence {
+        next_function = s
+        next_alternate = r
+        next_count = 2
+        input_function = s
+        input_alternate = r
+        input_count = 2
+    }
+
     prom {
         address_bits = 0
         data_width = 8

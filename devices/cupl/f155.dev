@@ -51,6 +51,15 @@ device f155 {
         preload_polarity = 0
     }
 
+    sequence {
+        next_function = j
+        next_alternate = k
+        next_count = 2
+        input_function = j
+        input_alternate = k
+        input_count = 2
+    }
+
     prom {
         address_bits = 0
         data_width = 12

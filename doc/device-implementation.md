@@ -35,18 +35,34 @@ images by image length. Descriptor capacity is not a silicon resource or
 an allocation size in these readers: changing 5,000 to 94 saves no memory
 by itself. Attribute resource limits are separate and remain intact.
 
-| Section | Unmapped bytes cleared in compiled images |
-| --- | --- |
-| Attributes (3) | 4–7, 20, 31–36, 50–60 |
-| Pin functions (6) | 9 |
-| Node functions (7) | 26 |
-| Connections (10) | 4 |
+| Section | Unmapped bytes cleared in compiled images | Classification in the 709 source entries |
+| --- | --- | --- |
+| Attributes (3) | 4 | Nonzero only in `f506`, `f506lcc` and `mapl144`; meaning unresolved |
+| Attributes (3) | 5, 7, 20 | Nonzero in multiple families; meaning unresolved |
+| Attributes (3) | 6, 31–36, 50, 57–60 | Zero in every source entry; reserved or unresolved, not established as unused |
+| Pin functions (6) | 9 | Zero in every source record; reserved or unresolved |
+| Node functions (7) | 26 | Often nonzero and sometimes different from row width; meaning unresolved |
+| Connections (10) | 4 | Zero in every source record; reserved or unresolved |
 
 No current native consumer has been identified for these ranges. Their
 meaning remains unresolved; reference binary copies retain their exact
 values outside the source catalog. `audit.py` requires each record byte to
 belong to a named field or an explicit exclusion, rejecting gaps and overlaps.
+Zero-only observations cannot establish what a nonzero value would mean.
 Connection byte 12 is a configuration value and is retained and compared.
+Attribute bytes 51–56 describe generic `SEQUENCE` expansion and are also
+retained and compared, including alternate function codes when the count
+selects only the primary function.
+
+Controlled `f506` compilations preserved the JEDEC bitmap, ABS file and
+documentation after independently changing attribute 4 (including a nonzero
+sentinel), attribute 20, next-function descriptors 51–52, node byte 26,
+section capacities or stored pointers. Setting either sequence count to
+zero rejected the same design. Separate `mapl144` probes also preserved
+ABS, PLA and documentation when attribute 4 or node byte 26 changed.
+These tests exercise an SR state machine, registered output and fitter-input
+generation; they do not establish that the remaining fields are unused
+by other families, simulation or library-editing tools.
 
 Catalog comparison checks every other record byte, including order,
 inactive operands and empty records. Canonical equality means those fields
@@ -90,6 +106,10 @@ catalog without reference binaries. `devcatalog_libraries` compares all
 entries against optional reference libraries through mapped fields and the
 native C reader, then checks clock-selection fuses and fitter input output.
 The root catalog is also compared with a library built by the native merger.
+`devsequence` checks generic state-machine declarations against explicit
+register-type declarations, registered `OUT` clauses, and expected simulation
+vectors. It exercises both source catalogs and all modeled interfaces without
+requiring reference binaries.
 
 Family tests check complete fuse ownership, selector encodings, package
 maps, reader stability, emitted JEDEC maps and expected ABS/JEDEC simulation
@@ -144,6 +164,12 @@ simulator, not necessarily a physical silicon property.
 | 47 | `simulation.output_polarity_mode` | `src/sim/eval.c` and `src/sim/core.c` select output/register polarity behavior |
 | 48 | `simulation.internal_polarity_mode` | `src/sim/eval.c` and compiler polarity handling select internal-feedback conventions |
 | 49 | `simulation.power_up` | `src/sim/core.c:init_levels()` selects unknown/low/high initial register state |
+| 51 | `sequence.next_function` | Declared as `ARCH_SEQ_NEXT_1` in `src/cupl/parse_int.h`; primary next-state function descriptor, retained even though the parser currently uses byte 54 for both next-state and registered-output expansion |
+| 52 | `sequence.next_alternate` | Declared as `ARCH_SEQ_NEXT_2`; alternate next-state function descriptor, with the same consumer limitation as byte 51 |
+| 53 | `sequence.next_count` | `src/cupl/parse_sequence.c:act_sequence_begin()` sets the number of next-state equations; zero rejects generic `SEQUENCE` |
+| 54 | `sequence.input_function` | `act_sequence_begin()` resolves the primary register-input extension used by `make_next_statement()` and `make_output_statement()` |
+| 55 | `sequence.input_alternate` | Same path resolves the second register-input extension, used when the count selects two equations, such as `.s`/`.r` or `.j`/`.k` |
+| 56 | `sequence.input_count` | `act_sequence_begin()` sets the number of registered-output equations; zero rejects generic `SEQUENCE` |
 | 61 | `signature.bits` | JEDEC writer/loader signature length |
 | 62–65 | `signature.first_fuse` | JEDEC writer/loader signature position |
 | 66 | `simulation.preload_polarity` | `src/sim/core.c` determines preload polarity |
@@ -155,6 +181,15 @@ simulator, not necessarily a physical silicon property.
 Some simulator paths read a 16-bit quantity starting at attribute byte 8;
 the catalog retains both bytes 8 and 9. The profile does not reinterpret or
 repair that historical overlap.
+
+The next-state and input triples (51–53 and 54–56) agree in all 709 source
+entries. They remain separate fields rather than treating that observation
+as a format requirement. For example, D-register entries normally specify
+`d, none, 1`, SR entries specify `s, r, 2`, and JK entries specify `j, k, 2`.
+ATF2500C retains `d, ce, 1`, including its unused alternate descriptor.
+Explicit `SEQUENCED`, `SEQUENCERS`, `SEQUENCEJK` and `SEQUENCET` select their
+own input functions; testing only those statements cannot validate these
+device defaults.
 
 ### Pin functions, section 6, 16 bytes
 

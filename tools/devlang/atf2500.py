@@ -226,6 +226,7 @@ def sections(model, options):
             (29,'H',logic.rows),(37,'H',350),(39,'H',array_slots),(41,'H',input_slots),
             (43,'B',1),(44,'H',3*count),(49,'B',1)]:
         struct.pack_into('<'+fmt,attrs,offset,value)
+    attrs[51:57] = bytes([D, CE, 1, D, CE, 1])
     result[3]=[bytes(attrs)]
     result[4]=[b.text_field(name,20)+bytes([code]) for name,code in
                [('d',D),('t',T),('ar',AR),('ck',CK),('oe',OE),('sp',SP),('io',IO),('ce',CE),('dfb',DFB)]]

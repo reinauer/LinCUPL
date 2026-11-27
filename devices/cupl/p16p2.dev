@@ -51,6 +51,15 @@ device p16p2 {
         preload_polarity = 0
     }
 
+    sequence {
+        next_function = none
+        next_alternate = none
+        next_count = 0
+        input_function = none
+        input_alternate = none
+        input_count = 0
+    }
+
     prom {
         address_bits = 0
         data_width = 2

@@ -51,6 +51,15 @@ device g6002lcc {
         preload_polarity = 0
     }
 
+    sequence {
+        next_function = d_enabled
+        next_alternate = ce
+        next_count = 2
+        input_function = d_enabled
+        input_alternate = ce
+        input_count = 2
+    }
+
     prom {
         address_bits = 0
         data_width = 10

@@ -51,6 +51,15 @@ device g20xv10i {
         preload_polarity = 0
     }
 
+    sequence {
+        next_function = d
+        next_alternate = none
+        next_count = 1
+        input_function = d
+        input_alternate = none
+        input_count = 1
+    }
+
     prom {
         address_bits = 0
         data_width = 10
