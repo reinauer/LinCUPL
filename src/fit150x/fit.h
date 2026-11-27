@@ -41,9 +41,6 @@ void fit_prep_nop(void);
  * (tt_flatten.c). */
 void fit_prep_hoist_children(FitEntity *ent, FitFctTree *tree);
 
-/* EDIF input (-str ifmt edif) only, which is not supported: reports
- * "fit150x: ifmt edif is not supported" and exits with 3. */
-void fit_prep_edif_keep_inputs(FitEntity *ent, int mode);
 
 /* Builds the list g_fit_block_groups from the entity; used by the block
  * partition (alloc.c). */

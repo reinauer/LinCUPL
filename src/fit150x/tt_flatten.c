@@ -2,9 +2,6 @@
  * tt_flatten.c - fct_flatten: turns the functions of an entity into sums
  * of products, splitting a function with new local variables when its
  * expansion would exceed a limit.
- *
- * Not implemented (only reachable with -str ifmt edif): the variant of the
- * tree-to-product-terms conversion that substitutes local variables.
  */
 #include "tt_priv.h"
 

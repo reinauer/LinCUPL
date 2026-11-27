@@ -2,9 +2,7 @@
  * min_bitvec.c - bit vectors of the ATF150x fitter: operations on arrays
  * of 32-bit words.  Variable v (1-based) is bit (v-1)&31 of word (v-1)>>5.
  *
- * EDIF input (-str ifmt edif) and equation input (-str ifmt eqn) are
- * unsupported options; their three entry points at the end of this file
- * are stubs.
+ * Equation input (-str ifmt eqn) is an unsupported option.
  */
 #include <stdio.h>
 #include <stdlib.h>
@@ -165,21 +163,4 @@ int bitvec_parse_eqn_cube(char *text, int *a, int *b, unsigned n)
     (void)n;
     bitvec_unsupported("the equation input format (-str ifmt eqn)");
     return 0;
-}
-
-/* -str ifmt edif */
-void *bitvec_cover_new(void)
-{
-    bitvec_unsupported("the EDIF input format (-str ifmt edif)");
-    return NULL;
-}
-
-/* -str ifmt edif */
-FitEntity *bitvec_cover_edif_postprocess(FitEntity *entity, int *arg2, int arg3)
-{
-    (void)entity;
-    (void)arg2;
-    (void)arg3;
-    bitvec_unsupported("the EDIF input format (-str ifmt edif)");
-    return NULL;
 }

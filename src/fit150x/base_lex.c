@@ -6,8 +6,8 @@
  * the input stream and calls lex_start; lex_next_token then leaves the
  * token code in g_lex_token and its text in g_lex_text / g_lex_long_text.
  *
- * Not implemented: the EDIF error mode and the equation parser, both needed
- * only with -str ifmt edif / eqn.
+ * The equation parser is not implemented. EDIF uses a separate scanner
+ * with source locations and bounded storage.
  */
 #include <stdarg.h>
 #include <stdio.h>
@@ -367,8 +367,7 @@ void lex_error(int mode, const char *msg, int tok, ...)
 
 /* lex_error without the message: count an error and, when mode
  * != 0 and tokens are given (a list ended by 0), skip input until the
- * current token is one of them or the end of the file.  Only the EDIF mode
- * of the scanner and the EDIF reader call it. */
+ * current token is one of them or the end of the file. */
 void lex_error_skip(int mode, int tok, ...)
 {
     g_lex_error_count++;

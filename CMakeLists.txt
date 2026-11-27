@@ -407,6 +407,21 @@ if(Python3_EXECUTABLE)
         COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/fit150x_builtin.py"
             "$<TARGET_FILE_DIR:cupl>")
     set_tests_properties(fit150x_builtin PROPERTIES TIMEOUT 600)
+    add_test(NAME fit150x_edif
+        COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/fit150x_edif.py"
+            "$<TARGET_FILE_DIR:cupl>")
+    add_test(NAME fit150x_yosys
+        COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/fit150x_yosys.py"
+            "$<TARGET_FILE_DIR:cupl>")
+    add_test(NAME fit150x_edif_extended
+        COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/fit150x_edif.py"
+            "$<TARGET_FILE_DIR:cupl>" extended)
+    add_test(NAME fit150x_yosys_extended
+        COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/fit150x_yosys.py"
+            "$<TARGET_FILE_DIR:cupl>" extended)
+    set_tests_properties(fit150x_edif fit150x_yosys fit150x_edif_extended
+        fit150x_yosys_extended PROPERTIES TIMEOUT 300)
+    set_tests_properties(fit150x_yosys fit150x_yosys_extended PROPERTIES SKIP_RETURN_CODE 77)
     add_test(NAME jedinspect
         COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/jedinspect.py" "$<TARGET_FILE:jedinspect>")
     add_test(NAME jedcompare

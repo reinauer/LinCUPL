@@ -11,8 +11,8 @@
  * read the design, apply the options, load the gate library and map the
  * design onto it, run the fit driver.
  *
- * Not supported: the command file "-c file" and the pin file "-pinfile";
- * both report "fit150x: ... is not supported" and exit with status 3.
+ * The command file "-c file" is not supported. EDIF pin assignments are
+ * read by the input stage when "-pinfile" is specified.
  *
  * FITTERDIR is joined with '/'; without FITTERDIR the directory holding
  * atmel.std is searched for; the temporary log is created in the system's
@@ -319,7 +319,7 @@ static int main_usage_common_ext(void)
         "   -strategy OE_node [node_Number1..node_NumberN]\n",
         "   -strategy logic_doubling [on | OFF]\n",
         "   -strategy twoclock [clockname]\n",
-        "   -strategy pinfile \n"
+        "   -strategy pinfile [file] \n"
     };
 
     for (size_t i = 0; i < sizeof(lines) / sizeof(lines[0]); i++)
@@ -495,12 +495,24 @@ static int main_usage_advanced(void)
         "   -strategy OE_node [node_Number1..node_NumberN]\n",
         "   -strategy logic_doubling [on | OFF]\n",
         "   -strategy twoclock [clockname]\n",
-        "   -strategy pinfile \n"
+        "   -strategy pinfile [file] \n"
     };
 
     for (size_t i = 0; i < sizeof(lines) / sizeof(lines[0]); i++)
         fprintf(g_msg, "%s", lines[i]);
     return 0;
+}
+
+/* Preserve a single argv value when the command parser splits words. */
+static void main_append_value(char **cmd, const char *value)
+{
+    int quote = value[0] != '"' && strpbrk(value, " \t\r\n") != NULL;
+
+    if (quote)
+        util_str_append(cmd, "\"");
+    util_str_append(cmd, value);
+    if (quote)
+        util_str_append(cmd, "\"");
 }
 
 /* "-str NAME VALUE", "-str NAME = V1 V2 ...", "-str NAME =V1 V2
@@ -565,7 +577,7 @@ static int main_append_strategy(char **argv, int argc, int *pi, char **cmd)
             util_str_append(cmd, " -");
             util_str_append(cmd, argv[*pi]);
             util_str_append(cmd, " ");
-            util_str_append(cmd, next);
+            main_append_value(cmd, next);
             (*pi)++;
         }
         return 1;
@@ -603,13 +615,13 @@ static int main_append_strategy(char **argv, int argc, int *pi, char **cmd)
         *strchr(copy, '=') = '\0';
         util_str_append(cmd, copy);
         util_str_append(cmd, " ");
-        util_str_append(cmd, strrchr(arg, '=') + 1);
+        main_append_value(cmd, strrchr(arg, '=') + 1);
         free(copy);
         return 1;
     }
     util_str_append(cmd, name);
     util_str_append(cmd, " ");
-    util_str_append(cmd, value);
+    main_append_value(cmd, value);
     return 1;
 }
 
@@ -653,7 +665,7 @@ static int main_build_command(int argc, char **argv, char **cmd)
                 if (i < argc - 1 && argv[i + 1][0] != '-') {
                     i++;
                     util_str_append(cmd, " ");
-                    util_str_append(cmd, argv[i]);
+                    main_append_value(cmd, argv[i]);
                     while (many && i + 1 < argc && argv[i + 1][0] != '-') {
                         i++;
                         util_str_append(cmd, " ");
@@ -665,7 +677,7 @@ static int main_build_command(int argc, char **argv, char **cmd)
             if (i > 2)
                 return main_usage();
             util_str_append(cmd, " ");
-            util_str_append(cmd, argv[i]);
+            main_append_value(cmd, argv[i]);
         }
     }
     return 1;
@@ -685,6 +697,16 @@ static int main_command_to_params(char *cmd, FitList **params)
     }
     if (*params == NULL || (*params)->count < 1)    /* cannot happen: main requires an argument */
         return 1;
+    for (int i = 0; i < (*params)->count; i++) {
+        FitParam *value = (*params)->items[i];
+        size_t length = strlen(value->value);
+
+        if (length >= 2 && value->value[0] == '"' &&
+            value->value[length - 1] == '"') {
+            memmove(value->value, value->value + 1, length - 2);
+            value->value[length - 2] = '\0';
+        }
+    }
     p = (*params)->items[0];
     if (util_str_icmp(p->name, g_empty_str) == 0)
         strcpy(p->name, "i");
@@ -1793,8 +1815,6 @@ static int main_fit_job(FitList *params)
         return 0;
     }
     latch_fixup_entity(ent);
-    if (g_opt.ifmt_edif != 0)
-        ent = bitvec_cover_edif_postprocess(ent, (int *)5, 0x28);
     return fit_driver(ent, base, g_opt.preassign, g_opt.latch_synthesis) != 0;
 }
 

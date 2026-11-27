@@ -27,6 +27,19 @@ why.  (The original CUPL ends with <tt>Error Code = 0</tt> in that case.)
 The simulator works from the <tt>.abs</tt> file that cupl writes, as for
 any other device.</p>
 
+<h2 id="edif">EDIF input</h2>
+<p>The fitters also accept EDIF 2 0 0 netlists directly, including Yosys
+generic gate netlists and hierarchical designs. Select <tt>-ifmt EDIF</tt>:</p>
+<pre class="shell">fit1502 -i design.edf -ifmt EDIF -device PLCC44 -tech ATF1502AS -pinfile board.pin</pre>
+<p>The optional pin file contains <tt>signal : pin</tt> assignments; bus
+members use names such as <tt>data[0]</tt>. Built-in primitives cover common
+gates, flip-flops, latches and tristate buffers. <tt>-lib cells.lib</tt>
+adds primitive definitions in the fitter's GATE/PGATE format. Unknown cells,
+unresolved connections and combinational loops are errors.</p>
+<p>The EDIF path produces fitted equations and JEDEC files, without a CUPL
+absolute file. Functional simulation through <tt>csim</tt> still requires
+the compiled CUPL design; ATF150x fuse-map simulation is not available.</p>
+
 <h2 id="example">Example</h2>
 <pre data-example="cpld.pld" data-lines="9-47">Device   f1502ispplcc44;
 

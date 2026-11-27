@@ -2,8 +2,8 @@
  * tt_input.c - input_driver: reads the design in the format named by the
  * parameter "ifmt" and registers it in the entity table.
  *
- * Only the PLA (.tt2) reader is implemented.  The equation reader (ifmt
- * EQN), the EDIF reader, the PALASM post-processing and the ABEL branch
+ * The PLA (.tt2) and EDIF readers are implemented. The equation reader
+ * (ifmt EQN), the PALASM post-processing and the ABEL branch
  * (one entity per item of a list that no reader fills in) are not: they are
  * reachable only with a -str ifmt value the CUPL flow never passes.
  */
@@ -32,25 +32,26 @@ int input_read(FitList *params, FitList *job)
         return 0;
     }
 
-    if (util_str_icmp(ifmt, "EDIF") == 0)
-        tt_not_supported("-str ifmt edif");
+    if (util_str_icmp(ifmt, "EDIF") == 0 && !edif_read(in, &entity, job)) {
+        util_fclose(in);
+        free(ifmt);
+        g_exit_code = FIT_EXIT_INPUT_SYNTAX;
+        return 0;
+    }
     if (util_str_icmp(ifmt, "TT") == 0 && !tt2_read(in, &entity, job)) {
         g_exit_code = FIT_EXIT_INPUT_SYNTAX;
         return 0;
     }
     if (util_str_icmp(ifmt, "EQN") == 0)
         tt_not_supported("-str ifmt eqn");
-    if (util_str_icmp(ifmt, "TT") != 0)
+    if (util_str_icmp(ifmt, "TT") != 0 && util_str_icmp(ifmt, "EDIF") != 0)
         /* PALASM, ABEL, LDF, NSR pass the check above but have no
          * reader. */
         tt_not_supported("this -str ifmt value");
 
     tt2_compact_entity(entity);         /* for every format but ABEL */
 
-    /* Formats other than TT would be checked for combinational cycles
-     * here ("Illegal Specification, The following cycle exists in your
-     * specification :"); with TT the only format read, there is no such
-     * check. */
+    free(ifmt);
 
     name = param_get(params, "d");
     if (name == NULL) {

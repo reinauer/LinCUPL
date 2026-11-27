@@ -3,7 +3,7 @@
  * it, constructors, copies and destructors of entity, function, netlist and
  * instance, and the lookups in an entity.
  *
- * Helpers needed only by the EQN / EDIF readers are not implemented.
+ * Equation input is not implemented.
  */
 #include <stdio.h>
 #include <stdlib.h>

@@ -15,8 +15,6 @@
  *     factorisation, splitting of wide functions into "FB_<n>" foldback
  *     nodes until the estimate fits the device.
  *
- * EDIF input (-str ifmt edif) is not supported (fit_prep_edif_keep_inputs).
- *
  * Lists are walked with index pairs (0-based index, 1-based position)
  * because the list package works with 1-based positions.
  */
@@ -464,14 +462,6 @@ int fit_prep_names_to_ids(FitEntity *ent, FitList *names, FitList **ids)
     if (*ids == NULL || (*ids)->count == 0)
         list_destroy(ids);
     return 1;
-}
-
-/* EDIF input (-str ifmt edif): not supported */
-void fit_prep_edif_keep_inputs(FitEntity *ent, int mode)
-{
-    (void)ent;
-    (void)mode;
-    fit_unsupported("ifmt edif");
 }
 
 /* 1 when fct can be a foldback term: a literal, a product of
