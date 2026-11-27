@@ -26,16 +26,14 @@ def main():
     args = parser.parse_args()
     bindir = args.bin_dir.resolve()
     share = bindir.parent / 'share/lincupl'
-    reference = share / 'lincupl.dl'
-    if not reference.is_file():
-        print('SKIP: reference device library is required')
-        return 77
     env = dict(os.environ, LINCUPL_SHARE=str(share))
     env.pop('LIBCUPL', None)
     env.pop('FITTERDIR', None)
     source = (ROOT / 'devices/families/gal22v10.dev').read_text()
     compiled = devcompile.compile_text(source)
-    generated, originals = images(compiled), images(reference.read_bytes())
+    generated = images(compiled)
+    reference_data = devcompile.compile_directory(ROOT / 'devices', list(generated), hardware=False)
+    originals = images(reference_data)
     assert set(generated) == {'g22v10', 'g22v10lcc', 'g22v10i', 'p22v10', 'p22v10lcc'}
     assert generated['g22v10lcc'] == generated['g22v10i']
     expected_differences = {'g22v10': set(), 'g22v10lcc': {'attributes', 'connections', 'fuse_plot'},
@@ -80,6 +78,8 @@ def main():
     runs, cases, plots = 0, [], []
     with tempfile.TemporaryDirectory(prefix='devgal22v10-') as temp:
         root = Path(temp)
+        reference = root / 'catalog.dl'
+        reference.write_bytes(reference_data)
         library = root / 'hardware.dl'
         library.write_bytes(compiled)
         def run(tool, argv, cwd):

@@ -6,11 +6,13 @@
 | --- | ---: | --- |
 | `devices/Atmel/*.dev` | 85 | Preserve the records and order of `Atmel.dl` |
 | `devices/cupl/*.dev` | 624 | Preserve `cupl.dl`, including both `p16l8` entries |
-| `devices/manifest.json` | 660 selected | First occurrence wins, with Atmel precedence |
-| `devices/families/*.dev` | 17 interfaces | Reusable models with the deliberate differences below |
+| `devices/manifest.json` | 660 selected | Atmel precedence, then 17 explicit hardware replacements |
+| `devices/families/*.dev` | 17 interfaces | Default hardware models with the deliberate differences below |
 
 The normal build compiles and installs `lincupl.dl` from the two complete
-catalogs. It needs no binary device library or target executable, including
+catalogs and the three hardware-family files. The manifest replaces 17
+entries in place; the other 643 images, lookup order and directory flags
+are unchanged. It needs no binary device library or target executable, including
 when cross-compiling. Source/manifests and compiler changes trigger rebuilding.
 Optional supporting data cannot overwrite the generated default library.
 
@@ -20,6 +22,9 @@ entries describe invocation and input formats, not their internal fuse maps.
 The 17 modeled interfaces cover eight ATF750C package/options, five 22V10
 interfaces and four ATF2500C package/keeper combinations. Earlier ATF2500
 revisions and special 22V10 modes remain available through the catalog files.
+`devcompile.py devices --catalog-only` builds the combined archival catalog
+without hardware replacements. The individual source catalogs are retained
+in full and still compile independently.
 
 ## Storage and comparison rules
 
@@ -96,6 +101,15 @@ for describing the hardware resources used by the compiler and simulator.
 
 ## Deliberate hardware-model differences
 
+The default library now uses these models. Assembly copies the four
+compatibility attributes from each selected catalog entry and retains node
+`legacy_width` by array, pin and function, rather than by record position.
+Array declarations are matched by array and function alone. Missing matches
+or conflicting catalog values fail the build. The unsupported ATF2500C
+records intentionally omitted below remain in the archival catalog sources.
+This metadata transfer changes no modeled hardware field and does not infer
+legacy width from the fuse-row width.
+
 The family files generate table IDs, connection groups and plotting programs
 from hardware resources. Their generated images must need no native reader
 repairs. Unlike catalog comparison, hardware comparison applies the documented
@@ -137,7 +151,14 @@ compatibility differences and reserved-byte failures. `devcatalog_libraries`
 compares all entries against optional reference libraries through every
 record byte and the
 native C reader, then checks clock-selection fuses and fitter input output.
-The root catalog is also compared with a library built by the native merger.
+The combined archival catalog is also compared with a library built by the
+native merger. `devdefault` independently checks all 17 replacements against
+their hardware models, all compatibility values against their catalogs,
+and all 643 fallback images byte for byte. It checks that a family-source
+edit changes the default image, that malformed replacements fail, and that
+the built library requires no native reader repairs for modeled entries.
+For every modeled interface it compares default compilation against an
+explicit family library and checks both ABS and JEDEC simulation vectors.
 `devsequence` checks generic state-machine declarations against explicit
 register-type declarations, registered `OUT` clauses, and expected simulation
 vectors. It exercises both source catalogs and all modeled interfaces without

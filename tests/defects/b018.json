@@ -1937,25 +1937,25 @@
       "label": "v750cext alias 44 pin 23 d positive with active-low output",
       "device": "v750cext",
       "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 23 = !r; pin 22 = y; pinnode 44 = q; r.d = b; r.ck = clk; y = q & a;",
-      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 23 = !r; pin 22 = y; pinnode 44 = q; r.d = b; r.ck = clk; y = r & a;"
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 23 = !r; pin 22 = y; pinnode 44 = q; r.d = b; r.ck = clk; y = !r & a;"
     },
     {
       "label": "v750cext alias 44 pin 23 t positive with active-low output",
       "device": "v750cext",
       "source": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 23 = !r; pin 22 = y; pinnode 44 = q; r.t = b; r.ck = clk; y = q & a;",
-      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 23 = !r; pin 22 = y; pinnode 44 = q; r.t = b; r.ck = clk; y = r & a;"
+      "reference": "pin 1 = clk; pin 2 = a; pin 3 = b; pin 23 = !r; pin 22 = y; pinnode 44 = q; r.t = b; r.ck = clk; y = !r & a;"
     },
     {
       "label": "v750cextlcc alias 48 pin 27 d positive with active-low output",
       "device": "v750cextlcc",
       "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = !r; pin 26 = y; pinnode 48 = q; r.d = b; r.ck = clk; y = q & a;",
-      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = !r; pin 26 = y; pinnode 48 = q; r.d = b; r.ck = clk; y = r & a;"
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = !r; pin 26 = y; pinnode 48 = q; r.d = b; r.ck = clk; y = !r & a;"
     },
     {
       "label": "v750cextlcc alias 48 pin 27 t positive with active-low output",
       "device": "v750cextlcc",
       "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = !r; pin 26 = y; pinnode 48 = q; r.t = b; r.ck = clk; y = q & a;",
-      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = !r; pin 26 = y; pinnode 48 = q; r.t = b; r.ck = clk; y = r & a;"
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = !r; pin 26 = y; pinnode 48 = q; r.t = b; r.ck = clk; y = !r & a;"
     },
     {
       "label": "v750cextppk alias 44 pin 23 d positive with active-low output and fixed register polarity",
@@ -1973,25 +1973,25 @@
       "label": "v750cextppklcc alias 48 pin 27 d positive with active-low output",
       "device": "v750cextppklcc",
       "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = !r; pin 26 = y; pinnode 48 = q; r.d = b; r.ck = clk; y = q & a;",
-      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = !r; pin 26 = y; pinnode 48 = q; r.d = b; r.ck = clk; y = r & a;"
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = !r; pin 26 = y; pinnode 48 = q; r.d = b; r.ck = clk; y = !r & a;"
     },
     {
       "label": "v750cextppklcc alias 48 pin 27 t positive with active-low output",
       "device": "v750cextppklcc",
       "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = !r; pin 26 = y; pinnode 48 = q; r.t = b; r.ck = clk; y = q & a;",
-      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = !r; pin 26 = y; pinnode 48 = q; r.t = b; r.ck = clk; y = r & a;"
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = !r; pin 26 = y; pinnode 48 = q; r.t = b; r.ck = clk; y = !r & a;"
     },
     {
       "label": "v750clcc alias 48 pin 27 d positive with active-low output",
       "device": "v750clcc",
       "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = !r; pin 26 = y; pinnode 48 = q; r.d = b; r.ck = clk; y = q & a;",
-      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = !r; pin 26 = y; pinnode 48 = q; r.d = b; r.ck = clk; y = r & a;"
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = !r; pin 26 = y; pinnode 48 = q; r.d = b; r.ck = clk; y = !r & a;"
     },
     {
       "label": "v750clcc alias 48 pin 27 t positive with active-low output",
       "device": "v750clcc",
       "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = !r; pin 26 = y; pinnode 48 = q; r.t = b; r.ck = clk; y = q & a;",
-      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = !r; pin 26 = y; pinnode 48 = q; r.t = b; r.ck = clk; y = r & a;"
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = !r; pin 26 = y; pinnode 48 = q; r.t = b; r.ck = clk; y = !r & a;"
     },
     {
       "label": "v750cppk alias 44 pin 23 d positive with active-low output and fixed register polarity",
@@ -2009,13 +2009,13 @@
       "label": "v750cppklcc alias 48 pin 27 d positive with active-low output",
       "device": "v750cppklcc",
       "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = !r; pin 26 = y; pinnode 48 = q; r.d = b; r.ck = clk; y = q & a;",
-      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = !r; pin 26 = y; pinnode 48 = q; r.d = b; r.ck = clk; y = r & a;"
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = !r; pin 26 = y; pinnode 48 = q; r.d = b; r.ck = clk; y = !r & a;"
     },
     {
       "label": "v750cppklcc alias 48 pin 27 t positive with active-low output",
       "device": "v750cppklcc",
       "source": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = !r; pin 26 = y; pinnode 48 = q; r.t = b; r.ck = clk; y = q & a;",
-      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = !r; pin 26 = y; pinnode 48 = q; r.t = b; r.ck = clk; y = r & a;"
+      "reference": "pin 2 = clk; pin 3 = a; pin 4 = b; pin 27 = !r; pin 26 = y; pinnode 48 = q; r.t = b; r.ck = clk; y = !r & a;"
     }
   ]
 }

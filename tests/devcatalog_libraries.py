@@ -141,7 +141,9 @@ def main():
         root = Path(temp)
         for name in ('Atmel', 'cupl'):
             (root / f'{name}.dl').write_bytes(devcompile.compile_directory(ROOT / 'devices' / name))
-        (root / 'lincupl.dl').write_bytes(devcompile.compile_directory(ROOT / 'devices'))
+        # Keep the archival comparison exact; default hardware replacement
+        # and its deliberate differences are checked by devdefault.
+        (root / 'lincupl.dl').write_bytes(devcompile.compile_directory(ROOT / 'devices', hardware=False))
         # Build an independent combined reference with the native merger.
         cbld = bindir / ('cbld.exe' if os.name == 'nt' else 'cbld')
         reference = root / 'reference/lincupl.dl'
