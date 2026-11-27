@@ -157,13 +157,12 @@ static void main_init(FILE *log_in, FILE *log_out)
     util_timer_reset();
 }
 
-/* "LinCUPL <version> fit<family>: ATF<family>AS Fitter" and the copyright
- * line, the same for both versions */
+/* Technology options have not been parsed yet, so name only the family. */
 static void main_print_banner(void)
 {
     g_family = dev_family_string();
     g_version = util_strdup(PROGRAM_VERSION);
-    fprintf(g_msg, "%s %s fit%s: ATF%sAS Fitter\n", PROGRAM_NAME, g_version, g_family, g_family);
+    fprintf(g_msg, "%s %s fit%s: ATF%s Fitter\n", PROGRAM_NAME, g_version, g_family, g_family);
     fprintf(g_msg, "%s\n", PROGRAM_COPYRIGHT);
 }
 

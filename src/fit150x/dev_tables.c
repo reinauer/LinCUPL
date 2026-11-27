@@ -64,6 +64,11 @@ static const FitJedecLayout jedec_1502 = {
     pt_addr_1502, { 15360, 15840 }, uim_addr_1502, notes_1502, 24
 };
 
+static const FitJedecLayout jedec_1502_be = {
+    "ATF1502BE", 16814, 960, 15360, 16720, 16750, 16782, 16790, 16806,
+    pt_addr_1502, { 15360, 15840 }, uim_addr_1502, NULL, 0
+};
+
 /* ATF1502, 40 x 5 node names: nodes selectable by each block input multiplexer. */
 static const char *const uim_src_1502[200] = {
     "B22p", "B29fb", "A16fb", "GND", "GCLK",
@@ -350,6 +355,11 @@ static const FitJedecNote notes_1504[48] = {
 static const FitJedecLayout jedec_1504 = {
     "ATF1504AS", 34192, 1920, 30720, 34080, 34134, 34166, 34170, 34186,
     pt_addr_1504, { 30720, 31680 }, uim_addr_1504, notes_1504, 48
+};
+
+static const FitJedecLayout jedec_1504_be = {
+    "ATF1504BE", 34198, 1920, 30720, 34080, 34134, 34166, 34174, 34190,
+    pt_addr_1504, { 30720, 31680 }, uim_addr_1504, NULL, 0
 };
 
 /* ATF1504, 40 x 9 node names: nodes selectable by each block input multiplexer. */
@@ -1106,6 +1116,11 @@ static const FitJedecLayout jedec_1508 = {
     pt_addr_1508, { 61440, 63360 }, uim_addr_1508, notes_1508, 96
 };
 
+static const FitJedecLayout jedec_1508_be = {
+    "ATF1508BE", 74146, 3840, 61440, 73920, 74082, 74114, 74122, 74138,
+    pt_addr_1508, { 61440, 63360 }, uim_addr_1508, NULL, 0
+};
+
 /* ATF1508, 40 x 27 node names: nodes selectable by each block input multiplexer. */
 static const char *const uim_src_1508[1080] = {
     "B30p", "B23fb", "C43p", "C36fb", "E77p", "D56fb", "E71fb", "F92p", "F84fb", "A9p", "H113fb", "H124p", "B18fb", "B27p", "C46p", "C40fb", "E73p", "D52fb", "E67fb", "F96p", "F88fb", "A13p", "H117fb", "H128p", "A3fb", "A7fb", "B19fb",
@@ -1757,3 +1772,40 @@ const FitDeviceDesc g_dev_descs[3] = {
     { FIT_DEV_1508, { 8, 128, 4, 27, 5, 1, 2, 3, "1508" }, &jedec_1508,
       packages_1508, 5, &packages_1508[1], 30, uim_src_1508, oe_src_1508, vector_maps_1508, 2, 20 },
 };
+
+/* Logical fitter controls to BE cell-record offsets. Low-power/PT-power
+ * controls have no BE encoding; storage, termination, hysteresis and I/O
+ * standard are handled separately by their technology-specific consumers. */
+const signed char fit_be_cfg_offsets[24] = {
+    7, 6, 5, 18, 17, 16, 26, 15, -1, 25, 24, 23,
+    22, 21, 20, 14, 19, 13, 12, 11, 3, -1, 2, 9
+};
+
+const FitJedecLayout *fit_be_jedec_layout(enum FitDevice id)
+{
+    if (id == FIT_DEV_1502) return &jedec_1502_be;
+    if (id == FIT_DEV_1504) return &jedec_1504_be;
+    if (id == FIT_DEV_1508) return &jedec_1508_be;
+    return NULL;
+}
+
+int fit_be_macrocell_base(enum FitDevice id, int mc)
+{
+    static const int order_1504[4] = {3, 0, 1, 2};
+    static const int order_1508[8] = {6, 7, 0, 1, 2, 3, 4, 5};
+    const FitJedecLayout *layout = fit_be_jedec_layout(id);
+    int block, row;
+    if (layout == NULL || mc < 0 || mc >= g_dev_descs[id].params.n_macrocells)
+        return -1;
+    block = mc / 16;
+    if (id == FIT_DEV_1502) {
+        row = 15 - mc % 16;
+    } else if (id == FIT_DEV_1504) {
+        row = block < 2 ? 15 - mc % 16 : mc % 16;
+        block = order_1504[block];
+    } else {
+        row = block == 0 || block == 2 || block == 3 ? 15 - mc % 16 : mc % 16;
+        block = order_1508[block];
+    }
+    return layout->mc_cfg_addr + block * 480 + row * 27;
+}

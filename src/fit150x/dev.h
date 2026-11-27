@@ -108,6 +108,13 @@ typedef struct FitJedecLayout {
     int n_notes;
 } FitJedecLayout;
 
+/* BE parts share the array/routing wiring but use packed 27-bit cell
+ * records and different global controls. Unsupported densities return
+ * NULL/-1. Macrocell numbers here are zero-based. */
+const FitJedecLayout *fit_be_jedec_layout(enum FitDevice id);
+int fit_be_macrocell_base(enum FitDevice id, int mc);
+extern const signed char fit_be_cfg_offsets[24];
+
 typedef struct FitDeviceDesc {
     enum FitDevice id;
     FitDeviceParams params;                 /* initial values of the parameter block */

@@ -59,6 +59,11 @@ static int g_jed_sum_on = 1;            /* (initial value 1) */
 static int jed_set_pterm(FitFctTree *tree, int pt, FitSlot *slot);
 static int jed_place_sum(FitSlot *slot, FitFctTree *tree, int use);
 
+static const FitJedecLayout *jed_layout(void)
+{
+    return g_opt.be ? fit_be_jedec_layout(g_dev_desc->id) : g_dev_desc->jedec;
+}
+
 static int jed_count(const FitList *l)
 {
     return l != NULL ? l->count : 0;
@@ -1144,7 +1149,7 @@ static int jed_map_all_cfg(void)
  * walks; the ATF1502 swaps them. */
 static void jed_cfg_area_put(int *pos, char c)
 {
-    int i = *pos - g_dev_desc->jedec->mc_cfg_addr;
+    int i = *pos - jed_layout()->mc_cfg_addr;
 
     if (i >= 0 && i < (int)sizeof g_jed_cfg_area)
         g_jed_cfg_area[i] = c;
@@ -1220,15 +1225,83 @@ static void jed_cfg_area_group(int half, int *pos, int a, int b, int c, int d)
     }
 }
 
+static const FitSlot *jed_pin_slot(int pin)
+{
+    for (int i = 0; i < jed_count(g_jed_slots); i++) {
+        const FitSlot *slot = g_jed_slots->items[i];
+        if (slot->pin == pin && util_str_icmp(slot->signal, FIT_FREE_NAME) != 0)
+            return slot;
+    }
+    return NULL;
+}
+
+/* Logical termination choices: 0 floating, 1 pull-up, 2 pull-down,
+ * 3 keeper. Dedicated inputs use a different fuse encoding from I/O. */
+static int jed_be_termination(int pin)
+{
+    const FitSlot *slot = jed_pin_slot(pin);
+    if (slot == NULL) {
+        if (g_opt.unused_to_pinkeeper) return 3;
+        if (g_opt.pull_up_unused) return 1;
+        return 0;
+    }
+    if (jed_option_applies(g_opt.pin_keep, g_opt.pin_keep_list, slot)) return 3;
+    if (list_find(g_opt.pull_up_list, slot->signal, jed_name_eq)) return 1;
+    if (list_find(g_opt.pull_down_list, slot->signal, jed_name_eq)) return 2;
+    return 0;
+}
+
+static int jed_be_hysteresis(int pin)
+{
+    const FitSlot *slot = jed_pin_slot(pin);
+    return slot != NULL && jed_option_applies(g_opt.schmitt_trigger, g_opt.schmitt_list, slot);
+}
+
+static void jed_build_be_cfg_area(void)
+{
+    memset(g_jed_cfg_area, '1', (size_t)jed_layout()->mc_cfg_fuses);
+    for (int mc = 0; mc < g_dev->n_macrocells; mc++) {
+        int pin = dev_pin_of_macrocell(g_dev_package, mc);
+        int start = fit_be_macrocell_base(g_dev_desc->id, mc) - jed_layout()->mc_cfg_addr;
+        char *c = g_jed_cfg_area + start;
+        const char *logical = g_jed_map->mc_cfg[mc];
+        memset(c, '0', 27);
+        for (int i = 0; i < FIT_MC_CFG_BITS; i++)
+            if (fit_be_cfg_offsets[i] >= 0)
+                c[fit_be_cfg_offsets[i]] = logical[i];
+        int term = pin > 0 ? jed_be_termination(pin) : 0;
+        c[0] = term & 1 ? '1' : '0';
+        c[1] = term & 2 ? '1' : '0';
+        c[4] = pin > 0 && jed_be_hysteresis(pin) ? '1' : '0';
+        /* A true T register replaces the AS XOR-with-feedback circuit. */
+        if (g_dev_desc->id != FIT_DEV_1502 && g_opt.tff_ok) {
+            for (int i = 0; i < jed_count(g_jed_slots); i++) {
+                const FitSlot *slot = g_jed_slots->items[i];
+                if (slot->macrocell == mc + 1 && slot->inst != NULL && slot->cell_kind == FIT_GATE_TFF) {
+                    c[8] = '1';
+                    c[9] = '0';
+                    c[24] = '0';
+                    break;
+                }
+            }
+        }
+    }
+}
+
 /* Lays the configuration bits of every macrocell out in g_jed_cfg_area:
  * two halves, six groups of four bits each. */
 static void jed_build_cfg_area(void)
 {
     int half;
 
-    memset(g_jed_cfg_area, '1', (size_t)g_dev_desc->jedec->mc_cfg_fuses);
+    if (g_opt.be) {
+        jed_build_be_cfg_area();
+        return;
+    }
+
+    memset(g_jed_cfg_area, '1', (size_t)jed_layout()->mc_cfg_fuses);
     for (half = 0; half < 2; half++) {
-        int pos = g_dev_desc->jedec->cfg_half_addr[half];
+        int pos = jed_layout()->cfg_half_addr[half];
         jed_cfg_area_group(half, &pos, 0x10, 0xc, 0xe, 0xb);
         jed_cfg_area_group(half, &pos, 9, 6, 0xd, 10);
         jed_cfg_area_group(half, &pos, 0x14, 0x12, 8, 0x15);
@@ -1399,9 +1472,33 @@ int jed_build_fuse_map(FitEntity *ent, FitList *slots, FitList *uim)
 {
     int i;
 
+    if (g_opt.be && jed_layout() == NULL) {
+        fprintf(g_msg, "BE fuse-map layout is not supported for ATF%s\n", g_dev->family);
+        return 0;
+    }
+    if (g_opt.be && g_opt.mc_power) {
+        fprintf(g_msg, "BE macrocells have no mc_power configuration bit\n");
+        return 0;
+    }
+    if (g_opt.be && (g_opt.sstl_input || g_opt.voltage_a != 1 || g_opt.voltage_b != 1 ||
+                     g_opt.unused_to_ground || g_opt.por || g_opt.power_reset)) {
+        fprintf(g_msg, "BE fuse encoding is not supported for the requested voltage, SSTL, "
+                       "unused-ground or power-up option\n");
+        return 0;
+    }
+
     g_jed_ent = ent;
     g_jed_uim = uim;
     g_jed_slots = slots;
+    if (g_opt.be) {
+        for (int mc = 0; mc < g_dev->n_macrocells; mc++) {
+            int pin = dev_pin_of_macrocell(g_dev_package, mc);
+            if (pin > 0 && jed_be_termination(pin) == 2) {
+                fprintf(g_msg, "BE pull-down is supported only on dedicated inputs (pin %d)\n", pin);
+                return 0;
+            }
+        }
+    }
     jed_collect_blocks();
     jed_collect_ctl_pin_slots();
     jed_alloc_map();
@@ -1470,15 +1567,15 @@ static void jed_write_header(void)
     for (i = 4; i < len && i - 4 < sizeof digits - 1; i++)
         digits[i - 4] = g_dev_package[i];
     jed_printf("%c", 2);
-    jed_printf("JEDEC file for: %s\n", g_dev_desc->jedec->part);
-    jed_printf("Device f%.4s", g_dev_desc->jedec->part + 3);
+    jed_printf("JEDEC file for: %s\n", jed_layout()->part);
+    jed_printf("Device f%.4s", jed_layout()->part + 3);
     for (i = 0; i < len; i++) jed_printf("%c", tolower((unsigned char)g_dev_package[i]));
     jed_printf("\n");
     jed_printf("Created on: %s*\n", ctime(&now));
     if (g_opt.security == 0)
-        jed_printf("QF%d* QP%d * F0*\n", g_dev_desc->jedec->n_fuses, atoi(digits));
+        jed_printf("QF%d* QP%d * F0*\n", jed_layout()->n_fuses, atoi(digits));
     else
-        jed_printf("QF%d* QP%d * F0* G1*\n", g_dev_desc->jedec->n_fuses, atoi(digits));
+        jed_printf("QF%d* QP%d * F0* G1*\n", jed_layout()->n_fuses, atoi(digits));
     jed_printf("NOTE\n");
     for (i = 0; i < 0x32; i++)
         jed_printf(i % 10 == 0 ? "0" : " ");
@@ -1514,7 +1611,7 @@ static void jed_write_pterm(int *addr, int mc, int pt)
  * reverse order (the ATF1502 starts with the other one). */
 static void jed_write_mc_pterms(int mc)
 {
-    int addr = g_dev_desc->jedec->pt_addr[mc - 1];
+    int addr = jed_layout()->pt_addr[mc - 1];
     int down = (mc % 2 == 0);
     int pt;
 
@@ -1571,7 +1668,7 @@ static void jed_write_debug_cfg(void)
 /* comment after a row of configuration fuses. */
 static void jed_write_cfg_note(int addr)
 {
-    const FitJedecLayout *lay = g_dev_desc->jedec;
+    const FitJedecLayout *lay = jed_layout();
     int i;
 
     for (i = 0; i < lay->n_notes; i++) {
@@ -1585,7 +1682,7 @@ static void jed_write_cfg_note(int addr)
 /* the macrocell configuration area, with a NOTE line after every row. */
 static void jed_write_cfg_area(void)
 {
-    const FitJedecLayout *lay = g_dev_desc->jedec;
+    const FitJedecLayout *lay = jed_layout();
     int addr = lay->mc_cfg_addr;
     int col = 0;
     int i;
@@ -1637,7 +1734,7 @@ static void jed_write_mux(int *addr, int block, int mux, int descending)
  * writes a[i] b[i] for i = 39 .. 0 with the fuses first to last. */
 static void jed_write_uim_section(int pair, int a, int b)
 {
-    int addr = g_dev_desc->jedec->uim_addr[pair];
+    int addr = jed_layout()->uim_addr[pair];
     int i;
 
     jed_printf("\nNOTE   UIM for block %c and %c *\n", 'A' + a, 'A' + b);
@@ -1677,7 +1774,7 @@ static void jed_write_global_oe(void)
 
     jed_printf("\nNOTE  6 global OE \n");
     jed_printf("0         0         0*\n");
-    jed_printf("L%d\n", g_dev_desc->jedec->global_oe_addr);
+    jed_printf("L%d\n", jed_layout()->global_oe_addr);
     for (i = 0; i < FIT_GLOBAL_SLOTS; i++) {
         const char *fuses = g_jed_map->global[g_dev_desc->id == FIT_DEV_1502 ? FIT_GLOBAL_SLOTS - 1 - i : i];
         for (k = 0; k < w; k++)
@@ -1691,9 +1788,40 @@ static void jed_write_device_bits(void)
 {
     int i;
 
+    if (g_opt.be) {
+        const char *logical = g_jed_map->cfg_bits;
+        char config[32];
+        int small = g_dev_desc->id == FIT_DEV_1502;
+        int pins[4] = {dev_special_pin(8, 0), dev_special_pin(9, 1),
+                       dev_special_pin(0xb, 0), dev_special_pin(4, 0)};
+        memset(config, '1', sizeof config);
+        config[0] = '0';
+        for (i = 0; i < 6; i++)
+            config[1 + i] = logical[27 - (small ? 5 - i : i)];
+        config[7] = logical[21];
+        for (i = 0; i < 3; i++) {
+            config[8 + 3 * i] = logical[20 - 3 * i];
+            config[9 + 3 * i] = logical[19 - 3 * i];
+            config[10 + 3 * i] = logical[18 - 3 * i];
+        }
+        config[17] = logical[8];
+        config[18] = logical[7];
+        for (i = 0; i < 4; i++) {
+            int term = jed_be_termination(pins[i]);
+            int encoded = term == 1 ? 2 : term == 2 ? 1 : term;
+            config[19 + i] = jed_be_hysteresis(pins[i]) ? '0' : '1';
+            config[23 + 2 * i] = encoded & 1 ? '1' : '0';
+            config[24 + 2 * i] = encoded & 2 ? '1' : '0';
+        }
+        jed_printf("\nNOTE  device configuration bits*\nL%d ", jed_layout()->cfg_bits_addr);
+        for (i = 0; i < 32; i++) jed_put_fuse(config[i]);
+        jed_printf("*\n");
+        return;
+    }
+
     jed_printf("\nNOTE  device configuration bits*\n");
     jed_printf("NOTE   0         0         0*\n");
-    jed_printf("L%d ", g_dev_desc->jedec->cfg_bits_addr);
+    jed_printf("L%d ", jed_layout()->cfg_bits_addr);
     for (i = 0x1f; i >= 0; i--)
         jed_put_fuse(g_jed_map->cfg_bits[i]);
     jed_printf("*\n");
@@ -1702,10 +1830,17 @@ static void jed_write_device_bits(void)
 static void jed_write_jtag_bits(void)
 {
     jed_printf("\nNOTE  Special Purpose Bits (JTAG) *\n");
-    jed_printf("L%d ", g_dev_desc->jedec->jtag_bits_addr);
+    jed_printf("L%d ", jed_layout()->jtag_bits_addr);
     g_jed_map->jtag_bits[0] = g_opt.jtag != 0 ? '1' : '0';
     jed_put_fuse('1');
     jed_put_fuse(g_jed_map->jtag_bits[0]);
+    if (g_opt.be) {
+        jed_put_fuse(g_opt.pd1 ? '0' : '1');
+        jed_put_fuse(g_opt.pd2 ? '0' : '1');
+        for (int i = 0; i < 4; i++) jed_put_fuse('1');
+        jed_printf("*\n");
+        return;
+    }
     jed_put_fuse('1');
     jed_put_fuse('1');
     jed_printf("*\n");
@@ -1716,7 +1851,7 @@ static void jed_write_ues_bits(void)
     int i;
 
     jed_printf("\nNOTE  UES bits*\n");
-    jed_printf("L%d ", g_dev_desc->jedec->ues_bits_addr);
+    jed_printf("L%d ", jed_layout()->ues_bits_addr);
     for (i = 0; i < 0x10; i++)
         jed_put_fuse(g_jed_map->ues_bits[i]);
     jed_printf("*\n");
@@ -1727,10 +1862,10 @@ static void jed_write_reserved_bits(void)
     int i;
 
     jed_printf("\nNOTE  Reserved bits *\n");
-    jed_printf("L%d ", g_dev_desc->jedec->reserved_addr);
-    /* the fuses up to QF: two on the ATF1508, six on the ATF1504 and
-     * ATF1502 */
-    for (i = g_dev_desc->jedec->reserved_addr; i < g_dev_desc->jedec->n_fuses; i++)
+    jed_printf("L%d ", jed_layout()->reserved_addr);
+    /* The fuses up to QF: two on AS1508, six on AS1502/1504,
+     * eight on supported BE parts. */
+    for (i = jed_layout()->reserved_addr; i < jed_layout()->n_fuses; i++)
         jed_put_fuse('0');
     jed_printf("*\n\n");
 }

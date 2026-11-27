@@ -1178,7 +1178,8 @@ void report_open(const char *out_base)
         return;         /* the name is not freed on this path */
     }
     time(&now);
-    fprintf(g_fit_report, "%s %s fit%s: ATF%sAS Fitter, ", PROGRAM_NAME, g_version, g_family, g_family);
+    fprintf(g_fit_report, "%s %s fit%s: ATF%s Fitter, ", PROGRAM_NAME, g_version, g_family,
+            g_family);
     fprintf(g_fit_report, "running %s\n\n", ctime(&now));
     if (FIT_EXT)
         report_print_command();
