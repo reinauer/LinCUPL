@@ -396,7 +396,8 @@ typedef struct FitSlot {
     char *buried;     /* FIT_FREE_NAME at creation; name of the buried (feedback node) signal */
     char *foldback;   /* FIT_FREE_NAME at creation; foldback signal of the cell (costs one term), or "NA" */
     char *fn_kind;    /* FIT_FREE_NAME at creation; "reg" / "com": kind of the function in the cell */
-    int   i28;        /* unknown; set to 1 by the report, never read */
+    int   reserved_pad; /* pad reserved for JTAG, power down or VREF */
+    int   sstl_input;  /* selected I/O input buffer, including bidirectional pads */
     int   polarity;   /* 1 for macrocells at creation; the fuse mapper stores the polarity of the
                          variable placed here (jed_map_slot) */
     /* The fields from cell_kind on are written by the fuse mapper

@@ -148,3 +148,34 @@ fitted result without an ABS file. LinSim exposes the same mode through
 **Simulator > Simulate JEDEC Fuse Map**. `jedcompare` checks combinational
 maps using that decoder; it rejects active register state and physical
 output feedback. See [JEDEC tools](jed-tools.md) for the proof scope.
+
+## BE electrical options
+
+In extended mode, `-voltage_level_A` and `-voltage_level_B` describe the
+external I/O bank supplies. ATF1502BE accepts 1.8, 2.5 and 3.3 V;
+ATF1504BE and ATF1508BE also accept 1.5 V. These options validate electrical
+choices; they do not program supply-voltage selectors or change Boolean
+logic. Each bank contains half the macrocells, with bank A first.
+
+On ATF1504BE and ATF1508BE, `-SSTL_input name1,name2` enables SSTL on the
+named I/O inputs, including the input buffer of bidirectional pads. Their
+bank must use 2.5 or 3.3 V. The fitter reserves that bank's VREF pin and
+keeps its termination disabled. VREF cannot also serve
+as user I/O or power down. Dedicated inputs cannot use SSTL, and SSTL
+cannot share a pad with Schmitt-trigger mode. `-SSTL_input ON` selects all
+I/O inputs while leaving dedicated inputs in CMOS mode; unconstrained
+inputs are placed in a suitable bank. An explicit list containing an
+output without input feedback, unknown name or dedicated input is an error.
+
+`-pull_down name1,name2` selects pull-down termination on named dedicated
+inputs or I/O pads. `-unused_To_Ground ON` selects it for unused pads.
+`-pull_up_unused ON` and `-unused_To_PinKeeper ON` provide the other unused
+pad policies; these policies are mutually exclusive. Active VREF pads
+remain floating under every policy, including global `-pin_keep ON`.
+
+`-POR one` and `-power_reset ON` are accepted compatibility options on BE
+parts and report that they do not change configuration fuses. They do not
+select an initial register value. Express a required initial state through
+reset logic; simulator preload vectors provide a separate way to test
+arbitrary register states. JEDEC simulation models binary I/O levels,
+not SSTL analog thresholds, supply ramp behavior or termination strength.

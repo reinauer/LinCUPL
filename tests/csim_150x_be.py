@@ -87,6 +87,38 @@ def main():
             simulate(order, 'P 0\nZ L\n')
             bits[config + 23], bits[config + 24] = 0, 1
             simulate(order, 'P 0\nZ H\n')
+            # Select the third global-clock pin, which belongs to an I/O
+            # macrocell. Its two-bit termination differs from a dedicated
+            # input: code2 pulls down, code1 pulls up. External drive wins.
+            io_clock, io_start = {1502: (35, 16245), 1504: (35, 32085),
+                                  1508: (85, 64245)}[part]
+            bits[config + 9] = bits[config + 10] = 0
+            bits[io_start:io_start + 2] = [0, 1]
+            simulate(f'P{io_clock},P{output}', 'P 0\nZ L\n1 H\n')
+            bits[io_start:io_start + 2] = [1, 0]
+            simulate(f'P{io_clock},P{output}', 'P 0\n0 L\nZ H\n')
+            if part != 1502:
+                # SSTL keeps binary input behavior but consumes its bank's
+                # reference pad. The pad must not remain a digital output.
+                bits[io_start + 10] = 1
+                simulate(f'P{io_clock},P{output}', 'P 0\n0 L\n1 H\n')
+                ref_start = 31551 if part == 1504 else 63204
+                for offset in (5, 6, 7, 13):
+                    bits[ref_start + offset] = 1
+                write()
+                assert 'VREF' in run('jedcompare', ['--sequential', 'test.jed', 'test.jed'], 2)
+                for offset in (5, 6, 7, 13):
+                    bits[ref_start + offset] = 0
+                bits[io_start + 4] = 1
+                write()
+                assert 'Schmitt' in run('jedcompare', ['--sequential', 'test.jed', 'test.jed'], 2)
+                bits[io_start + 4] = 0
+                if part == 1504:
+                    # VREFA and PD1 share pin5 on this package.
+                    bits[32565 + 10] = 1
+                    bits[config + 34] = 0
+                    write()
+                    assert 'VREF' in run('jedcompare', ['--sequential', 'test.jed', 'test.jed'], 2)
     print(f'PASS: {checks} independent BE map checks')
 
 

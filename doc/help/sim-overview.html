@@ -119,6 +119,16 @@ macrocell registers with physical storage values <tt>0</tt>, <tt>1</tt> or
 ATF1508BE maps use distinct 16814/34198/74146-fuse layouts, including per-pin
 termination and native ATF1504BE/1508BE toggle storage. Timing, JTAG
 programming and JTAG-specific input termination are not simulated.</li>
+<li><b>BE input configuration.</b> I/O pull-up, pull-down and keeper
+encodings determine the logical value of an undriven pad. SSTL inputs use
+binary logical levels in simulation; their bank's VREF pin is reserved
+and cannot also supply a digital input, output or power-down control.
+SSTL combined with Schmitt trigger is rejected. Supply voltages, analog
+thresholds, resistor strength and power-up voltage ramps are outside the
+logical model. Bank-voltage options select board/timing assumptions; they
+do not add voltage-selector fuses. BE <tt>POR</tt> and
+<tt>power_reset</tt> options do not change the fuse image or the simulated
+initial register values.</li>
 <li><b>ATF1508BE CBGA132.</b> Select <tt>f1508cbga132</tt>. In an
 <tt>ORDER</tt> list, ball names such as <tt>A1</tt>, <tt>G2</tt> and
 <tt>L2</tt> denote physical levels. Numbered aliases <tt>P1</tt> through

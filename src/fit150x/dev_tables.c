@@ -1851,6 +1851,17 @@ const signed char fit_be_cfg_offsets[24] = {
     22, 21, 20, 14, 19, 13, 12, 11, 3, -1, 2, 9
 };
 
+int fit_be_vref_macrocell(enum FitDevice id, int bank)
+{
+    if (bank < 0 || bank > 1) return -1;
+    /* Physical VREFA/VREFB pads in each BE package, numbered by cell. */
+    static const int cells_1504[2] = {3, 46};
+    static const int cells_1508[2] = {21, 93};
+    if (id == FIT_DEV_1504) return cells_1504[bank] - 1;
+    if (id == FIT_DEV_1508) return cells_1508[bank] - 1;
+    return -1;
+}
+
 const FitJedecLayout *fit_be_jedec_layout(enum FitDevice id)
 {
     if (id == FIT_DEV_1502) return &jedec_1502_be;

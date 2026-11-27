@@ -218,7 +218,10 @@ FitList *place_find_slots(FitEntity *ent, int block, int n_pt, int mode, int mc,
             continue;
 
         if (mode == 1) {
-            if (!(util_str_icmp(slot->signal, FIT_FREE_NAME) == 0 && slot->pin != 0))
+            FitVariable *owner = slot->sstl_input ? entity_var_by_id(ent, var_id) : NULL;
+            int own_sstl_pad = owner != NULL && util_str_ieq(slot->signal, owner->name);
+            if (slot->pin == 0 ||
+                (util_str_icmp(slot->signal, FIT_FREE_NAME) != 0 && !own_sstl_pad))
                 continue;
             goto check_preassign;
         } else if (mode == 5) {

@@ -35,7 +35,7 @@ typedef struct {
     const FitPackageDesc *package;
     const uint8_t *fuses;
     uint8_t config[32], input_used[257], output_used[257], drive[257], keeper[257];
-    uint8_t pd_pin[257], held_pins[257], held_nodes[257];
+    uint8_t pd_pin[257], vref_pin[257], held_pins[257], held_nodes[257];
     uint8_t termination[257]; /* 0 none, 1 keeper, 2 pull-up, 3 pull-down */
     int power_down, be, jtag;
     int pin_sym[257], pin_mc[257], pad[257];
@@ -156,8 +156,15 @@ static void configuration(void)
             }
             if (m->pin) {
                 int term = f[start] + 2 * f[start + 1];
-                chip->termination[m->pin] = term == 3 ? 1 : term == 1 ? 2 : 0;
-                if (term == 2) bad("ATF150x BE pin selects an invalid termination");
+                chip->termination[m->pin] = term == 3 ? 1 : term == 1 ? 2 : term == 2 ? 3 : 0;
+                if (!small && f[start + 10]) {
+                    int bank = i >= blocks * 8;
+                    int ref_mc = fit_be_vref_macrocell(chip->device->id, bank);
+                    int ref_pin = ref_mc < 0 ? 0 : chip->mc[ref_mc].pin;
+                    if (!ref_pin) bad("ATF150x SSTL reference pin is not bonded");
+                    if (f[start + 4]) bad("ATF150x input selects both SSTL and Schmitt trigger");
+                    chip->vref_pin[ref_pin] = 1;
+                }
             }
         }
         for (int i = 0; i < 6; i++)
@@ -327,6 +334,8 @@ static void reachable(int n, int depth)
     case J_PAD:
         if (chip->pd_pin[v->a])
             bad("ATF150x power-down pin is also routed as a logic input");
+        if (chip->vref_pin[v->a])
+            bad("ATF150x SSTL VREF pin is also routed as a logic input");
         chip->input_used[v->a] = 1;
         break;
     case J_STATE: {
@@ -362,7 +371,7 @@ static void device_view(void)
     for (int p = 1; p <= count; p++) {
         uint8_t *pin = record + pins + (p - 1) * DEV_PIN_REC_SIZE;
         wr16(pin + 2, (uint16_t)p);
-        if (chip->pad[p]) pin[5] = chip->pin_mc[p] >= 0 ? 16 : 12;
+        if (chip->pad[p] && !chip->vref_pin[p]) pin[5] = chip->pin_mc[p] >= 0 ? 16 : 12;
     }
     use_device_image(record, size);
 }
@@ -466,6 +475,7 @@ int jed150x_load(const uint8_t *fuses, unsigned nfuses, unsigned pins,
         if (chip->config[29 - i]) continue;
         int pin = p->pd_pins[i];
         if (!pin || !chip->pad[pin]) bad("ATF150x power-down pin is not bonded");
+        if (chip->vref_pin[pin]) bad("ATF150x power-down pin conflicts with SSTL VREF");
         chip->pd_pin[pin] = chip->input_used[pin] = 1;
         chip->power_down = chip->sequential = 1;
     }
@@ -474,6 +484,8 @@ int jed150x_load(const uint8_t *fuses, unsigned nfuses, unsigned pins,
     for (int i = 0; i < d->params.n_macrocells; i++) {
         jmacro_t *m = &chip->mc[i];
         int jtag = 0;
+        if (m->pin && chip->vref_pin[m->pin] && m->oe != 0)
+            bad("ATF150x SSTL VREF pin is also configured as an output");
         if (chip->jtag)
             for (int k = 0; k < 4; k++) if (m->pin == p->jtag_pins[k]) jtag = 1;
         if (m->pin && m->oe != 0 && !jtag && !chip->pd_pin[m->pin]) {
@@ -776,7 +788,7 @@ void jed150x_truth_pins(sim_truth_t *table)
         if (chip->output_used[p]) {
             table->role[p] = SIM_PIN_OUTPUT;
             table->outputs[table->noutputs++] = p;
-        } else if (chip->pad[p]) {
+        } else if (chip->pad[p] && !chip->vref_pin[p]) {
             table->role[p] = SIM_PIN_INPUT;
             if (chip->input_used[p]) table->inputs[table->ninputs++] = p;
         }

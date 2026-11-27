@@ -542,6 +542,13 @@ static FitSlot *fit_drv_free_input_slot(FitEntity *ent, char **node)
     return NULL;
 }
 
+/* SSTL inputs have their pad selected before output placement. */
+static int fit_drv_sstl_name(const char *name)
+{
+    return g_opt.sstl_input && (g_opt.sstl_list == NULL ||
+        list_find(g_opt.sstl_list, (void *)name, fit_str_ieq_cb) != 0);
+}
+
 /* gives input id a pin; *node receives the node name */
 static FitSlot *fit_drv_place_input(FitEntity *ent, int id, char **node)
 {
@@ -549,6 +556,15 @@ static FitSlot *fit_drv_place_input(FitEntity *ent, int id, char **node)
     FitSlot *slot;
     int k, node_id;
 
+    if (fit_drv_sstl_name(v->name)) {
+        for (int i = 0; i < g_dev->n_macrocells; i++) {
+            slot = slot_at(i);
+            if (util_str_ieq(slot->signal, v->name)) {
+                *node = pin_node_name(slot);
+                return slot;
+            }
+        }
+    }
     if (g_fit_preassign_used != 0) {
         k = list_find(g_preassign, v->name, place_name_eq);
         if (k != 0) {
@@ -1148,6 +1164,118 @@ static int fit_drv_check_preassign(FitEntity *ent)
     return 1;
 }
 
+/* Reserve VREF only for banks containing an SSTL input. Supplies are
+ * external: these constraints select legal pads, not voltage fuses. */
+static int fit_drv_sstl_pad_ok(FitSlot *slot)
+{
+    if (slot == NULL || slot->pin <= 0 || slot->macrocell <= 0 ||
+        !is_free_name(slot->signal))
+        return 0;
+    int bank = (slot->macrocell - 1) >= g_dev->n_macrocells / 2;
+    int voltage = bank ? g_opt.voltage_b : g_opt.voltage_a;
+    int refmc = fit_be_vref_macrocell(g_dev_desc->id, bank);
+    if (voltage < 2 || refmc < 0 || slot->macrocell == refmc + 1)
+        return 0;
+    FitSlot *ref = slot_at(refmc);
+    return ref->pin > 0 && place_preassign_index_of_pin(ref->pin) == 0 &&
+        (is_free_name(ref->signal) ||
+         util_str_ieq(ref->signal, bank ? "VREFB" : "VREFA"));
+}
+
+static int fit_drv_place_sstl(FitEntity *ent)
+{
+    if (!g_opt.sstl_input)
+        return 1;
+    if (!g_opt.be || g_dev_desc->id == FIT_DEV_1502) {
+        fprintf(g_msg, "SSTL inputs require ATF1504BE or ATF1508BE\n");
+        return 0;
+    }
+    FitList *pads = list_create();
+    for (int i = 0; i < LN(ent->inputs); i++) {
+        FitVariable *v = ent->inputs->items[i];
+        if (util_str_ieq(latch_signal_source(ent, v->name), v->name))
+            list_add(pads, v);
+    }
+    for (int i = 0; ent->net != NULL && i < LN(ent->outputs); i++) {
+        FitVariable *v = ent->outputs->items[i];
+        if (!util_str_ieq(latch_signal_source(ent, v->name), v->name))
+            continue;
+        int kind = tt3_gate_kind_of_output(ent, v->name);
+        FitInstance *inst = netlist_find_instance(ent, v->name);
+        if (inst == NULL && ent->net != NULL)
+            inst = tt3_find_instance_by_alias(ent, v->name, &kind);
+        if (inst != NULL && (inst->pin != NULL ||
+            ((kind == FIT_GATE_TH || kind == FIT_GATE_ITH) && inst->d != NULL)))
+            list_add(pads, v);
+    }
+    for (int i = 0; i < LN(g_opt.sstl_list); i++) {
+        char *name = g_opt.sstl_list->items[i];
+        if (list_find(pads, name, var_has_name) == 0) {
+            fprintf(g_msg, "SSTL input is not an input signal: %s\n", name);
+            list_destroy(&pads);
+            return 0;
+        }
+    }
+    /* Place constrained inputs first so automatic choices cannot consume
+     * a bank's reference pad before its explicitly selected input. */
+    for (int pass = 0; pass < 2; pass++) {
+        for (int i = 0; i < LN(pads); i++) {
+            FitVariable *v = pads->items[i];
+            if (!fit_drv_sstl_name(v->name))
+                continue;
+            int k = g_fit_preassign_used ?
+                list_find(g_preassign, v->name, place_name_eq) : 0;
+            if ((k == 0) != (pass != 0))
+                continue;
+            FitSlot *slot = k ? place_slot_of_pin(preassign_at(k)->pin) : NULL;
+            /* ON applies to I/O pads; dedicated constrained inputs stay CMOS. */
+            if (slot != NULL && slot->macrocell == 0 && g_opt.sstl_list == NULL)
+                continue;
+            if (g_opt.schmitt_trigger && (g_opt.schmitt_list == NULL ||
+                list_find(g_opt.schmitt_list, v->name, fit_str_ieq_cb))) {
+                fprintf(g_msg, "SSTL and Schmitt trigger conflict on input %s\n", v->name);
+                list_destroy(&pads);
+                return 0;
+            }
+            if (k == 0) {
+                for (int mc = 0; mc < g_dev->n_macrocells; mc++) {
+                    FitSlot *candidate = slot_at(mc);
+                    if (place_preassign_index_of_pin(candidate->pin) == 0 &&
+                        fit_drv_sstl_pad_ok(candidate)) {
+                        slot = candidate;
+                        break;
+                    }
+                }
+            }
+            if (!fit_drv_sstl_pad_ok(slot)) {
+                fprintf(g_msg, "SSTL input %s needs an I/O pad in a 2.5 or 3.3 V bank "
+                        "with an available VREF pin\n", v->name);
+                list_destroy(&pads);
+                return 0;
+            }
+            int bank = (slot->macrocell - 1) >= g_dev->n_macrocells / 2;
+            FitSlot *ref = slot_at(fit_be_vref_macrocell(g_dev_desc->id, bank));
+            ref->signal = bank ? "VREFB" : "VREFA";
+            ref->reserved_pad = 1;
+            slot->signal = util_strdup(v->name);
+            slot->sstl_input = 1;
+            if (k == 0 && entity_is_output(ent, v->id)) {
+                /* The output half of a bidirectional pad must use the
+                 * same macrocell selected for its SSTL input buffer. */
+                FitPreassignItem *item = util_calloc(1, sizeof *item);
+                item->name = util_strdup(v->name);
+                item->pin = slot->pin;
+                if (g_preassign == NULL)
+                    g_preassign = list_create();
+                list_add(g_preassign, item);
+                g_fit_preassign_used = 1;
+            }
+        }
+    }
+    list_destroy(&pads);
+    return 1;
+}
+
 /* gives signal v a transparent latch (constant enable) of its
  * own, so that it sits in a macrocell as a registered node */
 static void fit_drv_add_latch(FitEntity *ent, FitVariable *v)
@@ -1400,6 +1528,16 @@ static int fit_drv_take_global_pin(char *name, int kind, FitList *pins)
     int k = 0;
     int i;
 
+    if (fit_drv_sstl_name(name)) {
+        for (i = 0; i < g_dev->n_macrocells; i++) {
+            slot = slot_at(i);
+            if (util_str_ieq(slot->signal, name)) {
+                if (list_find(pins, FIT_INT2PTR(slot->pin), list_ptr_eq) == 0)
+                    return 0;
+                return kind != 6 || dev_assign_global_oe(slot) != 0;
+            }
+        }
+    }
     if (g_fit_preassign_used != 0)
         k = list_find(g_preassign, name, place_name_eq);
     if (k == 0) {
@@ -1530,7 +1668,7 @@ int fit_drv_pass(FitEntity *ent, FitList *used, int *result)
     place_create_slots(g_dev_package);
     place_create_uim_slots();
     place_create_global_slots();
-    if (fit_drv_check_preassign(ent) == 0) {
+    if (fit_drv_check_preassign(ent) == 0 || fit_drv_place_sstl(ent) == 0) {
         g_exit_code = 0x12e;
         *result = -2;
         return 0;
