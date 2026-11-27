@@ -1,22 +1,22 @@
 # SPDX-License-Identifier: BSD-2-Clause
-"""Reviewed exclusions from the imported library's record comparison.
+"""Record coverage and compatibility metadata in device libraries.
 
-These ranges have no identified consumer in the current native readers.
-They are not asserted to be padding or meaningless in other tools. Source
-libraries are retained separately from compiled device descriptions.
-See doc/device-implementation.md for consumers and remaining questions.
+Reserved regions are zero in the supported catalogs and are emitted as
+zero, but remain part of record comparison. Compatibility fields preserve
+values whose hardware meaning is not established. Only hardware-model
+comparison separates those fields from the functional records.
 """
 from .syntax import Error
 
 
 # (first byte, width), relative to a record. Every section is explicit,
-# including sections for which no whole-field exclusion is permitted.
-UNMAPPED_RANGES = {
-    3: ((4, 4), (20, 1), (31, 6), (50, 1), (57, 4)),
+# including sections without reserved bytes. These are not exclusions.
+RESERVED_ZERO_RANGES = {
+    3: ((6, 1), (31, 6), (50, 1), (57, 4)),
     4: (),
     5: (),
     6: ((9, 1),),
-    7: ((26, 1),),
+    7: (),
     8: (),
     9: (),
     10: ((4, 1),),
@@ -25,21 +25,25 @@ UNMAPPED_RANGES = {
 }
 
 
-def excluded_offsets(section):
-    return tuple(offset for start, width in UNMAPPED_RANGES[section]
-                 for offset in range(start, start + width))
+# (byte, name), used only to report hardware-model compatibility metadata
+# independently. Catalog comparison checks every one of these bytes.
+COMPATIBILITY_FIELDS = {
+    3: ((4, 'attribute_4'), (5, 'attribute_5'),
+        (7, 'attribute_7'), (20, 'attribute_20')),
+    7: ((26, 'legacy_width'),),
+}
 
 
 def validate_coverage(fields, widths):
-    """Reject holes, overlaps and out-of-bounds schema/exclusion ranges.
+    """Reject holes, overlaps and out-of-bounds field/reserved ranges.
 
     Losing a schema field must fail here, rather than silently classifying
-    its bytes as another exclusion. Adding an interpreted field requires
-    removing its reviewed exclusion in the same change.
+    its bytes as reserved. Adding a field in a reserved region requires
+    reviewing and narrowing that region in the same change.
     """
     expected = set(range(3, len(widths)))
-    if set(fields) != expected or set(UNMAPPED_RANGES) != expected:
-        raise Error('record schema and reviewed exclusions must cover every section')
+    if set(fields) != expected or set(RESERVED_ZERO_RANGES) != expected:
+        raise Error('record schema and reserved regions must cover every section')
     for section in expected:
         owner = [None] * widths[section]
 
@@ -53,8 +57,8 @@ def validate_coverage(fields, widths):
 
         for field in fields[section]:
             cover(field.offset, field.width, field.name)
-        for start, width in UNMAPPED_RANGES[section]:
-            cover(start, width, 'reviewed unmapped range')
+        for start, width in RESERVED_ZERO_RANGES[section]:
+            cover(start, width, 'reserved zero region')
         missing = [offset for offset, name in enumerate(owner) if name is None]
         if missing:
-            raise Error(f'section {section}: bytes without a field or reviewed exclusion: {missing}')
+            raise Error(f'section {section}: bytes without a field or reserved region: {missing}')

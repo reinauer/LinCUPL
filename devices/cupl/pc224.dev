@@ -16,6 +16,13 @@ device pc224 {
         supply = 24
     }
 
+    compatibility {
+        attribute_4 = 0
+        attribute_5 = 1
+        attribute_7 = 1
+        attribute_20 = 1
+    }
+
     fuses {
         count = 3204
         default = 0
@@ -127,6 +134,7 @@ device pc224 {
 
     node_functions {
         defaults {
+            legacy_width = 0
             invert = no
             config_value = 0
             first_or_fuse = 0

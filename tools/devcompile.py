@@ -140,8 +140,13 @@ def main():
         print(f'{args.output}: {len(data)} bytes')
         if report is not None:
             for name, result in report.items():
+                metadata = ''
+                if 'compatibility_equal' in result:
+                    metadata = ('; compatibility metadata ' +
+                                ('match' if result['compatibility_equal'] else 'DIFFER'))
                 print(f'{name}: raw bytes {"identical" if result["raw_equal"] else "differ"}; '
-                      f'canonical records {"match" if result["canonical_equal"] else "DIFFER"}')
+                      f'canonical records {"match" if result["canonical_equal"] else "DIFFER"}'
+                      f'{metadata}')
             if not all(r['canonical_equal'] for r in report.values()):
                 return 1
     except (Error, OSError, UnicodeError, KeyError, TypeError, json.JSONDecodeError) as exc:

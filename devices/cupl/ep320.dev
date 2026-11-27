@@ -16,6 +16,13 @@ device ep320 {
         supply = 20
     }
 
+    compatibility {
+        attribute_4 = 0
+        attribute_5 = 1
+        attribute_7 = 1
+        attribute_20 = 1
+    }
+
     fuses {
         count = 2916
         default = 0
@@ -123,6 +130,7 @@ device ep320 {
 
     node_functions {
         defaults {
+            legacy_width = 0
             invert = no
             config_value = 0
             first_or_fuse = 0

@@ -16,6 +16,13 @@ device p1020ev8 {
         supply = 24
     }
 
+    compatibility {
+        attribute_4 = 0
+        attribute_5 = 3
+        attribute_7 = 2
+        attribute_20 = 1
+    }
+
     fuses {
         count = 3616
         default = 0
@@ -126,6 +133,7 @@ device p1020ev8 {
 
     node_functions {
         defaults {
+            legacy_width = 0
             config_value = 0
             first_or_fuse = 0
             config_first_fuse = 0

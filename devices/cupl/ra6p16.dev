@@ -16,6 +16,13 @@ device ra6p16 {
         supply = 24
     }
 
+    compatibility {
+        attribute_4 = 0
+        attribute_5 = 0
+        attribute_7 = 0
+        attribute_20 = 0
+    }
+
     fuses {
         count = 1024
         default = 0
@@ -98,6 +105,7 @@ device ra6p16 {
 
     node_functions {
         defaults {
+            legacy_width = 0
             array = 1
             invert = no
             select_value = 0

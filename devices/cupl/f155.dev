@@ -16,6 +16,13 @@ device f155 {
         supply = 20
     }
 
+    compatibility {
+        attribute_4 = 0
+        attribute_5 = 0
+        attribute_7 = 0
+        attribute_20 = 1
+    }
+
     fuses {
         count = 2108
         default = 0
@@ -122,6 +129,7 @@ device f155 {
 
     node_functions {
         defaults {
+            legacy_width = 0
             config_value = 0
             config_first_fuse = 0
             pair_first_fuse = 0

@@ -4,7 +4,7 @@
 
 | Sources | Entries | Behavior |
 | --- | ---: | --- |
-| `devices/Atmel/*.dev` | 85 | Preserve the mapped records and order of `Atmel.dl` |
+| `devices/Atmel/*.dev` | 85 | Preserve the records and order of `Atmel.dl` |
 | `devices/cupl/*.dev` | 624 | Preserve `cupl.dl`, including both `p16l8` entries |
 | `devices/manifest.json` | 660 selected | First occurrence wins, with Atmel precedence |
 | `devices/families/*.dev` | 17 interfaces | Reusable models with the deliberate differences below |
@@ -35,40 +35,64 @@ images by image length. Descriptor capacity is not a silicon resource or
 an allocation size in these readers: changing 5,000 to 94 saves no memory
 by itself. Attribute resource limits are separate and remain intact.
 
-| Section | Unmapped bytes cleared in compiled images | Classification in the 709 source entries |
+| Section | Bytes | Disposition and established meaning |
 | --- | --- | --- |
-| Attributes (3) | 4 | Nonzero only in `f506`, `f506lcc` and `mapl144`; meaning unresolved |
-| Attributes (3) | 5, 7, 20 | Nonzero in multiple families; meaning unresolved |
-| Attributes (3) | 6, 31–36, 50, 57–60 | Zero in every source entry; reserved or unresolved, not established as unused |
-| Pin functions (6) | 9 | Zero in every source record; reserved or unresolved |
-| Node functions (7) | 26 | Often nonzero and sometimes different from row width; meaning unresolved |
-| Connections (10) | 4 | Zero in every source record; reserved or unresolved |
+| Attributes (3) | 4 | Retained as `compatibility.attribute_4`; nonzero only in `f506`, `f506lcc` and `mapl144` |
+| Attributes (3) | 5, 7, 20 | Retained as `compatibility.attribute_5`, `attribute_7` and `attribute_20`; no circuit meaning established |
+| Attributes (3) | 6, 31–36, 50, 57–60 | Reserved zero regions; zero in all 709 entries, emitted as zero and compared |
+| Pin functions (6) | 9 | Reserved zero byte; zero in every source record, emitted as zero and compared |
+| Node functions (7) | 26 | Retained as `legacy_width`; the historical field label is `width`, distinct from the next byte's `jwidth` |
+| Connections (10) | 4 | Reserved zero byte; zero in every source record, emitted as zero and compared |
 
-No current native consumer has been identified for these ranges. Their
-meaning remains unresolved; reference binary copies retain their exact
-values outside the source catalog. `audit.py` requires each record byte to
-belong to a named field or an explicit exclusion, rejecting gaps and overlaps.
-Zero-only observations cannot establish what a nonzero value would mean.
+No current native computation reads the five compatibility fields. The
+node diagnostic labels establish that `legacy_width` and `row_width` are
+separate quantities, not that one can be derived from the other. For example,
+`p10l8` array records have legacy width 32 and fuse row width 20. The exact
+values remain in every catalog description; compilation no longer discards
+them. Assigning circuit names to the four attributes would imply knowledge
+that the reader audit and controlled tests do not establish.
+
+`audit.py` requires each record byte to belong to a named field or an
+explicit reserved zero region, rejecting gaps and overlaps. Reserved regions
+are not comparison exclusions. A nonzero value on either side differs from
+the catalog's zero, so extending the supported format requires reviewing
+that field. Zero-only observations are not proof that the bytes are unused
+in every library tool.
+
 Connection byte 12 is a configuration value and is retained and compared.
 Attribute bytes 51–56 describe generic `SEQUENCE` expansion and are also
 retained and compared, including alternate function codes when the count
 selects only the primary function.
 
-Controlled `f506` compilations preserved the JEDEC bitmap, ABS file and
-documentation after independently changing attribute 4 (including a nonzero
-sentinel), attribute 20, next-function descriptors 51–52, node byte 26,
-section capacities or stored pointers. Setting either sequence count to
-zero rejected the same design. Separate `mapl144` probes also preserved
-ABS, PLA and documentation when attribute 4 or node byte 26 changed.
-These tests exercise an SR state machine, registered output and fitter-input
-generation; they do not establish that the remaining fields are unused
-by other families, simulation or library-editing tools.
+Controlled compilations preserved JEDEC, ABS and normalized documentation
+when the compatibility fields, section capacities or stored pointers were
+changed in selected devices. Generic state-machine count changes supplied
+positive failure controls. These results support the tested reader behavior;
+they do not justify deleting compatibility data or assigning it new meaning.
 
-Catalog comparison checks every other record byte, including order,
-inactive operands and empty records. Canonical equality means those fields
-agree; it is not whole-file identity. The native reader applies its existing
-repairs to both reference and catalog-compiled images. Tests compare those
-results and also compare connection records without exclusions.
+Separate reference simulations cover `p10l8`, `g20v8`, `v750c` and `f506`.
+For each, independently setting each of the four attributes and every legacy
+width to a nonzero sentinel, or clearing all five fields, preserved the
+waveform and listing apart from its creation time. Wrong expected outputs
+failed in all four cases. Changing the power-up attribute changed both
+registered-device waveforms, confirming that the selected library affects
+simulation. These are bounded behavioral checks, not a claim that every
+possible historical consumer ignores the compatibility fields.
+The rebuilt default library also reproduces all four reference simulations,
+including the regenerated header, capacities, pointers and image layout.
+
+Catalog comparison checks every record byte, including reserved bytes,
+record order, inactive operands and empty records. Only bytes after a text
+terminator are normalized. This is record equality, not whole-file identity:
+headers, section capacities, stored pointers and image layout follow the
+storage rules above. The native reader applies its existing repairs to both
+reference and catalog-compiled images, and tests compare those results too.
+
+The field-preservation audit is complete: every byte has an explicit
+retention or normalization rule, and unexplained nonzero fields are retained.
+The four attribute meanings and the numerical interpretation of legacy
+width remain unspecified. They are compatibility data, not prerequisites
+for describing the hardware resources used by the compiler and simulator.
 
 ## Deliberate hardware-model differences
 
@@ -76,7 +100,12 @@ The family files generate table IDs, connection groups and plotting programs
 from hardware resources. Their generated images must need no native reader
 repairs. Unlike catalog comparison, hardware comparison applies the documented
 reader repairs to references, clears inactive PROM operands, and omits empty
-fitter-argument records. All remaining differences are reported.
+fitter-argument records. The five compatibility fields are reported separately
+as `compatibility_equal` and `compatibility_differences`, with per-field counts
+and examples. They are normalized only for the hardware record comparison;
+`canonical_equal` alone does not claim preservation of that metadata.
+Reserved bytes remain part of both comparisons. All remaining differences
+are reported.
 
 | Family / interface | Deliberate difference |
 | --- | --- |
@@ -102,8 +131,11 @@ fuses keep explicit defaults without an inferred circuit function.
 ## Validation
 
 `devcatalog_sources` compiles all 709 descriptions and the combined 660-entry
-catalog without reference binaries. `devcatalog_libraries` compares all
-entries against optional reference libraries through mapped fields and the
+catalog without reference binaries. Independent mutation checks cover all 19
+formerly excluded byte offsets in both comparison directions, including
+compatibility differences and reserved-byte failures. `devcatalog_libraries`
+compares all entries against optional reference libraries through every
+record byte and the
 native C reader, then checks clock-selection fuses and fitter input output.
 The root catalog is also compared with a library built by the native merger.
 `devsequence` checks generic state-machine declarations against explicit
@@ -128,7 +160,8 @@ Reference comparisons skip when reference data is absent. Configure with
 ## Retained field consumers
 
 Offsets are decimal and relative to each record. The schemas live in
-`tools/devlang/catalog.py`; exclusions are in `tools/devlang/audit.py`.
+`tools/devlang/catalog.py`; reserved regions and compatibility fields are
+listed in `tools/devlang/audit.py`.
 These names describe the interface consumed by the native compiler and
 simulator, not necessarily a physical silicon property.
 
@@ -225,6 +258,7 @@ and JEDEC simulator resolve their input columns and configuration fuses.
 | 14–17 | `first_or_fuse` | Programmable OR-array position; expansion also reads this as `NODEFN_GROUP` |
 | 18–21 | `config_first_fuse` | Additional configuration-fuse start |
 | 22–25 | `pair_first_fuse` | Source-dependent mux/control-selection fuse start |
+| 26 | `legacy_width` | Retained diagnostic width metadata; not used for fuse stride and not derived from `row_width` |
 | 27 | `row_width` | AND row width or selector bit count in `src/cupl/jedec.c` |
 | 28 | `or_width` | Programmable OR row width in mapper and JEDEC writer |
 | 29 | `config_bits` | Additional configuration bit count |
@@ -238,7 +272,7 @@ and JEDEC simulator resolve their input columns and configuration fuses.
 | 38 | `alternate_step` | Alternate-node allocation/partner lookup in expansion and mapper |
 
 `NODE_B26` in the native C declarations means hexadecimal offset `0x26`,
-which is decimal **38**. It does not identify the unresolved decimal byte 26.
+which is decimal **38**. It does not identify decimal byte 26 (`legacy_width`).
 
 ### Connections, section 10, 13 bytes
 

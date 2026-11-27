@@ -16,6 +16,13 @@ device mach355 {
         supply = 0
     }
 
+    compatibility {
+        attribute_4 = 0
+        attribute_5 = 0
+        attribute_7 = 0
+        attribute_20 = 0
+    }
+
     fuses {
         count = 43740
         default = 0
@@ -954,6 +961,7 @@ device mach355 {
 
     node_functions {
         defaults {
+            legacy_width = 0
             array = 0
             pin = 0
             function = none

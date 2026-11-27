@@ -16,6 +16,13 @@ device p18n8 {
         supply = 20
     }
 
+    compatibility {
+        attribute_4 = 0
+        attribute_5 = 0
+        attribute_7 = 0
+        attribute_20 = 1
+    }
+
     fuses {
         count = 304
         default = 0
@@ -137,24 +144,24 @@ device p18n8 {
             sharing_mode = 0
             alternate_step = 0
         }
-        columns = [array, pin, function, select_value, first_row_fuse, row_width, max_terms, has_default, active]
+        columns = [array, pin, function, select_value, first_row_fuse, row_width, max_terms, has_default, active, legacy_width]
         rows = [
-            row(1, 19, array, 0, 0, 36, 1, no, no),
-            row(1, 19, none, 1, 296, 1, 0, yes, yes),
-            row(2, 18, array, 0, 36, 36, 1, no, no),
-            row(2, 18, none, 1, 297, 1, 0, yes, yes),
-            row(3, 17, array, 0, 72, 36, 1, no, no),
-            row(3, 17, none, 1, 298, 1, 0, yes, yes),
-            row(4, 16, array, 0, 108, 36, 1, no, no),
-            row(4, 16, none, 1, 299, 1, 0, yes, yes),
-            row(5, 15, array, 0, 144, 36, 1, no, no),
-            row(5, 15, none, 1, 300, 1, 0, yes, yes),
-            row(6, 14, array, 0, 180, 36, 1, no, no),
-            row(6, 14, none, 1, 301, 1, 0, yes, yes),
-            row(7, 13, array, 0, 216, 36, 1, no, no),
-            row(7, 13, none, 1, 302, 1, 0, yes, yes),
-            row(8, 12, array, 0, 252, 36, 1, no, no),
-            row(8, 12, none, 1, 303, 1, 0, yes, yes),
+            row(1, 19, array, 0, 0, 36, 1, no, no, 36),
+            row(1, 19, none, 1, 296, 1, 0, yes, yes, 1),
+            row(2, 18, array, 0, 36, 36, 1, no, no, 36),
+            row(2, 18, none, 1, 297, 1, 0, yes, yes, 1),
+            row(3, 17, array, 0, 72, 36, 1, no, no, 36),
+            row(3, 17, none, 1, 298, 1, 0, yes, yes, 1),
+            row(4, 16, array, 0, 108, 36, 1, no, no, 36),
+            row(4, 16, none, 1, 299, 1, 0, yes, yes, 1),
+            row(5, 15, array, 0, 144, 36, 1, no, no, 36),
+            row(5, 15, none, 1, 300, 1, 0, yes, yes, 1),
+            row(6, 14, array, 0, 180, 36, 1, no, no, 36),
+            row(6, 14, none, 1, 301, 1, 0, yes, yes, 1),
+            row(7, 13, array, 0, 216, 36, 1, no, no, 36),
+            row(7, 13, none, 1, 302, 1, 0, yes, yes, 1),
+            row(8, 12, array, 0, 252, 36, 1, no, no, 36),
+            row(8, 12, none, 1, 303, 1, 0, yes, yes, 1),
         ]
     }
 

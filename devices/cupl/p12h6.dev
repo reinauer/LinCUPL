@@ -16,6 +16,13 @@ device p12h6 {
         supply = 20
     }
 
+    compatibility {
+        attribute_4 = 0
+        attribute_5 = 0
+        attribute_7 = 0
+        attribute_20 = 1
+    }
+
     fuses {
         count = 384
         default = 0
@@ -118,20 +125,20 @@ device p12h6 {
             sharing_mode = 0
             alternate_step = 0
         }
-        columns = [array, pin, function, first_row_fuse, row_width, max_terms, active]
+        columns = [array, pin, function, first_row_fuse, row_width, max_terms, active, legacy_width]
         rows = [
-            row(1, 18, array, 0, 24, 4, no),
-            row(1, 18, none, 0, 0, 0, yes),
-            row(2, 17, array, 96, 24, 2, no),
-            row(2, 17, none, 0, 0, 0, yes),
-            row(3, 16, array, 144, 24, 2, no),
-            row(3, 16, none, 0, 0, 0, yes),
-            row(4, 15, array, 192, 24, 2, no),
-            row(4, 15, none, 0, 0, 0, yes),
-            row(5, 14, array, 240, 24, 2, no),
-            row(5, 14, none, 0, 0, 0, yes),
-            row(6, 13, array, 288, 24, 4, no),
-            row(6, 13, none, 0, 0, 0, yes),
+            row(1, 18, array, 0, 24, 4, no, 32),
+            row(1, 18, none, 0, 0, 0, yes, 0),
+            row(2, 17, array, 96, 24, 2, no, 32),
+            row(2, 17, none, 0, 0, 0, yes, 0),
+            row(3, 16, array, 144, 24, 2, no, 32),
+            row(3, 16, none, 0, 0, 0, yes, 0),
+            row(4, 15, array, 192, 24, 2, no, 32),
+            row(4, 15, none, 0, 0, 0, yes, 0),
+            row(5, 14, array, 240, 24, 2, no, 32),
+            row(5, 14, none, 0, 0, 0, yes, 0),
+            row(6, 13, array, 288, 24, 4, no, 32),
+            row(6, 13, none, 0, 0, 0, yes, 0),
         ]
     }
 

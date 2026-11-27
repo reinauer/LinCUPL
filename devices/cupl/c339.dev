@@ -16,6 +16,13 @@ device c339 {
         supply = 22
     }
 
+    compatibility {
+        attribute_4 = 0
+        attribute_5 = 28
+        attribute_7 = 0
+        attribute_20 = 1
+    }
+
     fuses {
         count = 768
         default = 0
@@ -155,6 +162,7 @@ device c339 {
 
     node_functions {
         defaults {
+            legacy_width = 0
             array = 0
             pin = 0
             function = none

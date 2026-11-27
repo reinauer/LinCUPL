@@ -16,6 +16,13 @@ device p1016c4 {
         supply = 28
     }
 
+    compatibility {
+        attribute_4 = 0
+        attribute_5 = 0
+        attribute_7 = 0
+        attribute_20 = 1
+    }
+
     fuses {
         count = 2056
         default = 0
@@ -108,6 +115,7 @@ device p1016c4 {
 
     node_functions {
         defaults {
+            legacy_width = 0
             invert = no
             select_value = 0
             config_value = 0

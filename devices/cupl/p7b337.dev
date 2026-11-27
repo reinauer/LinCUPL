@@ -16,6 +16,13 @@ device p7b337 {
         supply = 22
     }
 
+    compatibility {
+        attribute_4 = 0
+        attribute_5 = 28
+        attribute_7 = 0
+        attribute_20 = 1
+    }
+
     fuses {
         count = 768
         default = 0
@@ -145,24 +152,24 @@ device p7b337 {
             sharing_mode = 0
             alternate_step = 0
         }
-        columns = [array, pin, function, first_row_fuse, row_width, max_terms, has_default, active]
+        columns = [array, pin, function, first_row_fuse, row_width, max_terms, has_default, active, legacy_width]
         rows = [
-            row(1, 27, none, 0, 0, 0, yes, yes),
-            row(1, 27, array, 0, 24, 4, no, no),
-            row(2, 26, none, 0, 0, 0, yes, yes),
-            row(2, 26, array, 96, 24, 4, no, no),
-            row(3, 25, none, 0, 0, 0, yes, yes),
-            row(3, 25, array, 192, 24, 4, no, no),
-            row(4, 24, none, 0, 0, 0, yes, yes),
-            row(4, 24, array, 288, 24, 4, no, no),
-            row(5, 19, none, 0, 0, 0, yes, yes),
-            row(5, 19, array, 384, 24, 4, no, no),
-            row(6, 18, none, 0, 0, 0, yes, yes),
-            row(6, 18, array, 480, 24, 4, no, no),
-            row(7, 17, none, 0, 0, 0, yes, yes),
-            row(7, 17, array, 576, 24, 4, no, no),
-            row(8, 16, none, 0, 0, 0, yes, yes),
-            row(8, 16, array, 672, 24, 4, no, no),
+            row(1, 27, none, 0, 0, 0, yes, yes, 0),
+            row(1, 27, array, 0, 24, 4, no, no, 24),
+            row(2, 26, none, 0, 0, 0, yes, yes, 0),
+            row(2, 26, array, 96, 24, 4, no, no, 24),
+            row(3, 25, none, 0, 0, 0, yes, yes, 0),
+            row(3, 25, array, 192, 24, 4, no, no, 24),
+            row(4, 24, none, 0, 0, 0, yes, yes, 0),
+            row(4, 24, array, 288, 24, 4, no, no, 24),
+            row(5, 19, none, 0, 0, 0, yes, yes, 0),
+            row(5, 19, array, 384, 24, 4, no, no, 24),
+            row(6, 18, none, 0, 0, 0, yes, yes, 0),
+            row(6, 18, array, 480, 24, 4, no, no, 24),
+            row(7, 17, none, 0, 0, 0, yes, yes, 0),
+            row(7, 17, array, 576, 24, 4, no, no, 24),
+            row(8, 16, none, 0, 0, 0, yes, yes, 0),
+            row(8, 16, array, 672, 24, 4, no, no, 24),
         ]
     }
 

@@ -193,6 +193,23 @@ def main():
                                 capture_output=True, text=True, timeout=10)
         assert result.returncode == 0, result.stderr
         assert fresh.read_bytes() == compiled and new_report.is_file()
+        # Hardware metadata differences must remain visible in CLI output,
+        # while a reserved-byte difference still fails canonical comparison.
+        for label, offset, status in [('metadata', 4, 0), ('reserved', 6, 1)]:
+            changed = bytearray(devices['v750c'])
+            attr = struct.unpack_from('<I', changed, 3 * 20 + 8)[0]
+            changed[attr + offset] ^= 173
+            reference = tmp / f'{label}-reference.dl'
+            reference.write_bytes(catalog.pack_library([
+                dict(e, image=bytes(changed)) if e['name'] == 'v750c' else e
+                for e in catalog.entries(compiled)]))
+            result = subprocess.run(command[:-1] + [str(tmp / f'{label}.dl'),
+                                    '--compare', str(reference)],
+                                    capture_output=True, text=True, timeout=10)
+            assert result.returncode == status, result
+            line = next(line for line in result.stdout.splitlines() if line.startswith('v750c:'))
+            assert ('canonical records match' in line) == (label == 'metadata'), line
+            assert ('compatibility metadata DIFFER' in line) == (label == 'metadata'), line
         input_path.write_text('format = 1\ndevice broken {')
         result = subprocess.run(command, capture_output=True, text=True, timeout=10)
         assert result.returncode == 1 and ':2:' in result.stderr

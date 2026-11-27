@@ -16,6 +16,13 @@ device p16c1 {
         supply = 20
     }
 
+    compatibility {
+        attribute_4 = 0
+        attribute_5 = 0
+        attribute_7 = 0
+        attribute_20 = 1
+    }
+
     fuses {
         count = 512
         default = 0
@@ -122,11 +129,11 @@ device p16c1 {
             has_default = no
             alternate_step = 0
         }
-        columns = [pin, function, polarity, row_width, max_terms, sharing_mode, active]
+        columns = [pin, function, polarity, row_width, max_terms, sharing_mode, active, legacy_width]
         rows = [
-            row(0, array, unspecified, 32, 16, 0, no),
-            row(15, none, negative, 0, 0, 1, yes),
-            row(16, none, positive, 0, 0, 1, yes),
+            row(0, array, unspecified, 32, 16, 0, no, 32),
+            row(15, none, negative, 0, 0, 1, yes, 0),
+            row(16, none, positive, 0, 0, 1, yes, 0),
         ]
     }
 

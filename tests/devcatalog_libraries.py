@@ -17,6 +17,22 @@ from devlang import catalog
 from defects import fuses
 
 
+def record_bytes(image):
+    """Independent comparison: normalize only bytes after string NULs."""
+    sections = catalog.records(image)
+    text_ranges = {3: ((67, 13), (80, 32), (112, 20), (132, 20)),
+                   4: ((0, 20),), 5: ((0, 20), (20, 20)),
+                   8: ((0, 9),), 11: ((1, 23),), 12: ((0, 20),)}
+    for section, fields in text_ranges.items():
+        for row in sections[section]:
+            for start, width in fields:
+                raw = row[start:start + width]
+                if 0 in raw:
+                    end = start + raw.index(0) + 1
+                    row[end:start + width] = bytes(start + width - end)
+    return sections
+
+
 def check_connection_fuses(source, rebuilt, bindir, root):
     """Check source-dependent selection through the native JEDEC writer."""
     available = {e['name'] for e in catalog.entries(source.read_bytes())}
@@ -147,9 +163,9 @@ def main():
             changes = 0
             for original, compiled in zip(original_entries, compiled_entries):
                 assert original['name'] == compiled['name'] and original['flags'] == compiled['flags']
-                # All connection bytes must survive, even if the schema
-                # accidentally omits a field and comparison masks it out.
-                assert catalog.records(original['image'])[10] == catalog.records(compiled['image'])[10]
+                # Independently check every record byte, including reserved
+                # bytes and compatibility values. No schema mask is used.
+                assert record_bytes(original['image']) == record_bytes(compiled['image']), original['name']
                 normalized = []
                 for label, lib, entry in [('original', source, original), ('compiled', rebuilt, compiled)]:
                     path = root / f'{label}.image'
