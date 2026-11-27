@@ -324,6 +324,9 @@ enum {
 #define DEV_PIN_REC_SIZE 16
 #define DEV_NODE_REC_SIZE 39
 
+#include "sim_seq.h"
+sim_seq_model_t *jed150x_seq_copy(char *error, size_t size);
+
 SIM_EXTERN uint8_t *g_dev_rec;      /* the device record */
 void use_device_image(uint8_t *image, size_t size);
 int jed150x_load(const uint8_t *fuses, unsigned nfuses, unsigned pins,

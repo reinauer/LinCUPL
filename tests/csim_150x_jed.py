@@ -113,8 +113,21 @@ def main():
             ]:
                 work, mapping = fit(part, one_cell(model, inputs))
                 simulate(work, mapping, [n.lower() for n in inputs] + ['q'], vectors)
+                if model == 'DFF':
+                    simulate(work, mapping, ['clk', 'd', 'q'],
+                             'P01\n00H\nC0L\nP00\n01L\nC1H\nP0N\n00H\nP0X\n00X\nC0L\n')
+                    package = 'plcc84' if part == 1508 else 'plcc44'
+                    (work / 'test.pld').write_text(
+                        f'Device f{part}{package}; pin {mapping["clk"]}=clk; '
+                        f'pin {mapping["d"]}=d; pin {mapping["q"]}=!q;')
+                    (work / 'test.si').write_text(
+                        'ORDER:clk,d,q;\nVECTORS:\nP01\n00L\nC0H\nP00\n01H\nC1L\n')
+                    run('csim', ['-fl', 'test'], work)
+                if model == 'DFFAR':
+                    simulate(work, mapping, ['clk', 'd', 'ar', 'q'],
+                             'P011\n000H\n001L\n')
                 text = run('jedcompare', ['test.jed', 'test.jed'], work, 2)
-                assert 'sequential equivalence is not supported' in text, text
+                assert 'use --sequential' in text, text
 
             work, mapping = fit(part, one_cell('TRI', ('A', 'EN')))
             simulate(work, mapping, ['a', 'en', 'q'], '00Z\n10Z\n01L\n11H\n')
@@ -143,16 +156,29 @@ def main():
                      f'pin {clocks[0]}=clk; pin 1=rst; pin 4=q; pin 5=r;\n'
                      'q.t=!rst; q.ck=clk; q.ar=rst; r.t=!rst; r.ck=q; r.ar=rst;',
                      'clk,rst,q,r', '01LL\nC0HH\nC0LH\nC0HL\nC0LL\n')
-            # Place an independent buried register behind a combinational
-            # output on the same macrocell (the PT2 fast-data path).
+            # Keep a buried register separate from the combinational
+            # outputs, then preload it through its actual bonded pad.
             mid = 601 if part == 1502 else 616
             work = compiled(part,
                             f'pin {clocks[0]}=clk; pin 1=rst; pin 5=a; pin 6=b; '
                             f'pin 4=q; pin 8=r; pinnode {mid}=mid;\n'
-                            'mid.d=a; mid.ck=clk; mid.ar=rst; q=b; r=mid;',
-                            'clk,a,b,rst,q,r', '0001LL\nC100LH\n0110HH\nC010HL\n')
+                            'mid.d=a; mid.ck=clk; mid.ar=rst; q=b; r=mid # b;',
+                            'clk,a,b,rst,q,r', '0001LL\nC100LH\n0110HH\nC010HH\n')
             text = run('jedcompare', ['test.jed', 'test.jed'], work, 2)
-            assert 'sequential equivalence is not supported' in text, text
+            assert 'use --sequential' in text, text
+            mid_pin = int(re.search(r'^MC\d+\s+(\d+)\s+.*\bmid\b',
+                                   (work / 'test.fit').read_text(), re.M).group(1))
+            if mid_pin:
+                mapping = {'clk': clocks[0], 'a': 5, 'b': 6, 'rst': 1, 'q': 4, 'r': 8}
+                names = list(mapping)
+                if mid_pin not in mapping.values():
+                    mapping['mid'] = mid_pin
+                    names.append('mid')
+                preload = {p: '0' for p in mapping.values()}
+                preload.update({clocks[0]: 'P', 4: 'N', 8: 'N', mid_pin: '1'})
+                first = ''.join(preload[mapping[n]] for n in names)
+                extra = '0' if 'mid' in mapping else ''
+                simulate(work, mapping, names, first + '\n0000LH' + extra + '\nC000LL' + extra + '\n')
             for node, equation, function in [
                 (601, 'mid=a $ b; q=mid & c;', lambda a, b, c: (a ^ b) & c),
                 (301, 'mid=!(a & b); q=mid & c;', lambda a, b, c: not (a & b) and c),
@@ -216,7 +242,31 @@ def main():
             bits[config + 2] = 0  # PD1 selects the power-down function.
             write_map(work, bits, device, pins)
             text = run('jedcompare', ['test.jed', 'test.jed'], work, 2)
-            assert 'power-down pin operation is not supported' in text, text
+            assert 'use --sequential' in text, text
+            pd1, pd2 = (12, 45) if part == 1508 else (11, 25)
+            simulate(work, {'a': 2, 'b': 1, 'q': 4, 'pd': pd1},
+                     ['a', 'b', 'pd', 'q'], '000L\n110H\n001H\n101H\n100L\n')
+
+            # Either power-down input freezes the output and its enable.
+            held, mapping = fit(part, one_cell('TRI', ('A', 'EN')),
+                                pins={'a': 2, 'en': 1, 'q': 4})
+            bits = fuses(held / 'test.jed')
+            bits[config + 2] = bits[config + 3] = 0
+            write_map(held, bits, device, pins)
+            mapping.update(pd1=pd1, pd2=pd2)
+            simulate(held, mapping, ['a', 'en', 'pd1', 'pd2', 'q'],
+                     '1100H\n0010H\n0001H\n0000Z\n1110Z\n1101Z\n1100H\n')
+
+            # Clock, data and reset are blocked while asleep. Releasing
+            # power-down restores asynchronous reset before normal clocks.
+            held, mapping = fit(part, one_cell('DFFAR', ('CLK', 'D', 'AR')),
+                                pins={'clk': 2, 'd': 5, 'ar': 1, 'q': 4})
+            bits = fuses(held / 'test.jed')
+            bits[config + 2] = 0
+            write_map(held, bits, device, pins)
+            mapping['pd'] = pd1
+            simulate(held, mapping, ['clk', 'd', 'ar', 'pd', 'q'],
+                     '0010L\nC100H\nC001H\n0011H\n0010L\nC100H\n')
             write_map(work, original, device, pins + 1)
             text = run('jedcompare', ['test.jed', 'test.jed'], work, 2)
             assert 'QP pin count' in text, text
@@ -230,16 +280,16 @@ def main():
             text = (work / 'test.jed').read_text().replace('Device ', f'ATF{part}BE\nDevice ')
             (work / 'test.jed').write_text(text)
             text = run('jedcompare', ['test.jed', 'test.jed'], work, 2)
-            assert 'BE-series fuse maps are not supported' in text, text
+            assert 'BE-series description disagrees with QF fuse count' in text, text
             write_map(work, original, device, pins)
             run('jedcompare', ['-u', str(root / 'missing.dl'), 'test.jed', 'test.jed'], work)
             (work / 'test.si').write_text('ORDER:P2,P1,P4;\nVECTORS:\n00L\n01L\n10L\n11H\n')
             (work / 'test.pld').write_text('Device g16v8; pin 2=wrong;')
             text = run('csim', ['-fl', 'test'], work)
             assert 'pin names' in text and 'not used' in text, text
-            (work / 'test.si').write_text('ORDER:P2,P1,P4;\nVECTORS:\nP0L\n')
+            (work / 'test.si').write_text('ORDER:P2,P1,P4;\nVECTORS:\nP00\n')
             text = run('csim', ['-fl', 'test'], work, 1)
-            assert 'register preload is not supported' in text, text
+            assert 'without active storage' in text, text
 
         # Package pin numbering must follow the selected package, including
         # packages with unbonded internal macrocells.

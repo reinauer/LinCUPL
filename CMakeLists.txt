@@ -167,7 +167,7 @@ add_executable(jedinspect src/tools/jedinspect.c)
 target_link_libraries(jedinspect PRIVATE lincupl_shared)
 target_compile_options(jedinspect PRIVATE ${_cli_warn_flags})
 
-add_executable(jedcompare src/tools/jedcompare.c)
+add_executable(jedcompare src/tools/jedcompare.c src/tools/jedcompare_seq.c)
 target_link_libraries(jedcompare PRIVATE cupl_phases)
 target_compile_options(jedcompare PRIVATE ${_cli_warn_flags})
 
@@ -437,8 +437,18 @@ if(Python3_EXECUTABLE)
     add_test(NAME jedcompare
         COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/jedcompare.py" "$<TARGET_FILE_DIR:jedcompare>")
     set_tests_properties(jedinspect jedcompare PROPERTIES TIMEOUT 120)
+    add_test(NAME jedcompare_seq
+        COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/jedcompare_seq.py" "$<TARGET_FILE_DIR:jedcompare>")
+    set_tests_properties(jedcompare_seq PROPERTIES TIMEOUT 180)
+    add_test(NAME csim_150x_be
+        COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/csim_150x_be.py" "$<TARGET_FILE_DIR:jedcompare>")
+    set_tests_properties(csim_150x_be PROPERTIES TIMEOUT 180)
+    add_test(NAME fit150x_be
+        COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/fit150x_be.py" "$<TARGET_FILE_DIR:jedcompare>")
+    set_tests_properties(fit150x_be PROPERTIES TIMEOUT 180)
     if(NOT LINCUPL_REQUIRE_TEST_DATA)
         set_tests_properties(jedcompare PROPERTIES SKIP_RETURN_CODE 77)
+        set_tests_properties(jedcompare_seq PROPERTIES SKIP_RETURN_CODE 77)
     endif()
     add_test(
         NAME csim_jed

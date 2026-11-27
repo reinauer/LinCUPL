@@ -24,7 +24,7 @@ Amiga 3000/4000, built for a GAL22V10):
 | `cupl` | The compiler: `.pld` → `.jed` (and `.abs`, `.doc`, `.lst`, `.pla`, …) |
 | `csim` | The simulator: runs the vectors of a `.si` file against the compiled design, or against the fuse map of a `.jed` file |
 | `jedinspect` | Inspects JEDEC fuse maps, prints fuse ranges and compares fuse states; supports JSON output |
-| `jedcompare` | Checks combinational JEDEC pin equivalence exhaustively and reports a counterexample when outputs differ |
+| `jedcompare` | Checks combinational or ATF150x sequential JEDEC pin equivalence and reports counterexamples |
 | `fit1502`, `fit1504`, `fit1508` | Fitters for ATF150x CPLDs, accepting truth tables, EDIF and Boolean equations |
 | `cbld` | Lists the devices of a device library (`.dl`) and builds libraries |
 | `backpin` | Writes the pins a fitter chose back into the `.pld` file |
@@ -83,7 +83,8 @@ For Verilog synthesis with Yosys and direct ATF150x fitting, see
 For fuse-map inspection and equivalence checking, see
 [JEDEC tools](doc/jed-tools.md). `jedcompare` currently supports combinational
 GAL16V8, GAL20V8, GAL22V10 and ATF1502/1504/1508 designs without physical
-output feedback.
+output feedback. `--sequential` proves ATF150x equivalence by exploring all
+reachable state pairs, with explicit resource limits and counterexample traces.
 
 Compile a design to a JEDEC file (`-j`), an absolute file for the simulator
 (`-a`), a documentation file (`-x`) and a listing (`-l`), then simulate it:
@@ -143,9 +144,12 @@ csim -lf g20v8lcc u12     # the same as this device (for a file that does not sa
   bus-keeper state are decoded using the fitter's package/wiring tables.
   Simulation observes physical package pins; internal macrocells are
   evaluated but are not exposed as numbered `PINNODE` signals. Power-down
-  pin operation and register preload are rejected. Timing and JTAG
-  programming are not simulated. The decoder assumes the AS-family fuse
-  layout; BE-series maps are unsupported.
+  holds registers, outputs and output enables. A `P` vector directly loads
+  bonded macrocell registers with physical storage values `0`, `1` or `X`;
+  omitted registers retain their state. Timing and JTAG programming are not
+  simulated. ATF1502BE, ATF1504BE and ATF1508BE maps use their distinct
+  16814/34198/74146-fuse layouts, including per-pin termination and native
+  ATF1504BE/1508BE toggle storage.
 - A fuse map has no names. The pins are `P1`, `P2`, … in the `ORDER`
   statement, and their test values are levels at the pins. If `u12.pld` is
   there, the pins also have the names of its `PIN` declarations (and its

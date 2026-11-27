@@ -44,7 +44,7 @@ int build_truth_table(unsigned max_inputs, sim_truth_t *table, char *error, size
 {
     jedec_truth_pins(table);
     if (jed150x_sequential())
-        return fail(error, size, "registers or latches are present; sequential equivalence is not supported");
+        return fail(error, size, "stateful design; use --sequential for reachable-state equivalence");
     for (unsigned i = 0; i < table->noutputs; i++) {
         unsigned pin = table->outputs[i];
         int sym = pin_symbol(pin);

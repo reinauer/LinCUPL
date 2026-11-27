@@ -128,6 +128,15 @@ P 0 0 '5' X          /* registers := 101 */
 C 1 0 "6" L</pre>
 <p>With the <a href="virtual.html#use">virtual device</a> a preload sets
 active-high registers to the complement of the given values.</p>
+<p>For an ATF150x JEDEC map, preload values are physical storage levels:
+<tt>0</tt> loads zero, <tt>1</tt> loads one, and <tt>X</tt> makes the
+register unknown. Signal-name polarity does not invert these values.
+Each bonded macrocell is addressed by its physical pin, including a
+register used for internal feedback. Omitted registers and columns with
+<tt>N</tt> or <tt>*</tt> keep their state. Loading bypasses clocks and
+asynchronous controls, and establishes clock history after all loads.
+This initializes simulator state; it does not simulate the device's
+electrical preload or JTAG programming protocol.</p>
 <p class="seealso">See also: <a href="sim-directives.html">Simulator
 directives</a>, <a href="sim-listing.html">the listing</a>.</p>
 </body>

@@ -87,22 +87,52 @@ Current proof scope:
   including internal feedback, foldback, product-term cascades and output
   enables. These use the built-in wiring tables. A package name such as
   `f1504plcc44` is required when QP alone is ambiguous; the native fitters
-  write that name in the JEDEC heading. BE-series maps are unsupported.
+  write that name in the JEDEC heading. ATF1502BE, ATF1504BE and ATF1508BE
+  maps use distinct built-in configuration layouts.
 - Matching physical pin interfaces. A different pin count or input/output
   role is reported as an interface difference; pins are not remapped.
 - Binary external inputs and logical output levels, including high
   impedance. Timing, hazards, programming/security settings and analog
   behavior are outside the comparison.
-- Registers and physical output feedback are rejected, including acyclic output
-  feedback. Sequential equivalence needs a separate proof method. csim
-  can simulate ATF750 and ATF2500 maps, but their buried registers remain
-  outside this proof scope even when the pin outputs are combinational.
-  ATF150x registers are detected through the active routing graph,
-  including buried state feeding a combinational pin. Power-down pin
-  operation and invalid active routing configurations are rejected.
+- The default mode rejects registers and power-down state. Physical output
+  feedback is rejected in both modes, including acyclic output feedback.
+  csim can simulate ATF750 and ATF2500 maps, but their buried registers
+  remain outside this proof scope even when the pin outputs are combinational.
+  Invalid active routing configurations are rejected.
+
+### Sequential equivalence
+
+```sh
+jedcompare --sequential left.jed right.jed
+jedcompare --sequential --max-states 100000 --max-transitions 10000000 left.jed right.jed
+```
+
+Sequential mode explores reachable pairs of ATF150x states from their
+configured power-up values. It tries every binary assignment to the union
+of used inputs at each state, including asynchronous controls and clocks.
+Registers need not occupy matching macrocells or have matching counts.
+Power-down retains registers, clock history, output values and output enables.
+
+The first input assignment settles the power-up inputs. Subsequent
+assignments use csim's binary-vector transition rules: register updates
+are simultaneous, and derived clocks are processed until the circuit settles.
+Inputs are simultaneous logical levels, without a timing or hazard model.
+The comparison covers normal operation from power-up; it does not assert
+equivalence from arbitrary preloaded states.
+
+Equivalence is reported only when every reachable pair and outgoing input
+assignment has been checked. A difference includes a shortest input trace
+starting at power-up, with physical pin numbers and levels. Indeterminate
+outputs, unsupported feedback or nonsettling controls return inconclusive.
+Identical unknown values are never accepted as proof.
+
+The defaults are 10,000 state pairs and 1,000,000 transitions. The maximum
+limits are 1,000,000 states and 1,000,000,000 transitions. State exploration
+buffers have a 512 MiB budget; decoded models and runtime overhead are additional. The combined-input limit applies in both modes. Reaching any
+limit returns inconclusive, even if every transition checked so far agrees.
 
 Exit status is 0 only for proven equivalence within this scope, 1 for a
 pin-interface difference or a counterexample, and 2 for an error,
-unsupported design, indeterminate output or exceeded input bound. The
+unsupported design, indeterminate output or exceeded exploration bound. The
 proof is relative to csim's existing decoder and models; it is not an
 independent validation of those models or a physical device test.
