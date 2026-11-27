@@ -12,7 +12,7 @@ from .syntax import Error
 # (first byte, width), relative to a record. Every section is explicit,
 # including sections for which no whole-field exclusion is permitted.
 UNMAPPED_RANGES = {
-    3: ((4, 4), (20, 1), (31, 6), (50, 11)),
+    3: ((4, 4), (20, 1), (31, 6), (50, 1), (57, 4)),
     4: (),
     5: (),
     6: ((9, 1),),

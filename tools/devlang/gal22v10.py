@@ -195,6 +195,7 @@ def sections(model, options):
               (61, 'B', signature['bits']), (62, 'I', signature['first_fuse'])]
     for offset, code, value in values:
         struct.pack_into('<' + code, attr, offset, value)
+    attr[51:57] = bytes([dl.D, 0, 1, dl.D, 0, 1])
     result[3] = [bytes(attr)]
     result[4] = [dl.text_field(name, 20) + bytes([code])
                  for name, code in [('oe', dl.OE), ('d', dl.D), ('ar', dl.AR), ('sp', dl.SP)]]

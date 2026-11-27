@@ -58,7 +58,9 @@ record interface. This representation covers every catalog entry, including
 PROMs, programmable OR arrays and external-fitter interfaces.
 
 Attribute blocks are `package`, `power`, `fuses`, `signature`, `compiler`,
-`simulation`, `prom` and `fitter`. Each declares all its named fields.
+`simulation`, `sequence`, `prom` and `fitter`. Each declares all its named fields.
+The `sequence` block supplies generic state-machine register defaults;
+explicit `SEQUENCED`, `SEQUENCERS`, `SEQUENCEJK` and `SEQUENCET` override them.
 Tables use `columns`, `rows`, and optional `defaults`:
 
 ```text

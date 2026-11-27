@@ -129,6 +129,7 @@ def sections(model, options):
                                 (49, 'B', 1), (61, 'B', model['signature']['bits']),
                                 (62, 'I', model['signature']['first_fuse'])]:
         struct.pack_into('<' + code, attr, offset, value)
+    attr[51:57] = bytes([D, 0, 1, D, 0, 1])
     sections[3] = [bytes(attr)]
     sections[4] = [text_field(name, 20) + bytes([code]) for name, code in EXTENSIONS]
 
