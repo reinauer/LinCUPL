@@ -99,6 +99,30 @@ static void correct_vp8_enable_pin(uint8_t *image, size_t size)
     }
 }
 
+static void correct_v8h_complex_mode(uint8_t *image, size_t size)
+{
+    unsigned count;
+    uint8_t *init = image_records(image, size, 9, 9, &count);
+    int nonregistered = 0;
+    for (unsigned i = 0; i < count; i++) {
+        const uint8_t *r = init + 9 * i;
+        if (rd32(r) == 2192 && rd32(r + 4) == 2192 && r[8] == 1) {
+            nonregistered = 1;
+        }
+    }
+    if (!nonregistered) {
+        return;
+    }
+    for (unsigned i = 0; i < count; i++) {
+        uint8_t *r = init + 9 * i;
+        /* SG0/SG1 = 1/1 selects product-term output enable. The 1/0
+         * setting instead selects simple outputs or dedicated inputs. */
+        if (rd32(r) == 2193 && rd32(r + 4) == 2193 && r[8] == 0) {
+            r[8] = 1;
+        }
+    }
+}
+
 static void correct_v8h_simple_input(uint8_t *image, size_t size)
 {
     unsigned count;
@@ -360,6 +384,9 @@ size_t dl_read_device_image(FILE *fp, const uint8_t *entry, uint8_t *image, size
     }
     if (strcasecmp(name, "g16v8hslcc") == 0) {
         correct_v8h_simple_input(image, got);
+    }
+    if (strcasecmp(name, "g16v8hma") == 0 || strcasecmp(name, "g16v8hmalcc") == 0) {
+        correct_v8h_complex_mode(image, got);
     }
     if (strcasecmp(name, "g24v10ms") == 0) {
         correct_gal24v10_rows(image, got);

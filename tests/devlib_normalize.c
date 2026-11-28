@@ -285,6 +285,35 @@ static int check_atf750_feedback(void)
     return 0;
 }
 
+static int check_v8h_complex_mode(void)
+{
+    uint8_t input[IMAGE_SIZE] = { 0 }, fixed[IMAGE_SIZE], expected[IMAGE_SIZE];
+    section(input, 9, 3, 9, 260);
+    initializer(input + 260, 2192, 2192, 1);
+    initializer(input + 269, 2193, 2193, 0);
+    initializer(input + 278, 2210, 2217, 1);
+    memcpy(expected, input, sizeof(input));
+    expected[277] = 1;
+    const char *devices[] = { "g16v8hma", "g16v8hmalcc", "G16V8HMA" };
+    for (unsigned i = 0; i < sizeof(devices) / sizeof(devices[0]); i++) {
+        CHECK(read_image(input, sizeof(input), devices[i], 0, fixed) == 0);
+        CHECK(memcmp(expected, fixed, sizeof(input)) == 0);
+    }
+    CHECK(read_image(expected, sizeof(input), "g16v8hma", 0, fixed) == 0);
+    CHECK(memcmp(expected, fixed, sizeof(input)) == 0);
+    CHECK(read_image(input, sizeof(input), "g16v8hma", 1, fixed) == 0);
+    CHECK(memcmp(input, fixed, sizeof(input)) == 0);
+    CHECK(read_image(input, sizeof(input), "g16v8hs", 0, fixed) == 0);
+    CHECK(memcmp(input, fixed, sizeof(input)) == 0);
+    input[268] = 0; /* No matching nonregistered SG0 setting. */
+    CHECK(read_image(input, sizeof(input), "g16v8hma", 0, fixed) == 0);
+    CHECK(memcmp(input, fixed, sizeof(input)) == 0);
+    input[268] = 1;
+    CHECK(read_image(input, 275, "g16v8hma", 0, fixed) == 0);
+    CHECK(memcmp(input, fixed, 275) == 0);
+    return 0;
+}
+
 static int check_ecl_reset_polarity(void)
 {
     uint8_t input[IMAGE_SIZE] = { 0 }, fixed[IMAGE_SIZE], again[IMAGE_SIZE];
@@ -337,6 +366,7 @@ int main(void)
 
     CHECK(check_peel_enable() == 0);
     CHECK(check_5000_latch_selector() == 0);
+    CHECK(check_v8h_complex_mode() == 0);
 
     CHECK(read_image(original, sizeof(original), "g24v10ms", 1, again) == 0);
     CHECK(memcmp(original, again, sizeof(original)) == 0);

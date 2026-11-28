@@ -403,6 +403,10 @@ if(Python3_EXECUTABLE)
         COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/gal16v8h_pin.py"
             "$<TARGET_FILE_DIR:csim>")
     set_tests_properties(gal16v8h_pin PROPERTIES TIMEOUT 60)
+    add_test(NAME gal16v8h_mode
+        COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/gal16v8h_mode.py"
+            "$<TARGET_FILE_DIR:csim>")
+    set_tests_properties(gal16v8h_mode PROPERTIES TIMEOUT 60)
     add_test(NAME devatf2500
         COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/devatf2500.py"
             "$<TARGET_FILE_DIR:csim>")
