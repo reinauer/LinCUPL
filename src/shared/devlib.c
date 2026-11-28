@@ -99,6 +99,32 @@ static void correct_vp8_enable_pin(uint8_t *image, size_t size)
     }
 }
 
+static void correct_v8h_simple_input(uint8_t *image, size_t size)
+{
+    unsigned count;
+    uint8_t *pins = image_records(image, size, 6, 16, &count);
+    for (unsigned i = 0; i < count; i++) {
+        uint8_t *p = pins + 16 * i;
+        /* The unlatched input on line 16 names ground pin 20 instead
+         * of pin 12. Require the matching LQ route before changing it. */
+        if (rd16(p) != 16 || rd16(p + 2) != 20 || p[4] != 0 || p[5] != 0 ||
+            p[7] != 30 || p[8] != 31 || p[10] != 1 || p[11] != 1 ||
+            rd32(p + 12) != 2209) {
+            continue;
+        }
+        for (unsigned j = 0; j < count; j++) {
+            const uint8_t *q = pins + 16 * j;
+            if (rd16(q) == rd16(p) && rd16(q + 2) == 12 &&
+                q[4] == 0x18 && q[5] == 0 && q[10] == 0 &&
+                memcmp(q + 6, p + 6, 4) == 0 &&
+                memcmp(q + 11, p + 11, 5) == 0) {
+                wr16(p + 2, rd16(q + 2));
+                break;
+            }
+        }
+    }
+}
+
 static void correct_atf750_feedback(uint8_t *image, size_t size)
 {
     unsigned count;
@@ -331,6 +357,9 @@ size_t dl_read_device_image(FILE *fp, const uint8_t *entry, uint8_t *image, size
     }
     if (strcasecmp(name, "g16vp8ms") == 0) {
         correct_vp8_enable_pin(image, got);
+    }
+    if (strcasecmp(name, "g16v8hslcc") == 0) {
+        correct_v8h_simple_input(image, got);
     }
     if (strcasecmp(name, "g24v10ms") == 0) {
         correct_gal24v10_rows(image, got);

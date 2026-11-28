@@ -60,6 +60,52 @@ static int check_vp8_enable_pin(void)
     return 0;
 }
 
+static int check_v8h_simple_input(void)
+{
+    uint8_t input[IMAGE_SIZE] = { 0 }, fixed[IMAGE_SIZE], expected[IMAGE_SIZE];
+    section(input, 6, 3, 16, 260);
+    wr16(input + 260, 16);
+    wr16(input + 262, 20);
+    input[267] = 30;
+    input[268] = 31;
+    input[270] = input[271] = 1;
+    wr32(input + 272, 2209);
+    memcpy(input + 276, input + 260, 16);
+    wr16(input + 278, 12);
+    input[280] = 0x18; /* LQ shares the line, columns and selector. */
+    input[286] = 0;
+    wr16(input + 292, 18);
+    wr16(input + 294, 20);
+    input[297] = 2; /* The physical ground record stays unchanged. */
+    memcpy(expected, input, sizeof(input));
+    wr16(expected + 262, 12);
+
+    const char *devices[] = { "g16v8hslcc", "G16V8HSLCC" };
+    for (unsigned i = 0; i < sizeof(devices) / sizeof(devices[0]); i++) {
+        CHECK(read_image(input, sizeof(input), devices[i], 0, fixed) == 0);
+        CHECK(memcmp(expected, fixed, sizeof(input)) == 0);
+    }
+    CHECK(read_image(expected, sizeof(input), "g16v8hslcc", 0, fixed) == 0);
+    CHECK(memcmp(expected, fixed, sizeof(input)) == 0);
+    CHECK(read_image(input, sizeof(input), "g16v8hslcc", 1, fixed) == 0);
+    CHECK(memcmp(input, fixed, sizeof(input)) == 0);
+    CHECK(read_image(input, sizeof(input), "g16v8hs", 0, fixed) == 0);
+    CHECK(memcmp(input, fixed, sizeof(input)) == 0);
+
+    /* A different LQ selector cannot establish the replacement pin. */
+    wr32(input + 288, 2208);
+    CHECK(read_image(input, sizeof(input), "g16v8hslcc", 0, fixed) == 0);
+    CHECK(memcmp(input, fixed, sizeof(input)) == 0);
+    wr32(input + 288, 2209);
+    section(input, 6, 1, 16, 260); /* No LQ record in the section. */
+    CHECK(read_image(input, sizeof(input), "g16v8hslcc", 0, fixed) == 0);
+    CHECK(memcmp(input, fixed, sizeof(input)) == 0);
+    section(input, 6, 3, 16, 260);
+    CHECK(read_image(input, 280, "g16v8hslcc", 0, fixed) == 0);
+    CHECK(memcmp(input, fixed, 280) == 0);
+    return 0;
+}
+
 static int check_buried_d_polarity(void)
 {
     uint8_t input[IMAGE_SIZE] = { 0 }, fixed[IMAGE_SIZE], again[IMAGE_SIZE];
@@ -267,6 +313,7 @@ static int check_ecl_reset_polarity(void)
 int main(void)
 {
     CHECK(check_vp8_enable_pin() == 0);
+    CHECK(check_v8h_simple_input() == 0);
     CHECK(check_pal26_feedback() == 0);
     CHECK(check_atf750_feedback() == 0);
     CHECK(check_atf750_alias_columns() == 0);
