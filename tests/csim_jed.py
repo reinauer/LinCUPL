@@ -64,9 +64,8 @@ ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 OWN = os.path.join(ROOT, 'tests', 'csim_jed')
 HELP = os.path.join(ROOT, 'doc', 'help', 'examples')
 SUPPORTED = re.compile(r'^(g16v8|g20v8|g22v10|p22v10)')
-# Devices of the same families whose fuse maps have another fuse (power-down
-# option) and are not simulated from a JEDEC file
-UNSUPPORTED = re.compile(r'^g(16v8|20v8|22v10)cp')
+# The 22V10 CP option still needs a decoder.
+UNSUPPORTED = re.compile(r'^g22v10cp')
 SWAP = {'0': '1', '1': '0', 'L': 'H', 'H': 'L', 'l': 'h', 'h': 'l'}
 
 
@@ -983,7 +982,7 @@ def refusal_cases(suite, base_dir, base):
         else:
             suite.ok(name)
 
-    for qf in (2048, 2195, 2560, 5893, 12832):
+    for qf in (2048, 2196, 2560, 2708, 5893, 12832):
         fuses = [0] * qf
         jed = '\x02\nx*\nQF%d*\nF0*\nL0 1*\nC0001*\n\x030000\n' % qf
         run('refused: map of %d fuses' % qf, jed, ['-lf'], ['no device for JEDEC file', '%d fuses' % qf])

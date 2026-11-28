@@ -147,8 +147,9 @@ The optional V8 `power_down` block reserves `control = pin(4)` in reference
 package coordinates. It declares the extra `fuse`, its `disabled = 0` and
 `pin_controlled = 1` encodings, and `selection = pin_controlled`. Package
 mapping turns that reference pin into PLCC pin 5. The block describes
-compiler allocation and fuse emission; it does not add simulator support
-for the CP maps.
+compiler allocation and fuse emission. `csim -f` decodes the option from
+the extra fuse and holds the logic state and output enables while the
+physical control pin is high.
 
 A `macrocell_template` declares integer parameters. A
 `macrocell Name : Template` supplies those parameters; expressions in the

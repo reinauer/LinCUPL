@@ -429,6 +429,7 @@ SIM_EXTERN uint8_t *g_sig_saved;    /* g_sig_value at the end of the last vector
 SIM_EXTERN uint8_t *g_reg_before;   /* register state before the evaluation */
 SIM_EXTERN uint8_t *g_node_level;   /* level in front of the output buffer */
 SIM_EXTERN uint8_t *g_bypass_sym;   /* symbol (.byp) that bypasses the register */
+SIM_EXTERN uint8_t *g_power_hold;   /* scratch: g_nsyms values, then g_nsyms outputs */
 SIM_EXTERN uint16_t *g_feedback_sym; /* per symbol, index of the symbol it feeds */
 SIM_EXTERN uint16_t *g_fb_undefined; /* bit set: feedback symbols without a defined value */
 SIM_EXTERN uint16_t *g_fb_symbols;  /* bit set: feedback symbols */
@@ -532,6 +533,7 @@ int value_token_char(int token);
 
 extern const uint16_t k_invert_level[8];  /* the opposite logic level */
 enum { PIN_KIND = 5 };              /* byte +5 of a device pin record */
+enum { PIN_KIND_POWER_DOWN = 25 };
 void update_cells(int pass);        /* run the node models of all symbols */
 /* Simulated levels to result tokens; `check` compares them with the vector. */
 void compare_results(int check);
@@ -577,6 +579,7 @@ int eval_none(int sym, int pass);
 int cell_kind(int sym_index);
 void simulate_vector(void);         /* simulate the values in g_order[].value */
 void reset_simulation(void);        /* back to the power-up state */
+int sim_power_down_symbol(void);    /* V8 CP control, -1 without the option */
 int stuck_fault_row(unsigned long id); /* product term row of a fault id (csima only) */
 void jedec_vector(void);            /* V field of the vector just simulated */
 void print_vector(int quiet, int pass);

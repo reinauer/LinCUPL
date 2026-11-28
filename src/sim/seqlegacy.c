@@ -20,7 +20,7 @@
     X(g_term_outputs) X(g_in_unknown) X(g_in_valid) X(g_in_high)
 #define POINTERS(X) \
     BYTE_ARRAYS(X) WORD_ARRAYS(X) X(g_row_value) X(g_row_stable) \
-    X(g_stuck) X(g_syms) X(g_terms) X(g_cells) X(g_order) X(g_dev_rec)
+    X(g_stuck) X(g_syms) X(g_terms) X(g_cells) X(g_order) X(g_dev_rec) X(g_power_hold)
 #define SCALARS(X) \
     X(g_nsyms) X(g_nsyms_file) X(g_nterms) X(g_total_rows) \
     X(g_row_words) X(g_plane_words) X(g_dev_has_class) \
@@ -44,7 +44,7 @@ typedef struct {
 #define DECL_WORD(n) uint16_t *n;
     WORD_ARRAYS(DECL_WORD)
 #undef DECL_WORD
-    uint8_t *g_row_value, *g_row_stable, *g_stuck, *g_dev_rec;
+    uint8_t *g_row_value, *g_row_stable, *g_stuck, *g_dev_rec, *g_power_hold;
     sym_t *g_syms;
     term_entry_t *g_terms;
     cell_t *g_cells;

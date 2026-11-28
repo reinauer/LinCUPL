@@ -191,14 +191,10 @@ def main():
                     assert bits[-1] == 1
                 maps.append(bits)
                 run('csim', ['-l', '-u', library, 'test'], work)
-                if not h['power_down']:
-                    broken = feedback and kind == 'catalog' and name in ('g16v8s', 'g20v8s', 'g20v8slcc')
-                    log = run('csim', ['-fl', '-u', library, 'test'], work, int(broken))
-                    if broken:
-                        assert 'fuse map makes an input of pin' in log
-                else:
-                    log = run('csim', ['-fl', '-u', library, 'test'], work, 1)
-                    assert 'no device for JEDEC file' in log, log
+                broken = feedback and kind == 'catalog' and name in ('g16v8s', 'g20v8s', 'g20v8slcc')
+                log = run('csim', ['-fl', '-u', library, 'test'], work, int(broken))
+                if broken:
+                    assert 'fuse map makes an input of pin' in log
                 # Check the actual plot VM: every cell header and all 64 rows.
                 doc = (work / 'test.doc').read_text()
                 assert list(map(int, re.findall(r'Pin #\s*(\d+)', doc))) == [h['package'].number(c['pin']) for c in h['cells']]
@@ -211,7 +207,7 @@ def main():
             wrong = vectors.splitlines()
             wrong[0] = wrong[0][:-1] + ('L' if wrong[0][-1] == 'H' else 'H')
             (work / 'test.si').write_text(f'ORDER:{order};\nVECTORS:\n' + '\n'.join(wrong))
-            for flag in (('-l',) if h['power_down'] else ('-l', '-fl')):
+            for flag in ('-l', '-fl'):
                 assert 'user expected' in run('csim', [flag, '-u', libraries['hardware'], 'test'], work, 1)
             cases += 1
             return bits
@@ -284,7 +280,7 @@ def main():
                 work.mkdir()
                 (work / 'test.pld').write_text(f'Name test; Device {name}; ' + body.replace(f'pin {p(3)}=a;', f'pin {p(4)}=a;'))
                 run('cupl', ['-jm1', '-u', libraries['hardware'], 'test.pld'], work, 1)
-    print(f'PASS: 34 V8 interfaces, {cases} native cases, {len(invalid)} invalid models; CP JEDEC decoding remains unsupported')
+    print(f'PASS: 34 V8 interfaces, {cases} native cases, {len(invalid)} invalid models')
 
 
 if __name__ == '__main__':

@@ -86,7 +86,7 @@ def main():
                 maps.append(fuses(work / 'test.jed'))
                 # The state and registered OUT both implement q XOR a. A
                 # low clock must retain both values. These families have
-                # independent JEDEC simulation except for the CP option maps.
+                # independent JEDEC simulation as well as ABS simulation.
                 if kind == 'd':
                     vectors = VECTORS
                     if device in v8_models:
@@ -97,8 +97,7 @@ def main():
                         vectors = '\n'.join(line[:2] + '0' + line[2:] if line[:1] in ('C', '0', '1')
                                             else line for line in vectors.splitlines()) + '\n'
                     (work / 'test.si').write_text(vectors)
-                    flags_to_test = ('-l',) if device in v8_models and h['power_down'] else ('-l', '-fl')
-                    for flags in flags_to_test:
+                    for flags in ('-l', '-fl'):
                         run('csim', [flags, '-u', library, 'test'], work)
             assert maps[0] == maps[1], (label, device, 'default register type changed the fuse map')
             cases += 1

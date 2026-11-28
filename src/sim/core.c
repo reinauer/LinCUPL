@@ -110,6 +110,18 @@ void sim_reset(void)
     g_rand_seed = 1;
     g_cells = NULL;
     g_stuck = NULL;
+    g_power_hold = NULL;
+}
+
+int sim_power_down_symbol(void)
+{
+    unsigned fuses = rd32(dev_header() + 0x15);
+    if (fuses != 2195 && fuses != 2707) return -1;
+    for (int i = 0; i < g_nsyms; i++) {
+        if (g_syms[i].pin_rec >= 0 && dev_pin(g_syms[i].pin_rec)[PIN_KIND] == PIN_KIND_POWER_DOWN)
+            return i;
+    }
+    return -1;
 }
 
 int vector_is_preload(void)
@@ -127,6 +139,10 @@ static void init_levels(void)
 {
     jed150x_powerup();
     const uint8_t *hdr = dev_header();
+    int pd = sim_power_down_symbol();
+    /* An omitted PD column keeps the device awake, like an omitted OE
+     * keeps its outputs enabled. Explicit X remains indeterminate. */
+    if (pd >= 0) g_vec_level[pd] = LV_LOW;
     int level;
     switch (hdr[0x31]) {
     case 1: level = LV_LOW; break;
@@ -241,6 +257,7 @@ void sim_allocate(void)
     g_cells = alloc_tracked(n * sizeof(cell_t), what);
     bind_cells();
     pair_feedback_symbols();
+    g_power_hold = sim_power_down_symbol() >= 0 ? alloc_tracked(2 * n, what) : NULL;
     init_levels();
     memset(g_pin_reg_input, LV_UNKNOWN, n);
     if (g_vsima) {
@@ -888,10 +905,42 @@ static void clock_phase(int phase, int loop_pass)
 /* Simulate the vector whose values are in g_order[].value. */
 void simulate_vector(void)
 {
+    int pd = sim_power_down_symbol();
+    if (pd >= 0) {
+        memcpy(g_power_hold, g_sig_value, g_nsyms);
+        memcpy(g_power_hold + g_nsyms, g_sig_out, g_nsyms);
+    }
     clear_vector_state();
     apply_vector();
     if (g_sim_on) {
         int clocked;
+        if (pd >= 0 && !g_preload && g_vec_level[pd] != LV_LOW) {
+            /* No ordinary input or clock reaches the sleeping logic.
+             * Keep buffered levels, including Z, and clock history. The
+             * current vector's input levels remain available for reports. */
+            memcpy(g_sig_value, g_power_hold, g_nsyms);
+            memcpy(g_sig_out, g_power_hold + g_nsyms, g_nsyms);
+            if (g_vec_level[pd] != LV_HIGH) {
+                memset(g_reg_state, LV_UNKNOWN, g_nsyms);
+                memset(g_reg_prev, LV_UNKNOWN, g_nsyms);
+                memset(g_reg_q, LV_UNKNOWN, g_nsyms);
+                memset(g_sig_saved, LV_UNKNOWN, g_nsyms);
+                memset(g_sig_prev, LV_UNKNOWN, g_nsyms);
+                memset(g_reg_before, LV_UNKNOWN, g_nsyms);
+            }
+            for (int i = 0; i < g_nsyms; i++) {
+                if (g_cells[i].kind != 2 && g_cells[i].kind != 3) continue;
+                if (!g_sig_out[i] || g_vec_level[pd] != LV_HIGH) {
+                    g_sig_out[i] = g_node_level[i] = LV_UNKNOWN;
+                }
+            }
+            if (g_trace_level == 4) {
+                results_before_buffers();
+                print_vector(0, 1);
+            }
+            compare_results(1);
+            return;
+        }
         if (g_preload) {
             copy_values_to_results();
             update_cells(0);

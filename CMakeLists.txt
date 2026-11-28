@@ -365,6 +365,9 @@ add_test(NAME devlib_normalize COMMAND devlib_normalize_test)
 add_executable(devlib_read_test tests/devlib_read.c)
 target_link_libraries(devlib_read_test PRIVATE lincupl_shared)
 target_compile_options(devlib_read_test PRIVATE ${_cli_warn_flags})
+add_executable(v8_power_seq_test tests/v8_power_seq.c)
+target_link_libraries(v8_power_seq_test PRIVATE cupl_phases)
+target_compile_options(v8_power_seq_test PRIVATE ${_cli_warn_flags})
 if(Python3_EXECUTABLE)
     add_test(NAME devcompile
         COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/devcompile.py")
@@ -486,6 +489,10 @@ if(Python3_EXECUTABLE)
         COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/csim_atf_jed.py"
             "$<TARGET_FILE_DIR:csim>")
     set_tests_properties(csim_atf_jed PROPERTIES TIMEOUT 600)
+    add_test(NAME csim_v8_power
+        COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/csim_v8_power.py"
+                "$<TARGET_FILE_DIR:csim>")
+    set_tests_properties(csim_v8_power PROPERTIES TIMEOUT 180)
 
     add_test(NAME csim_atf750_alias
         COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/csim_atf750_alias.py"

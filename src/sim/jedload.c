@@ -5,7 +5,8 @@
  * would read from <design>.abs, so that the binder and the simulation run
  * on it unchanged.
  *
- * Supported are the GAL16V8 and GAL20V8 in their three modes and the
+ * Supported are the GAL16V8 and GAL20V8 in their three modes, including
+ * the CP power-down option, and the
  * GAL22V10, ATF750 and ATF2500. ATF row sharing and clock routing are
  * decoded here into the existing combinational, D and T cell models.
  *
@@ -94,12 +95,18 @@ static const struct {
     const char *device;
     uint32_t ptd_fuse;
 } k_families[] = {
+    { 2707, 28, "g20v8cplcc", 2640 },
+    { 2707, 28, "g20v8lcc", 2640 }, /* extra option fuse cleared */
     { 2706, 28, "g20v8lcc", 2640 },
     { 2706, 28, "g20v8alcc", 2640 },
     { 5892, 28, "g22v10lcc", 0 },
     { 5828, 28, "g22v10lcc", 0 },
     { 2194, 0, "g16v8", 2128 },
     { 2194, 0, "g16v8a", 2128 },
+    { 2195, 0, "g16v8cp", 2128 },
+    { 2195, 0, "g16v8", 2128 },
+    { 2707, 0, "g20v8cp", 2640 },
+    { 2707, 0, "g20v8", 2640 },
     { 2706, 0, "g20v8", 2640 },
     { 2706, 0, "g20v8a", 2640 },    /* Atmel.dl has the simple mode only as g20v8as */
     { 5892, 0, "g22v10", 0 },
@@ -167,6 +174,7 @@ static struct {
     int npins;
     int nsignals;              /* includes the numbered buried registers */
     int atf;                   /* 750 or 2500, zero for GAL devices */
+    int power_pin;             /* V8 CP input reserved by the option fuse */
     uint16_t row_mask[512];    /* selected sum-term rows, indexed by array */
     uint8_t gated_clock[512];  /* AND the product clock with the global pin */
     jpin_t pins[MAX_PINS + 1];  /* by pin number */
@@ -387,8 +395,16 @@ static int mode_fuses_match(void)
     return 1;
 }
 
+/* A cleared CP option leaves pin 4 available for ordinary logic. Decode
+ * that extended map with the corresponding non-CP library entry. */
+static int extra_v8_disabled(uint32_t fuses)
+{
+    return (fuses == 2194 || fuses == 2706) &&
+           g_jed.nfuses == fuses + 1 && !fuse(fuses);
+}
+
 /* Can the loaded library entry be decoded here, and is the fuse map one of
- * this device?  A map may leave out a signature at its end.  Returns 0 and
+ * this device? A map may leave out a signature at its end. Returns 0 and
  * the error if not. */
 static int check_device(const char *device, const char *jed_name, int *code, char *text, size_t text_size)
 {
@@ -420,7 +436,7 @@ static int check_device(const char *device, const char *jed_name, int *code, cha
         snprintf(text, text_size, "%s", device);
         return 0;
     }
-    if (g_jed.nfuses != fuses &&
+    if (g_jed.nfuses != fuses && !extra_v8_disabled(fuses) &&
         !(hdr[HDR_UES_BITS] != 0 && g_jed.nfuses == rd32(hdr + HDR_UES_FUSE) &&
           g_jed.nfuses + hdr[HDR_UES_BITS] == fuses)) {
         *code = ERR_JEDEC_FILE;
@@ -458,7 +474,8 @@ static int try_device(const char *device, const char *jed_name, char *entry, int
                 continue;
             }
             load_device_entry(names[i]);
-            if (g_jed.nfuses <= rd32(dev_header() + HDR_FUSES) && mode_fuses_match()) {
+            uint32_t fuses = rd32(dev_header() + HDR_FUSES);
+            if ((g_jed.nfuses <= fuses || extra_v8_disabled(fuses)) && mode_fuses_match()) {
                 snprintf(entry, DL_ENTRY_NAME_SIZE + 1, "%s", names[i]);
                 found = 1;
             }
@@ -542,6 +559,35 @@ static void choose_device(const char *jed_name, int strict)
  * Pins and macrocells
  * ------------------------------------------------------------------------- */
 
+/* CP uses reference pin 4, mapped to PLCC pin 5. Some catalog views put
+ * its reservation on DIP pin 3 or 23; restore those ordinary inputs in
+ * the private loaded image before decoding the physical routing. */
+static void configure_v8_power(void)
+{
+    if ((g_jed.nfuses != 2195 && g_jed.nfuses != 2707) || !fuse(g_jed.nfuses - 1))
+        return;
+    g_jed.power_pin = dev_header()[HDR_PINS] == 28 ? 5 : 4;
+    int found = 0;
+    for (int i = 0; i < dev_section_count(DEV_SEC_PINS); i++) {
+        uint8_t *rec = (uint8_t *)dev_pin(i);
+        unsigned pin = rd16(rec + PIN_NUMBER);
+        if (rec[PIN_KIND] == PIN_KIND_POWER_DOWN && pin != (unsigned)g_jed.power_pin) {
+            if (g_jed.nfuses != 2707 || dev_header()[HDR_PINS] != 24 || (pin != 3 && pin != 23))
+                fatal_error(ERR_JEDEC_DEVICE, "invalid V8 power-down pin");
+            rec[4] = rec[PIN_KIND] = 0;
+            rec[PIN_TRUE_COL] = pin == 3 ? 4 : fuse(2704) ? 6 : 2;
+            rec[PIN_COMP_COL] = rec[PIN_TRUE_COL] + 1;
+        }
+        if (pin == (unsigned)g_jed.power_pin) {
+            rec[4] = 40;
+            rec[PIN_KIND] = PIN_KIND_POWER_DOWN;
+            rec[PIN_TRUE_COL] = rec[PIN_COMP_COL] = 0;
+            found = 1;
+        }
+    }
+    if (!found) fatal_error(ERR_JEDEC_DEVICE, "missing V8 power-down pin");
+}
+
 /* Pin records and column pairs of every pin; default names */
 static void collect_pins(void)
 {
@@ -610,6 +656,16 @@ static void collect_pins(void)
             pin->column = (int16_t)g_jed.ncolumns++;
         }
     }
+    if (g_jed.power_pin) {
+        /* Keep the disconnected PD columns in the row geometry. They
+         * still make a row false when both literals are connected. */
+        if (g_jed.ncolumns >= MAX_COLUMNS)
+            fatal_error(ERR_JEDEC_DEVICE, g_device_name);
+        column_t *c = &g_jed.columns[g_jed.ncolumns];
+        *c = (column_t){ .true_col = 8, .comp_col = 9,
+                        .pin = (uint16_t)g_jed.power_pin, .sym = -1 };
+        g_jed.pins[g_jed.power_pin].column = (int16_t)g_jed.ncolumns++;
+    }
 }
 
 /* Every fuse of a row must be the input of a pin; and mark the inputs that
@@ -654,6 +710,8 @@ static void scan_arrays(void)
             }
             for (int c = 0; c < g_jed.ncolumns; c++) {
                 if (fuse(row + g_jed.columns[c].true_col) == 0 || fuse(row + g_jed.columns[c].comp_col) == 0) {
+                    if (g_jed.power_pin && g_jed.columns[c].pin == g_jed.power_pin)
+                        fatal_error(ERR_JEDEC_FILE, "power-down pin is also used as a logic input");
                     g_jed.columns[c].used = 1;
                 }
             }
@@ -926,6 +984,7 @@ static void build_symbols(void)
         int kind = p > g_jed.npins ? KIND_NODE : KIND_PIN;
         int ext_kind = p > g_jed.npins ? KIND_NODE_EXT : KIND_PIN_EXT;
         int used = (pin->column >= 0 && g_jed.columns[pin->column].used) ? SYMF_INPUT : 0;
+        if (p == g_jed.power_pin) used = SYMF_INPUT;
         if (pin->alias >= 0)
             continue;
         if (g_jed.atf && registered_node(pin->node))
@@ -2058,6 +2117,7 @@ void load_jedec_file(const char *jed_name, int source_names)
     lincupl_strcpy_trunc(g_abs_jedec_name, sizeof(g_abs_jedec_name), g_base_name);
     g_options |= OPT_N;
     read_header_items(design);
+    if (!atf150x) configure_v8_power();
     collect_pins();
     if (atf150x) {
         name_pins();
@@ -2109,7 +2169,8 @@ void jedec_truth_pins(sim_truth_t *table)
                 continue;
             }
             table->role[p] = SIM_PIN_INPUT;
-            if ((pin->column >= 0 && g_jed.columns[pin->column].used) || kind == PIN_KIND_ENABLE) {
+            if ((pin->column >= 0 && g_jed.columns[pin->column].used) || kind == PIN_KIND_ENABLE ||
+                kind == PIN_KIND_POWER_DOWN) {
                 table->inputs[table->ninputs++] = (unsigned)p;
             }
         }
