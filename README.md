@@ -132,6 +132,13 @@ csim -lf g20v8lcc u12     # the same as this device (for a file that does not sa
   numbers of a PLCC part. The mode of a GAL16V8 or GAL20V8 (simple,
   complex, registered) is read from its SYN and AC0 fuses; a mode can also
   be named (`g16v8ms`, `g16v8ma`, `g16v8s`).
+- V8 CP maps have 2195 or 2707 fuses. With the extra option bit set,
+  power-down is active high on DIP pin 4 or PLCC pin 5. Drive `P4` or `P5`
+  in the `.si` file; omitting that column keeps the device awake. While
+  asleep, logic and clocks stop and outputs retain their last value,
+  including high impedance. A cleared option bit leaves that pin available
+  for ordinary logic. Wake-up timing and electrical pin keepers are not
+  simulated.
 - ATF750 maps have 14394, 14435 or 14504 fuses; ATF2500 maps have
   71648, 71745 or 71816. Their QP28 or QP44 field selects the PLCC
   package. C-revision feedback and pin-keeper option bits select the

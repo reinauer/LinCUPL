@@ -174,11 +174,30 @@ page 1, specifies power-down on DIP pin 4 and PLCC pin 5. All CP descriptions
 reserve that input and emit the extra option fuse; other logic inputs remain
 available.
 
-CP fuse maps have 2195 or 2707 bits. The current JEDEC decoder does not
-support these sizes. Their regressions compare emitted maps and run ABS
-vectors without exercising power-down, and explicitly require JEDEC decoding
-to report that no supported device exists. They do not establish power-down
-simulation behavior.
+CP fuse maps have 2195 or 2707 bits. `csim -f` reads their extra option bit:
+one reserves the power-down input, while zero leaves it available for logic.
+The decoder also corrects the two catalog pin reservations listed above in
+its private library image. An active product referencing a reserved
+power-down literal is rejected; disabled products are ignored.
+
+Power-down follows [ATF16V8C data sheet 0425I](https://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-0425-PLD-ATF16V8C-Datasheet.pdf),
+section 3.7: a high control holds logic, registers and buffered outputs,
+including high impedance. Clock transitions while asleep are ignored.
+On waking, the current inputs reach the logic; a clock now high after its
+last active low level produces an edge. Timing constraints and electrical
+pin keepers are outside the functional model.
+
+Use physical alias `P4` (DIP) or `P5` (PLCC) in JEDEC simulation vectors.
+An omitted control defaults low. A high control in the first vector has no
+sampled output to hold and produces unknown outputs. An unknown control
+makes the held state unknown. Power-down regressions use JEDEC vectors;
+the reserved input cannot be declared as an ordinary CUPL logic pin.
+
+Power-down adds storage even to combinational designs, so `jedcompare`
+requires `--sequential`. Its unconstrained initial inputs include power-down
+high before any active vector; that case returns an indeterminate result
+rather than an equivalence proof. The sequential API can retain and restore
+power-down states after an initial awake transition.
 
 ## Validation
 
@@ -227,6 +246,13 @@ and feedback, automatic selection preferences, reserved power-down pins,
 signatures, and all fuse-plot rows and package labels. Wrong expectations
 must fail. Catalog comparisons permit only the documented AC1 correction
 in emitted maps; corrected power-down inputs are tested separately.
+
+`csim_v8_power` checks all 12 CP interfaces in each supported mode and both
+output polarities. It covers data and enable retention, sleeping clock
+pulses, wake-up edges, high-impedance outputs, unknown controls, anonymous
+JEDEC maps, cleared options and invalid power-down literals. Independent
+expected traces and deliberately wrong expectations test the simulation;
+interleaved sequential models test state restoration after awake inputs.
 
 ```sh
 cmake --build build

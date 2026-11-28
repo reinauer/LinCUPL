@@ -221,8 +221,7 @@ def main():
                     run('cupl', ['-jaxm1', *options, 'test.pld'], work)
                     maps.append(fuses(work / 'test.jed'))
                     (work / 'test.si').write_text(vectors)
-                    flags_to_test = ('-l',) if device in v8_models and h['power_down'] else ('-l', '-fl')
-                    for flags in flags_to_test:
+                    for flags in ('-l', '-fl'):
                         run('csim', [flags, *options, 'test'], work)
                 assert maps[0] == maps[1], device
                 if device.startswith('v750c'):

@@ -43,7 +43,7 @@ static int order_pin(unsigned pin, int token)
 int build_truth_table(unsigned max_inputs, sim_truth_t *table, char *error, size_t size)
 {
     jedec_truth_pins(table);
-    if (jed150x_sequential())
+    if (jed150x_sequential() || sim_power_down_symbol() >= 0)
         return fail(error, size, "stateful design; use --sequential for reachable-state equivalence");
     for (unsigned i = 0; i < table->noutputs; i++) {
         unsigned pin = table->outputs[i];
