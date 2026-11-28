@@ -75,14 +75,25 @@ def main():
             for keyword in ('sequence', 'sequence' + kind):
                 work = root / f'{label}-{device}-{keyword}'
                 work.mkdir()
-                (work / 'test.pld').write_text(source(device, pins, keyword, clock, buried))
+                text = source(device, pins, keyword, clock, buried)
+                if device.startswith('g16v8'):
+                    text += 'pin 11=disable;\n'
+                (work / 'test.pld').write_text(text)
                 run('cupl', ['-jaxm1', '-u', library, 'test.pld'], work)
                 maps.append(fuses(work / 'test.jed'))
                 # The state and registered OUT both implement q XOR a. A
                 # low clock must retain both values. These families have
                 # independent JEDEC simulation as well as ABS simulation.
                 if kind == 'd':
-                    (work / 'test.si').write_text(VECTORS)
+                    vectors = VECTORS
+                    if device.startswith('g16v8'):
+                        # Its register resets low before the inverting pad
+                        # driver, so the externally visible state starts high.
+                        vectors = vectors.translate(str.maketrans('LH', 'HL'))
+                        vectors = vectors.replace('clk,a,q,y', 'clk,a,disable,q,y')
+                        vectors = '\n'.join(line[:2] + '0' + line[2:] if line[:1] in ('C', '0', '1')
+                                            else line for line in vectors.splitlines()) + '\n'
+                    (work / 'test.si').write_text(vectors)
                     for flags in ('-l', '-fl'):
                         run('csim', [flags, '-u', library, 'test'], work)
             assert maps[0] == maps[1], (label, device, 'default register type changed the fuse map')
@@ -105,21 +116,27 @@ def main():
                 check(library, label, *case)
 
         modeled = 0
-        for family in ('atf750c', 'gal22v10', 'atf2500'):
+        for family in ('atf750c', 'gal22v10', 'atf2500', 'gal16v8'):
             library = root / (family + '.dl')
             library.write_bytes(devcompile.compile_text(
                 (ROOT / 'devices/families' / (family + '.dev')).read_text()))
             for entry in catalog.entries(library.read_bytes()):
                 attrs = catalog.records(entry['image'])[3][0]
-                if family == 'atf2500':
+                if family == 'gal16v8':
+                    if entry['name'] in ('g16v8ma', 'g16v8s'):
+                        assert attrs[51:57] == bytes(6)
+                        continue
+                    pins = (1, 2, 19, 18)
+                    assert attrs[51:57] == bytes([1, 0, 1, 1, 0, 1])
+                elif family == 'atf2500':
                     pins = (1, 2, 5, 6) if attrs[8] == 44 else (1, 2, 4, 5)
                     assert attrs[51:57] == bytes([1, 31, 1, 1, 31, 1])
                 else:
                     pins = (2, 3, 27, 26) if attrs[8] == 28 else (1, 2, 23, 22)
                     assert attrs[51:57] == bytes([1, 0, 1, 1, 0, 1])
-                check(library, family, entry['name'], 'd', pins, family != 'gal22v10')
+                check(library, family, entry['name'], 'd', pins, family in ('atf750c', 'atf2500'))
                 modeled += 1
-        assert modeled == 17
+        assert modeled == 19
 
         # Even currently inactive next-function descriptors are retained and
         # compared. They must not silently return to the exclusion list.
@@ -169,7 +186,7 @@ def main():
             actual = [int(any(out[i] == '1' for out in enabled)) for i in range(len(outputs))]
             assert actual == [a & (1 - q), a, a ^ q, a ^ q] + [1] * (len(outputs) - 4)
 
-    print(f'PASS: {cases} default-register comparisons, all 17 modeled interfaces, '
+    print(f'PASS: {cases} default-register comparisons, all 19 registered hardware interfaces, '
           f'enabled-D fitter equations, and {runs} native checks')
     return 0
 

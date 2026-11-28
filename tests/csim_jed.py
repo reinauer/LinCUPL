@@ -841,8 +841,8 @@ Location None;
 Device   g16v8s;
 '''
 
-# y is read back.  In the simple mode cupl makes its pin an input (AC1 = 1)
-# and still gives it the product term.
+# y is read back. The test sets AC1 to input mode after compilation,
+# leaving y's product term in place to exercise the decoder warning.
 DEAD_PLD = DEAD_HEADER + '''
 Pin 2  = a;
 Pin 3  = b;
@@ -894,9 +894,11 @@ def dead_terms_case(suite):
     if rc != 0:
         suite.fail(name, 'the compiled design does not simulate as written:\n' + out[-600:])
         return
+    _, bits = parse_jed(read_text(jed))
+    bits[2120] = 1  # Pin 19: simple-mode input, with its product terms retained.
     for with_pld, order, end in ((True, ('a, b, c, y', 'z, w'), ' (y)\n'), (False, ('P2, P3, P4, P19', 'P18, P17'), '\n')):
         d = suite.dir('dead16', 'names' if with_pld else 'pins')
-        shutil.copy(jed, os.path.join(d, 'dead16.jed'))
+        open(os.path.join(d, 'dead16.jed'), 'w').write(write_jed(bits).replace('*QP24 ', '*QP20 '))
         if with_pld:
             shutil.copy(os.path.join(ref, 'dead16.pld'), d)
         open(os.path.join(d, 'dead16.si'), 'w').write(DEAD_SI_MAP % order)
