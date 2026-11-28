@@ -102,6 +102,26 @@ The catalog record is retained. Tests compare the DIP pin-10 and PLCC
 pin-12 fuse maps, simulate both output polarities, and reject pin 20
 as a logic input.
 
+The `g16v8h*` interfaces describe the PALCE16V8HD architecture: its DIP24
+and PLCC28 pin maps, 32-column array, D/T registers, input latches and
+output-driver controls match the
+[AMD PAL Device Handbook](https://bitsavers.trailing-edge.com/components/amd/programmable_logic/1993_AMD_PAL_Device_Handbook.pdf),
+pages 2-135 through 2-143. The legacy mnemonics remain available.
+The complex-mode views `g16v8hma` and `g16v8hmalcc` require SG0/SG1 = 1/1;
+the reader corrects their SG1 initializer at fuse 2193. The catalog's 1/0
+encoding selects simple mode and, with SL0 = 1, disables the output driver
+instead of using its output-enable product term.
+
+The same documentation establishes the additional controls. Input latches
+are transparent while LE is high and hold while LE is low; LE is DIP pin 4
+or PLCC pin 5. SL2 and SL3 select direct versus latched input and feedback
+paths. SL4 selects totem-pole versus open-drain output, exposed by `.tec`;
+SL5 selects D versus T registers. The catalog places these four eight-bit
+banks at 2194, 2202, 2210 and 2218, respectively. A set bit selects direct
+input, direct feedback, totem-pole output or a D register. These addresses
+come from the catalog's selectors; the handbook establishes their circuit
+meaning. Both packages reset the register state low at power-up.
+
 The field-preservation audit is complete: every byte has an explicit
 retention or normalization rule, and unexplained nonzero fields are retained.
 The four attribute meanings and the numerical interpretation of legacy
