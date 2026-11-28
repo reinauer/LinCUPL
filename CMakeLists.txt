@@ -474,6 +474,11 @@ if(Python3_EXECUTABLE)
         COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/csim_atf_jed.py"
             "$<TARGET_FILE_DIR:csim>")
     set_tests_properties(csim_atf_jed PROPERTIES TIMEOUT 600)
+
+    add_test(NAME csim_atf750_alias
+        COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/csim_atf750_alias.py"
+                "$<TARGET_FILE_DIR:cupl>")
+    set_tests_properties(csim_atf750_alias PROPERTIES TIMEOUT 180)
     foreach(_mode IN ITEMS legacy extended)
         add_test(NAME csim_150x_jed_${_mode}
             COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/csim_150x_jed.py"

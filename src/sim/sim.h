@@ -467,6 +467,7 @@ typedef struct cell {
     int16_t true_fb;        /* 1 = fed back without inversion */
     int16_t fed_back;
     int clock_enable;      /* CE equation symbol, or -1 for unconditional clocking */
+    int register_alias;    /* next ABS alias receiving raw Q, or 0 for none */
     cell_state_t *node_state;
     cell_state_t *pin_state;
     uint8_t kind;           /* 0 none, 1 pin, 2 node, 3 pin with fed-back node */

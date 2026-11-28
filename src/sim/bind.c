@@ -790,6 +790,42 @@ sym_t *find_symbol(const char *name)
     return g_vsima ? find_symbol_vsima(name) : find_symbol_csima(name);
 }
 
+/* ATF750 output registers also have numbered buried aliases. An ABS
+ * reference to one of these aliases is a separate input symbol, without
+ * an equation of its own. The shared register is identified by its sum
+ * and function records, independently of names and package pin numbers. */
+static void bind_register_aliases(void)
+{
+    for (int i = 0; i < g_nsyms; i++) {
+        g_cells[i].register_alias = 0;
+    }
+    if (g_vsima || (g_options & OPT_FUSEMAP) || strncasecmp(g_device_name, "v750", 4) != 0) {
+        return;
+    }
+    int npins = dev_header()[8];
+    for (int i = 2; i < g_nsyms; i++) {
+        cell_t *c = &g_cells[i];
+        if (!c->is_node || c->number > npins || (c->node_type != 1 && c->node_type != 0x1b)) {
+            continue;
+        }
+        for (int j = 2; j < g_nsyms; j++) {
+            const sym_t *alias = &g_syms[j];
+            if (alias->pin <= npins || alias->pin_rec < 0 ||
+                (alias->flags & 0xc0) != 0x80 || dev_pin(alias->pin_rec)[4] != 0) {
+                continue;
+            }
+            for (int n = 0; n < dev_section_count(DEV_SEC_NODES); n++) {
+                const uint8_t *node = dev_node(n);
+                if (rd16(node + 2) == alias->pin && rd16(node) == c->term && node[4] == c->node_type) {
+                    g_cells[j].register_alias = c->register_alias;
+                    c->register_alias = j;
+                    break;
+                }
+            }
+        }
+    }
+}
+
 /* For every fed-back node the symbol through which the feedback reaches
  * the product terms. */
 void pair_feedback_symbols(void)
@@ -833,6 +869,7 @@ void pair_feedback_symbols(void)
             }
         }
     }
+    bind_register_aliases();
 }
 
 /* -------------------------------------------------------------------------
