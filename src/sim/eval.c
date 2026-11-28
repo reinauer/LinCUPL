@@ -229,6 +229,11 @@ static int drive_output(int sym, int registered, int value, int oe_pin, int oe_t
         return 0;
     }
     g_node_level[sym] = (uint8_t)value;
+    for (int alias = c->register_alias; alias != 0; alias = g_cells[alias].register_alias) {
+        /* Aliases tap Q before the output inverter and enable buffer. */
+        g_node_level[alias] = g_sig_out[alias] = g_sig_value[alias] = (uint8_t)value;
+        set_input_value(value, alias);
+    }
     if (g_vsima && dev_header()[0x12] == 10 && c->node_type == 0x1b && c->true_out == 0) {
         out = invert(value);
     } else if (c->true_out == 0) {
