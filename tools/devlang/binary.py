@@ -111,8 +111,8 @@ def plot_program(model):
 
 
 def sections(model, options):
-    if model['architecture'] == 'gal16v8':
-        from .gal16v8 import sections as lower
+    if model['architecture'] in ('gal16v8', 'gal20v8'):
+        from .galv8 import sections as lower
         return lower(model, options)
     if model['architecture'] == 'gal22v10':
         from .gal22v10 import sections as lower

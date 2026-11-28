@@ -115,7 +115,7 @@ and numeric interpreter operands, not encoded byte strings.
 
 Hardware devices declare `architecture`, `mnemonic`, package information,
 arrays, configuration choices and macrocell templates. Supported backends
-are `gal16v8`, `atf750c`, `gal22v10` and `atf2500`; complete examples are in
+are `gal16v8`, `gal20v8`, `atf750c`, `gal22v10` and `atf2500`; complete examples are in
 [`devices/families/`](../devices/families/).
 
 An array defines its rows, columns, first fuse, address order, and connected
@@ -129,15 +129,26 @@ data, clock, type, reset, preset and power-up behavior. Feedback declarations
 identify the source, true/complement columns and node alias. The backend
 assigns the table IDs and connection groups required by `.dl` readers.
 
-For `gal16v8`, `mode` selects `registered`, `complex`, `simple` or
+For `gal16v8` and `gal20v8`, `mode` selects `registered`, `complex`, `simple` or
 `automatic`. An automatic interface names the three fixed interfaces in
-`mode_devices`; the backend generates their selection rules. The shared
-`pin_columns` block lists the true/complement source pairs for each mode,
+`mode_devices`; the backend generates their selection rules. Its optional
+`combinational_feedback = simple` keeps simple mode for output feedback
+when no register or output enable is required; the default is `complex`.
+Logic without feedback, registers or output enables selects simple mode.
+The shared `pin_columns` block lists the true/complement source pairs for each mode,
 including the pad feedback paths that disappear in complex and simple
 modes. Macrocell `product_terms` describe the eight-term registered/simple
 sum and the seven-term sum plus output-enable product. `cell_mode` gives
 the AC1 encodings for both registered and simple modes; `product_disable`
-describes the per-row disable bits. All four interfaces inherit one family.
+describes the per-row disable bits. Each family supplies its modes and
+option variants through inheritance. GAL20V8 also supplies a PLCC28 map.
+
+The optional V8 `power_down` block reserves `control = pin(4)` in reference
+package coordinates. It declares the extra `fuse`, its `disabled = 0` and
+`pin_controlled = 1` encodings, and `selection = pin_controlled`. Package
+mapping turns that reference pin into PLCC pin 5. The block describes
+compiler allocation and fuse emission; it does not add simulator support
+for the CP maps.
 
 A `macrocell_template` declares integer parameters. A
 `macrocell Name : Template` supplies those parameters; expressions in the

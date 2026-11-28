@@ -290,8 +290,8 @@ def compile_model(device):
     if architecture == 'gal22v10':
         from .gal22v10 import compile_model as lower
         return lower(device)
-    if architecture == 'gal16v8':
-        from .gal16v8 import compile_model as lower
+    if architecture in ('gal16v8', 'gal20v8'):
+        from .galv8 import compile_model as lower
         return lower(device)
     if architecture == 'atf2500':
         from .atf2500 import compile_model as lower

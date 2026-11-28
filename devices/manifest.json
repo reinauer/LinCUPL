@@ -4,7 +4,22 @@
   "hardware": [
     {
       "file": "families/gal16v8.dev",
-      "devices": ["g16v8", "g16v8ms", "g16v8ma", "g16v8s"]
+      "devices": [
+        "g16v8", "g16v8ms", "g16v8ma", "g16v8s",
+        "g16v8a", "g16v8as", "g16v8c", "g16v8cms",
+        "g16v8cma", "g16v8cas", "g16v8cp", "g16v8cpms",
+        "g16v8cpma", "g16v8cpas"
+      ]
+    },
+    {
+      "file": "families/gal20v8.dev",
+      "devices": [
+        "g20v8", "g20v8a", "g20v8cp", "g20v8ms",
+        "g20v8ma", "g20v8s", "g20v8as", "g20v8cpms",
+        "g20v8cpma", "g20v8cps", "g20v8lcc", "g20v8alcc",
+        "g20v8cplcc", "g20v8mslcc", "g20v8malcc", "g20v8slcc",
+        "g20v8aslcc", "g20v8cpmslcc", "g20v8cpmalcc", "g20v8cpslcc"
+      ]
     },
     {
       "file": "families/atf750c.dev",

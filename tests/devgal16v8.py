@@ -48,7 +48,7 @@ def main():
     env.pop('LIBCUPL', None)
     env.pop('FITTERDIR', None)
     source = (ROOT / 'devices/families/gal16v8.dev').read_text()
-    compiled = devcompile.compile_text(source)
+    compiled = devcompile.compile_text(source, devices=['g16v8', 'g16v8ms', 'g16v8ma', 'g16v8s'])
     generated = {e['name']: e['image'] for e in catalog.entries(compiled)}
     assert set(generated) == {'g16v8', 'g16v8ms', 'g16v8ma', 'g16v8s'}
     reference_data = devcompile.compile_directory(ROOT / 'devices', generated, hardware=False)
@@ -57,7 +57,7 @@ def main():
         compare_records(image, originals[name], name)
     for device in model.inherited_devices(syntax.parse(source)):
         hardware = model.compile_model(device)
-        assert set(hardware['fuse_owners']) == set(range(2194))
+        assert set(hardware['fuse_owners']) == set(range(hardware['fuses']))
     rejected = 0
     for before, after in [
             ('columns = 32', 'columns = 31'), ('first_row = 8', 'first_row = 0'),

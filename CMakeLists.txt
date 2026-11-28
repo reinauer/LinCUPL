@@ -392,6 +392,10 @@ if(Python3_EXECUTABLE)
         COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/devgal16v8.py"
             "$<TARGET_FILE_DIR:csim>")
     set_tests_properties(devgal16v8 PROPERTIES TIMEOUT 180)
+    add_test(NAME devv8
+        COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/devv8.py"
+                "${CMAKE_BINARY_DIR}/bin")
+    set_tests_properties(devv8 PROPERTIES TIMEOUT 180)
     add_test(NAME devatf2500
         COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/devatf2500.py"
             "$<TARGET_FILE_DIR:csim>")
