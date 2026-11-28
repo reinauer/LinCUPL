@@ -1,22 +1,25 @@
-"""Compare original RTL with an independent readback of fitted TT3 equations.
+"""Compare original RTL with fitted TT3 equations and decoded JEDEC maps.
 
-This exercises synthesis, EDIF import, and logical fitting. It does not
-decode JEDEC or assert timing equivalence. Yosys and Icarus are optional.
+Exercise synthesis, EDIF import, fitting and fuse-map simulation without
+asserting timing equivalence. Yosys and Icarus are optional.
 """
 import json
 import os
 from pathlib import Path
+import re
 import shutil
 import subprocess
 import sys
 import tempfile
 
 
-def run(args, directory, env=None):
+def run(args, directory, env=None, expected=0):
     result = subprocess.run(args, cwd=directory, env=env, capture_output=True,
                             text=True, errors='replace', timeout=60)
-    assert result.returncode == 0, (args, result.stdout, result.stderr)
-    return result.stdout + result.stderr
+    output = result.stdout + result.stderr
+    diagnostic = output if len(output) <= 6000 else output[:4000] + '\n...\n' + output[-2000:]
+    assert result.returncode == expected, (directory, args, result.returncode, diagnostic)
+    return output
 
 
 def span(port):
@@ -136,10 +139,17 @@ def testbench(top, ports):
     for label, module in (('gold', top), ('actual', 'fitted')):
         connections = [f'.{name}({name if name in inputs else label + "_" + name})' for name in ports]
         code.append(f'{module} {label}(' + ', '.join(connections) + ');')
+    scalars = scalar_ports(ports)
+    observed = [name if direction == 'input' else 'gold_' + name
+                for name, direction in scalars.items()]
+    trace = '$display("VECTOR %b", {' + ', '.join(observed) + '});'
     code += ['task check;', 'begin']
     for name in outputs:
         code.append(f'if (gold_{name} !== actual_{name}) $fatal(1, "{top}/{name} at step %0d", i);')
-    code += ['end', 'endtask', 'initial begin'] + [name + '=0;' for name in inputs]
+    code += [trace, 'end', 'endtask', 'initial begin'] + [name + '=0;' for name in inputs]
+    # Seed physical inputs before the first edge. Registers may still be
+    # unknown here; every subsequent checked sample must be determinate.
+    code += ['#1;', trace]
     if top in ('and2', 'adder', 'tristate', 'offset'):
         width = sum(len(ports[name]['bits']) for name in inputs)
         code += [f'for (i=0; i<{1 << width}; i=i+1) begin',
@@ -164,6 +174,45 @@ def testbench(top, ports):
                 code.append(name + '=$random;')
         code += [f'#5; check; clk={edge}; #5; check;', 'end']
     return '\n'.join(code + ['$finish;', 'end', 'endmodule']) + '\n'
+
+
+def simulate_jedec(bindir, work, ports, trace, env):
+    pins = next(line for line in (work / 'design.tt3').read_text().splitlines()
+                if line.startswith('#$ PINS'))
+    mapping = {name: int(pin) for name, pin in re.findall(r'([^\s:+-]+)[+-]?:(\d+)', pins)}
+    scalars = scalar_ports(ports)
+    assert set(scalars) <= mapping.keys(), (scalars, mapping)
+    # N observes an output without checking its level. Use it only for
+    # RTL state that is unknown in the initial clock-seeding sample.
+    levels = {'0': 'L', '1': 'H', 'z': 'Z', 'x': 'N'}
+    vectors = []
+    for index, row in enumerate(re.findall(r'^VECTOR ([01xz]+)$', trace, re.M)):
+        assert len(row) == len(scalars), row
+        vector = []
+        for bit, direction in zip(row, scalars.values()):
+            if direction == 'input':
+                assert bit in '01', row
+                vector.append(bit)
+            else:
+                assert bit != 'x' or index == 0, row
+                vector.append(levels[bit])
+        vectors.append(''.join(vector))
+    assert len(vectors) > 1, trace
+    order = ','.join(f'P{mapping[name]}' for name in scalars)
+    header = f'ORDER:{order};\nVECTORS:\n'
+    (work / 'design.si').write_text(header + '\n'.join(vectors) + '\n')
+    assert not (work / 'design.abs').exists()
+    suffix = '.exe' if os.name == 'nt' else ''
+    args = [str(bindir / ('csim' + suffix)), '-fl', '-u',
+            str(bindir.parent / 'share/lincupl/lincupl.dl'), 'design']
+    run(args, work, env)
+    # A wrong expectation must fail, including when the output is floating.
+    index = next(i for i, direction in enumerate(scalars.values()) if direction == 'output')
+    row = vectors[-1]
+    wrong = 'L' if row[index] == 'H' else 'H'
+    vectors[-1] = row[:index] + wrong + row[index + 1:]
+    (work / 'design.si').write_text(header + '\n'.join(vectors) + '\n')
+    assert 'user expected' in run(args, work, env, expected=1)
 
 
 def main():
@@ -191,16 +240,19 @@ def main():
                  'write_edif -pvector bra design.edf'], work)
             ports = json.loads((work / 'design.json').read_text())['modules'][top]['ports']
             (work / 'tb.v').write_text(testbench(top, ports))
-            for part in (1502, 1504, 1508):
-                package = 84 if part == 1508 else 44
+            targets = [(1502, 'PLCC44', 'AS'), (1504, 'PLCC44', 'AS'), (1508, 'PLCC84', 'AS')]
+            if env['LINCUPL_FIT150X_MODE'] == 'extended':
+                targets += [(1502, 'TQFP44', 'BE'), (1504, 'TQFP44', 'BE'), (1508, 'TQFP100', 'BE')]
+            for part, package, tech in targets:
                 run([str(bindir / (f'fit{part}' + suffix)), '-i', 'design.edf', '-ifmt', 'EDIF',
-                     '-dev', f'P{part}C{package}', '-JTAG', 'OFF'], work, env)
+                     '-device', package, '-tech', f'ATF{part}{tech}', '-JTAG', 'OFF'], work, env)
                 (work / 'fitted.v').write_text(readback(work / 'design.tt3', ports))
                 run([tools['iverilog'], '-g2012', '-s', 'tb', '-o', 'simulation',
                      'designs.v', 'fitted.v', 'tb.v'], work)
-                run([tools['vvp'], 'simulation'], work)
+                trace = run([tools['vvp'], 'simulation'], work)
+                simulate_jedec(bindir, work, ports, trace, env)
                 checks += 1
-    print(f'PASS: {checks} Yosys EDIF fits with post-fit RTL comparisons')
+    print(f'PASS: {checks} Yosys EDIF fits with RTL and JEDEC comparisons')
     return 0
 
 

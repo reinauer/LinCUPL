@@ -132,9 +132,17 @@ primitive polarities and invalid input. It compares fitted functions against
 independently generated TT2 designs on all three device families.
 `fit150x_yosys` additionally synthesizes Verilog, fits its EDIF and compares
 an independent readback of the fitted TT3 equations with the original RTL.
-It requires Yosys and Icarus Verilog and is skipped when they are unavailable.
-Both suites run in the legacy and extended fitter modes. Linux regression
-jobs install the synthesis and simulation tools so these checks run in CI.
+It then replays the RTL input/output traces against the emitted JEDEC in
+`csim -f`, using the fitter's physical pin assignments. This covers Boolean
+logic, arithmetic, registers, reset, clock enable, latches, tristates, state
+machines and bus indexing. Unknown RTL state is ignored only in the initial
+setup sample, before reset or latch initialization; later samples must be
+determinate. A deliberately wrong output expectation must fail each fit.
+Yosys and Icarus Verilog are required; the test is skipped when they are
+unavailable. Both suites run in the legacy and extended fitter modes. The
+Yosys suite covers all three AS devices in both modes and all three BE
+devices in extended mode. Linux regression jobs install the synthesis and
+simulation tools so these checks run in CI.
 The `csim_150x_jed_legacy` and `csim_150x_jed_extended` suites additionally
 decode the emitted fuse maps and check physical pin vectors. They cover
 Boolean logic, cascades, foldback, internal and pad feedback, global and
