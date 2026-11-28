@@ -95,6 +95,13 @@ headers, section capacities, stored pointers and image layout follow the
 storage rules above. The native reader applies its existing repairs to both
 reference and catalog-compiled images, and tests compare those results too.
 
+For `g16v8hslcc`, the reader corrects the simple-mode unlatched input
+from pin 20 to pin 12 when its matching `.lq` record confirms the route.
+Both use line 16, columns 30/31 and selector fuse 2209; pin 20 is ground.
+The catalog record is retained. Tests compare the DIP pin-10 and PLCC
+pin-12 fuse maps, simulate both output polarities, and reject pin 20
+as a logic input.
+
 The field-preservation audit is complete: every byte has an explicit
 retention or normalization rule, and unexplained nonzero fields are retained.
 The four attribute meanings and the numerical interpretation of legacy
