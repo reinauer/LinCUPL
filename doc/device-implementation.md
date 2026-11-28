@@ -6,12 +6,12 @@
 | --- | ---: | --- |
 | `devices/Atmel/*.dev` | 85 | Preserve the records and order of `Atmel.dl` |
 | `devices/cupl/*.dev` | 624 | Preserve `cupl.dl`, including both `p16l8` entries |
-| `devices/manifest.json` | 660 selected | Atmel precedence, then 21 explicit hardware replacements |
-| `devices/families/*.dev` | 21 interfaces | Default hardware models with the deliberate differences below |
+| `devices/manifest.json` | 660 selected | Atmel precedence, then 51 explicit hardware replacements |
+| `devices/families/*.dev` | 51 interfaces | Default hardware models with the deliberate differences below |
 
 The normal build compiles and installs `lincupl.dl` from the two complete
-catalogs and the four hardware-family files. The manifest replaces 21
-entries in place; the other 639 images, lookup order and directory flags
+catalogs and the five hardware-family files. The manifest replaces 51
+entries in place; the other 609 images, lookup order and directory flags
 are unchanged. It needs no binary device library or target executable, including
 when cross-compiling. Source/manifests and compiler changes trigger rebuilding.
 Optional supporting data cannot overwrite the generated default library.
@@ -19,10 +19,11 @@ Optional supporting data cannot overwrite the generated default library.
 The catalogs describe the existing compiler interface. They do not add a
 fitter or simulator architecture where the tools lack one. External-fitter
 entries describe invocation and input formats, not their internal fuse maps.
-The 21 modeled interfaces cover four GAL16V8 interfaces, eight ATF750C
-package/options, five 22V10 interfaces and four ATF2500C package/keeper
-combinations. GAL20V8, other GAL16V8 variants, earlier ATF2500
-revisions and special 22V10 modes remain available through the catalog files.
+The 51 modeled interfaces cover 14 standard GAL16V8 interfaces, 20 GAL20V8
+DIP/PLCC and CP interfaces, eight ATF750C package/options, five 22V10
+interfaces and four ATF2500C package/keeper combinations. The eight GAL16V8H
+interfaces have additional latch/toggle controls and still use their catalog
+records, as do earlier ATF2500 revisions and special 22V10 modes.
 `devcompile.py devices --catalog-only` builds the combined archival catalog
 without hardware replacements. The individual source catalogs are retained
 in full and still compile independently.
@@ -124,9 +125,14 @@ are reported.
 
 | Family / interface | Deliberate difference |
 | --- | --- |
-| GAL16V8, all | Use revision 1, clear inactive PROM operands and configuration addresses, and omit empty fitter-argument records. Preserve every active logic record, initialization range and plot instruction. |
-| `g16v8` | Describe the signature at 2056 rather than 2048, consistent with the three fixed modes. Automatic selection uses those fixed modes when compiling. |
-| `g16v8s` | Describe the six feedback-capable pads as feedback sources without an input-mode configuration write. AC1 defaults to input mode; an output equation selects output mode. Reading that output in another equation no longer overwrites AC1 and disables its driver. |
+| Standard V8, all | Use revision 1, clear inactive PROM operands and configuration addresses, and omit empty fitter-argument records. Fixed-mode initialization ranges and plot instructions match the catalogs. |
+| GAL16V8 automatic views | Describe the signature at 2056 rather than 2048, consistent with the fixed modes. Derive eight registers and 25 array slots for the registered body in A/C/CP entries. Automatic compilation selects a fixed view. |
+| `g16v8s`, `g20v8s`, `g20v8slcc` | Describe the six feedback-capable pads as feedback sources without an input-mode configuration write. AC1 defaults to input mode; an output equation selects output mode. Reading that output in another equation no longer overwrites AC1 and disables its driver. |
+| GAL20V8 automatic views | Populate the placeholder pin/node operands, initialization ranges, plot and connection records from the registered view. Selection rules and priorities remain unchanged. Preserve the original `legacy_width` values through default assembly. |
+| `g20v8as`, `g20v8cps`, and their PLCC views | Combine each duplicate input/feedback pair into one feedback record with the same line and columns. |
+| `g20v8cpms`, `g20v8cps` | Reserve DIP pin 4 for power-down. The catalog incorrectly reserves pin 3 in registered mode and pin 23 in simple mode. Restore those pins as ordinary logic inputs. |
+| `g20v8alcc`, `g20v8cplcc`, `g20v8aslcc`, `g20v8cpslcc` | Use the four-sided package drawing instead of the DIP style. |
+| `g20v8aslcc`, `g20v8cpslcc` | Assign distinct NC line IDs 23–26 instead of repeating 25. Automatic GAL20V8 PLCC views likewise use IDs 25–28. |
 | ATF750C, all | Encode the existing `.tfb`, register-alias column and buried-D polarity repairs directly. Clear inactive pin configuration operands and the inconsistent pin-22 OE array annotation. |
 | `v750c`, `v750cextppk` | Canonical records match the reference. |
 | `v750cext` | Use consistent D/T feedback polarity instead of extra inversion flags on these functions and their aliases. |
@@ -146,7 +152,7 @@ designs. The ATF2500C user row retains its initialized-one behavior; it is
 not exposed as the compiler's part-number signature. Undocumented compatibility
 fuses keep explicit defaults without an inferred circuit function.
 
-The GAL16V8 model covers `g16v8`, `g16v8ms`, `g16v8ma` and `g16v8s`.
+The GAL16V8 model covers the base, A, C and CP interfaces.
 Its three operating modes follow the register, output-enable and feedback
 paths in [ATF16V8B data sheet 0364K](https://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-0364-PLD-ATF16V8B-8BQ-8BQL-Datasheet.pdf),
 section 10. Registers reset low before the inverting pad driver, so their
@@ -154,6 +160,18 @@ physical outputs start high. The existing GAL16V8 fuse coordinates are
 retained, including the 64-bit signature and product-disable positions.
 The simple-mode feedback correction changes exactly one AC1 bit for each
 affected output in the regression cases; the array and polarity bits match.
+The GAL20V8 model uses the same macrocell lowering with a 40-column array,
+four additional column pairs across its input routes, and its own fuse
+coordinates. The [ATF20V8C data sheet 0408H](https://datasheets.pl/elementy_czynne/IC/ATF/ATF20V8C.pdf),
+page 1, specifies power-down on DIP pin 4 and PLCC pin 5. All CP descriptions
+reserve that input and emit the extra option fuse; other logic inputs remain
+available.
+
+CP fuse maps have 2195 or 2707 bits. The current JEDEC decoder does not
+support these sizes. Their regressions compare emitted maps and run ABS
+vectors without exercising power-down, and explicitly require JEDEC decoding
+to report that no supported device exists. They do not establish power-down
+simulation behavior.
 
 ## Validation
 
@@ -165,23 +183,26 @@ compares all entries against optional reference libraries through every
 record byte and the
 native C reader, then checks clock-selection fuses and fitter input output.
 The combined archival catalog is also compared with a library built by the
-native merger. `devdefault` independently checks all 21 replacements against
+native merger. `devdefault` independently checks all 51 replacements against
 their hardware models, all compatibility values against their catalogs,
-and all 639 fallback images byte for byte. It checks that a family-source
+and all 609 fallback images byte for byte. It checks that a family-source
 edit changes the default image, that malformed replacements fail, and that
 the built library requires no native reader repairs for modeled entries.
 For every modeled interface it compares default compilation against an
-explicit family library and checks both ABS and JEDEC simulation vectors.
+explicit family library and checks ABS vectors, plus JEDEC vectors for
+supported map sizes.
 `devsequence` checks generic state-machine declarations against explicit
 register-type declarations, registered `OUT` clauses, and expected simulation
-vectors. It exercises both source catalogs and all 19 registered hardware interfaces without
-requiring reference binaries.
+vectors. It exercises both source catalogs and all 34 registered hardware
+interfaces without requiring reference binaries.
 
 Family tests check complete fuse ownership, selector encodings, package
 maps, reader stability, emitted JEDEC maps and expected ABS/JEDEC simulation
-vectors. They cover 111 GAL16V8 designs, 160 ATF750C package pairs, 250 22V10 designs and 576
-ATF2500C designs, plus independent handwritten maps. These are software
-checks, not physical programming measurements.
+vectors. They cover the original 111 GAL16V8 designs, all 34 standard V8
+interfaces,
+160 ATF750C package pairs, 250 22V10 designs and 576 ATF2500C designs, plus
+independent handwritten maps. These are software checks, not physical
+programming measurements.
 
 `devgal16v8` checks automatic mode selection, both polarities on every
 output, global and product output enables, registered feedback while the
@@ -191,6 +212,14 @@ paths and malformed models, and requires wrong expectations to fail in ABS
 and JEDEC simulation. The six catalog simple-mode feedback cases retain
 their known failing JEDEC result as a negative control; the generated maps
 must pass and differ only in the affected AC1 bit.
+
+`devv8` compares every record byte under the rules above, validates complete
+fuse ownership, and rejects malformed package maps, mode choices and option
+encodings. Native cases exercise every output polarity and mode, pad inputs
+and feedback, automatic selection preferences, reserved power-down pins,
+signatures, and all fuse-plot rows and package labels. Wrong expectations
+must fail. Catalog comparisons permit only the documented AC1 correction
+in emitted maps; corrected power-down inputs are tested separately.
 
 ```sh
 cmake --build build

@@ -16,10 +16,11 @@ import devcompile
 from devlang import binary, catalog
 from devlang.syntax import Error
 from defects import fuses
+from devv8 import NAMES, descriptions
 
 
 FAMILIES = {
-    'gal16v8': {'g16v8', 'g16v8ms', 'g16v8ma', 'g16v8s'},
+    **NAMES,
     'atf750c': {'v750c', 'v750cext', 'v750cppk', 'v750cextppk',
                 'v750clcc', 'v750cextlcc', 'v750cppklcc', 'v750cextppklcc'},
     'gal22v10': {'g22v10', 'g22v10lcc', 'g22v10i', 'p22v10', 'p22v10lcc'},
@@ -58,13 +59,14 @@ def main():
     expected = {entry['name']: entry for entry in old}
     assert len(actual) == len(old) == 660
     assert [(e['name'], e['flags']) for e in actual] == [(e['name'], e['flags']) for e in old]
+    v8_models = descriptions()
     models = {}
     for family, names in FAMILIES.items():
         path = ROOT / 'devices/families' / (family + '.dev')
         emitted = catalog.entries(devcompile.compile_text(path.read_text(), str(path)))
         assert {e['name'] for e in emitted} == names
         models.update({e['name']: e['image'] for e in emitted})
-    assert len(models) == 21
+    assert len(models) == 51
     for entry in actual:
         name = entry['name']
         if name in models:
@@ -201,10 +203,12 @@ def main():
                 body = (f'Name test; Device {device}; pin {clock}=clk; pin {data_pin}=a; '
                         f'pin {output_pin}=q; q.d=a;\n' + ('q.ck=clk;\n' if device.startswith('v') else ''))
                 vectors = 'ORDER:clk,a,q;\nVECTORS:\nC0L\nC1H\n00H\nC0L\n'
-                if device.startswith('g16v8'):
-                    body = f'Name test; Device {device}; pin 2=a; pin 19=q; '
-                    if device in ('g16v8', 'g16v8ms'):
-                        body += 'pin 1=clk; pin 11=disable; q.d=a;'
+                if device in v8_models:
+                    h = v8_models[device]
+                    p = h['package'].number
+                    body = f'Name test; Device {device}; pin {p(2)}=a; pin {p(h["cells"][0]["pin"])}=q; '
+                    if h['mode'] in ('automatic', 'registered'):
+                        body += f'pin {p(1)}=clk; pin {p(h["enable_pin"])}=disable; q.d=a;'
                         vectors = 'ORDER:clk,a,disable,q;\nVECTORS:\nC00L\nC10H\n000H\nC00L\n'
                     else:
                         body += 'q=a;'
@@ -217,7 +221,8 @@ def main():
                     run('cupl', ['-jaxm1', *options, 'test.pld'], work)
                     maps.append(fuses(work / 'test.jed'))
                     (work / 'test.si').write_text(vectors)
-                    for flags in ('-l', '-fl'):
+                    flags_to_test = ('-l',) if device in v8_models and h['power_down'] else ('-l', '-fl')
+                    for flags in flags_to_test:
                         run('csim', [flags, *options, 'test'], work)
                 assert maps[0] == maps[1], device
                 if device.startswith('v750c'):
@@ -244,7 +249,7 @@ def main():
                         (work / 'test.si').write_text('ORDER:clk,a,b,!r,y,q;\nVECTORS:\n' +
                                                       '\n'.join(lines) + '\n')
                         run('csim', ['-fl', 'test'], work)
-    print('PASS: 21 default hardware interfaces, 639 unchanged fallbacks, metadata and selection checks')
+    print('PASS: 51 default hardware interfaces, 609 unchanged fallbacks, metadata and selection checks')
 
 
 if __name__ == '__main__':

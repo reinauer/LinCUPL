@@ -128,3 +128,46 @@ device GAL16V8_AUTO : GAL16V8 {
 device GAL16V8_REGISTERED : GAL16V8 { mnemonic = g16v8ms mode = registered }
 device GAL16V8_COMPLEX : GAL16V8 { mnemonic = g16v8ma mode = complex }
 device GAL16V8_SIMPLE : GAL16V8 { mnemonic = g16v8s mode = simple }
+
+# The A view retains complex-mode preference for combinational feedback.
+device GAL16V8A_AUTO : GAL16V8 {
+    mnemonic = g16v8a
+    mode = automatic
+    mode_devices { registered = g16v8ms complex = g16v8ma simple = g16v8as }
+}
+device GAL16V8A_SIMPLE : GAL16V8 { mnemonic = g16v8as mode = simple }
+
+# C views prefer simple mode for feedback unless a register or output enable is used.
+device GAL16V8C_AUTO : GAL16V8 {
+    mnemonic = g16v8c
+    mode = automatic
+    mode_devices {
+        registered = g16v8cms complex = g16v8cma simple = g16v8cas
+        combinational_feedback = simple
+    }
+}
+device GAL16V8C_REGISTERED : GAL16V8 { mnemonic = g16v8cms mode = registered }
+device GAL16V8C_COMPLEX : GAL16V8 { mnemonic = g16v8cma mode = complex }
+device GAL16V8C_SIMPLE : GAL16V8 { mnemonic = g16v8cas mode = simple }
+
+family GAL16V8CP : GAL16V8 {
+    fuses = 2195
+    power_down {
+        control = pin(4)
+        fuse = 2194
+        disabled = 0
+        pin_controlled = 1
+        selection = pin_controlled
+    }
+}
+device GAL16V8CP_AUTO : GAL16V8CP {
+    mnemonic = g16v8cp
+    mode = automatic
+    mode_devices {
+        registered = g16v8cpms complex = g16v8cpma simple = g16v8cpas
+        combinational_feedback = simple
+    }
+}
+device GAL16V8CP_REGISTERED : GAL16V8CP { mnemonic = g16v8cpms mode = registered }
+device GAL16V8CP_COMPLEX : GAL16V8CP { mnemonic = g16v8cpma mode = complex }
+device GAL16V8CP_SIMPLE : GAL16V8CP { mnemonic = g16v8cpas mode = simple }

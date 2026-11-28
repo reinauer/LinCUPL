@@ -92,7 +92,7 @@ def compatibility_differences(left, right):
 
 
 def canonical(image, repairs=True, family='atf750c', compatibility=True):
-    require(family in ('atf750c', 'gal22v10', 'gal16v8', 'atf2500'), 'unsupported hardware comparison family')
+    require(family in ('atf750c', 'gal22v10', 'gal16v8', 'gal20v8', 'atf2500'), 'unsupported hardware comparison family')
     result = records(image)
     changes = Counter()
     def replace(record, offset, value, rule):
@@ -137,11 +137,11 @@ def canonical(image, repairs=True, family='atf750c', compatibility=True):
     zero(attr, [9, 10], f'inactive {family.upper()} PROM operands')
     if compatibility:
         normalize_compatibility(result, changes)
-    if family in ('atf750c', 'gal16v8'):
+    if family in ('atf750c', 'gal16v8', 'gal20v8'):
         for p in result[6]:
             if p[11] == 0:
                 zero(p, [10, 12, 13, 14, 15], 'inactive pin configuration operands')
-    if family == 'gal16v8':
+    if family in ('gal16v8', 'gal20v8'):
         for n in result[7]:
             if n[29] == 0:
                 zero(n, [18, 19, 20, 21], 'inactive node configuration address')
@@ -207,7 +207,13 @@ def compare_libraries(generated, reference):
     families = {name: 'atf750c' for name in dip | {name + 'lcc' for name in dip}}
     families.update({name: 'gal22v10' for name in
                      ('g22v10', 'g22v10lcc', 'g22v10i', 'p22v10', 'p22v10lcc')})
-    families.update({name: 'gal16v8' for name in ('g16v8', 'g16v8ms', 'g16v8ma', 'g16v8s')})
+    families.update({name: 'gal16v8' for name in (
+        'g16v8', 'g16v8a', 'g16v8as', 'g16v8ms', 'g16v8ma', 'g16v8s',
+        'g16v8c', 'g16v8cms', 'g16v8cma', 'g16v8cas',
+        'g16v8cp', 'g16v8cpms', 'g16v8cpma', 'g16v8cpas')})
+    families.update({name + suffix: 'gal20v8' for name in (
+        'g20v8', 'g20v8a', 'g20v8as', 'g20v8ms', 'g20v8ma', 'g20v8s',
+        'g20v8cp', 'g20v8cpms', 'g20v8cpma', 'g20v8cps') for suffix in ('', 'lcc')})
     families.update({name: 'atf2500' for name in
                      ('v2500c', 'v2500cppk', 'v2500clcc', 'v2500cppklcc')})
     require(set(actual) <= set(families), 'unsupported device in hardware comparison')
