@@ -1877,10 +1877,8 @@ static void name_pins(void)
 }
 
 /* A macrocell whose fuses make it an input does not drive its pin: product
- * terms it has are without effect.  cupl writes such a map for a design
- * that is forced into the simple mode of a GAL16V8 or GAL20V8 and reads an
- * output back: the compiled design then simulates as written, the device
- * does what the map says. */
+ * terms it has are without effect. Decode the programmed pin mode even
+ * when the source design declares that pin as an output. */
 static void warn_dead_terms(void)
 {
     for (int p = 1; p <= g_jed.npins; p++) {

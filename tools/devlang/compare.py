@@ -1,8 +1,8 @@
 # SPDX-License-Identifier: BSD-2-Clause
-"""Compare generated ATF750C device images with legacy library entries.
+"""Compare generated hardware images with catalog library entries.
 
 Report raw identity separately from canonical record equality. The latter
-excludes storage metadata and applies the existing ATF750C reader repairs.
+excludes storage metadata and applies the documented native reader repairs.
 Compatibility metadata is reported separately. Every normalized byte is
 counted by rule; all remaining record bytes, including reserved bytes, match.
 """
@@ -92,7 +92,7 @@ def compatibility_differences(left, right):
 
 
 def canonical(image, repairs=True, family='atf750c', compatibility=True):
-    require(family in ('atf750c', 'gal22v10', 'atf2500'), 'unsupported hardware comparison family')
+    require(family in ('atf750c', 'gal22v10', 'gal16v8', 'atf2500'), 'unsupported hardware comparison family')
     result = records(image)
     changes = Counter()
     def replace(record, offset, value, rule):
@@ -137,10 +137,15 @@ def canonical(image, repairs=True, family='atf750c', compatibility=True):
     zero(attr, [9, 10], f'inactive {family.upper()} PROM operands')
     if compatibility:
         normalize_compatibility(result, changes)
-    if family == 'atf750c':
+    if family in ('atf750c', 'gal16v8'):
         for p in result[6]:
             if p[11] == 0:
                 zero(p, [10, 12, 13, 14, 15], 'inactive pin configuration operands')
+    if family == 'gal16v8':
+        for n in result[7]:
+            if n[29] == 0:
+                zero(n, [18, 19, 20, 21], 'inactive node configuration address')
+    if family == 'atf750c':
         for n in result[7]:
             if n[4] == ARRAY:
                 # Array declarations are resolved by array number, not pin.
@@ -202,6 +207,7 @@ def compare_libraries(generated, reference):
     families = {name: 'atf750c' for name in dip | {name + 'lcc' for name in dip}}
     families.update({name: 'gal22v10' for name in
                      ('g22v10', 'g22v10lcc', 'g22v10i', 'p22v10', 'p22v10lcc')})
+    families.update({name: 'gal16v8' for name in ('g16v8', 'g16v8ms', 'g16v8ma', 'g16v8s')})
     families.update({name: 'atf2500' for name in
                      ('v2500c', 'v2500cppk', 'v2500clcc', 'v2500cppklcc')})
     require(set(actual) <= set(families), 'unsupported device in hardware comparison')

@@ -3,6 +3,10 @@
   "catalogs": ["Atmel", "cupl"],
   "hardware": [
     {
+      "file": "families/gal16v8.dev",
+      "devices": ["g16v8", "g16v8ms", "g16v8ma", "g16v8s"]
+    },
+    {
       "file": "families/atf750c.dev",
       "devices": [
         "v750c", "v750cext", "v750cppk", "v750cextppk",

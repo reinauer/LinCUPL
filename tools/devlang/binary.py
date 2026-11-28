@@ -17,6 +17,7 @@ SECTION_NAMES = ('reserved0', 'reserved1', 'reserved2', 'attributes', 'extension
 
 # Binary ABI codes; these do not appear in the device description.
 NONE, D, OE, SP, AR, ARRAY, CK, T, DFB, TFB, IO, CKMUX = 0, 1, 2, 3, 7, 14, 15, 27, 34, 36, 37, 42
+OE_TERM = 17
 GROUND, SUPPLY, FEEDBACK, CLOCK, COMBINATIONAL, INPUT, REGISTER = 2, 3, 7, 12, 16, 22, 23
 POSITIVE, CONTROL, INVERTED_OUTPUT, NORMAL_OUTPUT = 2, 4, 6, 7
 EXTENSIONS = [('d', D), ('t', T), ('ar', AR), ('ck', CK), ('ckmux', CKMUX),
@@ -110,6 +111,9 @@ def plot_program(model):
 
 
 def sections(model, options):
+    if model['architecture'] == 'gal16v8':
+        from .gal16v8 import sections as lower
+        return lower(model, options)
     if model['architecture'] == 'gal22v10':
         from .gal22v10 import sections as lower
         return lower(model, options)

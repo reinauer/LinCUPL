@@ -19,6 +19,7 @@ from defects import fuses
 
 
 FAMILIES = {
+    'gal16v8': {'g16v8', 'g16v8ms', 'g16v8ma', 'g16v8s'},
     'atf750c': {'v750c', 'v750cext', 'v750cppk', 'v750cextppk',
                 'v750clcc', 'v750cextlcc', 'v750cppklcc', 'v750cextppklcc'},
     'gal22v10': {'g22v10', 'g22v10lcc', 'g22v10i', 'p22v10', 'p22v10lcc'},
@@ -63,14 +64,14 @@ def main():
         emitted = catalog.entries(devcompile.compile_text(path.read_text(), str(path)))
         assert {e['name'] for e in emitted} == names
         models.update({e['name']: e['image'] for e in emitted})
-    assert len(models) == 17
+    assert len(models) == 21
     for entry in actual:
         name = entry['name']
         if name in models:
             check_metadata(entry['image'], models[name], expected[name]['image'])
         else:
             assert entry['image'] == expected[name]['image'], name
-    chosen = ['v750c', 'v2500clcc', 'g22v10i', 'p16l8']
+    chosen = ['v750c', 'v2500clcc', 'g22v10i', 'g16v8ma', 'p16l8']
     selected = catalog.entries(devcompile.compile_directory(ROOT / 'devices', chosen))
     assert [(e['name'], e['image']) for e in selected] == [
         (e['name'], e['image']) for e in actual if e['name'] in chosen]
@@ -199,6 +200,15 @@ def main():
                                                (2, 3, 27) if pins == 28 else (1, 2, 23))
                 body = (f'Name test; Device {device}; pin {clock}=clk; pin {data_pin}=a; '
                         f'pin {output_pin}=q; q.d=a;\n' + ('q.ck=clk;\n' if device.startswith('v') else ''))
+                vectors = 'ORDER:clk,a,q;\nVECTORS:\nC0L\nC1H\n00H\nC0L\n'
+                if device.startswith('g16v8'):
+                    body = f'Name test; Device {device}; pin 2=a; pin 19=q; '
+                    if device in ('g16v8', 'g16v8ms'):
+                        body += 'pin 1=clk; pin 11=disable; q.d=a;'
+                        vectors = 'ORDER:clk,a,disable,q;\nVECTORS:\nC00L\nC10H\n000H\nC00L\n'
+                    else:
+                        body += 'q=a;'
+                        vectors = 'ORDER:a,q;\nVECTORS:\n0L\n1H\n0L\n'
                 maps = []
                 for label, options in [('default', []), ('explicit', ['-u', explicit])]:
                     work = root / f'{device}-{label}'
@@ -206,7 +216,7 @@ def main():
                     (work / 'test.pld').write_text(body)
                     run('cupl', ['-jaxm1', *options, 'test.pld'], work)
                     maps.append(fuses(work / 'test.jed'))
-                    (work / 'test.si').write_text('ORDER:clk,a,q;\nVECTORS:\nC0L\nC1H\n00H\nC0L\n')
+                    (work / 'test.si').write_text(vectors)
                     for flags in ('-l', '-fl'):
                         run('csim', [flags, *options, 'test'], work)
                 assert maps[0] == maps[1], device
@@ -234,7 +244,7 @@ def main():
                         (work / 'test.si').write_text('ORDER:clk,a,b,!r,y,q;\nVECTORS:\n' +
                                                       '\n'.join(lines) + '\n')
                         run('csim', ['-fl', 'test'], work)
-    print('PASS: 17 default hardware interfaces, 643 unchanged fallbacks, metadata and selection checks')
+    print('PASS: 21 default hardware interfaces, 639 unchanged fallbacks, metadata and selection checks')
 
 
 if __name__ == '__main__':
