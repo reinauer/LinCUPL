@@ -412,6 +412,10 @@ if(Python3_EXECUTABLE)
     add_test(NAME devsequence
         COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/devsequence.py" "$<TARGET_FILE_DIR:cupl>")
     set_tests_properties(devsequence PROPERTIES TIMEOUT 120)
+    add_test(NAME automatic_toggle
+        COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/automatic_toggle.py"
+            "$<TARGET_FILE_DIR:cupl>")
+    set_tests_properties(automatic_toggle PROPERTIES TIMEOUT 60)
     set_tests_properties(devcatalog_libraries PROPERTIES TIMEOUT 300)
     set_tests_properties(devcompile_libraries PROPERTIES TIMEOUT 600)
     set_tests_properties(devpackages devgal22v10 devatf2500 PROPERTIES TIMEOUT 600)

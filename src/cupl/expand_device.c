@@ -426,7 +426,7 @@ static void count_output(const symbol_t *sym)
             g_reg_outputs[2]++;
         }
         break;
-    case 1: g_reg_outputs[0]++; break;
+    case 1: case 0x1b: g_reg_outputs[0]++; break; /* D or T register */
     case 2: g_reg_outputs[1]++; break;
     case 0x2b: g_reg_outputs[3]++; break;
     default: break;
